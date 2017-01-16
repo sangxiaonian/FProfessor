@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/activity_id"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/text_home_item_cut"
+    android:orientation="vertical"
+    tools:context="finance.com.fp.ui.IDActivity">
+
+    <include layout="@layout/view_toolbar" />
+
+    <LinearLayout
+        android:gravity="center_vertical"
+        style="@style/item_style"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TextView
+            style="@style/set_item"
+            android:text="头像" />
+
+        <ImageView
+            android:layout_width="67dp"
+            android:layout_height="67dp"
+            android:layout_marginBottom="23dp"
+            android:layout_marginRight="@dimen/find_margin_left"
+            android:layout_marginTop="23dp"
+            android:scaleType="centerCrop"
+            android:src="@mipmap/login_head" />
+
+    </LinearLayout>
+    <LinearLayout
+        style="@style/item_style"
+        android:id="@+id/ll_set_changeps"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingEnd="@dimen/find_margin_left"
+        android:layout_marginTop="@dimen/app_cut_line"
+        android:gravity="center">
+        <TextView
+            style="@style/set_item"
+            android:text="@string/set_ps" />
+        <TextView
+             android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/set_item"
+            android:layout_marginEnd="@dimen/app_item_cut_margin"
+            android:text="@string/set_add" />
+        <include layout="@layout/img_more"/>
+    </LinearLayout>
+
+    <LinearLayout
+        style="@style/item_style"
+
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingEnd="@dimen/find_margin_left"
+        android:layout_marginTop="@dimen/app_cut_line"
+        android:gravity="center">
+        <TextView
+            style="@style/set_item"
+            android:text="@string/phone" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/set_item"
+            android:layout_marginEnd="@dimen/app_item_cut_margin"
+            android:text="***********" />
+
+    </LinearLayout>
+
+
+
+</LinearLayout>

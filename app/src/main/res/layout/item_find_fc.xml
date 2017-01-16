@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="horizontal">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/app_item_cut_margin"
+        android:layout_marginTop="@dimen/app_item_cut_margin"
+        style="@style/item_style"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:paddingBottom="@dimen/find_margin_top"
+        android:paddingLeft="@dimen/find_margin_left"
+        android:paddingRight="@dimen/find_margin_left"
+        android:paddingTop="@dimen/find_margin_top">
+
+        <ImageView
+            android:layout_width="@dimen/home_bottom_img_width"
+            android:layout_height="@dimen/home_bottom_img_width"
+            android:layout_marginRight="@dimen/app_item_cut_margin"
+            android:scaleType="centerCrop"
+            android:src="@mipmap/icon_circleoffriends" />
+
+        <TextView
+            style="@style/find_text_item"
+            android:gravity="start"
+            android:text="@string/find_item_fcycle"
+             />
+
+        <ImageView
+            android:layout_gravity="start"
+            android:layout_width="5dp"
+            android:scaleType="centerCrop"
+            android:src="@mipmap/icon_circle"
+            android:id="@+id/img_red"
+            android:layout_marginRight="@dimen/find_margin_left"
+            android:layout_height="5dp">
+        </ImageView>
+
+        <include
+            layout="@layout/img_more" />
+
+    </LinearLayout>
+
+</RelativeLayout>

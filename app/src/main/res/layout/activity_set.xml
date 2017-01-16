@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/activity_set_"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/text_home_item_cut"
+    android:orientation="vertical">
+
+    <include layout="@layout/view_toolbar"/>
+
+    <LinearLayout
+        android:id="@+id/ll_set_msg"
+        style="@style/item_style"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/title_card_height"
+        android:gravity="center">
+
+        <TextView
+            style="@style/set_item"
+            android:text="@string/set_msg" />
+    </LinearLayout>
+
+    <LinearLayout
+        style="@style/item_style"
+        android:id="@+id/ll_set_changeps"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingEnd="@dimen/find_margin_left"
+        android:layout_marginTop="@dimen/app_cut_line"
+        android:gravity="center">
+
+        <TextView
+            style="@style/set_item"
+            android:text="@string/set_ps" />
+        <include layout="@layout/img_more"/>
+    </LinearLayout>
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        >
+
+        <Button
+            android:layout_marginStart="@dimen/find_margin_left"
+            android:text="@string/set_login_out"
+            android:layout_centerInParent="true"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/main_boom_height"
+            android:background="@color/colorPrimaryDark"
+            />
+    </RelativeLayout>
+
+
+</LinearLayout>

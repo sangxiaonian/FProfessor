@@ -1,0 +1,49 @@
+<resources>
+    <string name="app_name">融教授</string>
+    <string name="action_settings">Settings</string>
+    <string name="section_format">Hello World from section: %1$d</string>
+    <string name="home">首页</string>
+    <string name="find">发现</string>
+    <string name="set">我的</string>
+    <string name="set_msg">消息推送</string>
+    <string name="feedback">意见反馈</string>
+    <string name="id_infor">账号信息</string>
+
+    <string name="main_search">搜索最新金融口子,中介广告</string>
+    <string name="main_item_more_title">最新金融口子</string>
+    <string name="main_item_more">更多</string>
+
+
+    <string name="find_item_fcycle">金融中介朋友圈</string>
+    <string name="find_item_lao">捞偏门</string>
+    <string name="find_item_fun">最新金融口子</string>
+    <string name="set_item">登陆/注册</string>
+
+    <string name="card_title">办卡专区</string>
+    <string name="card_once_query">立刻查询</string>
+    <string name="balance">热门银行</string>
+    <string name="query_all_balance">查看全部银行</string>
+    <string name="card_pro">办卡进度</string>
+    <string name="card_hot">本期力荐卡</string>
+    <string name="loan_title">网贷专区</string>
+    <string name="import_title">提额专区</string>
+    <string name="import_start">开始</string>
+    <string name="import_key">一键提额</string>
+    <string name="import_key_des">(实时查看可提额度)</string>
+
+    <string name="set_title">设置</string>
+    <string name="set_commit">提交</string>
+    <string name="set_login_out">退出登录</string>
+
+
+    <string name="set_ps">密码修改</string>
+    <string name="phone">手机号</string>
+    <string name="set_add">添加</string>
+    <string name="set_contact">联系方式:</string>
+    <string name="feedback_hind">您对融教授app的任何宝贵以及那都可以反馈给我们(100字以内)</string>
+
+
+    <string name="hot_loan">热门网贷</string>
+
+    <string name="planner_start">哈喽,同学你好,想学习更多关于网贷、办卡、提额的结束么？留下你的微信、QQ、手机号码。老师会把免费的教程和素材发个你的哦！</string>
+</resources>

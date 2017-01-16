@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    style="@style/item_style"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingEnd="@dimen/find_margin_left"
+    android:paddingStart="@dimen/find_margin_left">
+
+    <ImageView
+        android:id="@+id/img_item"
+        android:layout_width="@dimen/loan_item_btn_height"
+        android:layout_height="@dimen/loan_item_btn_height"
+        android:layout_centerVertical="true"
+        android:layout_marginEnd="@dimen/init_float_margin"
+        android:src="@mipmap/loading" />
+
+    <TextView
+        android:id="@+id/tv_item"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/home_item_time_margin"
+        android:layout_marginTop="@dimen/init_float_margin"
+        android:layout_toEndOf="@id/img_item"
+        android:text="@string/action_settings"
+        android:textColor="@color/text_home_item"
+        android:textSize="@dimen/home_item_more_textSize" />
+
+    <TextView
+        android:id="@+id/tv_sub_item"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignStart="@id/tv_item"
+        android:layout_below="@id/tv_item"
+        android:layout_marginBottom="@dimen/init_float_margin"
+        android:text="@string/card_once_query"
+        android:textColor="@color/text_card_item_more"
+        android:textSize="@dimen/home_item_text" />
+
+    <include
+        android:id="@+id/more"
+        layout="@layout/img_more" />
+
+    <ImageView
+        android:id="@+id/img_item_icon"
+        android:layout_width="@dimen/item_loan_image_width"
+        android:layout_height="@dimen/init_float_margin"
+        android:layout_centerVertical="true"
+        android:layout_marginEnd="@dimen/init_float_margin"
+        android:layout_toStartOf="@id/more"
+        android:src="@mipmap/icon_gotoquery" />
+
+
+</RelativeLayout>

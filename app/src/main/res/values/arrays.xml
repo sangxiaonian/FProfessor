@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string-array name="set_items_title">
+        <item>办卡进度查询</item>
+        <item>网贷进度查询</item>
+        <item>个人信息</item>
+        <item>消息中心</item>
+        <item>意见反馈</item>
+        <item>设置</item>
+    </string-array>
+
+    <string-array name="card_items_title">
+        <item>办卡攻略</item>
+        <item>热申排行榜</item>
+        <item>中介朋友圈</item>
+        <item>学习・规划师</item>
+    </string-array>
+
+    <string-array name="home_items_title">
+        <item>学习・规划师</item>
+        <item>银行电话</item>
+        <item>征信查询</item>
+        <item>实用工具</item>
+    </string-array>
+
+    <string-array name="card_items_balances">
+        <item>中信银行</item>
+        <item>兴业银行</item>
+        <item>浦发银行</item>
+        <item>广大银行</item>
+        <item>交通银行</item>
+        <item>民生银行</item>
+        <item>招商银行</item>
+        <item>更多筛选</item>
+    </string-array>
+
+
+    <string-array name="loan_tools">
+        <item>网贷攻略</item>
+        <item>学习・规划师</item>
+        <item>网贷搜索</item>
+    </string-array>
+    <string-array name="loan_grid">
+        <item>信用卡贷</item>
+        <item>账单贷</item>
+        <item>代还信用卡</item>
+        <item>芝麻分贷</item>
+        <item>工薪贷</item>
+        <item>身份证贷</item>
+        <item>大学生贷</item>
+        <item>消费贷</item>
+        <item>微信QQ贷</item>
+        <item>全部分类</item>
+    </string-array>
+
+    <string-array name="loan_item">
+        <item>可贷额度0.1-0.3万 \n现金贷最快3分钟到账</item>
+        <item>可贷额度0.05-0.3万 \n0门槛,0服务费,5分钟审批</item>
+        <item>可贷额度0.2-0.3万 \n最快3分钟最高可获3万贷款</item>
+    </string-array>
+
+
+    <!--Home 实用工具-->
+    <string-array name="home_utility">
+        <item>企业信息查询</item>
+        <item>企业征信查询</item>
+        <item>个人征信查询</item>
+        <item>身份证挂失</item>
+        <item>身份证查询</item>
+        <item>老赖查询</item>
+        <item>MCC码查询</item>
+        <item>银联交易查询</item>
+        <item>安卓root</item>
+        <item>装逼神器</item>
+        <item>海报生成器</item>
+        <item>敬请期待</item>
+    </string-array>
+
+    <string-array name="home_pboc">
+        <item>央行信用报告_查逾期/查房贷/查贷款</item>
+        <item>芝麻信用_大数据个人信用</item>
+        <item>前海信用_第三方商业征信机构</item>
+        <item>考拉信用_考拉信用分/通行证</item>
+    </string-array>
+    <string-array name="home_balance_phone">
+        <item>中国银行_服务热线:95566\n信用卡中心:400-669-5566</item>
+        <item>农业银行_服务热线:95599\n信用卡中心:400-669-5599</item>
+        <item>中国工商银行_服务热线:95588\n信用卡中心:95588</item>
+        <item>建设银行_服务热线:95533\n信用卡中心:400-820-0588</item>
+        <item>交通银行_服务热线:95559\n信用卡中心:400-800-9888</item>
+        <item>招商银行_服务热线:95555\n信用卡中心:400-820-5555</item>
+        <item>浦发银行_服务热线:95528\n信用卡中心:400-820-8788</item>
+        <item>广发银行_服务热线:95508\n信用卡中心:400-830-8003</item>
+        <item>华夏银行_服务热线:95577\n信用卡中心:400-669-5577</item>
+        <item>平安银行_服务热线:95511\n信用卡中心:95511</item>
+        <item>广大银行_服务热线:95595\n信用卡中心:400-788-8888</item>
+        <item>中信银行_服务热线:95558\n信用卡中心:400-889-5558</item>
+        <item>兴业银行_服务热线:95561\n信用卡中心:400-889-5561</item>
+        <item>民生银行_服务热线:95568\n信用卡中心:400-669-5568</item>
+        <item>花旗银行_服务热线:400-821-1880</item>
+
+    </string-array>
+
+
+</resources>

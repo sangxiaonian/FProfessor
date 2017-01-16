@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+
+    android:background="@color/colorPrimaryDark"
+    android:orientation="vertical">
+
+    <!--    <android.support.v4.view.ViewPager
+
+            android:id="@+id/container"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:background="@color/bg" />-->
+    <FrameLayout
+
+        android:id="@+id/container"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:background="@color/bg" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@drawable/divider_line" />
+
+    <LinearLayout
+
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white"
+        android:gravity="center"
+        android:orientation="horizontal"
+        android:paddingBottom="@dimen/main_padding_boom"
+        android:paddingTop="@dimen/main_padding_top">
+
+        <LinearLayout
+            android:id="@+id/ll_home"
+
+            style="@style/home_bottom_ll">
+
+            <ImageView
+                android:id="@+id/img_home"
+                style="@style/home_bottom_img"
+                android:background="@drawable/select_home_page" />
+
+            <TextView
+                android:id="@+id/tv_home"
+                style="@style/home_bottom_text"
+                android:text="@string/home" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/ll_find"
+            style="@style/home_bottom_ll">
+
+            <ImageView
+                android:id="@+id/img_find"
+                style="@style/home_bottom_img"
+                android:background="@drawable/select_find_page" />
+
+            <TextView
+                android:id="@+id/tv_find"
+                style="@style/home_bottom_text"
+                android:text="@string/find" />
+        </LinearLayout>
+
+
+        <LinearLayout
+            android:id="@+id/ll_set"
+            style="@style/home_bottom_ll">
+
+            <ImageView
+                android:id="@+id/img_set"
+                style="@style/home_bottom_img"
+                android:background="@drawable/select_setting_page" />
+
+            <TextView
+                android:id="@+id/tv_set"
+                style="@style/home_bottom_text"
+                android:text="@string/set" />
+        </LinearLayout>
+    </LinearLayout>
+
+</LinearLayout>

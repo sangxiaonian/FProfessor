@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+    <RelativeLayout
+        android:background="@color/white"
+        android:layout_marginTop="@dimen/home_item_time_margin"
+        android:paddingTop="@dimen/home_item_time_margin"
+        android:paddingBottom="@dimen/home_item_time_margin"
+        android:paddingStart="@dimen/find_margin_left"
+        android:paddingEnd="@dimen/find_margin_left"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        
+        <ImageView
+            android:layout_marginEnd="@dimen/app_item_cut_margin"
+            android:id="@+id/img_item_loan"
+            android:layout_width="@dimen/loan_item_img_size"
+            android:layout_height="@dimen/loan_item_img_size"
+            android:layout_centerVertical="true"
+            />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="@dimen/home_item_more_textSize"
+            android:textColor="@color/text_import_item_more"
+            android:id="@+id/tv_title_item_loan"
+            android:text="aaaaa"
+            android:layout_toRightOf="@id/img_item_loan"
+            />
+        <TextView
+            android:layout_marginTop="@dimen/title_card_height"
+            android:layout_width="wrap_content"
+            android:text="aaaaa"
+            android:layout_below="@id/tv_title_item_loan"
+            android:layout_alignStart="@id/tv_title_item_loan"
+            android:layout_height="wrap_content"
+            android:textSize="@dimen/home_item_text"
+            android:textColor="@color/text_card_item_more"
+            android:id="@+id/tv_sub_item_loan"
+            />
+        
+        <Button
+            android:id="@+id/btn_start_item_loan"
+            android:layout_width="@dimen/loan_item_btn_width"
+            android:layout_height="@dimen/loan_item_btn_height"
+            android:background="@color/btn_import_item"
+            android:textColor="@color/white"
+            android:text="@string/import_start"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            />
+
+        
+    </RelativeLayout>
+
+</LinearLayout>

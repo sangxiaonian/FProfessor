@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/activity_feedback"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/text_home_item_cut"
+    android:orientation="vertical"
+    tools:context="finance.com.fp.ui.FeedbackActivity">
+
+    <include layout="@layout/view_toolbar" />
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+        <EditText
+            android:id="@+id/et_feed"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/app_bar_height"
+            android:background="@color/white"
+            android:gravity="start"
+            android:maxLength="100"
+            android:textColor="@color/text_home_more_text"
+            android:hint="@string/feedback_hind"
+            android:paddingBottom="@dimen/home_item_time_margin"
+            android:paddingEnd="@dimen/find_margin_left"
+            android:paddingStart="@dimen/find_margin_left"
+            android:paddingTop="@dimen/home_item_time_margin"
+            android:textColorHint="@color/set_item"
+            android:textSize="@dimen/item_textsize" />
+        <TextView
+            android:id="@+id/tv_feed_acount"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/set_item"
+            android:text="0/100"
+            android:layout_alignParentRight="true"
+            android:layout_alignBottom="@id/et_feed"
+            />
+    </RelativeLayout>
+
+
+    <LinearLayout
+        android:id="@+id/ll_set_msg"
+        style="@style/item_style"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/title_card_height"
+        android:gravity="center">
+
+
+        <TextView
+            style="@style/set_item"
+            android:layout_weight="0"
+            android:layout_width="wrap_content"
+            android:text="@string/set_contact" />
+
+        <TextView
+            style="@style/set_item"
+            android:text="***********" />
+    </LinearLayout>
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        >
+
+        <Button
+            android:layout_marginStart="@dimen/find_margin_left"
+            android:text="@string/set_commit"
+            android:layout_centerInParent="true"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/main_boom_height"
+            android:background="@color/colorPrimaryDark"
+            />
+    </RelativeLayout>
+
+
+</LinearLayout>

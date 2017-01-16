@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:paddingLeft="@dimen/find_margin_left"
+    android:paddingRight="@dimen/find_margin_left"
+    android:paddingTop="@dimen/find_margin_top"
+    android:paddingBottom="@dimen/find_margin_top"
+    style="@style/item_style"
+
+    android:gravity="center_vertical"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+
+    <ImageView
+        android:layout_centerVertical="true"
+        android:layout_width="16dp"
+        android:id="@+id/img_card"
+        android:scaleType="centerCrop"
+        android:src="@mipmap/icon_noticek"
+        android:layout_marginEnd="@dimen/init_float_margin"
+        android:layout_height="14dp" />
+      <TextSwitcher
+          android:layout_toEndOf ="@id/img_card"
+          android:layout_centerVertical="true"
+          android:id="@+id/ts_card"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          />
+
+       <TextView
+           android:layout_centerVertical="true"
+           android:layout_alignParentEnd="true"
+           android:layout_width="wrap_content"
+           android:layout_height="wrap_content"
+           android:textColor="@color/text_home_item_time"
+           android:text="5分钟前"
+           android:textSize="@dimen/home_item_time_text"
+           />
+
+
+</RelativeLayout>

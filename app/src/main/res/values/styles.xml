@@ -1,0 +1,99 @@
+<resources>
+
+    <!-- Base application theme. -->
+    <style name="AppTheme" parent="Theme.AppCompat.DayNight">
+        <!-- Customize your theme here. -->
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorAccent">@color/colorAccent</item>
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+        <item name="android:windowTranslucentStatus">true</item>
+        <item name="android:windowAnimationStyle">@style/activityAnim</item>
+    </style>
+
+    <!--页面切换动画-->
+    <style name="activityAnim">
+        <item name="android:activityOpenEnterAnimation">@anim/slide_right_in</item>
+        <item name="android:activityOpenExitAnimation">@anim/slide_left_out</item>
+        <item name="android:activityCloseEnterAnimation">@anim/slide_left_in</item>
+        <item name="android:activityCloseExitAnimation">@anim/slide_right_out</item>
+
+    </style>
+
+
+    <style name="AppTheme.AppBarOverlay" parent="android:Widget">
+        <item name="elevation">0dp</item>
+        <item name="android:background">?attr/colorPrimary</item>
+    </style>
+
+    <style name="item_style">
+        <item name="android:background">@drawable/select_item_click</item>
+        <item name="android:clickable">true</item>
+    </style>
+
+    <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
+    <!--   主界面底部Tag-->
+    <style name="home_bottom_ll">
+        <item name="android:clickable">true</item>
+        <item name="android:orientation">vertical</item>
+        <item name="android:layout_width">0dp</item>
+        <item name="android:layout_weight">1</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:gravity">center_horizontal</item>
+    </style>
+    <!--   主界面底部Tag:TextView-->
+    <style name="home_bottom_text">
+        <item name="android:enabled">false</item>
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_marginTop">@dimen/main_padding_radio</item>
+        <item name="android:textColor">@drawable/select_home_text</item>
+        <item name="android:textSize">@dimen/home_bottom_text_size</item>
+    </style>
+    <!--   主界面底部Tag:ImageView-->
+    <style name="home_bottom_img">
+        <item name="android:enabled">false</item>
+        <item name="android:button">@null</item>
+        <item name="android:layout_width">24dp</item>
+        <item name="android:layout_height">24dp</item>
+    </style>
+
+    <style name="home_item_more_img">
+        <item name="android:layout_marginLeft">@dimen/home_item_more_marginLeft</item>
+        <item name="android:layout_marginRight">@dimen/home_item_more_marginLeft</item>
+        <item name="android:layout_weight">1</item>
+        <item name="android:layout_width">@dimen/home_item_more_img_height</item>
+        <item name="android:layout_height">@dimen/home_item_more_img_height</item>
+    </style>
+
+    <style name="home_item_tools_text">
+        <item name="android:gravity">center</item>
+        <item name="android:layout_width">0dp</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_weight">1</item>
+        <item name="android:textColor">@color/text_home_item</item>
+        <item name="android:textSize">@dimen/home_bottom_text_size</item>
+    </style>
+
+    <style name="find_text_item">
+        <item name="android:gravity">center</item>
+        <item name="android:layout_width">0dp</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_weight">1</item>
+        <item name="android:textColor">@color/text_home_more_text</item>
+        <item name="android:textSize">@dimen/home_item_more_textSize</item>
+    </style>
+
+    <style name="set_item">
+        <item name="android:layout_weight">1</item>
+        <item name="android:layout_width">0dp</item>
+        <item name="android:layout_marginStart">@dimen/find_margin_left</item>
+        <item name="android:layout_marginTop">@dimen/item_card_icon</item>
+        <item name="android:layout_marginBottom">@dimen/item_card_icon</item>
+        <item name="android:textSize">@dimen/item_textsize</item>
+        <item name="android:textColor">@color/text_home_more_text</item>
+        <item name="android:layout_height">wrap_content</item>
+    </style>
+
+</resources>

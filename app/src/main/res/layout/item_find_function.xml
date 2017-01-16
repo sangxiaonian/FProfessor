@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/text_home_item_cut"
+    android:orientation="horizontal">
+
+    <RadioGroup
+        android:id="@+id/rg_find"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/app_item_cut_margin"
+        android:background="@color/white"
+        android:divider="@drawable/divider_line"
+        android:dividerPadding="1dp"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:showDividers="middle">
+
+        <RadioButton
+            android:paddingBottom="@dimen/find_margin_top"
+            android:paddingTop="@dimen/find_margin_top"
+            android:id="@+id/rb_lao"
+            android:button="@null"
+            android:text="@string/find_item_lao"
+            android:background="@drawable/select_item_click"
+            style="@style/find_text_item" />
+
+        <RadioButton
+            android:paddingBottom="@dimen/find_margin_top"
+            android:paddingTop="@dimen/find_margin_top"
+            android:background="@drawable/select_item_click"
+            android:id="@+id/rb_fun"
+            android:text="@string/find_item_fun"
+            android:button="@null"
+            style="@style/find_text_item" />
+
+    </RadioGroup>
+
+</RelativeLayout>
