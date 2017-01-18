@@ -14,5 +14,6 @@
     <color name="text_import_item_more">#fa5559</color>
     <color name="btn_import_item">#52bf7f</color>
     <color name="set_item">#bdbdbd</color>
+    <color name="loan_item">#1798f2</color>
 
 </resources>

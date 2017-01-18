@@ -15,7 +15,7 @@ public class Set_Activity extends BasisActivity {
         initView();
     }
 
-    private void initView() {
+    public void initView() {
         initToolBar(getString(R.string.set_title));
     }
 }

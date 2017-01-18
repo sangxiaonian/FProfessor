@@ -22,8 +22,8 @@
             android:textColor="@color/text_home_more_text"
             android:hint="@string/feedback_hind"
             android:paddingBottom="@dimen/home_item_time_margin"
-            android:paddingEnd="@dimen/find_margin_left"
-            android:paddingStart="@dimen/find_margin_left"
+            android:paddingEnd="@dimen/app_maggin_ends"
+            android:paddingStart="@dimen/app_maggin_ends"
             android:paddingTop="@dimen/home_item_time_margin"
             android:textColorHint="@color/set_item"
             android:textSize="@dimen/item_textsize" />
@@ -64,7 +64,7 @@
         >
 
         <Button
-            android:layout_marginStart="@dimen/find_margin_left"
+            android:layout_marginStart="@dimen/app_maggin_ends"
             android:text="@string/set_commit"
             android:layout_centerInParent="true"
             android:layout_width="match_parent"

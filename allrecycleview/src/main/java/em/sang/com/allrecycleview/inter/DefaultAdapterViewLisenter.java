@@ -25,10 +25,6 @@ public class DefaultAdapterViewLisenter<T> implements CustomAdapterListener<T> {
         return 0;
     }
 
-    @Override
-    public CustomHolder getHolderByViewType(Context context, List<T> lists, int itemID) {
-        return null;
-    }
 
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
@@ -57,4 +53,9 @@ public class DefaultAdapterViewLisenter<T> implements CustomAdapterListener<T> {
      * @return holder
      */
     public CustomHolder getFootdHolder(Context context, int position){return null;}
+
+    @Override
+    public CustomHolder getHolderByViewType(Context context, List lists, int itemID) {
+        return null;
+    }
 }

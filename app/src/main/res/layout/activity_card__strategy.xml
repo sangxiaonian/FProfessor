@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/activity_card__strategy"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context="finance.com.fp.ui.Card_StrategyActivity">
+
+    <include layout="@layout/view_toolbar" />
+
+    <RadioGroup
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/home_item_time_margin"
+        android:layout_marginTop="@dimen/home_item_time_margin"
+        android:background="@color/white"
+        android:orientation="horizontal"
+        android:id="@+id/rg_card"
+        android:paddingEnd="@dimen/app_maggin_ends"
+        android:paddingStart="@dimen/app_maggin_ends"
+        android:paddingTop="@dimen/app_item_cut_margin">
+
+        <RadioButton
+            style="@style/card_rb"
+            android:id="@+id/rb_primer"
+            android:text="@string/card_primer" />
+
+        <RadioButton
+            style="@style/card_rb"
+            android:id="@+id/rb_how"
+            android:text="@string/card_how" />
+
+        <RadioButton
+
+            android:id="@+id/rb_god"
+            style="@style/card_rb"
+            android:text="@string/card_god" />
+    </RadioGroup>
+
+    <include
+
+        android:id="@+id/rc"
+        layout="@layout/view_recycleview" />
+
+
+</LinearLayout>

@@ -2,26 +2,34 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:layout_marginTop="@dimen/home_item_time_margin"
-    android:paddingStart="@dimen/main_boom_height"
     android:paddingEnd="@dimen/find_margin_top"
-     >
+    android:paddingStart="@dimen/main_boom_height"
+    android:paddingTop="@dimen/home_item_time_margin">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <ImageView
+
+            android:id="@+id/img_icon"
+            android:layout_width="@dimen/collapsed_header_height"
+            android:layout_height="@dimen/collapsed_header_height"
+            android:layout_alignParentRight="true"
+            android:layout_marginTop="@dimen/home_item_time_margin"
+            android:src="@mipmap/icon_tcacher" />
+
+        <TextView
+            android:id="@+id/tv_planner"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/home_item_time_margin"
+            android:layout_toStartOf="@id/img_icon"
+            android:background="@drawable/icon_dialog_cus"
+            android:text="fasdfasdfasdfasdf"
+
+            />
+    </RelativeLayout>
 
 
-    <ImageView
-        android:id="@+id/img_icon"
-        android:layout_alignParentRight="true"
-        android:layout_width="@dimen/collapsed_header_height"
-        android:layout_height="@dimen/collapsed_header_height"
-        android:src="@mipmap/icon_tcacher"
-        />
-    <TextView
-        android:layout_toStartOf="@id/img_icon"
-        android:id="@+id/tv_planner"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="fasdfasdfasdfasdf"
-
-        />
-    
 </RelativeLayout>

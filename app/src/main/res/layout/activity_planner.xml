@@ -18,14 +18,14 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="60dp"
-        android:paddingStart="@dimen/find_margin_left"
-        android:paddingEnd="@dimen/find_margin_left"
+        android:paddingStart="@dimen/app_maggin_ends"
+        android:paddingEnd="@dimen/app_maggin_ends"
         android:paddingTop="@dimen/title_card_height"
         android:paddingBottom="@dimen/title_card_height"
         android:gravity="center_vertical"
         android:background="@color/white"
         >
-        
+
         <EditText
             android:background="@mipmap/icon_inputbox"
             android:id="@+id/et_planner"

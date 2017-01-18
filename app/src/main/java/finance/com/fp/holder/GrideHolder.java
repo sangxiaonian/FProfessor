@@ -17,7 +17,6 @@ import com.bumptech.glide.RequestManager;
 
 import java.util.List;
 
-import em.sang.com.allrecycleview.holder.HeardHolder;
 import finance.com.fp.R;
 import finance.com.fp.mode.bean.Set_Item;
 import finance.com.fp.utlis.ToastUtil;
@@ -28,7 +27,7 @@ import finance.com.fp.utlis.ToastUtil;
  * @Author：桑小年
  * @Data：2017/1/3 10:22
  */
-public class GrideHolder extends HeardHolder<Set_Item> {
+public class GrideHolder extends BasicHolder<Set_Item> {
 
     private GridView gv;
     RequestManager manager;

@@ -13,8 +13,8 @@
         android:gravity="center_vertical"
         android:orientation="horizontal"
         android:paddingBottom="@dimen/find_margin_top"
-        android:paddingLeft="@dimen/find_margin_left"
-        android:paddingRight="@dimen/find_margin_left"
+        android:paddingLeft="@dimen/app_maggin_ends"
+        android:paddingRight="@dimen/app_maggin_ends"
         android:paddingTop="@dimen/find_margin_top">
 
         <ImageView

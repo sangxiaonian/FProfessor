@@ -9,7 +9,7 @@ import java.util.List;
 
 import em.sang.com.allrecycleview.holder.CustomHolder;
 
-public interface CustomAdapterListener<T> {
+public interface CustomAdapterListener<T> extends BodyInitListener<T>{
 
     void initView(T data,View itemView);
 

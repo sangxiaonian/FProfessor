@@ -2,8 +2,6 @@ package em.sang.com.allrecycleview.holder;
 
 import android.content.Context;
 import android.view.View;
-import android.view.ViewGroup;
-import android.widget.LinearLayout;
 
 import java.util.List;
 
@@ -13,7 +11,7 @@ import java.util.List;
  * @Author：桑小年
  * @Data：2016/11/8 11:58
  */
-public class HeardHolder<T> extends CustomPeakHolder {
+public class HeardHolder<T> extends CustomPeakHolder<T> {
 
 
 
@@ -21,7 +19,7 @@ public class HeardHolder<T> extends CustomPeakHolder {
         super(itemView);
     }
 
-    public HeardHolder(Context context, int itemID, Object data) {
+    public HeardHolder(Context context, int itemID, T data) {
         super(context, itemID, data);
     }
 
@@ -30,17 +28,6 @@ public class HeardHolder<T> extends CustomPeakHolder {
     }
 
 
-    /**
-     * 设置根目录的margin值
-     * @param left
-     * @param top
-     * @param right
-     * @param bottom
-     */
-    public void setMagrin(float left,float top,float right,float bottom){
-        LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-        params.setMargins((int) left,(int)top,(int)right,(int)bottom);
-        itemView.setLayoutParams(params);
-    }
+
 
 }

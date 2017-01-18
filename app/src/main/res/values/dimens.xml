@@ -16,7 +16,7 @@
     <dimen name="main_radio_height">44dp</dimen>
 
     <dimen name="app_cut_line">1dp</dimen>
-
+    <dimen name="app_maggin_ends">18dp</dimen>
 
     <!--主界面底部导航栏ImageView-->
     <dimen name="home_bottom_img_width">23dp</dimen>
@@ -50,7 +50,7 @@
     <dimen name="home_item_more_textSize">17sp</dimen>
 
     <!--发现界面-->
-    <dimen name="find_margin_left">18dp</dimen>
+
     <dimen name="find_margin_top">12dp</dimen>
 
     <!--设置界面-->
@@ -84,4 +84,7 @@
     <dimen name="item_loan_end">38dp</dimen>
     <dimen name="dp_thirty_five">35dp</dimen>
 
+    <!--热审排行榜-->
+    <dimen name="item_hot_apply_img_width">90dp</dimen>
+    <dimen name="item_hot_apply_img_height">60dp</dimen>
 </resources>

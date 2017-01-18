@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:paddingLeft="@dimen/find_margin_left"
-    android:paddingRight="@dimen/find_margin_left"
+    android:paddingLeft="@dimen/app_maggin_ends"
+    android:paddingRight="@dimen/app_maggin_ends"
     android:paddingTop="@dimen/find_margin_top"
     android:paddingBottom="@dimen/find_margin_top"
     style="@style/item_style"

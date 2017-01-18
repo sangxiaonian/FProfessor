@@ -42,7 +42,7 @@ public class BasicAdapter<T> extends RecyclerView.Adapter {
 
     public BasicAdapter(Context context, List<T> lists, int itemID, CustomAdapterListener<T> listener) {
         if (lists!=null){
-        this.lists.addAll(lists);}
+        this.lists=lists;}
         this.itemID = itemID;
         this.listener = listener;
         this.context = context;

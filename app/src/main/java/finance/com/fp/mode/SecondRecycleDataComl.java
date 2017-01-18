@@ -7,6 +7,7 @@ import java.util.List;
 import finance.com.fp.mode.bean.Set_Item;
 import finance.com.fp.mode.bean.TranInfor;
 import finance.com.fp.mode.datafractory.BaseFractory;
+import finance.com.fp.mode.datafractory.CardDataFractory;
 import finance.com.fp.mode.datafractory.HomeDataFractory;
 import finance.com.fp.mode.inter.SecondRecycleData;
 
@@ -32,8 +33,10 @@ public class SecondRecycleDataComl implements SecondRecycleData {
         switch (tranInfor.activity_id){
             case 0://0:homeFragment
                 lists= HomeDataFractory.getInstance(context).creatDatas(tranInfor.item_id);
-                break;
-
+               break;
+            case 1:
+                lists= CardDataFractory.getInstance(context).creatDatas(tranInfor.item_id);
+            break;
         }
 
         return lists;

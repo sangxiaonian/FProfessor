@@ -5,6 +5,7 @@
       <module fileurl="file://$PROJECT_DIR$/FProfessor.iml" filepath="$PROJECT_DIR$/FProfessor.iml" />
       <module fileurl="file://$PROJECT_DIR$/allrecycleview/allrecycleview.iml" filepath="$PROJECT_DIR$/allrecycleview/allrecycleview.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
+      <module fileurl="file://$PROJECT_DIR$/xdialog/xdialog.iml" filepath="$PROJECT_DIR$/xdialog/xdialog.iml" />
     </modules>
   </component>
 </project>

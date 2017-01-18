@@ -4,6 +4,8 @@ import android.app.Activity;
 import android.content.Context;
 import android.graphics.Color;
 import android.os.Build;
+import android.os.Bundle;
+import android.os.PersistableBundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.AttributeSet;
@@ -16,7 +18,9 @@ import android.widget.TextView;
 
 import com.orhanobut.logger.Logger;
 
-import finance.com.fp.utlis.ListDatasFractary;
+import em.sang.com.allrecycleview.adapter.DefaultAdapter;
+import finance.com.fp.mode.bean.Set_Item;
+import finance.com.fp.mode.bean.TranInfor;
 
 /**
  * Description：
@@ -26,14 +30,37 @@ import finance.com.fp.utlis.ListDatasFractary;
  */
 public class BasisActivity extends AppCompatActivity {
     public Toolbar toolbar;
-    public ListDatasFractary dataFractory;
+
+    public TranInfor tranInfor;
+    public DefaultAdapter<Set_Item> adapter;
+
+
     @Override
     public View onCreateView(String name, Context context, AttributeSet attrs) {
-        dataFractory = ListDatasFractary.getInstance(context);
+
         return super.onCreateView(name, context, attrs);
 
     }
 
+    @Override
+    public void onCreate(Bundle savedInstanceState, PersistableBundle persistentState) {
+        super.onCreate(savedInstanceState, persistentState);
+
+
+    }
+
+
+    public void initData(){
+
+    }
+
+    public void loadData(){
+
+    }
+
+    public void  initView() {
+
+    }
 
 
     public void initToolBar(String title) {
@@ -111,4 +138,6 @@ public class BasisActivity extends AppCompatActivity {
         statusView.setBackgroundColor(color);
         return statusView;
     }
+
+
 }

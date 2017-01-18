@@ -7,7 +7,6 @@ import java.util.List;
 
 import finance.com.fp.R;
 import finance.com.fp.mode.bean.Set_Item;
-import finance.com.fp.utlis.ListDatasFractary;
 
 /**
  * Description：
@@ -19,16 +18,16 @@ public class HomeDataFractory extends BaseFractory {
     public HomeDataFractory(Context context) {
         super(context);
     }
-
+    public static HomeDataFractory fractory;
     public static HomeDataFractory getInstance(Context context){
-        if (factory==null){
+        if (fractory ==null){
             synchronized (ListDatasFractary.class){
-                if (factory==null){
-                    factory= new HomeDataFractory(context);
+                if (fractory ==null){
+                    fractory = new HomeDataFractory(context);
                 }
             }
         }
-        return (HomeDataFractory) factory;
+        return   fractory;
     }
     @Override
     public List<Set_Item> creatDatas(int item_id) {

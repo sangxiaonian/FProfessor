@@ -3,6 +3,7 @@ package finance.com.fp.presenter.inter;
 import android.app.Activity;
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
+import android.view.View;
 
 import finance.com.fp.mode.bean.Set_Item;
 import finance.com.fp.mode.bean.TranInfor;
@@ -42,4 +43,6 @@ public interface SecondRecyclePre {
      * @param data
      */
     void clickItem(Set_Item data);
+
+    void initCustomView(int position, Set_Item data, View itemView);
 }

@@ -4,7 +4,7 @@
 
     <!-- 如果注释掉solid，放开stroke，没有预览图，不知道为什么-->
     <solid android:color="@color/text_home_item_cut"/>
-    <!--<stroke android:color="#dbbdb"/>-->
+
     <size android:width="1dp"
         android:height="1dp"/>
 

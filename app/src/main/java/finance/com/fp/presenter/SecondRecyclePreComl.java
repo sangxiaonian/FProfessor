@@ -6,6 +6,7 @@ import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
+import android.view.View;
 
 import java.util.List;
 
@@ -110,22 +111,32 @@ public class SecondRecyclePreComl implements SecondRecyclePre {
                 onHomeFragment(data);
                 break;
 
+
         }
+    }
+
+    @Override
+    public void initCustomView(int position, Set_Item data, View itemView) {
+        switch (tranInfor.activity_id){
+            case 1://1:card
+                if (tranInfor.item_id==1)
+                view.showHotApply(position,  data,   itemView);
+                break;
+
+        }
+
     }
 
     private void onHomeFragment(Set_Item data) {
         switch (tranInfor.item_id){
             case 0:
-
                 break;
             case 1:
                 view.showPhoneDialog(data);
                 break;
             case 2:
-
                 break;
             case 3:
-
                 break;
 
         }

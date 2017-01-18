@@ -1,16 +1,16 @@
 package finance.com.fp.ui;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
-import android.view.View;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import em.sang.com.allrecycleview.PullRecycleView;
 import em.sang.com.allrecycleview.adapter.DefaultAdapter;
-import em.sang.com.allrecycleview.adapter.RefrushAdapter;
+import em.sang.com.allrecycleview.listener.OnToolsItemClickListener;
 import finance.com.fp.BasisActivity;
 import finance.com.fp.R;
 import finance.com.fp.holder.CardMoreHolder;
@@ -18,12 +18,14 @@ import finance.com.fp.holder.CardNotifiHolder;
 import finance.com.fp.holder.GrideHolder;
 import finance.com.fp.holder.HomeCarouselHolder;
 import finance.com.fp.holder.HomeToolsHolder;
+import finance.com.fp.mode.bean.Config;
 import finance.com.fp.mode.bean.Set_Item;
+import finance.com.fp.mode.bean.TranInfor;
 
-public class CardActivity extends BasisActivity {
+public class CardActivity extends BasisActivity implements OnToolsItemClickListener<Set_Item> {
 
     private Toolbar toolbar;
-    private PullRecycleView recyclerView;
+    private RecyclerView recyclerView;
     private List<Set_Item> tools;
     private CardNotifiHolder notifiHolder;
     private HomeCarouselHolder carouselHolder;
@@ -32,63 +34,47 @@ public class CardActivity extends BasisActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_card);
+        setContentView(R.layout.activity_recycle);
         setColor(this,getResources().getColor(R.color.white));
+        initToolBar(getString(R.string.card_title));
         initView();
         initData();
 
     }
 
-    @Override
-    protected void onStart() {
-        super.onStart();
-
-
-    }
-
-    @Override
-    protected void onResume() {
-        super.onResume();
-        initListener();
-    }
-    private void initView() {
-        toolbar = (Toolbar) findViewById(R.id.toolbar);
-        recyclerView = (PullRecycleView) findViewById(R.id.rc_card);
+    public void initView() {
+        recyclerView = (RecyclerView) findViewById(R.id.rc);
         LinearLayoutManager manager = new LinearLayoutManager(this);
         manager.setOrientation(LinearLayoutManager.VERTICAL);
         recyclerView.setLayoutManager(manager);
     }
 
-    private void initData() {
+    public void initData() {
+
         tools = new ArrayList<>();
-        int[] icons = {R.mipmap.icon_handlecardstrategy, R.mipmap.icon_list, R.mipmap.icon_circleoffeiengs,
+        Integer[] icons = {R.mipmap.icon_handlecardstrategy, R.mipmap.icon_list, R.mipmap.icon_circleoffeiengs,
                 R.mipmap.icon_learningpianner};
         String[] titles = getResources().getStringArray(R.array.card_items_title);
         for (int i = 0; i < titles.length; i++) {
             Set_Item item = new Set_Item(icons[i], titles[i]);
             tools.add(item);
         }
+
         recyclerView.setAdapter(getAdapter());
 //        recyclerView.upRefrush_state(PullRecycleView.LOADING);
+
     }
 
 
-    private void initListener(){
-        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                finish();
-            }
-        });
-    }
 
     private DefaultAdapter<Set_Item> getAdapter() {
         float item_cut = getResources().getDimension(R.dimen.home_item_time_margin);
         float item_cut_line = getResources().getDimension(R.dimen.app_cut_line);
 
-//        DefaultAdapter<Set_Item> adapter = new DefaultAdapter<>(this, null, 0, null);
-        RefrushAdapter<Set_Item> adapter = new RefrushAdapter<>(this, null, 0, null);
-        adapter.addHead(new HomeToolsHolder(this, tools, R.layout.item_card_tool));
+        adapter=new DefaultAdapter<>(this,null,0,null);
+        HomeToolsHolder toolsHolder = new HomeToolsHolder(this, tools, R.layout.item_card_tool);
+        toolsHolder.setOnToolsItemClickListener(this);
+        adapter.addHead(toolsHolder);
 
         carouselHolder = new HomeCarouselHolder(this, tools, R.layout.item_home_carousel);
         adapter.addHead(carouselHolder);
@@ -100,6 +86,12 @@ public class CardActivity extends BasisActivity {
         more.title = getString(R.string.balance);
         more.describe = getString(R.string.query_all_balance);
         CardMoreHolder moreHolder = new CardMoreHolder(this, R.layout.item_card_more, more);
+        moreHolder.setOnToolsItemClickListener(new OnToolsItemClickListener<Set_Item>() {
+            @Override
+            public void onItemClick(int position, Set_Item item) {
+                startActivity(new Intent(CardActivity.this,AllBanlancesActivity.class));
+            }
+        });
         moreHolder.setMagrin(0, item_cut, 0, item_cut_line);
         adapter.addHead(moreHolder);
         GrideHolder balancesHolder = new GrideHolder(this, getGVbalances(), R.layout.item_grideview);
@@ -160,5 +152,33 @@ public class CardActivity extends BasisActivity {
             datas.add(item);
         }
         return datas;
+    }
+
+    @Override
+    public void onItemClick(int position, Set_Item item) {
+        TranInfor tranInfor = new TranInfor();
+        Intent intent = new Intent(this, SecondRecycleActivity.class);
+        tranInfor.activity_id = 1;
+        tranInfor.item_id = position;
+        tranInfor.title = item.title;
+
+        switch (position) {
+            case 0:
+                intent = new Intent(this, Card_StrategyActivity.class);
+                break;
+            case 1:
+                tranInfor.layoutId = R.layout.item_hot_apply;
+                break;
+            case 2:
+                intent = new Intent(this, FriendActivity.class);
+                break;
+            case 3:
+                intent = new Intent(this, PlannerActivity.class);
+                break;
+
+        }
+        intent.putExtra(Config.infors, tranInfor);
+         startActivity(intent);
+
     }
 }

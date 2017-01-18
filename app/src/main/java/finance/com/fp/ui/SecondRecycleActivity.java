@@ -40,7 +40,7 @@ public class SecondRecycleActivity extends BasisActivity implements SecondRecycl
 
     }
 
-    private void initData() {
+    public void initData() {
         pre = new SecondRecyclePreComl(this);
         builder = Glide.with(this);
         pre.getTranData(this, tranInfo);
@@ -60,7 +60,7 @@ public class SecondRecycleActivity extends BasisActivity implements SecondRecycl
         tv.setText(data.title);
         ImageView img = (ImageView) itemView.findViewById(R.id.img_item);
         builder.load(data.icon_id)
-                .placeholder(R.mipmap.loading)
+
                 .error(R.mipmap.loading)
                 .crossFade()
                 .centerCrop()
@@ -71,15 +71,19 @@ public class SecondRecycleActivity extends BasisActivity implements SecondRecycl
             sub.setText(data.describe);
         }
 
+        pre.initCustomView(position,data,itemView);
+
+
         itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 pre.clickItem(data);
             }
         });
-
-
     }
+
+
+
 
     @Override
     public void setTitle(String title) {
@@ -88,16 +92,10 @@ public class SecondRecycleActivity extends BasisActivity implements SecondRecycl
 
     @Override
     public void showPhoneDialog(Set_Item data) {
-
         final AlertDialog.Builder dialog = new AlertDialog.Builder(this);
-        // Get the layout inflater
-
         LayoutInflater inflater = this.getLayoutInflater();
 
-
-        // Inflate and set the layout for the dialog
         View inflate = inflater.inflate(R.layout.dialog_item, null);
-
         dialog.setView(inflate);
         final AlertDialog show = dialog.show();
 
@@ -152,6 +150,27 @@ public class SecondRecycleActivity extends BasisActivity implements SecondRecycl
 
 
 
+    }
+
+
+    /**
+     * 热审排行榜特有信息
+     * @param data
+     * @param itemView
+     */
+    @Override
+    public void showHotApply(int position,Set_Item data, View itemView) {
+        TextView tv= (TextView) itemView.findViewById(R.id.more);
+        if (tv==null){
+            return;
+        }
+        if (position<3){
+            tv.setText((position+1)+"");
+            tv.setVisibility(View.VISIBLE);
+        }else {
+            tv.setVisibility(View.INVISIBLE);
+
+        }
     }
 
 

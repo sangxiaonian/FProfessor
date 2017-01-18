@@ -63,7 +63,7 @@ public class MainActivity extends BasisActivity implements View.OnClickListener 
         ll_home.performClick();
     }
 
-    private void initView() {
+    public void initView() {
         tv_find = (TextView) findViewById(R.id.tv_find);
         tv_set = (TextView) findViewById(R.id.tv_set);
         tv_home = (TextView) findViewById(R.id.tv_home);

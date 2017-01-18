@@ -5,7 +5,6 @@ import android.view.View;
 
 import java.util.List;
 
-import em.sang.com.allrecycleview.holder.HeardHolder;
 import finance.com.fp.utlis.ToastUtil;
 
 /**
@@ -14,7 +13,7 @@ import finance.com.fp.utlis.ToastUtil;
  * @Author：桑小年
  * @Data：2017/1/3 11:17
  */
-public class HomeMoreHolder extends HeardHolder{
+public class HomeMoreHolder extends BasicHolder{
 
 
     public HomeMoreHolder(Context context, List lists, int itemID) {

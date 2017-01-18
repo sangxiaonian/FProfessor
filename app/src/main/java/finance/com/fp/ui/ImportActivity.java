@@ -44,7 +44,7 @@ public class ImportActivity extends BasisActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_card);
+        setContentView(R.layout.activity_recycle);
         setColor(this,getResources().getColor(R.color.white));
         initView();
 
@@ -62,7 +62,7 @@ public class ImportActivity extends BasisActivity {
         initListener();
     }
 
-    private void initData() {
+    public void initData() {
         title.setText(getResources().getString(R.string.import_title));
         lists = getLists();
         recyclerView.setAdapter(getAdapter());
@@ -77,16 +77,16 @@ public class ImportActivity extends BasisActivity {
         });
     }
 
-    private void initView() {
+    public void initView() {
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         title = (TextView) findViewById(R.id.title);
-        recyclerView = (RecyclerView) findViewById(R.id.rc_card);
+        recyclerView = (RecyclerView) findViewById(R.id.rc);
         LinearLayoutManager manager = new LinearLayoutManager(this);
         manager.setOrientation(LinearLayoutManager.VERTICAL);
         recyclerView.setLayoutManager(manager);
     }
 
-    public DefaultAdapter getAdapter() {
+    public DefaultAdapter<Set_Item> getAdapter() {
         RefrushAdapter adapter = new RefrushAdapter(this, lists, R.layout.item_import, new DefaultAdapterViewLisenter() {
             @Override
             public CustomHolder<Set_Item> getBodyHolder(Context context, List lists, int itemID) {

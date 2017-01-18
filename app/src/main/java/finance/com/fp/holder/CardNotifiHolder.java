@@ -16,7 +16,6 @@ import android.widget.ViewSwitcher;
 
 import java.util.List;
 
-import em.sang.com.allrecycleview.holder.HeardHolder;
 import finance.com.fp.R;
 import finance.com.fp.mode.bean.Set_Item;
 
@@ -26,7 +25,7 @@ import finance.com.fp.mode.bean.Set_Item;
  * @Author：桑小年
  * @Data：2017/1/5 9:41
  */
-public class CardNotifiHolder extends HeardHolder {
+public class CardNotifiHolder extends BasicHolder {
 
     private TextSwitcher ts;
     private int item;

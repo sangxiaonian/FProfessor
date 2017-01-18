@@ -99,7 +99,35 @@
         <item>兴业银行_服务热线:95561\n信用卡中心:400-889-5561</item>
         <item>民生银行_服务热线:95568\n信用卡中心:400-669-5568</item>
         <item>花旗银行_服务热线:400-821-1880</item>
+    </string-array>
 
+
+    <string-array name="card_hot_apply">
+        <item>交通银行标准信用卡\n(银联，人民币，金卡)</item>
+        <item>中信i白金信用卡\n(银联，人民币，白金卡)</item>
+        <item>浦发银行标准信用卡\n(银联，人民币，金卡)</item>
+        <item>兴业银行标准信用卡\n(银联，人民币，金卡)</item>
+        <item>浦发青春信用卡\n(人民币，美元，普卡)</item>
+        <item>广大福信用卡\n(银联，人民币，金卡)</item>
+        <item>中心Q享信用卡\n(银联，人民币，金卡)</item>
+    </string-array>
+
+    <string-array name="all_balances">
+        <item>中信银行</item>
+        <item>兴业银行</item>
+        <item>浦发银行</item>
+        <item>交通银行</item>
+        <item>民生银行</item>
+        <item>招商银行</item>
+        <item>广大银行</item>
+        <item>农业银行</item>
+        <item>华夏银行</item>
+        <item>建设银行</item>
+        <item>平安银行</item>
+        <item>广发银行</item>
+        <item>中国银行</item>
+        <item>浙商银行</item>
+        <item>花旗银行</item>
     </string-array>
 
 

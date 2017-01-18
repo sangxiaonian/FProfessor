@@ -1,6 +1,7 @@
 package finance.com.fp.ui;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -22,14 +23,15 @@ import em.sang.com.allrecycleview.holder.CustomHolder;
 import em.sang.com.allrecycleview.holder.HeardHolder;
 import em.sang.com.allrecycleview.holder.SimpleHolder;
 import em.sang.com.allrecycleview.inter.DefaultAdapterViewLisenter;
+import em.sang.com.allrecycleview.listener.OnToolsItemClickListener;
 import finance.com.fp.BasisActivity;
 import finance.com.fp.R;
-import finance.com.fp.mode.bean.Set_Item;
 import finance.com.fp.holder.CardNotifiHolder;
 import finance.com.fp.holder.GrideHolder;
 import finance.com.fp.holder.HomeCarouselHolder;
 import finance.com.fp.holder.HomeToolsHolder;
-import finance.com.fp.utlis.ListDatasFractary;
+import finance.com.fp.mode.bean.Set_Item;
+import finance.com.fp.mode.datafractory.ListDatasFractary;
 
 /**
  *
@@ -44,14 +46,15 @@ public class LoanActivity extends BasisActivity {
     private CardNotifiHolder notifiHolder;
     
     private List<Set_Item> lists;
+    private ListDatasFractary dataFractory;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_card);
+        setContentView(R.layout.activity_recycle);
         setColor(this,getResources().getColor(R.color.white));
         initView();
-
+        dataFractory = ListDatasFractary.getInstance(this);
     }
 
     @Override
@@ -67,7 +70,7 @@ public class LoanActivity extends BasisActivity {
        initListener();
     }
 
-    private void initData() {
+    public void initData() {
 
         title.setText(getResources().getString(R.string.loan_title));
 
@@ -86,17 +89,17 @@ public class LoanActivity extends BasisActivity {
         });
     }
 
-    private void initView() {
+    public void initView() {
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         title = (TextView) findViewById(R.id.title);
-        recyclerView = (RecyclerView) findViewById(R.id.rc_card);
+        recyclerView = (RecyclerView) findViewById(R.id.rc);
         LinearLayoutManager manager = new LinearLayoutManager(this);
         manager.setOrientation(LinearLayoutManager.VERTICAL);
         recyclerView.setLayoutManager(manager);
     }
 
 
-    public RecyclerView.Adapter getAdapter() {
+    public DefaultAdapter<Set_Item> getAdapter() {
         
         DefaultAdapter<Set_Item> adapter = new DefaultAdapter<>(this, lists, R.layout.item_loan_item, new DefaultAdapterViewLisenter<Set_Item>(){
             @Override
@@ -123,6 +126,20 @@ public class LoanActivity extends BasisActivity {
         });
         HomeToolsHolder toolsHolder = new HomeToolsHolder(this, getTools(), R.layout.item_card_tool);
         toolsHolder.setImageSize(getResources().getDimension(R.dimen.loan_item_tools_size));
+        toolsHolder.setOnToolsItemClickListener(new OnToolsItemClickListener() {
+            @Override
+            public void onItemClick(int position, Object item) {
+                Class c = Loan_Strategy_Activity.class;
+                if (position==0){
+                    c=Loan_Strategy_Activity.class;
+                }else if (position==1){
+                    c=PlannerActivity.class;
+                }else if (position==2){
+                     c=Loan_Search_Activity.class;
+                }
+                startActivity(new Intent(LoanActivity.this,c));
+            }
+        });
         adapter.addHead(toolsHolder);
 
         carouselHolder = new HomeCarouselHolder(this, getTools(), R.layout.item_home_carousel);

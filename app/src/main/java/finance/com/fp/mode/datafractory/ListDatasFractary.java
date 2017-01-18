@@ -1,4 +1,4 @@
-package finance.com.fp.utlis;
+package finance.com.fp.mode.datafractory;
 
 import android.content.Context;
 
@@ -14,23 +14,24 @@ import finance.com.fp.mode.bean.Set_Item;
  * @Author：桑小年
  * @Data：2017/1/11 10:19
  */
-public class ListDatasFractary {
+public class ListDatasFractary extends BaseFractory{
 
     public static final int LOAN_ITEM=1;
-    public static ListDatasFractary factory;
-    private Context context;
+    public static ListDatasFractary  fractory;
+
+    public ListDatasFractary(Context context) {
+        super(context);
+    }
+
     public static ListDatasFractary getInstance(Context context){
-        if (factory==null){
+        if (fractory==null){
             synchronized (ListDatasFractary.class){
-                if (factory==null){
-                    factory=new ListDatasFractary(context);
+                if (fractory==null){
+                    fractory=new ListDatasFractary(context);
                 }
             }
         }
-        return factory;
-    }
-    public ListDatasFractary(Context context){
-        this.context=context;
+        return (ListDatasFractary) fractory;
     }
 
     public  List<Set_Item> creatData(int type){

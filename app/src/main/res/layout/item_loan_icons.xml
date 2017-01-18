@@ -6,8 +6,8 @@
 
     <LinearLayout
         android:layout_marginTop="@dimen/home_item_time_margin"
-        android:paddingEnd="@dimen/find_margin_left"
-        android:paddingStart="@dimen/find_margin_left"
+        android:paddingEnd="@dimen/app_maggin_ends"
+        android:paddingStart="@dimen/app_maggin_ends"
         android:paddingTop="@dimen/home_item_time_margin"
         android:paddingBottom="@dimen/home_item_time_margin"
         android:layout_width="match_parent"

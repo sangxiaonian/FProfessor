@@ -26,7 +26,8 @@
         <item name="elevation">0dp</item>
         <item name="android:background">?attr/colorPrimary</item>
     </style>
-
+  <!--  android:background="?actionBarItemBackground"
+    @drawable/select_item_click-->
     <style name="item_style">
         <item name="android:background">@drawable/select_item_click</item>
         <item name="android:clickable">true</item>
@@ -88,12 +89,26 @@
     <style name="set_item">
         <item name="android:layout_weight">1</item>
         <item name="android:layout_width">0dp</item>
-        <item name="android:layout_marginStart">@dimen/find_margin_left</item>
+        <item name="android:layout_marginStart">@dimen/app_maggin_ends</item>
         <item name="android:layout_marginTop">@dimen/item_card_icon</item>
         <item name="android:layout_marginBottom">@dimen/item_card_icon</item>
         <item name="android:textSize">@dimen/item_textsize</item>
         <item name="android:textColor">@color/text_home_more_text</item>
         <item name="android:layout_height">wrap_content</item>
+    </style>
+
+    <style name="card_rb">
+
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_weight">1</item>
+        <item name="android:textSize">@dimen/item_textsize</item>
+        <item name="android:button">@null</item>
+        <item name="android:textColor">@color/text_home_item</item>
+        <item name="android:gravity">center</item>
+        <item name="android:drawablePadding">15dp</item>
+        <item name="android:drawableBottom">@drawable/select_card_bottom</item>
+
     </style>
 
 </resources>

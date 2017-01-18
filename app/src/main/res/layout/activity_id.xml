@@ -24,7 +24,7 @@
             android:layout_width="67dp"
             android:layout_height="67dp"
             android:layout_marginBottom="23dp"
-            android:layout_marginRight="@dimen/find_margin_left"
+            android:layout_marginRight="@dimen/app_maggin_ends"
             android:layout_marginTop="23dp"
             android:scaleType="centerCrop"
             android:src="@mipmap/login_head" />
@@ -35,7 +35,7 @@
         android:id="@+id/ll_set_changeps"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:paddingEnd="@dimen/find_margin_left"
+        android:paddingEnd="@dimen/app_maggin_ends"
         android:layout_marginTop="@dimen/app_cut_line"
         android:gravity="center">
         <TextView
@@ -55,7 +55,7 @@
 
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:paddingEnd="@dimen/find_margin_left"
+        android:paddingEnd="@dimen/app_maggin_ends"
         android:layout_marginTop="@dimen/app_cut_line"
         android:gravity="center">
         <TextView

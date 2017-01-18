@@ -31,7 +31,7 @@ public class TranInfor implements Parcelable{
 
     /**
      * 获取数据的页面Id
-     * 0:homeFragment
+     * 0:homeFragment 1.card 办卡
      */
     public int activity_id;
 

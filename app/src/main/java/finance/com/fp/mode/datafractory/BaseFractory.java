@@ -14,8 +14,11 @@ import finance.com.fp.mode.bean.Set_Item;
  */
 public class BaseFractory {
 
-    public static BaseFractory factory;
+
     public Context context;
+
+
+    public DataLoadLisetner lisetner;
 
     public BaseFractory(Context context){
         this.context=context;

@@ -17,7 +17,7 @@ public class IDActivity extends BasisActivity {
         setColor(this,getResources().getColor(R.color.white));
         initView();
     }
-    private void initView() {
+    public void initView() {
         initToolBar(getString(R.string.id_infor));
     }
 }

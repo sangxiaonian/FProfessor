@@ -43,7 +43,7 @@ public class PlannerActivity extends BasisActivity {
     }
 
 
-    private void initData() {
+    public void initData() {
         lists = new ArrayList<>();
         final Set_Item item = new Set_Item();
         item.title = getString(R.string.planner_start);

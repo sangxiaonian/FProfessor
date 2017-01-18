@@ -28,7 +28,7 @@
         android:id="@+id/ll_set_changeps"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:paddingEnd="@dimen/find_margin_left"
+        android:paddingEnd="@dimen/app_maggin_ends"
         android:layout_marginTop="@dimen/app_cut_line"
         android:gravity="center">
 
@@ -43,7 +43,7 @@
         >
 
         <Button
-            android:layout_marginStart="@dimen/find_margin_left"
+            android:layout_marginStart="@dimen/app_maggin_ends"
             android:text="@string/set_login_out"
             android:layout_centerInParent="true"
             android:layout_width="match_parent"

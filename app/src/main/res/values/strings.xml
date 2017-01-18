@@ -8,6 +8,7 @@
     <string name="set_msg">消息推送</string>
     <string name="feedback">意见反馈</string>
     <string name="id_infor">账号信息</string>
+    <string name="friend">朋友圈</string>
 
     <string name="main_search">搜索最新金融口子,中介广告</string>
     <string name="main_item_more_title">最新金融口子</string>
@@ -23,6 +24,7 @@
     <string name="card_once_query">立刻查询</string>
     <string name="balance">热门银行</string>
     <string name="query_all_balance">查看全部银行</string>
+    <string name="all_balance">全部银行</string>
     <string name="card_pro">办卡进度</string>
     <string name="card_hot">本期力荐卡</string>
     <string name="loan_title">网贷专区</string>
@@ -46,4 +48,16 @@
     <string name="hot_loan">热门网贷</string>
 
     <string name="planner_start">哈喽,同学你好,想学习更多关于网贷、办卡、提额的结束么？留下你的微信、QQ、手机号码。老师会把免费的教程和素材发个你的哦！</string>
+
+    <!--办卡二级界面-->
+    <string name="card_primer">新手入门</string>
+    <string name="card_how">如何选卡</string>
+    <string name="card_god">卡神之路</string>
+
+    <!--网贷二级界面-->
+    <string name="loan_strategy">网贷攻略</string>
+    <string name="loan_apply">申请资料详解</string>
+    <string name="loan_apply_detail">针对常见的申请资料，网贷机构是如何考察的？有哪些改善技巧？融教授为您一一解析。</string>
+
+
 </resources>

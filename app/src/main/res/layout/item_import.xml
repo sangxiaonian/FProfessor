@@ -8,8 +8,8 @@
         android:layout_marginTop="@dimen/home_item_time_margin"
         android:paddingTop="@dimen/home_item_time_margin"
         android:paddingBottom="@dimen/home_item_time_margin"
-        android:paddingStart="@dimen/find_margin_left"
-        android:paddingEnd="@dimen/find_margin_left"
+        android:paddingStart="@dimen/app_maggin_ends"
+        android:paddingEnd="@dimen/app_maggin_ends"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
         

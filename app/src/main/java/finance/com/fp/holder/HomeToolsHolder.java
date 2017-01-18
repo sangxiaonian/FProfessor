@@ -11,8 +11,6 @@ import android.widget.TextView;
 
 import java.util.List;
 
-import em.sang.com.allrecycleview.holder.HeardHolder;
-import em.sang.com.allrecycleview.listener.OnToolsItemClickListener;
 import finance.com.fp.R;
 import finance.com.fp.mode.bean.Set_Item;
 import finance.com.fp.utlis.ToastUtil;
@@ -23,23 +21,18 @@ import finance.com.fp.utlis.ToastUtil;
  * @Author：桑小年
  * @Data：2017/1/3 11:17
  */
-public class HomeToolsHolder extends HeardHolder {
+public class HomeToolsHolder extends BasicHolder {
 
     private List<Set_Item> lists;
     LinearLayout.LayoutParams params;
     private int size;
-    private OnToolsItemClickListener listener;
-    public void setOnToolsItemClickListener(OnToolsItemClickListener listener){
-        this.listener=listener;
-    }
+
 
     public HomeToolsHolder(Context context, List lists, int itemID) {
         super(context, lists, itemID);
         this.lists = lists;
         size = (int) context.getResources().getDimension(R.dimen.home_item_more_img_height);
-        if (context instanceof OnToolsItemClickListener){
-            this.listener= (OnToolsItemClickListener) context;
-        }
+
     }
 
     public void setMagrin(int left, int top, int right, int bottom) {

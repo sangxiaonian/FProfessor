@@ -27,4 +27,5 @@ public interface SecondRecycleInter {
 
     void showPhoneDialog(Set_Item data);
 
+    void showHotApply(int position, Set_Item data, View itemView);
 }

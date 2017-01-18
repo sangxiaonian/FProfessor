@@ -3,8 +3,8 @@
     style="@style/item_style"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:paddingEnd="@dimen/find_margin_left"
-    android:paddingStart="@dimen/find_margin_left">
+    android:paddingEnd="@dimen/app_maggin_ends"
+    android:paddingStart="@dimen/app_maggin_ends">
 
     <ImageView
         android:id="@+id/img_item"

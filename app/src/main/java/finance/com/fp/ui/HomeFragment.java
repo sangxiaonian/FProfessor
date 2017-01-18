@@ -4,14 +4,17 @@ import android.content.Context;
 import android.content.Intent;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
 
+import com.orhanobut.logger.Logger;
+
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import em.sang.com.allrecycleview.adapter.DefaultAdapter;
 import em.sang.com.allrecycleview.holder.CustomHolder;
@@ -26,7 +29,12 @@ import finance.com.fp.holder.HomeToolsHolder;
 import finance.com.fp.mode.bean.Config;
 import finance.com.fp.mode.bean.Set_Item;
 import finance.com.fp.mode.bean.TranInfor;
+import finance.com.fp.mode.http.HttpClient;
+import finance.com.fp.mode.http.HttpService;
 import finance.com.fp.utlis.ToastUtil;
+import retrofit2.Retrofit;
+import rx.Subscriber;
+import rx.schedulers.Schedulers;
 
 /**
  * Description：
@@ -34,9 +42,9 @@ import finance.com.fp.utlis.ToastUtil;
  * @Author：桑小年
  * @Data：2016/12/27 16:41
  */
-public class HomeFragment extends BasisFragment implements View.OnClickListener ,OnToolsItemClickListener<Set_Item>{
+public class HomeFragment extends BasisFragment implements View.OnClickListener, OnToolsItemClickListener<Set_Item> {
 
-    private Toolbar toolbar;
+
     private RecyclerView recyclerView;
 
     private List<String> lists;
@@ -53,7 +61,37 @@ public class HomeFragment extends BasisFragment implements View.OnClickListener 
         title_card = (ImageButton) view.findViewById(R.id.img_main_card_icon);
         ltitle_ending = (ImageButton) view.findViewById(R.id.img_main_net_icon);
         title_forheard = (ImageButton) view.findViewById(R.id.img_main_imp_icon);
+
         return view;
+    }
+
+
+    private void getData() {
+        Retrofit client = HttpClient.getClient("http://192.168.0.113/phpcms/");
+        HttpService service = client.create(HttpService.class);
+        Map<String, String> map = new HashMap<>();
+
+        map.put("m", "content");
+        map.put("c", "doserver");
+        map.put("a", "get_app_content");
+
+//        service.getReslut("content","doserver","get_app_content").subscribeOn(Schedulers.io()).subscribe(new Subscriber<String>() {
+        service.getReslut(map).subscribeOn(Schedulers.io()).subscribe(new Subscriber<String>() {
+            @Override
+            public void onCompleted() {
+
+            }
+
+            @Override
+            public void onError(Throwable e) {
+                e.printStackTrace();
+            }
+
+            @Override
+            public void onNext(String s) {
+                Logger.i(s);
+            }
+        });
     }
 
 
@@ -85,7 +123,6 @@ public class HomeFragment extends BasisFragment implements View.OnClickListener 
             item.icon_id = icons[i];
             funs.add(item);
         }
-
 
 
         LinearLayoutManager manager = new LinearLayoutManager(getContext());
@@ -122,13 +159,14 @@ public class HomeFragment extends BasisFragment implements View.OnClickListener 
                 break;
             case R.id.img_main_net:
             case R.id.img_main_net_icon:
-                c=LoanActivity.class;
+                c = LoanActivity.class;
                 break;
             case R.id.img_main_imp:
             case R.id.img_main_imp_icon:
                 c = ImportActivity.class;
                 break;
         }
+        getData();
         if (c == null) {
 
             ToastUtil.showTextToast(cnt, "该功能尚未开放");
@@ -153,29 +191,29 @@ public class HomeFragment extends BasisFragment implements View.OnClickListener 
     @Override
     public void onItemClick(int position, Set_Item item) {
         TranInfor tranInfor = new TranInfor();
-        Intent intent = new Intent(getActivity(),SecondRecycleActivity.class);
-        tranInfor.activity_id=0;
-        tranInfor.item_id=position;
-        tranInfor.title=item.title;
+        Intent intent = new Intent(getActivity(), SecondRecycleActivity.class);
+        tranInfor.activity_id = 0;
+        tranInfor.item_id = position;
+        tranInfor.title = item.title;
 
-        switch (position){
+        switch (position) {
             case 0:
-                 intent = new Intent(getActivity(),PlannerActivity.class);
+                intent = new Intent(getActivity(), PlannerActivity.class);
                 break;
             case 1:
-                tranInfor.layoutId=R.layout.item_tool_balance_details;
+                tranInfor.layoutId = R.layout.item_tool_balance_details;
                 break;
             case 2:
-                tranInfor.layoutId=R.layout.item_tool_pboc;
+                tranInfor.layoutId = R.layout.item_tool_pboc;
                 break;
             case 3:
-                tranInfor.manager_type=1;
-                tranInfor.manager_row_num=3;
-                tranInfor.layoutId=R.layout.item_tool;
+                tranInfor.manager_type = 1;
+                tranInfor.manager_row_num = 3;
+                tranInfor.layoutId = R.layout.item_tool;
                 break;
 
         }
-        intent.putExtra(Config.infors,tranInfor);
+        intent.putExtra(Config.infors, tranInfor);
         getActivity().startActivity(intent);
     }
 }

@@ -36,7 +36,7 @@ public class FeedbackActivity extends BasisActivity {
         super.onResume();
         initListener();
     }
-    private void initView() {
+    public void initView() {
         initToolBar(getString(R.string.feedback));
         et= (EditText) findViewById(R.id.et_feed);
         acount= (TextView) findViewById(R.id.tv_feed_acount);
