@@ -37,11 +37,11 @@ public class BasicView extends View {
      */
     public static final int LOAD_FAIL = 2;//加载失败
     /**
-     * 正常状态
+     * 箭头向下
      */
     public static final int LOAD_OVER = 4;//正常状态
     /**
-     * 即将开始加载
+     * 箭头向上
      */
     public static final int LOAD_BEFOR = 5;//即将开始加载
 
@@ -53,7 +53,7 @@ public class BasicView extends View {
     /**
      * 前一个状态
      */
-    protected int lastState;
+    protected int lastState = -1;
     /**
      * 间隙
      */
@@ -77,8 +77,6 @@ public class BasicView extends View {
     protected ShapFactory factory;
 
 
-
-
     public BasicView(Context context) {
         super(context);
         initView(context, null, 0);
@@ -95,24 +93,15 @@ public class BasicView extends View {
     }
 
     private void initView(Context context, AttributeSet attrs, int defStyleAttr) {
-
-
-
         mPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
         mPaint.setStrokeWidth(1);
         color = Color.parseColor("#B8B7B8");
-
-
         mPaint.setColor(color);
         mPaint.setStyle(Paint.Style.FILL);
-
-        state = LOAD_OVER;
-        lastState = LOAD_OVER;
+        upState(LOAD_BEFOR);
         gap = Apputils.dip2px(getContext(), 5);
         mPath = new Path();
-        factory = ShapFactory.getInstance(mPath,mPaint);
-
-
+        factory = ShapFactory.getInstance(mPath, mPaint);
     }
 
     @Override
@@ -123,34 +112,29 @@ public class BasicView extends View {
         int heightMode = MeasureSpec.getMode(heightMeasureSpec);
         int heightSize = MeasureSpec.getSize(heightMeasureSpec);
 
-        int width,heitht;
+        int width, heitht;
         if (widthMode == MeasureSpec.EXACTLY) {
             width = widthSize;
-
         } else {
-            width = (getPaddingLeft() + Apputils.dip2px(getContext(),40)   + getPaddingRight());
+            width = (getPaddingLeft() + Apputils.dip2px(getContext(), 40) + getPaddingRight());
         }
-
         if (heightMode == MeasureSpec.EXACTLY) {
             heitht = heightSize;
-
         } else {
-            heitht = (getPaddingTop() + Apputils.dip2px(getContext(),40) + getPaddingBottom());
+            heitht = (getPaddingTop() + Apputils.dip2px(getContext(), 40) + getPaddingBottom());
         }
-
         setMeasuredDimension(width, heitht);
     }
-
 
 
     @Override
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
-        if (mWidth==0){
-            mHeight=mWidth=Math.max(getMeasuredWidth(),getMeasuredHeight());
+        if (mWidth == 0) {
+            mHeight = mWidth = Math.max(getMeasuredWidth(), getMeasuredHeight());
         }
         Bitmap bitmap = creatBitmap(state);
-        if (bitmap!=null){
+        if (bitmap != null) {
             canvas.drawBitmap(bitmap, 0, 0, mPaint);
             bitmap.recycle();
         }
@@ -159,6 +143,7 @@ public class BasicView extends View {
 
     /**
      * 根据当前所处状态来绘制不同的图形
+     *
      * @param state
      * @eturn
      */
@@ -167,15 +152,15 @@ public class BasicView extends View {
         switch (state) {
             case LOAD_BEFOR:
             case LOAD_OVER:
-                bitmap= factory.creatArrows(mWidth ,mHeight ,12);
+                bitmap = factory.creatArrows(mWidth, mHeight, 12);
                 break;
             case LOADING:
-               setShapRotation(0);
-                bitmap= creatShape(mWidth ,mHeight );
+                setShapRotation(0);
+                bitmap = creatShape(mWidth, mHeight);
                 break;
             case LOAD_SUCCESS:
                 setShapRotation(0);
-                bitmap = factory.creatCorrect(mWidth ,mHeight);
+                bitmap = factory.creatCorrect(mWidth, mHeight);
                 break;
 
         }
@@ -186,10 +171,11 @@ public class BasicView extends View {
 
     /**
      * 绘制加载中的动画,必须重写
-     * @param mWidth 高度
+     *
+     * @param mWidth  高度
      * @param mHeight 宽度
      */
-    protected Bitmap creatShape(int mWidth, int mHeight){
+    protected Bitmap creatShape(int mWidth, int mHeight) {
         throw new UnOverWriteException("No OverWrite creatShap()");
 
     }
@@ -201,6 +187,7 @@ public class BasicView extends View {
 
     /**
      * 箭头变化动画
+     *
      * @param state
      */
     private void round(final int state) {
@@ -213,7 +200,7 @@ public class BasicView extends View {
         if (flip != null && flip.isRunning()) {
             flip.cancel();
         }
-        startAng=getRotation();
+        startAng = getRotation();
         switch (state) {
             case LOAD_OVER:
                 endAng = 0;
@@ -276,12 +263,11 @@ public class BasicView extends View {
                 flipAnimation();
                 break;
             case LOAD_SUCCESS:
-                if (flip != null||flip.isRunning()) {
+                if (flip != null || flip.isRunning()) {
                     flip.cancel();
                 }
                 break;
         }
-
 
 
     }
@@ -294,13 +280,13 @@ public class BasicView extends View {
     }
 
     public void upState(int state) {
-        if (this.state==state){
+        if (this.state == state) {
             return;
         }
         this.state = state;
         if (state == LOAD_BEFOR || state == LOAD_OVER) {
             round(state);
-        } else if (state==LOADING){
+        } else if (state == LOADING) {
             flip(state);
         }
 
@@ -308,17 +294,16 @@ public class BasicView extends View {
     }
 
 
-
-    protected void setShapRotation(float rotation){
+    protected void setShapRotation(float rotation) {
         setPivotX(mWidth / 2);
         setPivotY(mHeight / 2);
-        setRotation( rotation);
+        setRotation(rotation);
     }
 
     @Override
     protected void onAttachedToWindow() {
         super.onAttachedToWindow();
-        if (  state == LOADING) {
+        if (state == LOADING) {
             flipAnimation();
         }
     }
@@ -326,7 +311,7 @@ public class BasicView extends View {
     @Override
     protected void onDetachedFromWindow() {
         super.onDetachedFromWindow();
-        if (flip != null&&flip.isRunning()) {
+        if (flip != null && flip.isRunning()) {
             flip.cancel();
         }
     }

@@ -3,19 +3,15 @@ package finance.com.fp.ui;
 import android.content.Context;
 import android.content.Intent;
 import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
 
-import com.orhanobut.logger.Logger;
-
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
+import em.sang.com.allrecycleview.PullDownRecycleView;
 import em.sang.com.allrecycleview.adapter.DefaultAdapter;
 import em.sang.com.allrecycleview.holder.CustomHolder;
 import em.sang.com.allrecycleview.inter.DefaultAdapterViewLisenter;
@@ -29,12 +25,7 @@ import finance.com.fp.holder.HomeToolsHolder;
 import finance.com.fp.mode.bean.Config;
 import finance.com.fp.mode.bean.Set_Item;
 import finance.com.fp.mode.bean.TranInfor;
-import finance.com.fp.mode.http.HttpClient;
-import finance.com.fp.mode.http.HttpService;
 import finance.com.fp.utlis.ToastUtil;
-import retrofit2.Retrofit;
-import rx.Subscriber;
-import rx.schedulers.Schedulers;
 
 /**
  * Description：
@@ -45,7 +36,7 @@ import rx.schedulers.Schedulers;
 public class HomeFragment extends BasisFragment implements View.OnClickListener, OnToolsItemClickListener<Set_Item> {
 
 
-    private RecyclerView recyclerView;
+    private PullDownRecycleView recyclerView;
 
     private List<String> lists;
     private HomeCarouselHolder carouselHolder;
@@ -54,7 +45,7 @@ public class HomeFragment extends BasisFragment implements View.OnClickListener,
     @Override
     public View initViews(LayoutInflater inflater, ViewGroup container) {
         View view = inflater.inflate(R.layout.fragment_main, null);
-        recyclerView = (RecyclerView) view.findViewById(R.id.rc_home);
+        recyclerView = (PullDownRecycleView) view.findViewById(R.id.rc_home);
         card = (ImageButton) view.findViewById(R.id.img_main_card);
         lending = (ImageButton) view.findViewById(R.id.img_main_net);
         forheard = (ImageButton) view.findViewById(R.id.img_main_imp);
@@ -63,35 +54,6 @@ public class HomeFragment extends BasisFragment implements View.OnClickListener,
         title_forheard = (ImageButton) view.findViewById(R.id.img_main_imp_icon);
 
         return view;
-    }
-
-
-    private void getData() {
-        Retrofit client = HttpClient.getClient("http://192.168.0.113/phpcms/");
-        HttpService service = client.create(HttpService.class);
-        Map<String, String> map = new HashMap<>();
-
-        map.put("m", "content");
-        map.put("c", "doserver");
-        map.put("a", "get_app_content");
-
-//        service.getReslut("content","doserver","get_app_content").subscribeOn(Schedulers.io()).subscribe(new Subscriber<String>() {
-        service.getReslut(map).subscribeOn(Schedulers.io()).subscribe(new Subscriber<String>() {
-            @Override
-            public void onCompleted() {
-
-            }
-
-            @Override
-            public void onError(Throwable e) {
-                e.printStackTrace();
-            }
-
-            @Override
-            public void onNext(String s) {
-                Logger.i(s);
-            }
-        });
     }
 
 
@@ -166,7 +128,6 @@ public class HomeFragment extends BasisFragment implements View.OnClickListener,
                 c = ImportActivity.class;
                 break;
         }
-        getData();
         if (c == null) {
 
             ToastUtil.showTextToast(cnt, "该功能尚未开放");

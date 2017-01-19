@@ -12,6 +12,7 @@ public class Set_Item {
     public String   describe;
     public String   describe_sub;
     public int   type;
+    public boolean isCheck;
     public Set_Item(){
 
     }

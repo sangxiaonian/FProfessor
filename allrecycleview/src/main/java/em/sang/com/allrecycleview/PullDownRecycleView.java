@@ -23,23 +23,22 @@ import em.sang.com.allrecycleview.view.ShapeView;
  * Author：桑小年
  * Data：2016/12/1 14:42
  */
-public class PullUPRecycleView extends BasicPullRecycleView {
+public class PullDownRecycleView extends BasicPullRecycleView {
 
 
-
-    public PullUPRecycleView(Context context) {
+    public PullDownRecycleView(Context context) {
         super(context);
         initView(context, null, 0);
 
     }
 
-    public PullUPRecycleView(Context context, @Nullable AttributeSet attrs) {
+    public PullDownRecycleView(Context context, @Nullable AttributeSet attrs) {
         super(context, attrs);
         initView(context, attrs, 0);
 
     }
 
-    public PullUPRecycleView(Context context, @Nullable AttributeSet attrs, int defStyle) {
+    public PullDownRecycleView(Context context, @Nullable AttributeSet attrs, int defStyle) {
         super(context, attrs, defStyle);
         initView(context, attrs, defStyle);
 
@@ -47,69 +46,68 @@ public class PullUPRecycleView extends BasicPullRecycleView {
 
     protected void initView(Context context, @Nullable AttributeSet attrs, int defStyle) {
         downY = -1;
-        topView = new RefrushLinearLayout(context);
         min = 1f;
-        mearchTop = Apputils.getWidthAndHeight(topView)[1];
-        LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
+        boomView = new RefrushLinearLayout(context);
+        mearchBoom = Apputils.getWidthAndHeight(boomView)[1];
+        LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, mearchBoom);
         params.height = (int) min;
-        topView.setLayoutParams(params);
-        upRefrush_state(LOAD_OVER);
-        hasTop = true;
-
+        boomView.setLayoutParams(params);
+        upRefrush_state(LOAD_DOWN_BEFOR);
+        hasBoom = true;
     }
-
 
     /**
      * 刷新成功后调用
      */
-    @Override
     public void loadSuccess() {
-        upRefrush_state(LOAD_SUCCESS);
+        upRefrush_state(LOAD_DOWN_SUCCESS);
     }
 
     /**
      * 刷新失败后调用
      */
-    @Override
     public void loadFail() {
-        upRefrush_state(LOAD_SUCCESS);
+        upRefrush_state(LOAD_DOWN_SUCCESS);
     }
 
 
 
+    /**
+     * 向上拖动，改变数据
+     *
+     * @return
+     */
+    public boolean canDrag() {
+        return isLast();
+    }
 
+
+    @Override
     public int changeStateByHeight(int height) {
         int result;
         float stand = getEndHeight();
         if (height < stand) {
-            result = LOAD_OVER;
+            result = LOAD_DOWN_OVER;
         } else {
-
-            result = LOAD_BEFOR;
+            result = LOAD_DOWN_BEFOR;
         }
         return result;
     }
 
-
-    @Override
-    public float getEndHeight() {
-        int stand = (int) min;
-        if (isFirst()) {
-            stand = mearchTop;
-        }
-        return stand;
-    }
-
     //获取刷新的高度
     @Override
-    public LinearLayout getEndView() {
-        LinearLayout view = topView;
+    public float getEndHeight() {
+        return mearchBoom;
+    }
 
+
+    @Override
+    public LinearLayout getEndView() {
+        LinearLayout view = boomView;
         return view;
     }
 
 
-    @Override
     public void upRefrush_state(int refrush_state) {
         if (this.refrush_state == refrush_state) {
             return;
@@ -117,59 +115,48 @@ public class PullUPRecycleView extends BasicPullRecycleView {
         this.refrush_state = refrush_state;
         moveToChildHight(refrush_state);
         switch (refrush_state) {
-            case LOAD_OVER:
-                topView.setTvMsg("下拉刷新数据");
-                topView.upState(ShapeView.LOAD_OVER);
+            case LOAD_DOWN_OVER:
+                boomView.upState(ShapeView.LOAD_BEFOR);
+                boomView.setTvMsg("上拉加载数据");
                 break;
-            case LOAD_BEFOR:
-                topView.upState(ShapeView.LOAD_BEFOR);
-                topView.setTvMsg("松手刷新数据");
-
+            case LOAD_DOWN_BEFOR:
+                boomView.setTvMsg("松手刷新数据");
+                boomView.upState(ShapeView.LOAD_OVER);
                 break;
-            case LOADING:
-                topView.upState(ShapeView.LOADING);
-                topView.setTvMsg("正在加载数据");
+            case LOADING_DOWN:
+                boomView.upState(ShapeView.LOADING);
+                boomView.setTvMsg("正在加载数据");
                 if (listener != null) {
                     listener.onLoading();
                 }
 
                 break;
-            case LOAD_FAIL:
-                topView.upState(ShapeView.LOAD_FAIL);
-                topView.setTvMsg("加载失败");
-
-
+            case LOAD_DOWN_FAIL:
+                boomView.upState(ShapeView.LOAD_FAIL);
+                boomView.setTvMsg("加载失败");
                 break;
-            case LOAD_SUCCESS:
-                topView.upState(ShapeView.LOAD_SUCCESS);
-                topView.setTvMsg("加载成功!");
+            case LOAD_DOWN_SUCCESS:
+                boomView.upState(ShapeView.LOAD_SUCCESS);
+                boomView.setTvMsg("加载成功!");
                 break;
             default:
-                topView.setTvMsg("加载异常");
-
+                boomView.setTvMsg("加载异常");
+                boomView.setTvMsg("加载异常");
                 break;
         }
 
 
     }
 
-    @Override
-    public void setLoading() {
-        super.setLoading();
-
-        setHightVisiable(mearchTop+1);
-        upRefrush_state(LOADING);
-
-
-    }
 
     @Override
     public boolean isChangStateByHeight() {
-        return refrush_state == LOAD_OVER || refrush_state == LOAD_BEFOR;
+        return refrush_state == LOAD_DOWN_OVER || refrush_state == LOAD_DOWN_BEFOR;
     }
 
 
-    protected void moveToChildHight(final int refrush_state) {
+    @Override
+    public void moveToChildHight(final int refrush_state) {
         final View view = getEndView();
         int height = getHeightVisiable(view);
         final float stand = getStandHeightByStated(refrush_state);
@@ -199,12 +186,12 @@ public class PullUPRecycleView extends BasicPullRecycleView {
                 super.onAnimationEnd(animation);
                 int load;
                 switch (refrush_state) {
-                    case LOAD_BEFOR:
-                        load = LOADING;
+                    case LOAD_DOWN_BEFOR:
+                        load = LOADING_DOWN;
                         break;
                     default:
                         if (stand == min) {
-                            load = LOAD_OVER;
+                            load = LOAD_DOWN_OVER;
                         } else {
                             load = refrush_state;
                         }
@@ -216,7 +203,7 @@ public class PullUPRecycleView extends BasicPullRecycleView {
 
         animator.setDuration(200);
         if (isMove) {
-            if (isChangStateByHeight() || refrush_state == LOADING) {
+            if (isChangStateByHeight() || refrush_state == LOADING_DOWN) {
                 animator.start();
             } else {
                 animator.setStartDelay(200);
@@ -228,7 +215,7 @@ public class PullUPRecycleView extends BasicPullRecycleView {
 
 
     /**
-     * 根据状态获取最终高度
+     * 根据状态获取动画执行最终高度
      *
      * @param refrush_state
      * @return
@@ -236,8 +223,8 @@ public class PullUPRecycleView extends BasicPullRecycleView {
     public float getStandHeightByStated(int refrush_state) {
         float stand;
         switch (refrush_state) {
-            case LOAD_BEFOR:
-            case LOADING:
+            case LOAD_DOWN_BEFOR:
+            case LOADING_DOWN:
                 stand = getEndHeight();
                 break;
             default:
@@ -252,15 +239,9 @@ public class PullUPRecycleView extends BasicPullRecycleView {
     public void addUpDataItem(Adapter adapter) {
         if (adapter instanceof BasicAdapter) {
             BasicAdapter basicAdapter = (BasicAdapter) adapter;
-            if (getHasTop()) {
-                basicAdapter.addTop(new SimpleHolder(topView));
+            if (getHasBoom()) {
+                basicAdapter.addBoom(new SimpleHolder(boomView));
             }
-
         }
-    }
-
-    @Override
-    public boolean canDrag() {
-        return isFirst();
     }
 }

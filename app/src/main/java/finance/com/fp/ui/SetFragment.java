@@ -2,7 +2,6 @@ package finance.com.fp.ui;
 
 import android.content.Context;
 import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,14 +9,15 @@ import android.view.ViewGroup;
 import java.util.ArrayList;
 import java.util.List;
 
+import em.sang.com.allrecycleview.PullUPRecycleView;
 import em.sang.com.allrecycleview.adapter.DefaultAdapter;
 import em.sang.com.allrecycleview.holder.CustomHolder;
 import em.sang.com.allrecycleview.inter.DefaultAdapterViewLisenter;
 import finance.com.fp.BasisFragment;
 import finance.com.fp.R;
-import finance.com.fp.mode.bean.Set_Item;
 import finance.com.fp.holder.SetBodyHolder;
 import finance.com.fp.holder.SetLoginHolder;
+import finance.com.fp.mode.bean.Set_Item;
 
 /**
  * Description：
@@ -28,7 +28,7 @@ import finance.com.fp.holder.SetLoginHolder;
 public class SetFragment extends BasisFragment {
 
     private View view;
-    private RecyclerView rc;
+    private PullUPRecycleView rc;
     private int[] icons = {R.mipmap.icon_handlecardprogress, R.mipmap.icon_netcreditinquiry,R.mipmap.icon_personalcenter
             , R.mipmap.icon_advices, R.mipmap.icon_feedback, R.mipmap.icon_set};
     private List<Set_Item> lists;
@@ -36,7 +36,7 @@ public class SetFragment extends BasisFragment {
     @Override
     public View initViews(LayoutInflater inflater, ViewGroup container) {
         view = inflater.inflate(R.layout.fragment_set, null);
-        rc = (RecyclerView) view.findViewById(R.id.rc_find);
+        rc = (PullUPRecycleView) view.findViewById(R.id.rc_find);
         return view;
     }
 
@@ -64,6 +64,6 @@ public class SetFragment extends BasisFragment {
         rc.setLayoutManager(manager);
         adapter.addHead(new SetLoginHolder(getContext(),null,R.layout.item_set_top));
         rc.setAdapter(adapter);
-
+        rc.setLoading();
     }
 }

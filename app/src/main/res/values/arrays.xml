@@ -130,5 +130,21 @@
         <item>花旗银行</item>
     </string-array>
 
+    <string-array name="search_items">
+        <item>所有贷款类型</item>
+        <item>信用卡贷</item>
+        <item>账单贷</item>
+        <item>代还信用卡</item>
+        <item>芝麻分贷</item>
+        <item>工薪贷</item>
+        <item>身份证贷</item>
+        <item>大学生贷</item>
+        <item>消费贷</item>
+        <item>微信QQ贷</item>
+        <item>保单贷</item>
+        <item>公积金贷</item>
+        <item>电商贷</item>
+        <item>按揭房贷</item>
+    </string-array>
 
 </resources>

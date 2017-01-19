@@ -20,6 +20,7 @@ public class ShapeView extends BasicView {
     public ShapeView(Context context) {
         super(context);
 
+
     }
 
     public ShapeView(Context context, AttributeSet attrs) {

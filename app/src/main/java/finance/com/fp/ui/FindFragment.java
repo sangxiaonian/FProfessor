@@ -2,7 +2,6 @@ package finance.com.fp.ui;
 
 import android.content.Context;
 import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,7 +10,8 @@ import android.widget.TextView;
 import java.util.ArrayList;
 import java.util.List;
 
-import em.sang.com.allrecycleview.adapter.DefaultAdapter;
+import em.sang.com.allrecycleview.PullRecycleView;
+import em.sang.com.allrecycleview.adapter.RefrushAdapter;
 import em.sang.com.allrecycleview.holder.CustomHolder;
 import em.sang.com.allrecycleview.inter.DefaultAdapterViewLisenter;
 import finance.com.fp.BasisFragment;
@@ -31,12 +31,12 @@ public class FindFragment extends BasisFragment {
     private View view;
     private TextView tv;
     private ArrayList<String> lists;
-    RecyclerView rc;
+    PullRecycleView rc;
     @Override
     public View initViews(LayoutInflater inflater, ViewGroup container) {
         view=inflater.inflate(R.layout.fragment_find,null);
 
-        rc = (RecyclerView) view.findViewById(R.id.rc_find);
+        rc = (PullRecycleView) view.findViewById(R.id.rc_find);
         initData();
         return view;
     }
@@ -44,8 +44,6 @@ public class FindFragment extends BasisFragment {
     @Override
     public void onStart() {
         super.onStart();
-
-
     }
 
 
@@ -56,17 +54,20 @@ public class FindFragment extends BasisFragment {
             lists.add("这是测试数据"+i);
         }
 
-        DefaultAdapter<String> adapter = new DefaultAdapter<>(getContext(), lists, R.layout.item_home, new DefaultAdapterViewLisenter<String>() {
+
+        RefrushAdapter<String> adapter = new RefrushAdapter<>(getContext(), lists, R.layout.item_home, new DefaultAdapterViewLisenter<String>() {
             @Override
             public CustomHolder getBodyHolder(Context context, List<String> lists, int itemID) {
                 return new HomeBodyHolder(context, lists, itemID);
             }
         });
+        adapter.setRefrushPosition(2);
         adapter.addHead(new FindFriendHolder(getContext(),null,R.layout.item_find_fc));
         adapter.addHead(new FindFunctionHolder(getContext(),null,R.layout.item_find_function));
         LinearLayoutManager manager = new LinearLayoutManager(getContext());
         manager.setOrientation(LinearLayoutManager.VERTICAL);
         rc.setLayoutManager(manager);
         rc.setAdapter(adapter);
+
     }
 }

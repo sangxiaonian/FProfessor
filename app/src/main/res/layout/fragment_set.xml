@@ -6,7 +6,15 @@
     android:background="@color/bg"
 
      >
-    <include layout="@layout/view_recycleview"
+   <!-- <include layout="@layout/view_recycleview"
         android:id="@+id/rc_find"
-        />
+        />-->
+    <em.sang.com.allrecycleview.PullUPRecycleView
+        android:layout_width="match_parent"
+        android:id="@+id/rc_find"
+        android:background="@color/text_home_item_cut"
+        android:layout_height="match_parent">
+
+    </em.sang.com.allrecycleview.PullUPRecycleView>
+
 </LinearLayout>

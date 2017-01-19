@@ -10,6 +10,7 @@ import finance.com.fp.mode.bean.Set_Item;
 import rx.Observable;
 import rx.Subscriber;
 import rx.android.schedulers.AndroidSchedulers;
+import rx.functions.Action0;
 import rx.functions.Func1;
 import rx.schedulers.Schedulers;
 
@@ -20,7 +21,7 @@ import rx.schedulers.Schedulers;
  * @Author：桑小年
  * @Data：2017/1/11 14:49
  */
-public class LoanDataFractory extends BaseFractory {
+public class LoanDataFractory<T> extends BaseFractory  {
     public LoanDataFractory(Context context) {
         super(context);
     }
@@ -93,6 +94,59 @@ public class LoanDataFractory extends BaseFractory {
                 });
 
         return lists;
+
+    }
+
+    public void getAllSearch(final DataLoadLisetner<Set_Item> lisetner){
+        String[] titles = context.getResources().getStringArray(R.array.search_items);
+        Observable.from(titles)
+                .subscribeOn(Schedulers.io())
+                .map(new Func1<String, Set_Item>() {
+                    @Override
+                    public Set_Item call(String s) {
+                        Set_Item item = new Set_Item();
+                        item.title = s;
+                        return item;
+                    }
+                })
+
+                .observeOn(AndroidSchedulers.mainThread())
+                .doOnCompleted(new Action0() {
+                    @Override
+                    public void call() {
+                        if (lists.size()>0){
+                            lists.get(0).isCheck=true;
+                        }
+                    }
+                })
+                .subscribe(new Subscriber<Set_Item>() {
+                    @Override
+                    public void onCompleted() {
+                        if (lisetner != null) {
+                            lisetner.loadOver(lists);
+                        }
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        e.printStackTrace();
+                    }
+
+                    @Override
+                    public void onNext(Set_Item set_item) {
+                        lists.add(set_item);
+                    }
+
+                    @Override
+                    public void onStart() {
+                        super.onStart();
+                        if (lists == null) {
+                            lists = new ArrayList<Set_Item>();
+                        } else {
+                            lists.clear();
+                        }
+                    }
+                });
 
     }
 

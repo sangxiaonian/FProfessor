@@ -5,17 +5,15 @@ import android.animation.AnimatorListenerAdapter;
 import android.animation.ValueAnimator;
 import android.content.Context;
 import android.support.annotation.Nullable;
-import android.support.v7.widget.RecyclerView;
 import android.util.AttributeSet;
 import android.view.Gravity;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 
-import em.sang.com.allrecycleview.inter.RefrushListener;
+import em.sang.com.allrecycleview.adapter.BasicAdapter;
+import em.sang.com.allrecycleview.holder.SimpleHolder;
 import em.sang.com.allrecycleview.utils.Apputils;
-import em.sang.com.allrecycleview.utils.JLog;
 import em.sang.com.allrecycleview.view.RefrushLinearLayout;
 import em.sang.com.allrecycleview.view.ShapeView;
 
@@ -25,71 +23,9 @@ import em.sang.com.allrecycleview.view.ShapeView;
  * Author：桑小年
  * Data：2016/12/1 14:42
  */
-public class PullRecycleView extends BasicRecycleView {
+public class PullRecycleView extends BasicPullRecycleView {
 
 
-    private boolean hasTop,hasBoom;
-    private float downY;
-
-    private RefrushLinearLayout topView, boomView;
-    private int mearchTop, mearchBoom;
-    private int refrush_state = 0;
-    private RefrushListener listener;
-
-
-    /**
-     * 正在加载
-     */
-    public static final int LOADING = 0;
-    /**
-     * 加载成功
-     */
-    public static final int LOAD_SUCCESS = 1;//加载成功
-
-    /**
-     * 加载失败
-     */
-    public static final int LOAD_FAIL = 2;//加载失败
-    /**
-     * 正常状态
-     */
-    public static final int LOAD_OVER = 4;//正常状态
-    /**
-     * 即将开始加载
-     */
-    public static final int LOAD_BEFOR = 5;//即将开始加载
-
-
-
-    /**
-     * 正在上拉加载
-     */
-    public static final int LOADING_DOWN = 6;//即将开始加载
-    /**
-     * 加载成功
-     */
-    public static final int LOAD_SUCCESS_DOWN = 7;//加载成功
-
-    /**
-     * 加载失败
-     */
-    public static final int LOAD_FAIL_DOWN = 8;//加载失败
-    /**
-     * 正常状态
-     */
-    public static final int LOAD_OVER_DOWN = 9;//正常状态
-    /**
-     * 即将开始加载
-     */
-    public static final int LOAD_BEFOR_DOWN = 10;//即将开始加载
-
-
-    /**
-     * 滑动距离倍数
-     */
-    private final int muli = 3;
-
-    private boolean isMove;
     public PullRecycleView(Context context) {
         super(context);
         initView(context, null, 0);
@@ -108,6 +44,34 @@ public class PullRecycleView extends BasicRecycleView {
 
     }
 
+    @Override
+    public float getStandHeightByStated(int refrush_state) {
+        float stand;
+        switch (refrush_state) {
+            case LOAD_BEFOR:
+            case LOADING:
+                if (isFirst()){
+                    stand = getEndHeight();
+                }else {
+                    stand = min;
+                }
+                break;
+            case LOADING_DOWN:
+            case LOAD_DOWN_BEFOR:
+                if (isLast()){
+                    stand = getEndHeight();
+                }else {
+                    stand = min;
+                }
+
+                break;
+            default:
+                stand = min;
+                break;
+        }
+        return stand;
+    }
+
     protected void initView(Context context, @Nullable AttributeSet attrs, int defStyle) {
         downY = -1;
         topView = new RefrushLinearLayout(context);
@@ -118,23 +82,35 @@ public class PullRecycleView extends BasicRecycleView {
         mearchBoom = Apputils.getWidthAndHeight(boomView)[1];
 
         LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
-        params.height = 0;
+        params.height = (int) min;
         topView.setLayoutParams(params);
         boomView.setLayoutParams(params);
-        refrush_state = LOAD_OVER;
         hasTop=true;
         hasBoom=true;
+    }
 
+
+    @Override
+    public boolean isLast() {
+
+        if (refrush_state==LOADING){
+
+            return false;
+        }else {
+            return super.isLast();
+        }
 
     }
 
-    /**
-     * 设置刷新监听
-     *
-     * @param listener
-     */
-    public void setRefrushListener(RefrushListener listener) {
-        this.listener = listener;
+    @Override
+    public boolean isFirst() {
+        if (refrush_state==LOADING_DOWN){
+
+            return false;
+        }else {
+            return super.isFirst();
+        }
+
     }
 
     /**
@@ -151,155 +127,62 @@ public class PullRecycleView extends BasicRecycleView {
         upRefrush_state(LOAD_SUCCESS);
     }
 
+    @Override
+    public void addUpDataItem(Adapter adapter) {
+        if (adapter instanceof BasicAdapter) {
+            BasicAdapter basicAdapter = (BasicAdapter) adapter;
+            if (getHasBoom()) {
+                basicAdapter.addBoom(new SimpleHolder(boomView));
+            }
 
-    public View getTopView() {
-        return topView;
-    }
-
-    public View getBoomView() {
-        return boomView;
-    }
-
-    public void setHasTop(boolean hasTop){
-        this.hasTop=hasTop;
-    }
-    public void setHasBoom(boolean hasBoom){
-        this.hasBoom=hasBoom;
-    }
-
-    public boolean getHasTop(){
-        return hasTop;
-    }
-
-    public boolean getHasBoom() {
-        return hasBoom;
-    }
-
-    public void setTopView(View view) {
-
-        topView.addView(view);
-        mearchTop = Apputils.getWidthAndHeight(topView)[1];
-    }
-
-    public void setBoomView(View view) {
-
-        boomView.addView(view);
-        mearchBoom = Apputils.getWidthAndHeight(boomView)[1];
+            if (getHasTop()){
+                basicAdapter.addTop(new SimpleHolder(topView));
+            }
+        }
     }
 
     @Override
-    public boolean onTouchEvent(MotionEvent e) {
+    public void setLoading() {
+        super.setLoading();
+        setHightVisiable(mearchTop+1);
+        upRefrush_state(LOADING);
+    }
+    @Override
+    public void setAdapter(Adapter adapter) {
+        super.setAdapter(adapter);
+        upRefrush_state(LOAD_OVER);
+        upRefrush_state(LOAD_DOWN_BEFOR);
+    }
 
-        if (downY == -1) {
-            downY = e.getRawY();
-        }
-
-        switch (e.getAction()) {
-            case MotionEvent.ACTION_DOWN:
-                downY = e.getRawY();
-                break;
-            case MotionEvent.ACTION_MOVE:
-                float gap = (e.getRawY() - downY) / muli;
-                downY = e.getRawY();
-                isMove = false;
-
-                if (isShowUp() || getHeightVisiable(topView) >= 0) {
-                    setHightVisiable(topView, gap);
-                } else if (isShowDown() || getHeightVisiable(boomView) >= 0) {
-                    setHightVisiable(boomView, -gap);
-                }
-
-                break;
-            case MotionEvent.ACTION_UP:
-            case MotionEvent.ACTION_CANCEL:
-                downY = -1;
-                isMove = true;
-                if (isFirst()) {
-                    moveToChildHight(refrush_state);
-                } else if (isLast()) {
-                    moveToChildHight(refrush_state);
-                }
-                break;
-            default:
-
-                break;
-        }
-
-
-        return super.onTouchEvent(e);
+    @Override
+    public boolean canDrag() {
+        return isLast()||isFirst();
     }
 
 
-    /**
-     * 获取当前控件高度
-     *
-     * @param view
-     * @return
-     */
-    private int getHeightVisiable(LinearLayout view) {
-        ViewGroup.LayoutParams layoutParams = view.getLayoutParams();
-        return layoutParams.height;
-    }
-
-    /**
-     * 设置当前控件高度
-     *
-     * @param view
-     * @param gap
-     */
-    private void setHightVisiable(LinearLayout view, float gap) {
-        if (animator != null && animator.isRunning()) {
-            animator.cancel();
-        }
-        int height = (int) (getHeightVisiable(view) + gap);
-        height = height >= 0 ? height : 0;
-        ViewGroup.LayoutParams layoutParams = view.getLayoutParams();
-        layoutParams.height = height;
-        view.setLayoutParams(layoutParams);
-        if (isCanMove() && height != 0 && isFirst()) {
-            scrollToPosition(0);
-        } else if (height != 0 && isLast() && gap < 0) {
-            scrollToPosition(getAdapter().getItemCount() - 1);
-        }
-        JLog.i("-----------------"+height+"---------------------");
-        //根据高度更新状态
-        if (isCanMove()) {
-
-            upRefrush_state(changeStateByHeight(height));
-        }
-
-    }
-
-    private int changeStateByHeight(int height) {
-        int result;
+    public int changeStateByHeight(int height) {
+        int result = 0;
         float stand = getEndHeight();
 
-        if ((isFirst()&&refrush_state==LOADING)||(isLast()&&refrush_state==LOADING_DOWN)){
-            return refrush_state;
-        }
         if (isFirst()) {
             if (height < stand) {
                 result = LOAD_OVER;
             } else {
-
                 result = LOAD_BEFOR;
             }
-        } else if (isLast()) {
+        }else if (isLast()){
             if (height < stand) {
-                result = LOAD_OVER_DOWN;
+                result = LOAD_DOWN_OVER;
             } else {
-                result = LOAD_BEFOR_DOWN;
+                result = LOAD_DOWN_BEFOR;
             }
-        } else {
-            result = refrush_state;
         }
-
         return result;
     }
 
     //获取刷新的高度
-    private float getEndHeight() {
-        int stand = 0;
+    public float getEndHeight() {
+        int stand = (int) min;
         if (isFirst()) {
             stand = mearchTop;
         } else if (isLast()) {
@@ -309,7 +192,7 @@ public class PullRecycleView extends BasicRecycleView {
     }
 
     //获取刷新的高度
-    private LinearLayout getEndView() {
+    public LinearLayout getEndView() {
         LinearLayout view = topView;
         if (isFirst()) {
             view = topView;
@@ -317,6 +200,12 @@ public class PullRecycleView extends BasicRecycleView {
             view = boomView;
         }
         return view;
+    }
+
+    @Override
+    public boolean isChangStateByHeight() {
+        return refrush_state == LOAD_DOWN_OVER || refrush_state == LOAD_DOWN_BEFOR||refrush_state == LOAD_OVER || refrush_state == LOAD_BEFOR;
+
     }
 
 
@@ -350,96 +239,52 @@ public class PullRecycleView extends BasicRecycleView {
             case LOAD_FAIL:
                 topView.upState(ShapeView.LOAD_FAIL);
                 topView.setTvMsg("加载失败");
-
-
                 break;
             case LOAD_SUCCESS:
                 topView.upState(ShapeView.LOAD_SUCCESS);
                 topView.setTvMsg("加载成功!");
+                break;
 
+            case LOAD_DOWN_OVER:
+                boomView.upState(ShapeView.LOAD_BEFOR);
+                boomView.setTvMsg("上拉加载数据");
+                break;
+            case LOAD_DOWN_BEFOR:
+                boomView.setTvMsg("松手刷新数据");
+                boomView.upState(ShapeView.LOAD_OVER);
                 break;
             case LOADING_DOWN:
                 boomView.upState(ShapeView.LOADING);
                 boomView.setTvMsg("正在加载数据");
-                break;
-            case LOAD_OVER_DOWN:
-                boomView.upState(ShapeView.LOAD_BEFOR);
-                boomView.setTvMsg("上拉加载数据");
+                if (listener != null) {
+                    listener.onLoading();
+                }
 
                 break;
-            case LOAD_BEFOR_DOWN:
-                boomView.upState(ShapeView.LOAD_OVER);
-                boomView.setTvMsg("松手刷新数据");
-
-                break;
-
-            case LOAD_FAIL_DOWN:
+            case LOAD_DOWN_FAIL:
                 boomView.upState(ShapeView.LOAD_FAIL);
                 boomView.setTvMsg("加载失败");
-
                 break;
-            case LOAD_SUCCESS_DOWN:
+            case LOAD_DOWN_SUCCESS:
                 boomView.upState(ShapeView.LOAD_SUCCESS);
                 boomView.setTvMsg("加载成功!");
-                if (listener != null) {
-                    listener.onDownLoading();
-                }
                 break;
             default:
                 topView.setTvMsg("加载异常");
                 boomView.setTvMsg("加载异常");
-
                 break;
         }
-
-
     }
 
-
-    /**
-     * 是否正在下拉
-     *
-     * @return
-     */
-    private boolean isShowUp() {
-        return topView.getChildCount() > 0 && isFirst() && state == RecyclerView.SCROLL_STATE_DRAGGING;
-    }
-
-    /**
-     * 是否正在上拉
-     *
-     * @return
-     */
-    private boolean isShowDown() {
-        return boomView.getChildCount() > 0 && isLast() && state == RecyclerView.SCROLL_STATE_DRAGGING;
-    }
-
-    private boolean isCanMove() {
-        return refrush_state == LOAD_OVER || refrush_state == LOAD_BEFOR || refrush_state == LOAD_OVER_DOWN
-                || refrush_state == LOAD_BEFOR_DOWN||(isFirst()&&refrush_state>5)||(isLast()&&refrush_state<6);
-    }
-
-
-    private ValueAnimator animator;
-
-    private void moveToChildHight(final int refrush_state) {
+    @Override
+    public void moveToChildHight(final int refrush_state) {
         View view = getEndView();
-        float stand;
+        final float stand=getStandHeightByStated(refrush_state);
+
         ViewGroup.LayoutParams layoutParams = view.getLayoutParams();
         int height = layoutParams.height;
-        switch (refrush_state) {
-            case LOAD_BEFOR:
-            case LOADING:
-            case LOADING_DOWN:
-            case LOAD_BEFOR_DOWN:
-                stand = getEndHeight();
-                break;
-            default:
-                stand = 0;
-                break;
-        }
 
-        JLog.i(refrush_state + "===");
+
 
         if (animator != null && animator.isRunning()) {
             animator.removeAllListeners();
@@ -454,52 +299,49 @@ public class PullRecycleView extends BasicRecycleView {
             @Override
             public void onAnimationUpdate(ValueAnimator animation) {
                 float value = (float) animation.getAnimatedValue();
-                ViewGroup.LayoutParams layoutParams = finalView.getLayoutParams();
-                layoutParams.height = (int) value;
-                finalView.setLayoutParams(layoutParams);
-
+                setViewHeight(finalView,value);
             }
         });
 
-        if (refrush_state == LOAD_BEFOR || refrush_state == LOAD_BEFOR_DOWN) {
+
+
+
             animator.addListener(new AnimatorListenerAdapter() {
                 @Override
                 public void onAnimationEnd(Animator animation) {
                     super.onAnimationEnd(animation);
 
-
-                    if (isFirst()) {
-                        upRefrush_state(LOADING);
-                    } else if (isLast()) {
-                        upRefrush_state(LOADING_DOWN);
+                    int load = refrush_state;
+                    switch (refrush_state) {
+                        case LOAD_DOWN_BEFOR:
+                            load = LOADING_DOWN;
+                            break;
+                        case LOAD_BEFOR:
+                            load = LOADING;
+                            break;
+                        default:
+                            if (stand==min) {
+                                if (isFirst()){
+                                    load = LOAD_OVER;
+                                }else if (isLast()) {
+                                    load = LOAD_DOWN_OVER;
+                                }
+                            }else {
+                                load=refrush_state;
+                            }
+                            break;
                     }
+                    upRefrush_state(load);
 
                 }
             });
 
-        } else if (stand == 0) {
-            animator.addListener(new AnimatorListenerAdapter() {
-                @Override
-                public void onAnimationEnd(Animator animation) {
-                    super.onAnimationEnd(animation);
-                    if (getHeightVisiable(getEndView()) == 0) {
-                        if (isFirst()) {
-                            upRefrush_state(LOAD_OVER);
-                        } else if (isLast()) {
-                            upRefrush_state(LOAD_OVER_DOWN);
 
-                        }
-                    }
-//
-                }
-            });
-        }
         animator.setDuration(200);
         if (isMove) {
-            if (isCanMove() || refrush_state == LOADING || refrush_state == LOADING_DOWN) {
+            if (isChangStateByHeight() || refrush_state == LOADING || refrush_state == LOADING_DOWN) {
                 animator.start();
             } else {
-//                if ()
                 animator.setStartDelay(200);
                 animator.start();
             }

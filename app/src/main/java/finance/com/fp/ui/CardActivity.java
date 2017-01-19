@@ -30,6 +30,7 @@ public class CardActivity extends BasisActivity implements OnToolsItemClickListe
     private CardNotifiHolder notifiHolder;
     private HomeCarouselHolder carouselHolder;
     private Set_Item more;
+    private DefaultAdapter<Set_Item> adapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

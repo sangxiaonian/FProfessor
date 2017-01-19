@@ -18,8 +18,6 @@ import android.widget.TextView;
 
 import com.orhanobut.logger.Logger;
 
-import em.sang.com.allrecycleview.adapter.DefaultAdapter;
-import finance.com.fp.mode.bean.Set_Item;
 import finance.com.fp.mode.bean.TranInfor;
 
 /**
@@ -32,7 +30,7 @@ public class BasisActivity extends AppCompatActivity {
     public Toolbar toolbar;
 
     public TranInfor tranInfor;
-    public DefaultAdapter<Set_Item> adapter;
+
 
 
     @Override
