@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/lLayout_bg"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/alert_bg"
+    android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/txt_title"
+
+        style="@style/text_title"
+         />
+
+    <EditText
+        android:id="@+id/txt_msg"
+        android:background="@null"
+        android:textColorHint="@color/cut_line"
+        android:hint="@string/hint"
+        style="@style/text_content"/>
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="0.5dp"
+        android:layout_marginTop="10dp"
+        android:background="@color/cut_line" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/bt_cancel"
+            style="@style/btn_corners_left" />
+        <ImageView
+            android:layout_width="0.5dp"
+            android:layout_height="43dp"
+            android:background="@color/cut_line" />
+        <Button
+            android:id="@+id/bt_entry"
+            style="@style/btn_corners_right"
+            android:background="@drawable/selector_brn_corner_right" />
+    </LinearLayout>
+
+</LinearLayout>

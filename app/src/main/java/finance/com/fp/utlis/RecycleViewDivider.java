@@ -33,6 +33,7 @@ public class RecycleViewDivider extends RecyclerView.ItemDecoration {
 
         final TypedArray a = context.obtainStyledAttributes(ATTRS);
         mDivider = a.getDrawable(0);
+
         a.recycle();
     }
 
@@ -46,6 +47,7 @@ public class RecycleViewDivider extends RecyclerView.ItemDecoration {
     public RecycleViewDivider(Context context, int orientation, int drawableId) {
         this(context, orientation);
         mDivider = ContextCompat.getDrawable(context, drawableId);
+
         mDividerHeight = mDivider.getIntrinsicHeight();
     }
 

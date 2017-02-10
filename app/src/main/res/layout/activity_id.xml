@@ -1,75 +1,34 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/activity_id"
+    android:id="@+id/activity_card"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/text_home_item_cut"
     android:orientation="vertical"
-    tools:context="finance.com.fp.ui.IDActivity">
+    android:fitsSystemWindows="true"
 
-    <include layout="@layout/view_toolbar" />
+    tools:context="finance.com.fp.ui.CardActivity">
 
-    <LinearLayout
-        android:gravity="center_vertical"
-        style="@style/item_style"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+    <include
+        layout="@layout/view_toolbar" />
 
-        <TextView
-            style="@style/set_item"
-            android:text="头像" />
-
-        <ImageView
-            android:layout_width="67dp"
-            android:layout_height="67dp"
-            android:layout_marginBottom="23dp"
-            android:layout_marginRight="@dimen/app_maggin_ends"
-            android:layout_marginTop="23dp"
-            android:scaleType="centerCrop"
-            android:src="@mipmap/login_head" />
-
-    </LinearLayout>
-    <LinearLayout
-        style="@style/item_style"
-        android:id="@+id/ll_set_changeps"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:paddingEnd="@dimen/app_maggin_ends"
-        android:layout_marginTop="@dimen/app_cut_line"
-        android:gravity="center">
-        <TextView
-            style="@style/set_item"
-            android:text="@string/set_ps" />
-        <TextView
-             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textColor="@color/set_item"
-            android:layout_marginEnd="@dimen/app_item_cut_margin"
-            android:text="@string/set_add" />
-        <include layout="@layout/img_more"/>
-    </LinearLayout>
-
-    <LinearLayout
-        style="@style/item_style"
-
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:paddingEnd="@dimen/app_maggin_ends"
-        android:layout_marginTop="@dimen/app_cut_line"
-        android:gravity="center">
-        <TextView
-            style="@style/set_item"
-            android:text="@string/phone" />
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textColor="@color/set_item"
-            android:layout_marginEnd="@dimen/app_item_cut_margin"
-            android:text="***********" />
-
-    </LinearLayout>
+   <android.support.v7.widget.RecyclerView
+        android:id="@+id/rc"
+       android:layout_weight="1"
+       android:layout_height="0dp"
+       android:layout_width="match_parent" />
 
 
+        <Button
+            android:layout_gravity="center"
+            android:layout_marginTop="@dimen/app_cut_big"
+            android:layout_marginBottom="@dimen/app_second_image_size"
+            android:layout_centerInParent="true"
+            android:layout_width="325dp"
+            android:layout_height="45dp"
+            android:background="@mipmap/immediatelytoapplyforaloan"
+            />
 
 </LinearLayout>

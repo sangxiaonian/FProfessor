@@ -5,10 +5,10 @@
     android:layout_height="wrap_content"
     android:gravity="center_vertical"
     android:orientation="horizontal"
-    android:paddingBottom="@dimen/find_margin_top"
-    android:paddingLeft="@dimen/app_maggin_ends"
-    android:paddingRight="@dimen/app_maggin_ends"
-    android:paddingTop="@dimen/find_margin_top">
+    android:paddingBottom="@dimen/app_title_text_pad_V"
+    android:paddingLeft="@dimen/app_margin_ends"
+    android:paddingRight="@dimen/app_margin_ends"
+    android:paddingTop="@dimen/app_title_text_pad_V">
 
     <ImageView
         android:id="@+id/img_card_item"
@@ -25,25 +25,23 @@
         android:layout_centerVertical="true"
         android:layout_toRightOf="@id/img_card_item"
         android:textColor="@color/text_home_more_text"
-        android:textSize="@dimen/card_item_big_textSize" />
+        android:textSize="@dimen/app_title_text_size" />
 
     <include
         android:id="@+id/more_icon"
         layout="@layout/img_more"
-        android:layout_alignParentRight="true"
-        android:layout_centerVertical="true"
-        android:layout_width="6dp"
-        android:layout_height="12dp" />
+        />
 
     <TextView
         android:id="@+id/tv_card_item_small"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerVertical="true"
-        android:layout_marginRight="@dimen/home_item_margin"
+        android:layout_alignParentEnd="true"
+        android:layout_marginEnd="@dimen/app_margin_ends"
         android:layout_toLeftOf="@id/more_icon"
         android:textColor="@color/text_home_item_time"
-        android:textSize="@dimen/card_item_small_textSize"
+        android:textSize="@dimen/app_title_text_size_small"
         />
 
 

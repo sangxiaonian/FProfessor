@@ -5,6 +5,7 @@ import android.view.View;
 
 import java.util.List;
 
+import finance.com.fp.R;
 import finance.com.fp.utlis.ToastUtil;
 
 /**
@@ -13,7 +14,7 @@ import finance.com.fp.utlis.ToastUtil;
  * @Author：桑小年
  * @Data：2017/1/3 11:17
  */
-public class HomeMoreHolder extends BasicHolder{
+public class HomeMoreHolder extends BasicHolder {
 
 
     public HomeMoreHolder(Context context, List lists, int itemID) {
@@ -22,13 +23,27 @@ public class HomeMoreHolder extends BasicHolder{
 
 
     @Override
-    public void initView(int position, final Context context) {
+    public void initView(final int position, final Context context) {
         super.initView(position, context);
-        itemView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                ToastUtil.showTextToast(context,"更多被点击了!");
-            }
-        });
+        View view = itemView.findViewById(R.id.more);
+        View click = itemView;
+        if (itemView.isClickable()) {
+            click = itemView;
+        } else if (view != null && view.isClickable()) {
+            click = view;
+        }
+        click.setOnClickListener(new View.OnClickListener() {
+                                     @Override
+                                     public void onClick(View v) {
+                                         if (listener == null) {
+                                             ToastUtil.showTextToast(context, "更多被点击了!");
+                                         } else {
+                                             listener.onItemClick(position,null);
+                                         }
+                                     }
+                                 }
+
+        );
+
     }
 }

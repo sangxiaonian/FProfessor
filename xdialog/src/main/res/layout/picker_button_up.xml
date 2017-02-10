@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+     >
+    <LinearLayout
+        android:id="@+id/ll"
+        android:background="@drawable/bg_width"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <Button
+            android:layout_width="0dp"
+            android:id="@+id/bt_cancel"
+            android:layout_weight="1"
+            android:textSize="16sp"
+            android:paddingTop="15dp"
+            android:paddingBottom="15dp"
+            android:layout_marginEnd="0.5dp"
+            android:background="@drawable/select_bt"
+            android:text="@string/cancel"
+            android:layout_height="wrap_content" />
+        <Button
+            android:paddingTop="15dp"
+            android:paddingBottom="15dp"
+            android:layout_width="0dp"
+            android:id="@+id/bt_entry"
+            android:text="@string/entry"
+            android:layout_marginStart="0.5dp"
+            android:layout_weight="1"
+            android:textSize="16sp"
+            android:background="@drawable/select_bt"
+            android:layout_height="wrap_content" />
+    </LinearLayout>
+
+    <sang.com.xdialog.view.PickerScrollView
+        android:layout_width="match_parent"
+        android:layout_below="@id/ll"
+        android:id="@+id/picker"
+        android:layout_height="match_parent" />
+
+
+</LinearLayout>

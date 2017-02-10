@@ -3,29 +3,29 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:paddingEnd="@dimen/find_margin_top"
-    android:paddingStart="@dimen/main_boom_height"
-    android:paddingTop="@dimen/home_item_time_margin">
+    android:paddingStart="@dimen/planner_img_size"
+     >
 
     <RelativeLayout
+        android:layout_marginTop="@dimen/app_cut_big"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
         <ImageView
 
             android:id="@+id/img_icon"
-            android:layout_width="@dimen/collapsed_header_height"
-            android:layout_height="@dimen/collapsed_header_height"
+            android:layout_width="@dimen/planner_img_size"
+            android:layout_height="@dimen/planner_img_size"
             android:layout_alignParentRight="true"
-            android:layout_marginTop="@dimen/home_item_time_margin"
             android:src="@mipmap/icon_tcacher" />
 
         <TextView
             android:id="@+id/tv_planner"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/home_item_time_margin"
             android:layout_toStartOf="@id/img_icon"
-            android:background="@drawable/icon_dialog_cus"
+            android:background="@drawable/icon_dialog"
+            android:textSize="@dimen/app_title_text_size"
             android:text="fasdfasdfasdfasdf"
 
             />

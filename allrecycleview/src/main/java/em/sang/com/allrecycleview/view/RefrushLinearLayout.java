@@ -2,6 +2,7 @@ package em.sang.com.allrecycleview.view;
 
 import android.content.Context;
 import android.util.AttributeSet;
+import android.util.TypedValue;
 import android.view.Gravity;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -45,10 +46,10 @@ public class RefrushLinearLayout extends LinearLayout {
         LayoutParams params = new LayoutParams(Apputils.dip2px(context,30),Apputils.dip2px(context,30));
         shapeView.setLayoutParams(params);
         tvMsg = new TextView(context);
-        tvMsg.setTextSize(Apputils.sp2px(context,8));
+        tvMsg.setTextSize(TypedValue.COMPLEX_UNIT_PX,Apputils.sp2px(context,16));
         tvMsg.setText("准备刷新数据");
         tvTime = new TextView(context);
-        tvTime.setTextSize(Apputils.sp2px(context,6));
+        tvTime.setTextSize(TypedValue.COMPLEX_UNIT_PX,Apputils.sp2px(context,12));
         tvTime.setText("上次刷新时间:");
         LinearLayout l = new LinearLayout(context);
         l.addView(tvMsg);

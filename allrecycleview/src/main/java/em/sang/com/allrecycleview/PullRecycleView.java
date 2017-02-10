@@ -6,7 +6,6 @@ import android.animation.ValueAnimator;
 import android.content.Context;
 import android.support.annotation.Nullable;
 import android.util.AttributeSet;
-import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
@@ -14,6 +13,7 @@ import android.widget.LinearLayout;
 import em.sang.com.allrecycleview.adapter.BasicAdapter;
 import em.sang.com.allrecycleview.holder.SimpleHolder;
 import em.sang.com.allrecycleview.utils.Apputils;
+import em.sang.com.allrecycleview.utils.JLog;
 import em.sang.com.allrecycleview.view.RefrushLinearLayout;
 import em.sang.com.allrecycleview.view.ShapeView;
 
@@ -46,24 +46,19 @@ public class PullRecycleView extends BasicPullRecycleView {
 
     @Override
     public float getStandHeightByStated(int refrush_state) {
-        float stand;
+        float stand = min;
         switch (refrush_state) {
             case LOAD_BEFOR:
             case LOADING:
-                if (isFirst()){
-                    stand = getEndHeight();
-                }else {
-                    stand = min;
-                }
+
+                stand=mearchTop;
                 break;
             case LOADING_DOWN:
             case LOAD_DOWN_BEFOR:
                 if (isLast()){
                     stand = getEndHeight();
-                }else {
-                    stand = min;
                 }
-
+                stand=mearchBoom;
                 break;
             default:
                 stand = min;
@@ -76,7 +71,7 @@ public class PullRecycleView extends BasicPullRecycleView {
         downY = -1;
         topView = new RefrushLinearLayout(context);
         boomView = new RefrushLinearLayout(context);
-        boomView.setGravity(Gravity.CENTER);
+
 
         mearchTop = Apputils.getWidthAndHeight(topView)[1];
         mearchBoom = Apputils.getWidthAndHeight(boomView)[1];
@@ -84,7 +79,10 @@ public class PullRecycleView extends BasicPullRecycleView {
         LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
         params.height = (int) min;
         topView.setLayoutParams(params);
-        boomView.setLayoutParams(params);
+
+        LinearLayout.LayoutParams boom = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
+        boom.height = (int) min;
+        boomView.setLayoutParams(boom);
         hasTop=true;
         hasBoom=true;
     }
@@ -124,7 +122,7 @@ public class PullRecycleView extends BasicPullRecycleView {
      * 刷新失败后调用
      */
     public void loadFail() {
-        upRefrush_state(LOAD_SUCCESS);
+        upRefrush_state(LOAD_FAIL);
     }
 
     @Override
@@ -144,14 +142,14 @@ public class PullRecycleView extends BasicPullRecycleView {
     @Override
     public void setLoading() {
         super.setLoading();
-        setHightVisiable(mearchTop+1);
+        setViewHeight(getEndView(),mearchTop);
         upRefrush_state(LOADING);
     }
     @Override
     public void setAdapter(Adapter adapter) {
         super.setAdapter(adapter);
-        upRefrush_state(LOAD_OVER);
-        upRefrush_state(LOAD_DOWN_BEFOR);
+//        upRefrush_state(LOAD_OVER);
+//        upRefrush_state(LOAD_DOWN_BEFOR);
     }
 
     @Override
@@ -161,17 +159,17 @@ public class PullRecycleView extends BasicPullRecycleView {
 
 
     public int changeStateByHeight(int height) {
-        int result = 0;
+        int result =refrush_state;
         float stand = getEndHeight();
 
         if (isFirst()) {
-            if (height < stand) {
+            if (height <= stand) {
                 result = LOAD_OVER;
             } else {
                 result = LOAD_BEFOR;
             }
         }else if (isLast()){
-            if (height < stand) {
+            if (height <= stand) {
                 result = LOAD_DOWN_OVER;
             } else {
                 result = LOAD_DOWN_BEFOR;
@@ -182,7 +180,7 @@ public class PullRecycleView extends BasicPullRecycleView {
 
     //获取刷新的高度
     public float getEndHeight() {
-        int stand = (int) min;
+        float stand = min;
         if (isFirst()) {
             stand = mearchTop;
         } else if (isLast()) {
@@ -210,13 +208,25 @@ public class PullRecycleView extends BasicPullRecycleView {
 
 
     public void upRefrush_state(int refrush_state) {
-
         if (this.refrush_state == refrush_state) {
             return;
         }
-        this.refrush_state = refrush_state;
 
+//        if ((this.refrush_state==LOAD_BEFOR||this.refrush_state==LOAD_DOWN_BEFOR)&&refrush_state==LOADING){
+//            if (listener!=null){
+//                listener.onLoading();
+//            }
+//        }
 
+        JLog.i(this.refrush_state+">>>>>>"+refrush_state);
+        if (refrush_state==LOADING){
+            JLog.i(this.refrush_state+"执行监听>>>>>>"+refrush_state);
+            if (listener!=null){
+                listener.onLoading();
+            }
+        }
+
+        clearViewAnimotion();
         moveToChildHight(refrush_state);
         switch (refrush_state) {
             case LOAD_OVER:
@@ -226,15 +236,10 @@ public class PullRecycleView extends BasicPullRecycleView {
             case LOAD_BEFOR:
                 topView.upState(ShapeView.LOAD_BEFOR);
                 topView.setTvMsg("松手刷新数据");
-
                 break;
             case LOADING:
                 topView.upState(ShapeView.LOADING);
                 topView.setTvMsg("正在加载数据");
-                if (listener != null) {
-                    listener.onLoading();
-                }
-
                 break;
             case LOAD_FAIL:
                 topView.upState(ShapeView.LOAD_FAIL);
@@ -256,9 +261,6 @@ public class PullRecycleView extends BasicPullRecycleView {
             case LOADING_DOWN:
                 boomView.upState(ShapeView.LOADING);
                 boomView.setTvMsg("正在加载数据");
-                if (listener != null) {
-                    listener.onLoading();
-                }
 
                 break;
             case LOAD_DOWN_FAIL:
@@ -274,25 +276,64 @@ public class PullRecycleView extends BasicPullRecycleView {
                 boomView.setTvMsg("加载异常");
                 break;
         }
+        this.refrush_state = refrush_state;
+
     }
 
+
+    private int a;
+
+    private int nextState=-1;
     @Override
     public void moveToChildHight(final int refrush_state) {
         View view = getEndView();
-        final float stand=getStandHeightByStated(refrush_state);
-
+         float stand=getStandHeightByStated(refrush_state);
         ViewGroup.LayoutParams layoutParams = view.getLayoutParams();
         int height = layoutParams.height;
-
-
-
-        if (animator != null && animator.isRunning()) {
-            animator.removeAllListeners();
-            animator.cancel();
-        }
         if (height == stand) {
             return;
         }
+        if (animator != null && animator.isRunning()) {
+            animator.removeAllListeners();
+            animator.cancel();
+            animator=null;
+        }
+
+        if (refrush_state==LOADING){
+
+            JLog.i("--------------失败了------------------------"+stand+">>>"+height);
+        }
+
+
+        int load = refrush_state;
+        switch (refrush_state) {
+            case LOAD_DOWN_BEFOR:
+                if (isNoTouch) {
+                    load = LOADING_DOWN;
+                }
+                break;
+            case LOAD_BEFOR:
+                if (isNoTouch) {
+                    load = LOADING;
+                }
+                break;
+            case LOADING:
+            case LOADING_DOWN:
+            case LOAD_OVER:
+            case LOAD_DOWN_OVER:
+                break;
+            case LOAD_SUCCESS:
+            case LOAD_FAIL:
+                load=LOAD_OVER;
+                break;
+            case LOAD_DOWN_SUCCESS:
+            case LOAD_DOWN_FAIL:
+                load=LOAD_DOWN_OVER;
+                break;
+        }
+
+        this.nextState=load;
+        JLog.i(load+"---------------动画执行开始-------------------------"+refrush_state);
         animator = ValueAnimator.ofFloat(height, stand);
         final View finalView = view;
         animator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
@@ -302,50 +343,33 @@ public class PullRecycleView extends BasicPullRecycleView {
                 setViewHeight(finalView,value);
             }
         });
-
-
-
-
-            animator.addListener(new AnimatorListenerAdapter() {
+        final int finalLoad = load;
+        animator.addListener(new AnimatorListenerAdapter() {
                 @Override
                 public void onAnimationEnd(Animator animation) {
                     super.onAnimationEnd(animation);
-
-                    int load = refrush_state;
-                    switch (refrush_state) {
-                        case LOAD_DOWN_BEFOR:
-                            load = LOADING_DOWN;
-                            break;
-                        case LOAD_BEFOR:
-                            load = LOADING;
-                            break;
-                        default:
-                            if (stand==min) {
-                                if (isFirst()){
-                                    load = LOAD_OVER;
-                                }else if (isLast()) {
-                                    load = LOAD_DOWN_OVER;
-                                }
-                            }else {
-                                load=refrush_state;
-                            }
-                            break;
-                    }
-                    upRefrush_state(load);
+                    JLog.i(finalLoad +"---------------动画执行结束-------------------------"+refrush_state);
+                    upRefrush_state( PullRecycleView.this.nextState);
 
                 }
             });
 
+        if (refrush_state==LOAD_SUCCESS){
 
+            JLog.i("-------------加载成功----------------");
+        }
         animator.setDuration(200);
-        if (isMove) {
-            if (isChangStateByHeight() || refrush_state == LOADING || refrush_state == LOADING_DOWN) {
+
+        if (isNoTouch) {
+            if (isChangStateByHeight()) {
                 animator.start();
             } else {
                 animator.setStartDelay(200);
                 animator.start();
             }
         }
+
+
     }
 
 

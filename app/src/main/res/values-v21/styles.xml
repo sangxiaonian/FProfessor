@@ -20,4 +20,17 @@
 
     </style>
 
+    <style name="item_style">
+
+        <item name="android:background">@drawable/select_item_click</item>
+        <item name="android:clickable">true</item>
+
+    </style>
+
+    <style name="item_bg_style">
+
+        <item name="android:background">?android:attr/selectableItemBackground</item>
+        <item name="android:clickable">true</item>
+
+    </style>
 </resources>

@@ -202,7 +202,8 @@ public class PullDownRecycleView extends BasicPullRecycleView {
         });
 
         animator.setDuration(200);
-        if (isMove) {
+
+        if (isNoTouch) {
             if (isChangStateByHeight() || refrush_state == LOADING_DOWN) {
                 animator.start();
             } else {

@@ -7,6 +7,7 @@ import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.text.TextUtils;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -27,7 +28,7 @@ public class PlannerActivity extends BasisActivity {
 
     private RecyclerView rc;
     private EditText et;
-    private ImageView img;
+    private Button btn;
     private List<Set_Item> lists;
 
     @Override
@@ -35,10 +36,10 @@ public class PlannerActivity extends BasisActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_planner);
         initToolBar("学习・规划师");
-        setColor(this, getResources().getColor(R.color.white));
+        setColor(this, getResources().getColor(R.color.statucolor));
         rc = (RecyclerView) findViewById(R.id.rc);
         et = (EditText) findViewById(R.id.et_planner);
-        img = (ImageView) findViewById(R.id.img_planner);
+        btn = (Button) findViewById(R.id.btn_planner_send);
         initData();
     }
 
@@ -52,15 +53,15 @@ public class PlannerActivity extends BasisActivity {
         rc.setLayoutManager(manage);
         final PlannerAdapter adapter = new PlannerAdapter();
         rc.setAdapter(adapter);
-        img.setOnClickListener(new View.OnClickListener() {
+        btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
                 String msg = et.getText().toString().trim();
                 if (!TextUtils.isEmpty(msg)){
                     Set_Item item1 = new Set_Item();
                     item1.title=msg;
                     item1.type=1;
+                    item1.icon_id=R.mipmap.login_boyhead;
                     lists.add(item1);
                     adapter.notifyItemInserted(adapter.getItemCount()-1);
                     rc.scrollToPosition(adapter.getItemCount()-1);
@@ -117,9 +118,11 @@ public class PlannerActivity extends BasisActivity {
         }
 
         public void initView(Set_Item item) {
+            view = (ImageView) itemView.findViewById(R.id.img_icon);
             if (item.icon_id != 0) {
-                view = (ImageView) itemView.findViewById(R.id.img_icon);
                 Glide.with(PlannerActivity.this).load(item.icon_id).placeholder(R.mipmap.icon_tcacher).crossFade().into(view);
+            }else {
+                Glide.with(PlannerActivity.this).load(R.mipmap.icon_tcacher).placeholder(R.mipmap.icon_tcacher).crossFade().into(view);
             }
 
             if (!TextUtils.isEmpty(item.title)){

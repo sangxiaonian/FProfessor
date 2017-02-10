@@ -11,7 +11,7 @@ public class Set_Activity extends BasisActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_set);
-        setColor(this,getResources().getColor(R.color.white));
+        setColor(this,getResources().getColor(R.color.statucolor));
         initView();
     }
 

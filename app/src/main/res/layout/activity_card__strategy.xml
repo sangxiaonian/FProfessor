@@ -12,14 +12,14 @@
     <RadioGroup
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="@dimen/home_item_time_margin"
-        android:layout_marginTop="@dimen/home_item_time_margin"
+        android:layout_marginBottom="@dimen/app_cut_big"
+        android:layout_marginTop="@dimen/app_cut_big"
         android:background="@color/white"
         android:orientation="horizontal"
         android:id="@+id/rg_card"
-        android:paddingEnd="@dimen/app_maggin_ends"
-        android:paddingStart="@dimen/app_maggin_ends"
-        android:paddingTop="@dimen/app_item_cut_margin">
+        android:paddingEnd="@dimen/app_margin_ends"
+        android:paddingStart="@dimen/app_margin_ends"
+        android:paddingTop="@dimen/app_cut_big">
 
         <RadioButton
             style="@style/card_rb"

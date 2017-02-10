@@ -18,8 +18,8 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="60dp"
-        android:paddingStart="@dimen/app_maggin_ends"
-        android:paddingEnd="@dimen/app_maggin_ends"
+        android:paddingStart="@dimen/app_margin_ends"
+        android:paddingEnd="@dimen/app_margin_ends"
         android:paddingTop="@dimen/title_card_height"
         android:paddingBottom="@dimen/title_card_height"
         android:gravity="center_vertical"
@@ -33,19 +33,12 @@
             android:layout_weight="1"
             android:layout_height="match_parent" />
 
-        <ImageView
-            android:layout_marginStart="@dimen/title_card_height"
-            android:layout_marginEnd="@dimen/title_card_height"
-            android:layout_width="@dimen/set_margin_icon"
-            android:layout_height="@dimen/set_margin_icon"
-            android:src="@mipmap/icon_expression"/>
-
-        <ImageView
-            android:id="@+id/img_planner"
-            android:layout_width="@dimen/set_margin_icon"
-            android:layout_height="@dimen/set_margin_icon"
-            android:src="@mipmap/icon_cdd"/>
-
-
+        <Button
+            android:id="@+id/btn_planner_send"
+            android:layout_marginStart="@dimen/app_cut_big"
+            android:background="@color/transparent"
+            android:layout_width="@dimen/import_item_img_size"
+            android:layout_height="match_parent"
+            android:text="发送"/>
     </LinearLayout>
 </LinearLayout>

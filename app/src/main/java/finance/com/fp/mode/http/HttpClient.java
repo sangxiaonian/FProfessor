@@ -17,6 +17,7 @@ import retrofit2.converter.scalars.ScalarsConverterFactory;
 public class HttpClient {
 
     public static Retrofit getClient(String url){
+
         OkHttpClient.Builder builder = new OkHttpClient.Builder();
         builder.connectTimeout(60, TimeUnit.SECONDS);
         HttpLoggingInterceptor interceptor = new HttpLoggingInterceptor();

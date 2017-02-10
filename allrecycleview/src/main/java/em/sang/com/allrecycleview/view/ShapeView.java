@@ -37,6 +37,7 @@ public class ShapeView extends BasicView {
 
     private boolean change;
     protected void flipAnimation() {
+        clearViewAnimation();
         flip = ValueAnimator.ofFloat(1f, 0f, 1f);
         flip.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
             @Override

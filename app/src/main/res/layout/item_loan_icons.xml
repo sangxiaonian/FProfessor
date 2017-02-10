@@ -1,62 +1,62 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    >
+    android:layout_height="wrap_content">
 
     <LinearLayout
-        android:layout_marginTop="@dimen/home_item_time_margin"
-        android:paddingEnd="@dimen/app_maggin_ends"
-        android:paddingStart="@dimen/app_maggin_ends"
-        android:paddingTop="@dimen/home_item_time_margin"
-        android:paddingBottom="@dimen/home_item_time_margin"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+
         android:background="@color/white"
         android:gravity="center_vertical"
-        android:orientation="horizontal">
+        android:orientation="horizontal"
+        android:padding="@dimen/app_cut_big">
 
         <ImageButton
 
-            android:layout_width="@dimen/item_image_width"
-            android:layout_height="@dimen/item_image_height"
+            android:layout_width="@dimen/loan_item_loan_img_size"
+            android:layout_height="@dimen/loan_item_loan_img_size"
             android:background="@color/transparent"
             android:scaleType="fitXY"
-            android:src="@mipmap/icon_icon_hot" />
+            android:src="@mipmap/icon_thehot" />
 
         <TextView
             android:layout_width="0dp"
-            android:layout_weight="1"
-            android:layout_height="match_parent" />
-        <ImageButton
-
-            android:layout_width="@dimen/item_image_width"
-            android:layout_height="@dimen/item_image_height"
-            android:background="@color/transparent"
-            android:scaleType="fitXY"
-            android:src="@mipmap/icon_small" />
-        <TextView
-            android:layout_width="0dp"
-            android:layout_weight="1"
-            android:layout_height="match_parent" />
+            android:layout_height="match_parent"
+            android:layout_weight="1" />
 
         <ImageButton
 
-            android:layout_width="@dimen/item_image_width"
-            android:layout_height="@dimen/item_image_height"
+            android:layout_width="@dimen/loan_item_loan_img_size"
+            android:layout_height="@dimen/loan_item_loan_img_size"
             android:background="@color/transparent"
             android:scaleType="fitXY"
             android:src="@mipmap/icon_hot" />
+
         <TextView
             android:layout_width="0dp"
-            android:layout_weight="1"
-            android:layout_height="match_parent" />
+            android:layout_height="match_parent"
+            android:layout_weight="1" />
+
         <ImageButton
 
-            android:layout_width="@dimen/item_image_width"
-            android:layout_height="@dimen/item_image_height"
+            android:layout_width="@dimen/loan_item_loan_img_size"
+            android:layout_height="@dimen/loan_item_loan_img_size"
             android:background="@color/transparent"
             android:scaleType="fitXY"
-            android:src="@mipmap/icon_large" />
+            android:src="@mipmap/icon_door" />
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1" />
+
+        <ImageButton
+
+            android:layout_width="@dimen/loan_item_loan_img_size"
+            android:layout_height="@dimen/loan_item_loan_img_size"
+            android:background="@color/transparent"
+            android:scaleType="fitXY"
+            android:src="@mipmap/icon_big" />
     </LinearLayout>
 </RelativeLayout>

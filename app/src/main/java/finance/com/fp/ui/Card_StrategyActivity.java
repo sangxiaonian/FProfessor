@@ -35,7 +35,7 @@ public class Card_StrategyActivity extends BasisActivity implements RadioGroup.O
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_card__strategy);
-        setColor(this, getResources().getColor(R.color.white));
+        setColor(this, getResources().getColor(R.color.statucolor));
         tranInfor=getIntent().getParcelableExtra(Config.infors);
         initToolBar(tranInfor.title);
         initView();

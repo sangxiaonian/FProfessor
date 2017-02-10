@@ -12,10 +12,7 @@ public class DefaultRefrushListener implements RefrushListener {
 
     }
 
-    @Override
-    public void onDownLoading() {
 
-    }
 
 
 }

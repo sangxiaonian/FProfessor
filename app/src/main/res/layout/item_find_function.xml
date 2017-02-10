@@ -9,7 +9,6 @@
         android:id="@+id/rg_find"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="@dimen/app_item_cut_margin"
         android:background="@color/white"
         android:divider="@drawable/divider_line"
         android:dividerPadding="1dp"
@@ -18,8 +17,8 @@
         android:showDividers="middle">
 
         <RadioButton
-            android:paddingBottom="@dimen/find_margin_top"
-            android:paddingTop="@dimen/find_margin_top"
+            android:paddingBottom="@dimen/find_title_item_margin"
+            android:paddingTop="@dimen/find_title_item_margin"
             android:id="@+id/rb_lao"
             android:button="@null"
             android:text="@string/find_item_lao"

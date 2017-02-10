@@ -6,7 +6,6 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.widget.TextView;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import em.sang.com.allrecycleview.adapter.DefaultAdapter;
@@ -32,7 +31,7 @@ public class Loan_Strategy_Activity extends BasisActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_recycle);
-        setColor(this,getResources().getColor(R.color.white));
+        setColor(this,getResources().getColor(R.color.statucolor));
         initToolBar(getString(R.string.loan_strategy));
         rc = (RecyclerView) findViewById(R.id.rc);
 
@@ -42,7 +41,7 @@ public class Loan_Strategy_Activity extends BasisActivity {
     @Override
     public void initData() {
         super.initData();
-        lists=new ArrayList<>();
+        lists= LoanDataFractory.getInstance().getLoanStragety();
         adapter = new DefaultAdapter<Set_Item>(this,lists,R.layout.item_loan_strategy,new DefaultAdapterViewLisenter<Set_Item>(){
             @Override
             public CustomHolder getBodyHolder(Context context, List<Set_Item> lists, int itemID) {
@@ -66,7 +65,7 @@ public class Loan_Strategy_Activity extends BasisActivity {
 
         rc.addItemDecoration(new RecycleViewDivider(this,LinearLayoutManager.HORIZONTAL,R.drawable.divider_line));
         rc.setAdapter(adapter);
-        LoanDataFractory.getInstance(this).getLoanStrategyData(new DataLoadLisetner<Set_Item>() {
+        LoanDataFractory.getInstance().getLoanStrategyData(new DataLoadLisetner<Set_Item>() {
             @Override
             public void loadOver(List<Set_Item> lists) {
                 Loan_Strategy_Activity.this.lists.addAll(lists);

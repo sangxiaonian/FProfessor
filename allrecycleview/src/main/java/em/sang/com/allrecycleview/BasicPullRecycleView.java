@@ -77,7 +77,7 @@ public abstract class BasicPullRecycleView extends RecyclerView {
     public float downY;
 
 
-    public boolean isMove;
+    public boolean isNoTouch=true;
 
     /**
      * 滑动状态
@@ -88,7 +88,7 @@ public abstract class BasicPullRecycleView extends RecyclerView {
      */
     public final int muli = 3;
     public RefrushListener listener;
-    public float min = 1;
+    public float min = 0;
     public int refrush_state = -1;
     public ValueAnimator animator;
 
@@ -114,7 +114,7 @@ public abstract class BasicPullRecycleView extends RecyclerView {
         if (downY == -1) {
             downY = e.getRawY();
         }
-
+        clearViewAnimotion();
         switch (e.getAction()) {
             case MotionEvent.ACTION_DOWN:
                 downY = e.getRawY();
@@ -122,15 +122,13 @@ public abstract class BasicPullRecycleView extends RecyclerView {
             case MotionEvent.ACTION_MOVE:
                 float gap = (e.getRawY() - downY) / muli;
                 downY = e.getRawY();
-                isMove = false;
+                isNoTouch = false;
 
                 if (canDrag()) {
-
                     if (isFirst()) {
                         setHightVisiable(gap);
-                    } else if (isLast()) {
+                    } else if (!isFirst()&&isLast()) {
                         setHightVisiable(-gap);
-
                     }
                 }
 
@@ -138,7 +136,7 @@ public abstract class BasicPullRecycleView extends RecyclerView {
             case MotionEvent.ACTION_UP:
             case MotionEvent.ACTION_CANCEL:
                 downY = -1;
-                isMove = true;
+                isNoTouch = true;
                 if (canDrag()) {
                     moveToChildHight(refrush_state);
                 }
@@ -164,18 +162,21 @@ public abstract class BasicPullRecycleView extends RecyclerView {
         return layoutParams.height;
     }
 
+
+    protected void clearViewAnimotion(){
+        if (animator != null && animator.isRunning()) {
+            animator.cancel();
+            animator=null;
+        }
+    }
+
     /**
      * 设置当前控件高度
      *
      * @param gap
      */
     public void setHightVisiable(float gap) {
-        if (animator != null && animator.isRunning()) {
-            animator.cancel();
-        }
-
         LinearLayout view = getEndView();
-
         int height = (int) (getHeightVisiable(view) + gap);
         float minheight;
 
@@ -225,7 +226,6 @@ public abstract class BasicPullRecycleView extends RecyclerView {
      * @return
      */
     public abstract float getEndHeight();
-    //获取刷新的高度
 
     /**
      * 获取刷新条目
@@ -260,6 +260,7 @@ public abstract class BasicPullRecycleView extends RecyclerView {
         if (manager instanceof LinearLayoutManager) {
             LinearLayoutManager linearLayoutManager = ((LinearLayoutManager) manager);
             int position = linearLayoutManager.findFirstCompletelyVisibleItemPosition();
+              position = linearLayoutManager.findFirstVisibleItemPosition();
             return 0 == position;
         } else if (manager instanceof StaggeredGridLayoutManager) {
             return 0 == ((StaggeredGridLayoutManager) manager).findFirstVisibleItemPositions(new int[2])[0];
@@ -354,8 +355,14 @@ public abstract class BasicPullRecycleView extends RecyclerView {
         return hasBoom;
     }
 
+    /**
+     * 正在加载
+     */
     public void setLoading(){
 
     }
+
+
+
 
 }

@@ -5,16 +5,17 @@
     android:background="@drawable/circular_bg"
     android:showDividers="middle"
     android:divider="@drawable/divider_line_dark"
+    android:paddingBottom="@dimen/app_cut_big"
     android:orientation="vertical">
     <TextView
-        android:paddingStart="@dimen/home_item_time_margin"
-        android:paddingEnd="@dimen/home_item_time_margin"
-        android:paddingTop="@dimen/init_float_margin"
-        android:paddingBottom="@dimen/init_float_margin"
+        android:paddingStart="@dimen/app_cut_big"
+        android:paddingEnd="@dimen/app_cut_big"
+        android:paddingTop="@dimen/app_margin_ends"
+        android:paddingBottom="@dimen/app_margin_ends"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:textColor="@color/text_import_item_more"
-        android:textSize="@dimen/item_textsize"
+        android:textSize="@dimen/app_title_text_size"
         android:text="请选择电话"
         />
 
@@ -22,10 +23,10 @@
         android:id="@+id/ll_phone"
         style="@style/item_style"
         android:layout_width="match_parent"
-        android:paddingStart="@dimen/home_item_time_margin"
-        android:paddingEnd="@dimen/home_item_time_margin"
-        android:paddingTop="@dimen/init_float_margin"
-        android:paddingBottom="@dimen/init_float_margin"
+        android:paddingStart="@dimen/app_cut_big"
+        android:paddingEnd="@dimen/app_cut_big"
+        android:paddingTop="@dimen/app_margin_ends"
+        android:paddingBottom="@dimen/app_margin_ends"
         android:gravity="center_vertical"
         android:layout_height="wrap_content">
         <TextView
@@ -35,14 +36,14 @@
             android:layout_weight="1"
 
             android:textColor="@color/text_home_item"
-            android:textSize="@dimen/card_item_big_textSize"
+            android:textSize="@dimen/app_title_text_size"
             />
         <TextView
             android:id="@+id/tv_phonenumber"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textColor="@color/text_card_item_more"
-            android:textSize="@dimen/home_bottom_text_size"
+            android:textSize="@dimen/app_title_text_model"
             />
 
     </LinearLayout>
@@ -51,30 +52,29 @@
         style="@style/item_style"
         android:id="@+id/ll_credit"
         android:layout_width="match_parent"
-        android:paddingStart="@dimen/home_item_time_margin"
-        android:paddingEnd="@dimen/home_item_time_margin"
-        android:paddingTop="@dimen/init_float_margin"
-        android:paddingBottom="@dimen/init_float_margin"
-        android:layout_marginBottom="@dimen/home_item_time_margin"
+        android:paddingStart="@dimen/app_cut_big"
+        android:paddingEnd="@dimen/app_cut_big"
+        android:paddingTop="@dimen/app_margin_ends"
+        android:paddingBottom="@dimen/app_margin_ends"
         android:gravity="center_vertical"
+
         android:layout_height="wrap_content">
         <TextView
             android:id="@+id/tv_credit"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
+
             android:textColor="@color/text_home_item"
-            android:textSize="@dimen/card_item_big_textSize"
+            android:textSize="@dimen/app_title_text_size"
             />
         <TextView
             android:id="@+id/tv_creditnumber"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-
             android:textColor="@color/text_card_item_more"
-            android:textSize="@dimen/home_bottom_text_size"
+            android:textSize="@dimen/app_title_text_model"
             />
-
     </LinearLayout>
 
 

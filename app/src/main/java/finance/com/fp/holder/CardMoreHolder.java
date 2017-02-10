@@ -10,7 +10,6 @@ import com.bumptech.glide.Glide;
 
 import finance.com.fp.R;
 import finance.com.fp.mode.bean.Set_Item;
-import finance.com.fp.utlis.ToastUtil;
 
 /**
  * Description：
@@ -57,7 +56,7 @@ public class CardMoreHolder extends BasicHolder<Set_Item> {
             @Override
             public void onClick(View v) {
                 if (listener==null) {
-                    ToastUtil.showTextToast(context, item.title);
+
                 } else {
                     listener.onItemClick(position,item);
                 }

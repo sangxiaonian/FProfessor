@@ -40,7 +40,6 @@ public class MoveDialog extends Dialog {
     private void initView( Context context){
         mContext= (Activity) context;
         requestWindowFeature(Window.FEATURE_NO_TITLE);
-
     }
 
     @Override
@@ -52,6 +51,11 @@ public class MoveDialog extends Dialog {
     }
 
 
+    /**
+     * 根据坐标位置显示
+     * @param x
+     * @param y
+     */
     public void show(float x,float y){
         Window mWindow = getWindow();
         WindowManager.LayoutParams lp = mWindow.getAttributes();
@@ -61,11 +65,15 @@ public class MoveDialog extends Dialog {
         show();
     }
 
+    /**
+     * 根据点击的按钮显示在按钮下方
+     * @param view
+     */
     public void show(final View view){
         Window mWindow = getWindow();
         mWindow.setGravity(Gravity.LEFT | Gravity.TOP);
         int[] location = new int[2] ;
-//        view.getLocationInWindow(location); //获取在当前窗口内的绝对坐标
+
         view.getLocationOnScreen(location);//获取在整个屏幕内的绝对坐标
 
         WindowManager.LayoutParams lp = mWindow.getAttributes();
@@ -84,5 +92,10 @@ public class MoveDialog extends Dialog {
         dialogWindow.setAttributes(p);
         show();
     }
+
+
+
+
+
 
 }

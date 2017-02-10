@@ -4,6 +4,7 @@ import android.content.Context;
 
 import java.util.List;
 
+import finance.com.fp.CusApplication;
 import finance.com.fp.mode.bean.Set_Item;
 
 /**
@@ -20,8 +21,8 @@ public class BaseFractory {
 
     public DataLoadLisetner lisetner;
 
-    public BaseFractory(Context context){
-        this.context=context;
+    public BaseFractory(){
+        this.context= CusApplication.getContext();
     }
 
 

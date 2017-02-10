@@ -2,11 +2,11 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:paddingStart="@dimen/app_maggin_ends"
-    android:paddingEnd="@dimen/app_maggin_ends"
-    android:paddingTop="@dimen/item_card_icon"
+    android:paddingStart="@dimen/app_margin_ends"
+    android:paddingEnd="@dimen/app_margin_ends"
+    android:paddingTop="@dimen/app_margin_ends"
     style="@style/item_style"
-    android:paddingBottom="@dimen/item_card_icon"
+    android:paddingBottom="@dimen/app_margin_ends"
     >
 
     <TextView
@@ -15,7 +15,7 @@
         android:layout_height="wrap_content"
         android:id="@+id/tv"
         android:textColor="@color/text_card_item_more"
-        android:textSize="@dimen/home_bottom_text_size"
+        android:textSize="@dimen/app_title_text_model"
         />
 
     <include layout="@layout/img_more"/>

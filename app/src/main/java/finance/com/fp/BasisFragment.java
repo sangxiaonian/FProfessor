@@ -31,7 +31,6 @@ public class BasisFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         rootView = initViews(inflater, container);
         initData();
-
         return rootView;
     }
 

@@ -16,8 +16,6 @@ import android.view.WindowManager;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.orhanobut.logger.Logger;
-
 import finance.com.fp.mode.bean.TranInfor;
 
 /**
@@ -85,7 +83,7 @@ public class BasisActivity extends AppCompatActivity {
      */
     public static void setColor(Activity activity, int color) {
 
-        Logger.i(Build.VERSION.SDK_INT + "当前android版本");
+
         Window window = activity.getWindow();
         View statusView = createStatusView(activity, color);
         // 添加 statusView 到布局中

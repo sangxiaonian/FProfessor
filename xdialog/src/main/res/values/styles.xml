@@ -1,0 +1,74 @@
+<resources>
+
+
+    <style name="DialogTheme" parent="android:Theme.Dialog">
+
+        <item name="android:layout_width">fill_parent</item>
+        <item name="android:layout_height">fill_parent</item>
+        <!-- No backgrounds, titles or window float -->
+        <item name="android:windowBackground">@null</item>
+        <item name="android:windowNoTitle">true</item>
+        <item name="android:windowIsFloating">true</item>
+    </style>
+
+    <style name="DialogCutTheme" parent="android:Theme.DeviceDefault.Dialog">
+        <!-- No backgrounds, titles or window float -->
+        <item name="android:windowBackground">@null</item>
+        <item name="android:windowNoTitle">true</item>
+        <item name="android:windowIsFloating">true</item>
+    </style>
+
+    <style name="dialog_down">
+        <item name="@android:windowEnterAnimation">@anim/dialog_down_in</item>
+        <item name="@android:windowExitAnimation">@anim/dialog_down_out</item>
+    </style>
+
+
+
+    <style name="btn_corners_left">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">43dp</item>
+        <item name="android:layout_weight">1</item>
+        <item name="android:gravity">center</item>
+        <item name="android:text">@string/cancel</item>
+        <item name="android:textColor">@color/btn_blue</item>
+        <item name="android:textSize">16sp</item>
+        <item name="android:background">@drawable/selector_brn_corner_left</item>
+    </style>
+
+     <style name="btn_corners_right" parent="btn_corners_left">
+        <item name="android:text">@string/entry</item>
+        <item name="background">@drawable/selector_brn_corner_right</item>
+    </style>
+
+    <style name="text_content">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_marginStart">15dp</item>
+        <item name="android:layout_marginEnd">15dp</item>
+        <item name="android:layout_marginTop">15dp</item>
+        <item name="android:gravity">center</item>
+        <item name="android:textColor">@color/black</item>
+        <item name="android:textSize">@dimen/content_size</item>
+    </style>
+
+    <style name="text_title" parent="text_content">
+        <item name="android:textSize">@dimen/title_size</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="btn_corners">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">45dp</item>
+        <item name="android:textSize">@dimen/title_size</item>
+        <item name="android:gravity">center</item>
+        <item name="android:textStyle">bold</item>
+
+        <item name="android:layout_marginTop">8dp</item>
+        <item name="android:textColor">@color/btn_blue</item>
+        <item name="android:background">@drawable/select_btn_corner</item>
+    </style>
+
+
+
+</resources>

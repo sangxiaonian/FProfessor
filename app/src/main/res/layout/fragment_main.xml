@@ -8,14 +8,14 @@
      >
 
 
-    <em.sang.com.allrecycleview.PullDownRecycleView
+    <android.support.v7.widget.RecyclerView
         android:id="@+id/rc_home"
         android:background="@color/text_home_item_cut"
         android:layout_width="match_parent"
         app:layout_behavior="finance.com.fp.utlis.CustomBehavior"
         android:layout_height="match_parent">
 
-    </em.sang.com.allrecycleview.PullDownRecycleView>
+    </android.support.v7.widget.RecyclerView>
 
 
 
@@ -35,36 +35,36 @@
                 android:layout_width="match_parent"
                 android:layout_height="?actionBarSize"
                 android:gravity="center_vertical"
-                android:layout_marginLeft="@dimen/home_heard_margin"
-                android:layout_marginRight="@dimen/home_heard_margin"
+                android:layout_marginLeft="@dimen/home_title_ends"
+                android:layout_marginRight="@dimen/home_title_ends"
                 android:orientation="horizontal">
                 <EditText
                     android:id="@+id/et_main_heard"
-                    android:layout_width="wrap_content"
-                    android:layout_height="30dp"
+                    android:layout_width="0dp"
+                    android:layout_height="@dimen/home_title_et_height"
                     android:layout_weight="1"
                     android:ellipsize="end"
                     android:background="#f88889"
-                    android:drawablePadding="14dp"
-
+                    android:drawablePadding="@dimen/app_cut_big"
                     android:maxLines="1"
+                    android:textSize="@dimen/home_title_et_size"
                     android:drawableStart="@mipmap/nav_search"
                     android:hint="@string/main_search"
-                    android:paddingLeft="7dp"
+                    android:paddingLeft="@dimen/app_cut_big"
                     android:textColor="@color/white" />
 
                 <ImageButton
                     android:id="@+id/img_main_scan"
-                    android:layout_width="24dp"
-                    android:layout_height="24dp"
-                    android:layout_marginLeft="11dp"
-                    android:layout_marginRight="11dp"
+                    android:layout_width="@dimen/home_title_icon"
+                    android:layout_height="@dimen/home_title_icon"
+                    android:layout_marginLeft="@dimen/app_cut_big"
+                    android:layout_marginRight="@dimen/app_cut_big"
                     android:background="@mipmap/nav_scan" />
 
                 <ImageButton
                     android:id="@+id/img_main_msg"
-                    android:layout_width="24dp"
-                    android:layout_height="24dp"
+                    android:layout_width="@dimen/home_title_icon"
+                    android:layout_height="@dimen/home_title_icon"
                     android:src="@mipmap/nav_notice"
                     android:background="@color/transparent" />
             </LinearLayout>
@@ -80,13 +80,13 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
-                android:layout_marginLeft="40dp"
-                android:layout_marginRight="40dp">
+                android:layout_marginLeft="@dimen/home_title_img_margin"
+                android:layout_marginRight="@dimen/home_title_img_margin">
 
                 <ImageButton
                     android:id="@+id/img_main_card"
-                    android:layout_width="42dp"
-                    android:layout_height="33dp"
+                    android:layout_width="@dimen/home_title_img_width"
+                    android:layout_height="@dimen/home_title_img_height"
                     android:background="@color/transparent"
                     android:scaleType="centerCrop"
                     android:src="@mipmap/icon_handlecard" />
@@ -94,8 +94,8 @@
                 <ImageButton
 
                     android:id="@+id/img_main_net"
-                    android:layout_width="42dp"
-                    android:layout_height="33dp"
+                    android:layout_width="@dimen/home_title_img_width"
+                    android:layout_height="@dimen/home_title_img_height"
                     android:layout_centerInParent="true"
                     android:background="@color/transparent"
                     android:scaleType="centerCrop"
@@ -103,8 +103,8 @@
 
                 <ImageButton
                     android:id="@+id/img_main_imp"
-                    android:layout_width="42dp"
-                    android:layout_height="33dp"
+                    android:layout_width="@dimen/home_title_img_width"
+                    android:layout_height="@dimen/home_title_img_height"
                     android:layout_alignParentRight="true"
                     android:background="@color/transparent"
                     android:scaleType="centerCrop"
@@ -132,7 +132,7 @@
                     android:layout_centerVertical="true"
                     android:text="办卡"
                     android:textColor="@color/white"
-                    android:textSize="17sp" />
+                    android:textSize="@dimen/app_title_text_size" />
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -141,7 +141,7 @@
                     android:layout_centerVertical="true"
                     android:text="网贷"
                     android:textColor="@color/white"
-                    android:textSize="17sp" />
+                    android:textSize="@dimen/app_title_text_size" />
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -150,7 +150,7 @@
                     android:layout_centerVertical="true"
                     android:text="提额"
                     android:textColor="@color/white"
-                    android:textSize="17sp" />
+                    android:textSize="@dimen/app_title_text_size" />
 
             </RelativeLayout>
 
@@ -166,7 +166,7 @@
             android:gravity="center_vertical"
             android:layout_marginLeft="20dp"
             android:layout_marginRight="20dp"
-
+            android:clickable="false"
             >
             <ImageButton
                 android:id="@+id/img_main_card_icon"
@@ -179,9 +179,8 @@
             <ImageButton
                 android:layout_marginLeft="40dp"
                 android:id="@+id/img_main_net_icon"
-                android:layout_width="30dp"
-                android:layout_height="24dp"
-
+                android:layout_width="@dimen/home_title_small_img_width"
+                android:layout_height="@dimen/home_title_small_img_height"
                 android:background="@color/transparent"
                 android:scaleType="centerCrop"
                 android:src="@mipmap/icon_lending" />
@@ -189,26 +188,27 @@
             <ImageButton
                 android:layout_marginLeft="40dp"
                 android:id="@+id/img_main_imp_icon"
-                android:layout_width="30dp"
-                android:layout_height="24dp"
+                android:layout_width="@dimen/home_title_small_img_width"
+                android:layout_height="@dimen/home_title_small_img_height"
                 android:background="@color/transparent"
                 android:scaleType="centerCrop"
                 android:src="@mipmap/bab_mentiontheforehead" />
             <android.support.v4.widget.Space
                 android:layout_width="0dp"
-                android:layout_height="wrap_content"
+                android:layout_height="1dp"
                 android:layout_weight="1"/>
             <ImageView
-
-                android:layout_marginRight="20dp"
+                android:layout_marginEnd="@dimen/app_cut_big"
                 android:layout_width="1dp"
                 android:layout_height="18dp"
+                android:clickable="false"
                 android:src="@mipmap/nav_notice"
                 android:alpha="0.3"
                 android:background="@color/text_home_item_cut" />
             <ImageButton
-                android:layout_width="24dp"
-                android:layout_height="24dp"
+                android:id="@+id/img_main_msg_small"
+                android:layout_width="@dimen/home_title_small_img_width"
+                android:layout_height="@dimen/home_title_small_img_height"
                 android:src="@mipmap/nav_notice"
                 android:background="@color/transparent" />
         </LinearLayout>

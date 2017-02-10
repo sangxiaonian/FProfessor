@@ -197,9 +197,7 @@ public class BasicView extends View {
         }
 
         lastState = state;
-        if (flip != null && flip.isRunning()) {
-            flip.cancel();
-        }
+        clearViewAnimation();
         startAng = getRotation();
         switch (state) {
             case LOAD_OVER:
@@ -251,12 +249,7 @@ public class BasicView extends View {
         if (state == lastState) {
             return;
         }
-        if (flip != null && flip.isRunning()) {
-            flip.cancel();
-        }
-        if (rota != null && rota.isRunning()) {
-            rota.cancel();
-        }
+      clearViewAnimation();
         lastState = state;
         switch (state) {
             case LOADING:
@@ -272,25 +265,41 @@ public class BasicView extends View {
 
     }
 
+
+
+
     /**
      * 加载状态时候的动画
      */
     protected void flipAnimation() {
-
+        clearViewAnimation();
     }
 
     public void upState(int state) {
         if (this.state == state) {
             return;
         }
+        clearViewAnimation();
         this.state = state;
         if (state == LOAD_BEFOR || state == LOAD_OVER) {
             round(state);
         } else if (state == LOADING) {
             flip(state);
+        }else if (state==LOAD_SUCCESS){
+            clearViewAnimation();
         }
 
         postInvalidate();
+    }
+
+    protected void clearViewAnimation(){
+        if (flip != null && flip.isRunning()) {
+            flip.cancel();
+
+        }
+        if (rota != null && rota.isRunning()) {
+            rota.cancel();
+        }
     }
 
 
@@ -314,5 +323,6 @@ public class BasicView extends View {
         if (flip != null && flip.isRunning()) {
             flip.cancel();
         }
+        clearViewAnimation();
     }
 }

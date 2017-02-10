@@ -2,21 +2,20 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-
     android:orientation="horizontal">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="1dp"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="@dimen/app_cut_big"
+        android:id="@+id/more"
         style="@style/item_style"
         android:gravity="center_vertical"
         android:orientation="horizontal"
-        android:paddingBottom="@dimen/find_margin_top"
-        android:paddingLeft="@dimen/app_maggin_ends"
-        android:paddingRight="@dimen/app_maggin_ends"
-        android:paddingTop="@dimen/find_margin_top">
+        android:paddingBottom="@dimen/import_item_one_padding"
+        android:paddingLeft="@dimen/app_margin_ends"
+        android:paddingRight="@dimen/app_margin_ends"
+        android:paddingTop="@dimen/import_item_one_padding">
 
         <TextView
             android:layout_width="wrap_content"
@@ -24,7 +23,7 @@
 
             android:text="@string/import_key"
             android:textColor="@color/text_home_more_text"
-            android:textSize="@dimen/home_item_text" />
+            android:textSize="@dimen/import_item_text_size" />
         <TextView
 
             android:layout_width="0dp"
@@ -32,7 +31,7 @@
             android:layout_weight="1"
             android:text="@string/import_key_des"
             android:textColor="@color/text_home_item_time"
-            android:textSize="@dimen/home_item_time_text" />
+            android:textSize="@dimen/app_title_text_size_small" />
 
         <TextView
             android:layout_width="wrap_content"
@@ -40,7 +39,7 @@
             android:layout_marginRight="@dimen/home_bottom_text_size"
             android:text="@string/query_all_balance"
             android:textColor="@color/text_card_item_more"
-            android:textSize="@dimen/home_item_text" />
+            android:textSize="@dimen/tools_text_size_home" />
 
         <include layout="@layout/img_more" />
 

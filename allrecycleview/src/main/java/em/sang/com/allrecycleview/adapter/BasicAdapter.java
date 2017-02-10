@@ -16,9 +16,9 @@ import em.sang.com.allrecycleview.inter.CustomAdapterListener;
 
 /**
  * Description：
- *
+ * <p>
  * Author： 桑小年
- *
+ * <p>
  * Data： 2016/11/7 16:43
  */
 public class BasicAdapter<T> extends RecyclerView.Adapter {
@@ -41,8 +41,9 @@ public class BasicAdapter<T> extends RecyclerView.Adapter {
     }
 
     public BasicAdapter(Context context, List<T> lists, int itemID, CustomAdapterListener<T> listener) {
-        if (lists!=null){
-        this.lists=lists;}
+        if (lists != null) {
+            this.lists = lists;
+        }
         this.itemID = itemID;
         this.listener = listener;
         this.context = context;
@@ -67,14 +68,14 @@ public class BasicAdapter<T> extends RecyclerView.Adapter {
 
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
-        if (listener!=null){
-            listener.onBindViewHolder(holder,position);
+        if (listener != null) {
+            listener.onBindViewHolder(holder, position);
         }
     }
 
     @Override
     public int getItemCount() {
-        return lists.size() + heards.size() + foots.size()+tops.size()+booms.size() ;
+        return lists.size() + heards.size() + foots.size() + tops.size() + booms.size();
     }
 
 
@@ -92,9 +93,9 @@ public class BasicAdapter<T> extends RecyclerView.Adapter {
      *
      * @param heardHolder 头布局的holder
      */
-    public void addHead(int index,CustomPeakHolder heardHolder) {
+    public void addHead(int index, CustomPeakHolder heardHolder) {
 
-        heards.add(index,heardHolder);
+        heards.add(index, heardHolder);
     }
 
     /**
@@ -105,7 +106,8 @@ public class BasicAdapter<T> extends RecyclerView.Adapter {
     public void addFoots(CustomPeakHolder footHolder) {
         foots.add(footHolder);
     }
-   /**
+
+    /**
      * 添加顶部刷新局
      *
      * @param topHolder
@@ -114,16 +116,18 @@ public class BasicAdapter<T> extends RecyclerView.Adapter {
         tops.clear();
         tops.add(topHolder);
     }
+
     /**
      * 添加底部刷新局
      *
      * @param topHolder 顶部布局的holder
      */
-    public void addTop(int index,CustomPeakHolder topHolder) {
+    public void addTop(int index, CustomPeakHolder topHolder) {
 
-        tops.add(index,topHolder);
+        tops.add(index, topHolder);
     }
-  /**
+
+    /**
      * 添加顶部刷新局
      *
      * @param boomHolder
@@ -132,14 +136,15 @@ public class BasicAdapter<T> extends RecyclerView.Adapter {
         booms.clear();
         booms.add(boomHolder);
     }
+
     /**
      * 添加底部刷新局
      *
      * @param boomHolder 头布局的holder
      */
-    public void addBoom(int index,CustomPeakHolder boomHolder) {
+    public void addBoom(int index, CustomPeakHolder boomHolder) {
 
-        booms.add(index,boomHolder);
+        booms.add(index, boomHolder);
     }
 
     public void onAttachedToRecyclerView(RecyclerView recyclerView) {
@@ -158,6 +163,7 @@ public class BasicAdapter<T> extends RecyclerView.Adapter {
             });
         }
     }
+
     @Override
     public void onViewAttachedToWindow(RecyclerView.ViewHolder holder) {
         super.onViewAttachedToWindow(holder);
@@ -172,17 +178,18 @@ public class BasicAdapter<T> extends RecyclerView.Adapter {
 
 
     public boolean isFooter(int position) {
-        return position >= heards.size() + lists.size()+tops.size() && position < tops.size()+heards.size() + lists.size() + foots.size()+booms.size();
+        return position >= heards.size() + lists.size() + tops.size() && position < tops.size() + heards.size() + lists.size() + foots.size() + booms.size();
     }
 
     public boolean isHeader(int position) {
-        return position >= 0 && position < heards.size()+tops.size();
+        return position >= 0 && position < heards.size() + tops.size();
     }
 
-    public List<T> getBodyLists(){
+    public List<T> getBodyLists() {
         return lists;
     }
-    public void upData(List<T> list){
+
+    public void upData(List<T> list) {
         this.lists = list;
         notifyDataSetChanged();
 

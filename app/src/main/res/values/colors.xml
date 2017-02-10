@@ -4,6 +4,7 @@
     <color name="colorPrimaryDark">#F95658</color>
     <color name="colorAccent">#FF4081</color>
     <color name="bg">#afafaf</color>
+    <color name="statucolor">#ffffff</color>
     <color name="white">#ffffff</color>
     <color name="transparent">#00ffffff</color>
     <color name="text_home_item">#404040</color>
@@ -15,5 +16,7 @@
     <color name="btn_import_item">#52bf7f</color>
     <color name="set_item">#bdbdbd</color>
     <color name="loan_item">#1798f2</color>
+
+    <color name="click_item">#f3f3f3</color>
 
 </resources>

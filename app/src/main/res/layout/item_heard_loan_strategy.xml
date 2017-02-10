@@ -49,24 +49,24 @@
             android:layout_height="wrap_content"
             android:background="@color/white"
             android:paddingBottom="@dimen/home_item_time_margin"
-            android:paddingEnd="@dimen/app_maggin_ends"
-            android:paddingStart="@dimen/app_maggin_ends"
-            android:paddingTop="@dimen/home_item_time_margin"
+            android:paddingEnd="@dimen/app_margin_ends"
+            android:paddingStart="@dimen/app_margin_ends"
+            android:paddingTop="@dimen/app_cut_big"
             android:text="@string/loan_apply"
             android:textColor="@color/text_card_item_more"
-            android:textSize="@dimen/home_item_text" />
+            android:textSize="@dimen/tools_text_size_loan" />
 
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@color/white"
             android:paddingBottom="@dimen/home_item_time_margin"
-            android:paddingEnd="@dimen/app_maggin_ends"
-            android:paddingStart="@dimen/app_maggin_ends"
+            android:paddingEnd="@dimen/app_margin_ends"
+            android:paddingStart="@dimen/app_margin_ends"
             android:textColor="@color/bg"
             android:lineSpacingMultiplier="1.5"
-            android:paddingTop="@dimen/home_item_time_margin"
-            android:textSize="@dimen/home_bottom_text_size"
+            android:paddingTop="@dimen/app_cut_big"
+            android:textSize="@dimen/app_title_text_model"
             android:text="@string/loan_apply_detail" />
     </LinearLayout>
 </RelativeLayout>

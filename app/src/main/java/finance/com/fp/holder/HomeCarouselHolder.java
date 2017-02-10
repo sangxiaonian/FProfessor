@@ -16,7 +16,6 @@ import com.bumptech.glide.RequestManager;
 
 import java.util.List;
 
-import em.sang.com.allrecycleview.holder.HeardHolder;
 import em.sang.com.allrecycleview.utils.Apputils;
 import finance.com.fp.R;
 
@@ -26,7 +25,7 @@ import finance.com.fp.R;
  * @Author：桑小年
  * @Data：2017/1/3 11:17
  */
-public class HomeCarouselHolder extends HeardHolder {
+public class HomeCarouselHolder extends BasicHolder {
 
     ViewPager vp;
     LinearLayout ll_tag;
@@ -76,7 +75,6 @@ public class HomeCarouselHolder extends HeardHolder {
             LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
             params.setMargins(0, 0, Apputils.dip2px(context, 7), 0);
             tag.setLayoutParams(params);
-
             tag.setImageResource(R.drawable.tag_carousel);
             ll_tag.addView(tag);
         }

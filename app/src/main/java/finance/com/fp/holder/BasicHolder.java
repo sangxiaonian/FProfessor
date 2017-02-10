@@ -47,4 +47,6 @@ public class BasicHolder<T> extends HeardHolder<T> {
         params.setMargins((int) left,(int)top,(int)right,(int)bottom);
         itemView.setLayoutParams(params);
     }
+
+
 }

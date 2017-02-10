@@ -1,22 +1,22 @@
 package finance.com.fp.holder;
 
 import android.content.Context;
+import android.support.v7.widget.GridLayoutManager;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
-import android.util.TypedValue;
-import android.view.Gravity;
 import android.view.View;
-import android.view.ViewGroup;
-import android.widget.BaseAdapter;
-import android.widget.GridView;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
-import com.bumptech.glide.RequestManager;
+import com.orhanobut.logger.Logger;
 
 import java.util.List;
 
+import em.sang.com.allrecycleview.adapter.DefaultAdapter;
+import em.sang.com.allrecycleview.holder.CustomHolder;
+import em.sang.com.allrecycleview.inter.DefaultAdapterViewLisenter;
 import finance.com.fp.R;
 import finance.com.fp.mode.bean.Set_Item;
 import finance.com.fp.utlis.ToastUtil;
@@ -29,127 +29,83 @@ import finance.com.fp.utlis.ToastUtil;
  */
 public class GrideHolder extends BasicHolder<Set_Item> {
 
-    private GridView gv;
-    RequestManager manager;
-    private int numColuns=4;
-    private int imageWidth,imageHeight;
-    private LinearLayout.LayoutParams imgParams,textParams;
+    private RecyclerView gv;
+    private int gvItem=R.layout.view_gv_card;
+
+    private int numColuns = 4;
+    private List<Set_Item> list;
 
     public GrideHolder(Context context, List lists, int itemID) {
         super(context, lists, itemID);
-        manager = Glide.with(context);
-        imageWidth=(int) context.getResources().getDimension(R.dimen.card_item_gri_img);
-        imageHeight=(int) context.getResources().getDimension(R.dimen.card_item_gri_img);
+        list=lists;
+
     }
 
-    public GridView getGridView(){
-        return (GridView) itemView.findViewById(R.id.gridview);
+    public void setItemID(int itemID){
+        this.gvItem=itemID;
+    }
+    public RecyclerView getGridView() {
+        return (RecyclerView) itemView.findViewById(R.id.gridview);
     }
 
-    public void setImageParams(float width, float height, int numColuns ){
-        this.imageHeight= (int) height;
-        this.imageWidth= (int) width;
-        this.numColuns=numColuns;
+    public void setnumColuns(int numColuns) {
+
+        this.numColuns = numColuns;
     }
 
-    public void setImageParams(LinearLayout.LayoutParams params){
-        imgParams=params;
-    }
-
-    public void setTextParams(LinearLayout.LayoutParams params){
-        textParams=params;
-    }
 
     @Override
-    public void initView(final int position,final Context context) {
+    public void initView(final int position, final Context context) {
         super.initView(position, context);
-        gv = (GridView) itemView.findViewById(R.id.gridview);
-        gv.setNumColumns(numColuns);
-        GVAdater adater = new GVAdater();
-        gv.setAdapter(adater);
-        int col=numColuns;
-        int totalHeight=0;
-        for (int i = 0; i < adater.getCount(); i += col) {
-            // 获取listview的每一个item
-            View listItem = adater.getView(i, null, gv);
-            listItem.measure(0, 0);
-            // 获取item的高度和
-            totalHeight += listItem.getMeasuredHeight()+gv.getVerticalSpacing();
-        }
-        // 获取listview的布局参数
-        ViewGroup.LayoutParams params = gv.getLayoutParams();
-        // 设置高度
-        params.height = totalHeight+gv.getPaddingBottom();
+        gv = (RecyclerView) itemView.findViewById(R.id.gridview);
+        LinearLayoutManager manager = new GridLayoutManager(context,numColuns);
+        manager.setOrientation(LinearLayoutManager.VERTICAL);
+        gv.setLayoutManager(manager);
 
-        // 设置参数
-        gv.setLayoutParams(params);
+
+        DefaultAdapter<Set_Item> adapter = new DefaultAdapter<>(context, datas, gvItem, new DefaultAdapterViewLisenter<Set_Item>() {
+
+            @Override
+            public CustomHolder getBodyHolder(Context context, List<Set_Item> lists, final int itemID) {
+                return new CustomHolder<Set_Item>(context, lists, itemID) {
+                    @Override
+                    public void initView(int position, List<Set_Item> datas, final Context context) {
+                        super.initView(position, datas, context);
+                        ImageView imageView = (ImageView) itemView.findViewById(R.id.img_item);
+
+                        TextView tv_title = (TextView) itemView.findViewById(R.id.tv_item);
+
+
+                        final Set_Item item =  datas.get(position);
+
+                        if (item.icon_id > 0) {
+                            Glide.with(context).load(item.icon_id)
+                                    .centerCrop()
+                                    .crossFade()
+                                    .into(imageView);
+
+                        }
+                        if (!TextUtils.isEmpty(item.title)) {
+                            tv_title.setText(item.title);
+                        }
+
+                        itemView.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                ToastUtil.showTextToast(context, item.title);
+                            }
+                        });
+                    }
+                };
+            }
+        });
+        gv.setAdapter(adapter);
+
+
 
     }
 
 
-
-    public class GVAdater extends BaseAdapter {
-
-        @Override
-        public int getCount() {
-            return datas.size();
-        }
-
-        @Override
-        public Object getItem(int position) {
-            return datas.get(position);
-        }
-
-        @Override
-        public long getItemId(int position) {
-            return position;
-        }
-
-        @Override
-        public View getView(int position, View convertView, ViewGroup parent) {
-            LinearLayout ll = new LinearLayout(context);
-
-
-            int dimension = (int) context.getResources().getDimension(R.dimen.app_item_cut_margin);
-
-            if (imgParams==null) {
-                imgParams = new LinearLayout.LayoutParams(imageWidth, imageHeight);
-                imgParams.setMargins(0, dimension, 0, dimension);
-            }
-
-            ll.setGravity(Gravity.CENTER);
-            ll.setOrientation(LinearLayout.VERTICAL);
-            ImageView imageView = new ImageView(context);
-            imageView.setLayoutParams(imgParams);
-            TextView tv_title = new TextView(context);
-            if (textParams!=null){
-                tv_title.setLayoutParams(textParams);
-            }
-            tv_title.setTextColor(context.getResources().getColor(R.color.text_home_item));
-            tv_title.setTextSize(TypedValue.COMPLEX_UNIT_PX,context.getResources().getDimensionPixelSize(R.dimen.card_item_small_textSize));
-            tv_title.setGravity(Gravity.CENTER);
-
-            final Set_Item item= (Set_Item) datas.get(position);
-            if (item.icon_id>0) {
-                manager.load(item.icon_id)
-                        .centerCrop()
-                        .into(imageView);
-                ll.addView(imageView);
-            }
-            if (!TextUtils.isEmpty(item.title)){
-                tv_title.setText(item.title);
-                ll.addView(tv_title);
-            }
-
-            ll.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    ToastUtil.showTextToast(context, item.title);
-                }
-            });
-            return ll;
-        }
-    }
 
 
 }

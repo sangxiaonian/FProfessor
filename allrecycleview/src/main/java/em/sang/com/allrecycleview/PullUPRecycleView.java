@@ -94,9 +94,7 @@ public class PullUPRecycleView extends BasicPullRecycleView {
     @Override
     public float getEndHeight() {
         int stand = (int) min;
-        if (isFirst()) {
-            stand = mearchTop;
-        }
+        stand = mearchTop;
         return stand;
     }
 
@@ -156,12 +154,12 @@ public class PullUPRecycleView extends BasicPullRecycleView {
     @Override
     public void setLoading() {
         super.setLoading();
-
         setHightVisiable(mearchTop+1);
         upRefrush_state(LOADING);
 
-
     }
+
+
 
     @Override
     public boolean isChangStateByHeight() {
@@ -202,6 +200,7 @@ public class PullUPRecycleView extends BasicPullRecycleView {
                     case LOAD_BEFOR:
                         load = LOADING;
                         break;
+
                     default:
                         if (stand == min) {
                             load = LOAD_OVER;
@@ -215,7 +214,7 @@ public class PullUPRecycleView extends BasicPullRecycleView {
         });
 
         animator.setDuration(200);
-        if (isMove) {
+        if (isNoTouch) {
             if (isChangStateByHeight() || refrush_state == LOADING) {
                 animator.start();
             } else {

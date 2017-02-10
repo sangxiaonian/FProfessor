@@ -83,13 +83,13 @@
         <item name="android:layout_height">wrap_content</item>
         <item name="android:layout_weight">1</item>
         <item name="android:textColor">@color/text_home_more_text</item>
-        <item name="android:textSize">@dimen/home_item_more_textSize</item>
+        <item name="android:textSize">@dimen/app_title_text_size</item>
     </style>
 
     <style name="set_item">
         <item name="android:layout_weight">1</item>
         <item name="android:layout_width">0dp</item>
-        <item name="android:layout_marginStart">@dimen/app_maggin_ends</item>
+        <item name="android:layout_marginStart">@dimen/app_margin_ends</item>
         <item name="android:layout_marginTop">@dimen/item_card_icon</item>
         <item name="android:layout_marginBottom">@dimen/item_card_icon</item>
         <item name="android:textSize">@dimen/item_textsize</item>
@@ -102,7 +102,7 @@
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>
         <item name="android:layout_weight">1</item>
-        <item name="android:textSize">@dimen/item_textsize</item>
+        <item name="android:textSize">@dimen/app_title_text_size</item>
         <item name="android:button">@null</item>
         <item name="android:textColor">@color/text_home_item</item>
         <item name="android:gravity">center</item>
@@ -110,5 +110,16 @@
         <item name="android:drawableBottom">@drawable/select_card_bottom</item>
 
     </style>
+
+    <style name="item_text_title">
+        <item name="android:textSize">@dimen/app_title_text_model</item>
+        <item name="android:textColor">@color/text_home_item</item>
+        <item name="android:layout_centerVertical">true</item>
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+
+    </style>
+
+
 
 </resources>

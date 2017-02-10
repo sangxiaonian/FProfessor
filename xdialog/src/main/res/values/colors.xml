@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="black">#000000</color>
+    <color name="alert_bg">#ddffffff</color>
+    <color name="cut_line">#c8c8c8</color>
+    <color name="trans">#00ffffff</color>
+    <color name="btn_blue">#037BFF</color>
+    <color name="btn_bg_tran">#00000000</color>
+    <color name="white">#ffffff</color>
+
+    <color name="alertdialog_line">#c6c6c6</color>
+    <color name="actionsheet_blue">#037BFF</color>
+    <color name="actionsheet_red">#FD4A2E</color>
+    <color name="actionsheet_gray">#8F8F8F</color>
+
+</resources>

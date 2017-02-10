@@ -1,48 +1,40 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    style="@style/item_style"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="horizontal">
+    android:layout_height="wrap_content"
+    android:gravity="center_vertical"
+    android:orientation="horizontal"
+    android:paddingLeft="@dimen/app_margin_ends"
+    android:paddingRight="@dimen/app_margin_ends"
+    >
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="@dimen/app_item_cut_margin"
-        android:layout_marginTop="@dimen/app_item_cut_margin"
-        style="@style/item_style"
-        android:gravity="center_vertical"
-        android:orientation="horizontal"
-        android:paddingBottom="@dimen/find_margin_top"
-        android:paddingLeft="@dimen/app_maggin_ends"
-        android:paddingRight="@dimen/app_maggin_ends"
-        android:paddingTop="@dimen/find_margin_top">
 
-        <ImageView
-            android:layout_width="@dimen/home_bottom_img_width"
-            android:layout_height="@dimen/home_bottom_img_width"
-            android:layout_marginRight="@dimen/app_item_cut_margin"
-            android:scaleType="centerCrop"
-            android:src="@mipmap/icon_circleoffriends" />
+    <ImageView
+        android:layout_width="@dimen/home_bottom_img_width"
+        android:layout_height="@dimen/home_bottom_img_width"
+        android:layout_marginRight="@dimen/app_item_cut_margin"
+        android:scaleType="centerCrop"
+        android:src="@mipmap/icon_circleoffriends" />
 
-        <TextView
-            style="@style/find_text_item"
-            android:gravity="start"
-            android:text="@string/find_item_fcycle"
-             />
+    <TextView
+        style="@style/find_text_item"
+        android:layout_marginBottom="@dimen/find_title_item_margin"
+        android:layout_marginTop="@dimen/find_title_item_margin"
+        android:gravity="start"
+        android:text="@string/find_item_fcycle" />
 
-        <ImageView
-            android:layout_gravity="start"
-            android:layout_width="5dp"
-            android:scaleType="centerCrop"
-            android:src="@mipmap/icon_circle"
-            android:id="@+id/img_red"
-            android:layout_marginRight="@dimen/app_maggin_ends"
-            android:layout_height="5dp">
-        </ImageView>
+    <ImageView
+        android:visibility="gone"
+        android:id="@+id/img_red"
+        android:layout_width="@dimen/red_point"
+        android:layout_height="@dimen/red_point"
+        android:layout_gravity="start"
+        android:layout_marginTop="@dimen/app_margin_ends"
+        android:layout_marginEnd="@dimen/app_margin_ends"
+        android:scaleType="centerCrop"
+        android:src="@mipmap/icon_circle"/>
+    <include layout="@layout/img_more" />
 
-        <include
-            layout="@layout/img_more" />
 
-    </LinearLayout>
-
-</RelativeLayout>
+</LinearLayout>

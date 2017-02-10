@@ -5,6 +5,7 @@ import android.view.View;
 
 import java.util.List;
 
+import finance.com.fp.R;
 import finance.com.fp.utlis.ToastUtil;
 
 /**
@@ -23,6 +24,9 @@ public class FindFriendHolder extends BasicHolder{
     @Override
     public void initView(int position,  final Context context) {
         super.initView(position, context);
+        itemView.findViewById(R.id.img_red).setVisibility(View.VISIBLE);
+
+
         itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

@@ -1,60 +1,50 @@
 package finance.com.fp.ui;
 
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
-import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.bumptech.glide.Glide;
-
-import java.util.ArrayList;
 import java.util.List;
 
-import em.sang.com.allrecycleview.adapter.DefaultAdapter;
-import em.sang.com.allrecycleview.holder.CustomHolder;
-import em.sang.com.allrecycleview.holder.HeardHolder;
-import em.sang.com.allrecycleview.holder.SimpleHolder;
-import em.sang.com.allrecycleview.inter.DefaultAdapterViewLisenter;
-import em.sang.com.allrecycleview.listener.OnToolsItemClickListener;
 import finance.com.fp.BasisActivity;
 import finance.com.fp.R;
 import finance.com.fp.holder.CardNotifiHolder;
-import finance.com.fp.holder.GrideHolder;
 import finance.com.fp.holder.HomeCarouselHolder;
-import finance.com.fp.holder.HomeToolsHolder;
+import finance.com.fp.mode.bean.Config;
 import finance.com.fp.mode.bean.Set_Item;
-import finance.com.fp.mode.datafractory.ListDatasFractary;
+import finance.com.fp.mode.bean.TranInfor;
+import finance.com.fp.presenter.LoanProComl;
+import finance.com.fp.presenter.inter.LoanInter;
+import finance.com.fp.ui.inter.LoanView;
+import finance.com.fp.utlis.ToastUtil;
 
 /**
- *
  * 网贷
  */
-public class LoanActivity extends BasisActivity {
+public class LoanActivity extends BasisActivity implements LoanView {
 
     private Toolbar toolbar;
     private TextView title;
     private RecyclerView recyclerView;
     private HomeCarouselHolder carouselHolder;
     private CardNotifiHolder notifiHolder;
-    
+
     private List<Set_Item> lists;
-    private ListDatasFractary dataFractory;
+
+
+    private LoanInter pre;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_recycle);
-        setColor(this,getResources().getColor(R.color.white));
+        setColor(this, getResources().getColor(R.color.statucolor));
         initView();
-        dataFractory = ListDatasFractary.getInstance(this);
+
     }
 
     @Override
@@ -67,17 +57,15 @@ public class LoanActivity extends BasisActivity {
     @Override
     protected void onResume() {
         super.onResume();
-       initListener();
+        initListener();
     }
 
     public void initData() {
-
+        pre = new LoanProComl(this);
         title.setText(getResources().getString(R.string.loan_title));
 
-        lists=dataFractory.creatData(ListDatasFractary.LOAN_ITEM);
-        
-        
-        recyclerView.setAdapter(getAdapter());
+        recyclerView.setAdapter(pre.getAdapter(this));
+
     }
 
     private void initListener() {
@@ -99,112 +87,6 @@ public class LoanActivity extends BasisActivity {
     }
 
 
-    public DefaultAdapter<Set_Item> getAdapter() {
-        
-        DefaultAdapter<Set_Item> adapter = new DefaultAdapter<>(this, lists, R.layout.item_loan_item, new DefaultAdapterViewLisenter<Set_Item>(){
-            @Override
-            public CustomHolder getBodyHolder(Context context, final List lists, int itemID) {
-                return new CustomHolder<Set_Item>(context,lists,itemID){
-                    @Override
-                    public void initView(int position, List<Set_Item> lists,Context context) {
-                        super.initView(position, context);
-                        ImageView img = (ImageView) itemView.findViewById(R.id.img_item_loan);
-                        TextView title = (TextView) itemView.findViewById(R.id.tv_title_item_loan);
-                        TextView sub = (TextView) itemView.findViewById(R.id.tv_title_sub_item_loan);
-
-                        Set_Item item=lists.get(position);
-                        Glide.with(context)
-                                .load(item.icon_id)
-                                .centerCrop()
-                                .crossFade()
-                                .into(img);
-                        title.setText(item.title);
-                        sub.setText(item.describe);
-                    }
-                };
-            }
-        });
-        HomeToolsHolder toolsHolder = new HomeToolsHolder(this, getTools(), R.layout.item_card_tool);
-        toolsHolder.setImageSize(getResources().getDimension(R.dimen.loan_item_tools_size));
-        toolsHolder.setOnToolsItemClickListener(new OnToolsItemClickListener() {
-            @Override
-            public void onItemClick(int position, Object item) {
-                Class c = Loan_Strategy_Activity.class;
-                if (position==0){
-                    c=Loan_Strategy_Activity.class;
-                }else if (position==1){
-                    c=PlannerActivity.class;
-                }else if (position==2){
-                     c=Loan_Search_Activity.class;
-                }
-                startActivity(new Intent(LoanActivity.this,c));
-            }
-        });
-        adapter.addHead(toolsHolder);
-
-        carouselHolder = new HomeCarouselHolder(this, getTools(), R.layout.item_home_carousel);
-        adapter.addHead(carouselHolder);
-
-        int dimension = (int) getResources().getDimension(R.dimen.title_card_height);
-        notifiHolder = new CardNotifiHolder(this, getTools(), R.layout.item_card_navi);
-        notifiHolder.setMagrin(0,0,0, dimension);
-        adapter.addHead(notifiHolder);
-
-
-        GrideHolder grideHolder = new GrideHolder(this, getGrive(), R.layout.item_grideview);
-        int imgSize = (int) getResources().getDimension(R.dimen.loan_item_btn_height);
-        grideHolder.setImageParams(imgSize,imgSize,5);
-        LinearLayout.LayoutParams gvparams = new LinearLayout.LayoutParams(imgSize, imgSize);
-        gvparams.setMargins(0,dimension,0,dimension);
-        grideHolder.setImageParams(gvparams);
-        LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-        params.setMargins(0,0,0,dimension);
-        grideHolder.setTextParams(params);
-        adapter.addHead(grideHolder);
-
-        adapter.addHead(new HeardHolder(LayoutInflater.from(this).inflate(R.layout.item_loan_icons,null)));
-
-        adapter.addHead(new SimpleHolder(this,R.layout.item_loan_hot));
-
-        return adapter;
-    }
-
-
-
-    private List<Set_Item> getTools(){
-        ArrayList<Set_Item> tools = new ArrayList<>();
-        int[] icons = {R.mipmap.icon_strategy,
-                R.mipmap.icon_learningpianner_small, R.mipmap.icon_netcreditsearch};
-        String[] titles = getResources().getStringArray(R.array.loan_tools);
-        for (int i = 0; i < titles.length; i++) {
-            Set_Item item = new Set_Item(icons[i], titles[i]);
-            tools.add(item);
-        }
-        return tools;
-    }
-
-    private List<Set_Item> getGrive(){
-        ArrayList<Set_Item> tools = new ArrayList<>();
-        int[] icons = {R.mipmap.icon_creditcardloanst,
-                R.mipmap.icon_thebillisborrowed,
-                R.mipmap.icon_creditcardalso,
-                R.mipmap.icon_sesamepointsborrow,
-                R.mipmap.icon_workingtoborrow,
-                R.mipmap.icon_idcardtoborrow,
-                R.mipmap.icon_college,
-                R.mipmap.icon_consumercredit,
-                R.mipmap.icon_wechatqq,
-                R.mipmap.icon_allcategories };
-        String[] titles = getResources().getStringArray(R.array.loan_grid);
-
-        for (int i = 0; i < 10; i++) {
-            Set_Item item = new Set_Item(icons[i], titles[i]);
-
-            tools.add(item);
-        }
-
-        return tools;
-    }
     @Override
     protected void onDestroy() {
         super.onDestroy();
@@ -212,8 +94,58 @@ public class LoanActivity extends BasisActivity {
     }
 
     private void clearThread() {
-        notifiHolder.stopCarousel();
-        carouselHolder.stopCarousel();
+        pre.stopCarousel();
+
     }
 
+
+    @Override
+    public void onItemClick(int position, Object item) {
+        Class c = null;
+        if (position == 0) {
+            c = Loan_Strategy_Activity.class;
+        } else if (position == 1) {
+            c = PlannerActivity.class;
+        } else if (position == 2) {
+            c = Loan_Search_Activity.class;
+        }
+        if (c!=null) {
+            startActivity(new Intent(LoanActivity.this, c));
+        }else {
+            ToastUtil.showTextToast("该功能尚未开放");
+        }
+    }
+
+    @Override
+    public void onListItemClick(int position, Set_Item item) {
+        TranInfor tranInfor = new TranInfor();
+        Intent intent = new Intent();
+        tranInfor.activity_id = 2;
+
+        tranInfor.title = item.title;
+        Class c = null;
+        switch (position) {
+            case 0://提额攻略
+//                tranInfor.item_id = LoanDataFractory.LOAN_STRAGE;
+
+                break;
+            case 1://交易分析
+//               c=HomeSonActivity.class;
+//                tranInfor.item_id = LoanDataFractory.BALANCE_CALL;
+                break;
+            case 2://精养卡分析
+//                c=HomeSonActivity.class;
+//                tranInfor.item_id = HomeDataFractory.CREDIT;
+                break;
+
+
+        }
+        if (c==null){
+            ToastUtil.showTextToast("该功能尚未开放");
+        }else {
+            intent.putExtra(Config.infors, tranInfor);
+            intent.setClass(this, c);
+            startActivity(intent);
+        }
+    }
 }

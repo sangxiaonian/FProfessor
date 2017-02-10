@@ -13,5 +13,6 @@ public class FriendActivity extends BasisActivity {
         setContentView(R.layout.activity_friend);
         initToolBar("朋友圈");
         setColor(this,getResources().getColor(R.color.text_home_more_text));
+
     }
 }

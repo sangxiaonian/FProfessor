@@ -37,7 +37,7 @@ public class Loan_Search_Activity extends BasisActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_loan__search_);
-        setColor(this, getResources().getColor(R.color.white));
+        setColor(this, getResources().getColor(R.color.statucolor));
         initToolBar("网贷搜索");
         initView();
 
@@ -59,11 +59,11 @@ public class Loan_Search_Activity extends BasisActivity {
     public void initData() {
         super.initData();
         searchs = new ArrayList<>();
-        fractory = LoanDataFractory.getInstance(this);
+        fractory = LoanDataFractory.getInstance();
         view = (RecyclerView) View.inflate(this, R.layout.view_recycleview, null);
-        int dimension = (int) getResources().getDimension(R.dimen.app_maggin_ends);
+        int dimension = (int) getResources().getDimension(R.dimen.app_margin_ends);
         view.setPadding(dimension,0,dimension, (int) (dimension*2.0/3));
-        view.setBackground(new ColorDrawable(getResources().getColor(R.color.white)));
+        view.setBackground(new ColorDrawable(getResources().getColor(R.color.statucolor)));
         GridLayoutManager manager = new GridLayoutManager(this, 3);
         manager.setOrientation(LinearLayoutManager.VERTICAL);
         view.addItemDecoration(new DividerGridItemDecoration(this,R.drawable.divider_line_rectangle));

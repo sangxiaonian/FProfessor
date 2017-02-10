@@ -16,9 +16,9 @@
         android:layout_height="wrap_content">
         <CheckBox
             android:id="@+id/cb_search"
-            android:paddingTop="@dimen/home_heard_margin"
-            android:paddingBottom="@dimen/home_heard_margin"
-            android:paddingStart="@dimen/app_maggin_ends"
+            android:paddingTop="@dimen/app_margin_ends"
+            android:paddingBottom="@dimen/app_margin_ends"
+            android:paddingStart="@dimen/app_cut_big"
             android:text="所有贷款类型"
             android:textColor="@drawable/select_search_text"
             android:button="@null"
@@ -27,7 +27,7 @@
             android:layout_height="wrap_content" />
         <ImageView
             android:id="@+id/img_icon"
-            android:layout_marginEnd="@dimen/app_maggin_ends"
+            android:layout_marginEnd="@dimen/app_cut_big"
             android:layout_width="16dp"
             android:src="@drawable/select_search_icon"
             android:layout_alignParentEnd="true"
