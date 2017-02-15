@@ -2,19 +2,17 @@ package finance.com.fp.ui;
 
 import android.content.Intent;
 import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
 
-import java.util.List;
-
+import em.sang.com.allrecycleview.PullUPRecycleView;
 import em.sang.com.allrecycleview.adapter.RefrushAdapter;
+import em.sang.com.allrecycleview.inter.DefaultRefrushListener;
 import finance.com.fp.BasisFragment;
 import finance.com.fp.R;
-import finance.com.fp.holder.HomeCarouselHolder;
 import finance.com.fp.mode.bean.Config;
 import finance.com.fp.mode.bean.Set_Item;
 import finance.com.fp.mode.bean.TranInfor;
@@ -35,10 +33,8 @@ import sang.com.xdialog.PickerDialog;
 public class HomeFragment extends BasisFragment implements View.OnClickListener, HomeFramentView {
 
 
-    private RecyclerView recyclerView;
+    private PullUPRecycleView recyclerView;
 
-    private List<String> lists;
-    private HomeCarouselHolder carouselHolder;
     private ImageButton card, lending, forheard, title_card, ltitle_ending, title_forheard,msg,msg_small,img_scan;
 
     private HomeFragmentPre pre;
@@ -47,7 +43,7 @@ public class HomeFragment extends BasisFragment implements View.OnClickListener,
     @Override
     public View initViews(LayoutInflater inflater, ViewGroup container) {
         View view = inflater.inflate(R.layout.fragment_main, null);
-        recyclerView = (RecyclerView) view.findViewById(R.id.rc_home);
+        recyclerView = (PullUPRecycleView) view.findViewById(R.id.rc_home);
         card = (ImageButton) view.findViewById(R.id.img_main_card);
         lending = (ImageButton) view.findViewById(R.id.img_main_net);
         forheard = (ImageButton) view.findViewById(R.id.img_main_imp);
@@ -85,6 +81,13 @@ public class HomeFragment extends BasisFragment implements View.OnClickListener,
         pre = new HomeFragmentPreComl(this);
         adapter=pre.initAdapter(getContext());
         recyclerView.setAdapter(adapter);
+        recyclerView.setRefrushListener(new DefaultRefrushListener(){
+            @Override
+            public void onLoading() {
+                pre.getFinceData(3);
+            }
+        });
+        recyclerView.setLoading();
 
     }
 
@@ -137,7 +140,7 @@ public class HomeFragment extends BasisFragment implements View.OnClickListener,
     @Override
     public void onDestroy() {
         super.onDestroy();
-
+        pre.unsubscribe();
     }
 
 
@@ -166,7 +169,6 @@ public class HomeFragment extends BasisFragment implements View.OnClickListener,
                 tranInfor.item_id = HomeDataFractory.UTILITY_TOLL;
                 c=HomeSonActivity.class;
                 break;
-
         }
         if (c==null){
             ToastUtil.showTextToast("该功能尚未开放");
@@ -175,5 +177,20 @@ public class HomeFragment extends BasisFragment implements View.OnClickListener,
             intent.setClass(getActivity(), c);
             getActivity().startActivity(intent);
         }
+    }
+
+    @Override
+    public void loadSuccess() {
+        recyclerView.loadSuccess();
+    }
+
+    @Override
+    public void loadFail() {
+        recyclerView.loadFail();
+    }
+
+    @Override
+    public void showLoad() {
+        recyclerView.setLoading();
     }
 }

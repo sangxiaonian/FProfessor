@@ -9,17 +9,19 @@ import em.sang.com.allrecycleview.adapter.RefrushAdapter;
 import em.sang.com.allrecycleview.holder.CustomHolder;
 import em.sang.com.allrecycleview.holder.SimpleHolder;
 import em.sang.com.allrecycleview.inter.DefaultAdapterViewLisenter;
+import em.sang.com.allrecycleview.listener.OnToolsItemClickListener;
 import finance.com.fp.R;
-import finance.com.fp.holder.FindFriendHolder;
-import finance.com.fp.holder.FindFunctionHolder;
-import finance.com.fp.holder.HomeBodyHolder;
-import finance.com.fp.holder.HomeCarouselHolder;
-import finance.com.fp.holder.HomeToolsHolder;
+import finance.com.fp.ui.holder.FindFriendHolder;
+import finance.com.fp.ui.holder.FindFunctionHolder;
+import finance.com.fp.ui.holder.HomeBodyHolder;
+import finance.com.fp.ui.holder.HomeCarouselHolder;
+import finance.com.fp.ui.holder.HomeToolsHolder;
 import finance.com.fp.mode.HomeFragmentDataCom;
 import finance.com.fp.mode.bean.Set_Item;
 import finance.com.fp.mode.inter.HomeFragmentData;
 import finance.com.fp.presenter.inter.HomeFragmentPre;
 import finance.com.fp.ui.inter.HomeFramentView;
+import rx.Subscriber;
 
 import static finance.com.fp.CusApplication.getContext;
 
@@ -35,6 +37,9 @@ public class HomeFragmentPreComl implements HomeFragmentPre {
     private HomeFragmentData data;
     private List<Set_Item> lists;
     private RefrushAdapter<Set_Item> adapter;
+
+
+
     public HomeFragmentPreComl(HomeFramentView view) {
         this.view=view;
         data=new HomeFragmentDataCom();
@@ -49,19 +54,20 @@ public class HomeFragmentPreComl implements HomeFragmentPre {
     @Override
     public RefrushAdapter<Set_Item> initAdapter(Context context) {
         lists = new ArrayList<>();
-        List<Set_Item> funs = data.getTools();
 
-        adapter = new RefrushAdapter<>(context, funs, R.layout.item_home, new DefaultAdapterViewLisenter<Set_Item>() {
+        adapter = new RefrushAdapter<>(context, lists, R.layout.item_home, new DefaultAdapterViewLisenter<Set_Item>() {
             @Override
             public CustomHolder getBodyHolder(Context context, List<Set_Item> lists, int itemID) {
                 return new HomeBodyHolder(context, lists, itemID);
             }
         });
 
-        HomeCarouselHolder carouselHolder = new HomeCarouselHolder(context, funs, R.layout.item_home_carousel);
+        adapter.setRefrushPosition(2);
+
+        HomeCarouselHolder carouselHolder = new HomeCarouselHolder(context,  data.getTools(), R.layout.item_home_carousel);
 
         adapter.addHead(carouselHolder);
-        HomeToolsHolder toolsHolder = new HomeToolsHolder(context, funs, R.layout.item_home_tool);
+        HomeToolsHolder toolsHolder = new HomeToolsHolder(context,  data.getTools(), R.layout.item_home_tool);
         float dimension = context.getResources().getDimension(R.dimen.app_cut_big);
         toolsHolder.setMagrin(0,dimension,0,dimension);
         toolsHolder.setOnToolsItemClickListener(view);
@@ -70,26 +76,104 @@ public class HomeFragmentPreComl implements HomeFragmentPre {
         return adapter;
     }
 
+
+    private int checkId;
+
     @Override
     public RefrushAdapter<Set_Item> initFindAdapter(Context context) {
-        lists=data.getfinancialhole();
-        adapter = new RefrushAdapter<>(getContext(), lists, R.layout.item_home, new DefaultAdapterViewLisenter<Set_Item>() {
+        lists=new ArrayList<>();
+        adapter = new RefrushAdapter<>(context, lists, R.layout.item_home, new DefaultAdapterViewLisenter<Set_Item>() {
             @Override
             public CustomHolder getBodyHolder(Context context, List<Set_Item> lists, int itemID) {
                 return new HomeBodyHolder(context, lists, itemID);
             }
         });
+
         adapter.setRefrushPosition(2);
         FindFriendHolder friendHolder = new FindFriendHolder(getContext(), null, R.layout.item_find_fc);
         float dimension = context.getResources().getDimension(R.dimen.find_title_item_margin_v);
         friendHolder.setMagrin(0,dimension,0,dimension);
+        friendHolder.setOnToolsItemClickListener(view);
+
+
         adapter.addHead(friendHolder);
         FindFunctionHolder holder = new FindFunctionHolder(getContext(), null, R.layout.item_find_function);
+        holder.setOnToolsItemClickListener(new OnToolsItemClickListener() {
+            @Override
+            public void onItemClick(int position, Object item) {
+                view.showLoad();
+               checkId=position;
+                getData();
+            }
+        });
+
         float dimension1 = context.getResources().getDimension(R.dimen.app_cut_big);
         holder.setMagrin(0,0,0,dimension1);
         adapter.addHead(holder);
         return adapter;
     }
+
+    @Override
+    public void getFinceData(int i) {
+        if (i>0) {
+            data.getfinancialhole().take(i).subscribe(getSubscribre());
+        }else {
+            data.getfinancialhole().subscribe(getSubscribre());
+        }
+    }
+
+
+    @Override
+    public void unsubscribe() {
+        if (subscriber!=null){
+            subscriber.unsubscribe();
+        }
+    }
+
+    @Override
+    public void getData() {
+        if (checkId==0){
+            getFinceData(0);
+        }else {
+            getPartialDoor();
+        }
+    }
+
+    private void getPartialDoor() {
+        data.getPartialDoor().subscribe(getSubscribre());
+    }
+
+    Subscriber<Set_Item> subscriber;
+    private Subscriber<Set_Item> getSubscribre(){
+        unsubscribe();
+         return subscriber = new Subscriber<Set_Item>() {
+
+             @Override
+             public void onStart() {
+                 super.onStart();
+                 lists.clear();
+             }
+
+             @Override
+            public void onCompleted() {
+                adapter.notifyDataSetChanged();
+                view.loadSuccess();
+            }
+
+            @Override
+            public void onError(Throwable e) {
+                e.printStackTrace();
+                view.loadFail();
+            }
+
+            @Override
+            public void onNext(Set_Item set_item) {
+                lists.add(set_item);
+            }
+        };
+    }
+
+
 
 
 }

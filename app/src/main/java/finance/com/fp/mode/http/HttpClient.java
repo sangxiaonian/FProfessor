@@ -16,7 +16,7 @@ import retrofit2.converter.scalars.ScalarsConverterFactory;
  */
 public class HttpClient {
 
-    public static Retrofit getClient(String url){
+    public static HttpService getClient(String url){
 
         OkHttpClient.Builder builder = new OkHttpClient.Builder();
         builder.connectTimeout(60, TimeUnit.SECONDS);
@@ -29,7 +29,7 @@ public class HttpClient {
                 .addCallAdapterFactory(RxJavaCallAdapterFactory.create())
                 .baseUrl(url)
                 .build();
-        return retrofit;
+        return retrofit.create(HttpService.class);
 
     }
 }

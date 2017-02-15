@@ -9,6 +9,7 @@
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
         <item name="android:windowAnimationStyle">@style/activityAnim</item>
+        <item name="android:textColorPrimaryInverse">@color/colorPrimaryDark</item>
     </style>
 
     <!--页面切换动画-->

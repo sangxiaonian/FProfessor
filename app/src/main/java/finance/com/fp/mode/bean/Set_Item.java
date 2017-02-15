@@ -1,5 +1,7 @@
 package finance.com.fp.mode.bean;
 
+import finance.com.fp.R;
+
 /**
  * Description：
  *
@@ -11,6 +13,14 @@ public class Set_Item {
      * 图片ID
      */
     public int icon_id;
+
+    /**
+     * 默认图片
+     */
+    public int placeholder= R.mipmap.loading;
+
+    public int faildId=R.mipmap.load_fail;
+
     /**
      * 标题
      */

@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.View;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -17,10 +18,11 @@ import em.sang.com.allrecycleview.inter.DefaultAdapterViewLisenter;
 import em.sang.com.allrecycleview.listener.OnToolsItemClickListener;
 import finance.com.fp.BasisActivity;
 import finance.com.fp.R;
-import finance.com.fp.holder.IDHolder;
+import finance.com.fp.ui.holder.IDHolder;
 import finance.com.fp.mode.bean.Config;
 import finance.com.fp.mode.bean.Set_Item;
 import finance.com.fp.mode.bean.TranInfor;
+import finance.com.fp.mode.datafractory.ImprotFactory;
 import finance.com.fp.utlis.RecycleViewDivider;
 import sang.com.xdialog.DialogFactory;
 import sang.com.xdialog.XDialog;
@@ -57,6 +59,19 @@ public class IDActivity extends BasisActivity implements OnToolsItemClickListene
 
 
     }
+
+    public void click(View view){
+        TranInfor tranInfor = new TranInfor();
+        Intent intent = new Intent(this,HomeSonActivity.class);
+        tranInfor.activity_id = 2;
+        tranInfor.item_id= ImprotFactory.LOAN_ONE_KEY_IPMORT;
+        tranInfor.title = getString(R.string.import_at_once);
+        intent.putExtra(Config.infors, tranInfor);
+        startActivity(intent);
+
+    }
+
+
 
     public void initView() {
         rc = (RecyclerView) findViewById(R.id.rc);
@@ -146,7 +161,7 @@ public class IDActivity extends BasisActivity implements OnToolsItemClickListene
 
     @Override
     public void onClick(Dialog dialog, int which, String data) {
-        item.describe = (String) data;
+        item.describe =  data;
         adapter.notifyDataSetChanged();
         dialog.dismiss();
     }

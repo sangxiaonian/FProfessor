@@ -28,7 +28,7 @@
             android:src="@mipmap/login_head_boy" />
 
         <TextView
-
+            android:clickable="true"
             android:id="@+id/tv_set"
             style="@style/find_text_item"
             android:gravity="start"

@@ -1,12 +1,8 @@
 package em.sang.com.allrecycleview;
 
-import android.animation.Animator;
-import android.animation.AnimatorListenerAdapter;
-import android.animation.ValueAnimator;
 import android.content.Context;
 import android.support.annotation.Nullable;
 import android.util.AttributeSet;
-import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 
@@ -149,71 +145,66 @@ public class PullDownRecycleView extends BasicPullRecycleView {
     }
 
 
-    @Override
-    public boolean isChangStateByHeight() {
-        return refrush_state == LOAD_DOWN_OVER || refrush_state == LOAD_DOWN_BEFOR;
-    }
 
 
-    @Override
-    public void moveToChildHight(final int refrush_state) {
-        final View view = getEndView();
-        int height = getHeightVisiable(view);
-        final float stand = getStandHeightByStated(refrush_state);
-        if (animator != null && animator.isRunning()) {
-            animator.removeAllListeners();
-            animator.cancel();
-        }
-        if (height == stand) {
-            return;
-        }
 
-        animator = ValueAnimator.ofFloat(height, stand);
-
-
-        animator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
-            @Override
-            public void onAnimationUpdate(ValueAnimator animation) {
-                float value = (float) animation.getAnimatedValue();
-                setViewHeight(view, value);
-            }
-        });
-
-
-        animator.addListener(new AnimatorListenerAdapter() {
-            @Override
-            public void onAnimationEnd(Animator animation) {
-                super.onAnimationEnd(animation);
-                int load;
-                switch (refrush_state) {
-                    case LOAD_DOWN_BEFOR:
-                        load = LOADING_DOWN;
-                        break;
-                    default:
-                        if (stand == min) {
-                            load = LOAD_DOWN_OVER;
-                        } else {
-                            load = refrush_state;
-                        }
-                        break;
-                }
-                upRefrush_state(load);
-            }
-        });
-
-        animator.setDuration(200);
-
-        if (isNoTouch) {
-            if (isChangStateByHeight() || refrush_state == LOADING_DOWN) {
-                animator.start();
-            } else {
-                animator.setStartDelay(200);
-                animator.start();
-            }
-        }
-
-    }
-
+//    @Override
+//    public void moveToChildHight(final int refrush_state) {
+//        final View view = getEndView();
+//        int height = getHeightVisiable(view);
+//        final float stand = getStandHeightByStated(refrush_state);
+//        if (animator != null && animator.isRunning()) {
+//            animator.removeAllListeners();
+//            animator.cancel();
+//        }
+//        if (height == stand) {
+//            return;
+//        }
+//
+//        animator = ValueAnimator.ofFloat(height, stand);
+//        animator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
+//            @Override
+//            public void onAnimationUpdate(ValueAnimator animation) {
+//                float value = (float) animation.getAnimatedValue();
+//                setViewHeight(view, value);
+//            }
+//        });
+//
+//
+//        animator.addListener(new AnimatorListenerAdapter() {
+//            @Override
+//            public void onAnimationEnd(Animator animation) {
+//                super.onAnimationEnd(animation);
+//                int load;
+//                switch (refrush_state) {
+//                    case LOAD_DOWN_BEFOR:
+//                        load = LOADING_DOWN;
+//                        break;
+//                    default:
+//                        if (stand == min) {
+//                            load = LOAD_DOWN_OVER;
+//                        } else {
+//                            load = refrush_state;
+//                        }
+//                        break;
+//                }
+//                upRefrush_state(load);
+//            }
+//        });
+//
+//        animator.setDuration(200);
+//
+//        if (isNoTouch) {
+//            if (isChangStateByHeight() || refrush_state == LOADING_DOWN) {
+//                animator.start();
+//            } else {
+//                animator.setStartDelay(200);
+//                animator.start();
+//            }
+//        }
+//
+//    }
+//
 
     /**
      * 根据状态获取动画执行最终高度

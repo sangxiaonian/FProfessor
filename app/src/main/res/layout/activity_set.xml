@@ -43,12 +43,10 @@
         >
 
         <Button
-            android:layout_marginStart="@dimen/app_margin_ends"
+            style="@style/login_btn"
             android:text="@string/set_login_out"
             android:layout_centerInParent="true"
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/main_boom_height"
-            android:background="@color/colorPrimaryDark"
+
             />
     </RelativeLayout>
 

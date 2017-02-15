@@ -5,7 +5,7 @@
     <!-- 如果注释掉solid，放开stroke，没有预览图，不知道为什么-->
     <solid android:color="@color/colorPrimaryDark"/>
     <!--<stroke android:color="#dbbdb"/>-->
-    <size android:width="100dp"
+    <size android:width="300dp"
         android:height="3dp"/>
 
 

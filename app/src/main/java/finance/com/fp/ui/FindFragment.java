@@ -1,21 +1,20 @@
 package finance.com.fp.ui;
 
+import android.content.Intent;
 import android.support.v7.widget.LinearLayoutManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
-import android.widget.TextView;
-
-import java.util.ArrayList;
 
 import em.sang.com.allrecycleview.PullRecycleView;
 import em.sang.com.allrecycleview.adapter.RefrushAdapter;
+import em.sang.com.allrecycleview.inter.RefrushListener;
 import finance.com.fp.BasisFragment;
 import finance.com.fp.R;
 import finance.com.fp.mode.bean.Set_Item;
-import finance.com.fp.presenter.inter.HomeFragmentPre;
 import finance.com.fp.presenter.HomeFragmentPreComl;
+import finance.com.fp.presenter.inter.HomeFragmentPre;
 import finance.com.fp.ui.inter.HomeFramentView;
 import finance.com.fp.utlis.RecycleViewDivider;
 
@@ -25,11 +24,9 @@ import finance.com.fp.utlis.RecycleViewDivider;
  * @Author：桑小年
  * @Data：2016/12/27 16:41
  */
-public class FindFragment extends BasisFragment implements HomeFramentView{
+public class FindFragment extends BasisFragment implements HomeFramentView {
 
-    private View view;
-    private TextView tv;
-    private ArrayList<String> lists;
+
     private PullRecycleView rc;
     private HomeFragmentPre pre;
     private RefrushAdapter<Set_Item> adapter;
@@ -37,17 +34,11 @@ public class FindFragment extends BasisFragment implements HomeFramentView{
 
     @Override
     public View initViews(LayoutInflater inflater, ViewGroup container) {
-        view=inflater.inflate(R.layout.fragment_find,null);
-
+       View view = inflater.inflate(R.layout.activity_register, null);
         rc = (PullRecycleView) view.findViewById(R.id.rc_find);
-        initData();
         return view;
     }
 
-    @Override
-    public void onStart() {
-        super.onStart();
-    }
 
 
     @Override
@@ -58,16 +49,44 @@ public class FindFragment extends BasisFragment implements HomeFramentView{
         rc.setLayoutManager(manager);
         rc.addItemDecoration(new RecycleViewDivider(getContext(), LinearLayout.VERTICAL));
         pre = new HomeFragmentPreComl(this);
-        adapter=pre.initFindAdapter(getContext());
+        adapter = pre.initFindAdapter(getActivity());
         rc.setAdapter(adapter);
+        rc.setRefrushListener(new RefrushListener() {
+            @Override
+            public void onLoading() {
 
+                pre.getData();
+            }
 
+            @Override
+            public void onLoadDowning() {
+
+                pre.getData();
+            }
+        });
+        rc.setLoading();
 
 
     }
 
     @Override
     public void onItemClick(int position, Set_Item item) {
+        Intent intent = new Intent(getActivity(), FriendActivity.class);
+        startActivity(intent);
+    }
 
+    @Override
+    public void loadSuccess() {
+        rc.loadSuccess();
+    }
+
+    @Override
+    public void loadFail() {
+        rc.loadFail();
+    }
+
+    @Override
+    public void showLoad() {
+        rc.setLoading();
     }
 }

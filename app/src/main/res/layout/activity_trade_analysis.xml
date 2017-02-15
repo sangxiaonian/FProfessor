@@ -1,0 +1,136 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/activity_trade_analysis"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@color/text_home_item_cut"
+    tools:context="finance.com.fp.ui.TradeAnalysisActivity">
+
+    <include layout="@layout/view_toolbar"/>
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:divider="@drawable/divider_line"
+        android:orientation="vertical"
+        android:showDividers="middle">
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/app_margin_ends"
+            android:src="@mipmap/background_imagr" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/white"
+            android:paddingBottom="@dimen/app_cut_big"
+            android:paddingEnd="@dimen/app_margin_ends"
+            android:paddingStart="@dimen/app_margin_ends"
+            android:paddingTop="@dimen/app_cut_big"
+            android:text="@string/main_item_more"
+            android:textColor="@color/bg"
+            android:textSize="@dimen/content_size" />
+
+        <RelativeLayout
+            style="@style/item_style"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/query"
+            android:paddingEnd="@dimen/app_margin_ends"
+            android:paddingStart="@dimen/app_margin_ends">
+
+            <ImageView
+                android:id="@+id/img_icon_top"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_centerVertical="true"
+                android:src="@mipmap/icon_query" />
+
+            <ImageView
+                android:id="@+id/img_top"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_centerVertical="true"
+                android:layout_marginEnd="@dimen/app_cut_big"
+                android:src="@mipmap/icon_box" />
+
+            <TextView
+                android:layout_toStartOf="@id/img_icon_top"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_toEndOf="@id/img_top"
+                android:paddingTop="@dimen/app_cut_big"
+                android:text="@string/balance_query_title"
+                android:textColor="#ae79c3"
+                android:textSize="@dimen/app_title_text_size" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignBottom="@id/img_top"
+                android:layout_toEndOf="@id/img_top"
+                android:layout_toStartOf="@id/img_icon_top"
+                android:paddingBottom="@dimen/app_cut_big"
+                android:paddingTop="@dimen/app_cut_big"
+                android:text="@string/balance_query_content"
+                android:textColor="@color/text_card_item_more"
+                android:textSize="@dimen/content_size" />
+        </RelativeLayout>
+
+        <RelativeLayout
+            style="@style/item_style"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/mcc"
+            android:paddingEnd="@dimen/app_margin_ends"
+            android:paddingStart="@dimen/app_margin_ends">
+
+            <ImageView
+                android:id="@+id/img_icon_down"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_centerVertical="true"
+                android:src="@mipmap/icon_mcc" />
+
+            <ImageView
+                android:id="@+id/img_down"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_centerVertical="true"
+                android:layout_marginEnd="@dimen/app_cut_big"
+                android:src="@mipmap/icon_case" />
+
+            <TextView
+                android:layout_toStartOf="@id/img_icon_down"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_toEndOf="@id/img_down"
+                android:paddingTop="@dimen/app_cut_big"
+                android:text="@string/balance_query_title"
+                android:textColor="#5bade1"
+                android:textSize="@dimen/app_title_text_size" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignBottom="@id/img_down"
+                android:layout_toEndOf="@id/img_down"
+                android:layout_toStartOf="@id/img_icon_down"
+                android:paddingBottom="@dimen/app_cut_big"
+                android:paddingTop="@dimen/app_cut_big"
+                android:text="@string/balance_query_content"
+                android:textColor="@color/text_card_item_more"
+                android:textSize="@dimen/content_size" />
+        </RelativeLayout>
+    </LinearLayout>
+    </ScrollView>
+</LinearLayout>

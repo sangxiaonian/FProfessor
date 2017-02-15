@@ -14,7 +14,8 @@
         android:theme="@style/AppTheme">
         <activity
             android:name=".ui.MainActivity"
-            android:label="@string/app_name">
+            android:label="@string/app_name"
+            android:launchMode="singleTask">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -27,16 +28,19 @@
         <activity android:name=".ui.Set_Activity" />
         <activity android:name=".ui.FeedbackActivity" />
         <activity android:name=".ui.IDActivity" />
-        <activity android:name=".ui.SecondRecycleActivity" />
         <activity android:name=".ui.PlannerActivity" />
         <activity android:name=".ui.Card_StrategyActivity" />
         <activity android:name=".ui.FriendActivity" />
-        <activity android:name=".ui.AllBanlancesActivity" />
         <activity android:name=".ui.Loan_Strategy_Activity" />
         <activity android:name=".ui.Loan_Search_Activity" />
         <activity android:name=".ui.HomeSonActivity" />
         <activity android:name=".ui.OneKeyActivity" />
-        <activity android:name=".ui.IDSonActivity"></activity>
+        <activity android:name=".ui.IDSonActivity" />
+        <activity android:name=".ui.ShowDetailActivity" />
+        <activity android:name=".ui.NoticeActivity" />
+        <activity android:name=".ui.TradeAnalysisActivity" />
+        <activity android:name=".ui.LoginActivity" />
+        <activity android:name=".ui.RegisterActivity"></activity>
     </application>
 
 </manifest>

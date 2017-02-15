@@ -1,40 +1,51 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     style="@style/item_style"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:gravity="center_vertical"
+
     android:orientation="horizontal"
     android:paddingLeft="@dimen/app_margin_ends"
-    android:paddingRight="@dimen/app_margin_ends"
-    >
+
+    android:paddingRight="@dimen/app_margin_ends">
 
 
     <ImageView
+        android:id="@+id/img_item"
         android:layout_width="@dimen/home_bottom_img_width"
         android:layout_height="@dimen/home_bottom_img_width"
+        android:layout_centerVertical="true"
         android:layout_marginRight="@dimen/app_item_cut_margin"
         android:scaleType="centerCrop"
         android:src="@mipmap/icon_circleoffriends" />
 
+    <include
+        android:id="@+id/more"
+        layout="@layout/img_more" />
+
+    <ImageView
+        android:id="@+id/img_red"
+
+        android:layout_width="@dimen/red_point"
+        android:layout_height="@dimen/red_point"
+        android:layout_alignBottom="@id/more"
+        android:layout_marginEnd= "@dimen/app_margin_ends"
+        android:layout_toStartOf="@id/more"
+        android:scaleType="centerCrop"
+        android:src="@mipmap/icon_circle" />
+
+
     <TextView
         style="@style/find_text_item"
+        android:layout_width="match_parent"
+        android:layout_centerVertical="true"
+
         android:layout_marginBottom="@dimen/find_title_item_margin"
         android:layout_marginTop="@dimen/find_title_item_margin"
+        android:layout_toEndOf="@id/img_item"
+        android:layout_toStartOf="@id/img_red"
         android:gravity="start"
         android:text="@string/find_item_fcycle" />
 
-    <ImageView
-        android:visibility="gone"
-        android:id="@+id/img_red"
-        android:layout_width="@dimen/red_point"
-        android:layout_height="@dimen/red_point"
-        android:layout_gravity="start"
-        android:layout_marginTop="@dimen/app_margin_ends"
-        android:layout_marginEnd="@dimen/app_margin_ends"
-        android:scaleType="centerCrop"
-        android:src="@mipmap/icon_circle"/>
-    <include layout="@layout/img_more" />
 
-
-</LinearLayout>
+</RelativeLayout>

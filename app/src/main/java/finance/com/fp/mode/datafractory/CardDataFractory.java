@@ -1,10 +1,18 @@
 package finance.com.fp.mode.datafractory;
 
+import android.support.annotation.NonNull;
+
 import java.util.ArrayList;
 import java.util.List;
 
 import finance.com.fp.R;
 import finance.com.fp.mode.bean.Set_Item;
+import finance.com.fp.utlis.ParameterException;
+import rx.Observable;
+import rx.android.schedulers.AndroidSchedulers;
+import rx.functions.Func1;
+import rx.functions.Func2;
+import rx.schedulers.Schedulers;
 
 
 /**
@@ -19,6 +27,7 @@ public class CardDataFractory extends BaseFractory {
     public static final int APPLY_PROGRESS = 3;
 
     private static CardDataFractory cardDataFractory;
+
     public static CardDataFractory getInstance() {
         if (cardDataFractory == null) {
             synchronized (CardDataFractory.class) {
@@ -30,30 +39,30 @@ public class CardDataFractory extends BaseFractory {
         return cardDataFractory;
     }
 
-    @Override
-    public List<Set_Item> creatDatas(int item_id) {
-        List<Set_Item> list = null;
-        switch (item_id) {
 
-            case 0:
-                break;
+    @Override
+    public Observable creatObservable(int itemId) {
+        Observable observable;
+        switch (itemId) {
+
             case HOT_APPLY://热申排行榜
-                list = getHotApply();
+                observable = getHotApply();
                 break;
             case ALL_BALANCE:
-                list = getAllBalances();
+                observable = getAllBalances();
                 break;
             case APPLY_PROGRESS:
-                list = getCardProgress();
+                observable = getCardProgress();
                 break;
-
+            default:
+                throw new ParameterException("传入ID参数错误");
         }
-        return list;
+
+        return observable;
     }
 
-    private List<Set_Item> getCardProgress() {
-        List<Set_Item> list = new ArrayList<>();
-        int[] icons = {R.mipmap.icon_pinganbank_phone,
+    private Observable<Set_Item> getCardProgress() {
+        Integer[] icons = {R.mipmap.icon_pinganbank_phone,
                 R.mipmap.icon_guangdongdevelopmentbankk_phone,
                 R.mipmap.icon_chinaciticbank_phone,
                 R.mipmap.icon_chinamerchants_phone,
@@ -68,17 +77,14 @@ public class CardDataFractory extends BaseFractory {
 
         };
         String[] titles = context.getResources().getStringArray(R.array.card_pro_query);
-        for (int i = 0; i < titles.length; i++) {
-            Set_Item item = new Set_Item(icons[i], titles[i]);
-            list.add(item);
-        }
-        return list;
+
+        return getZip(icons, titles);
     }
 
 
-    public List<Set_Item> getAllBalances(){
-        List<Set_Item> list = new ArrayList<>();
-        int[] icons = {R.mipmap.icon_thebankofchina_phone,
+    public Observable<Set_Item> getAllBalances() {
+
+        Integer[] icons = {R.mipmap.icon_thebankofchina_phone,
                 R.mipmap.icon_agricuralbankof_phone,
                 R.mipmap.icon_constructionbankccb_phone,
 
@@ -99,13 +105,25 @@ public class CardDataFractory extends BaseFractory {
                 R.mipmap.icon_citibank_phone
         };
         String tittles[] = context.getResources().getStringArray(R.array.home_balance_phone);
-        for (int i = 0; i < icons.length; i++) {
-            String[] split = tittles[i].split("_");
-            list.add(new Set_Item(icons[i], split[0]));
-        }
 
-        return list;
 
+        return Observable.zip(Observable.from(icons),
+                Observable.from(tittles).map(new Func1<String, String>() {
+                    @Override
+                    public String call(String s) {
+                        String[] split = s.split("_");
+
+                        return split[0];
+                    }
+                })
+                , new Func2<Integer, String, Set_Item>() {
+                    @Override
+                    public Set_Item call(Integer integer, String s) {
+
+                        return new Set_Item(integer, s);
+
+                    }
+                }).subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread());
     }
 
     /**
@@ -113,8 +131,7 @@ public class CardDataFractory extends BaseFractory {
      *
      * @return
      */
-    private List<Set_Item> getHotApply() {
-        final List<Set_Item> list = new ArrayList<>();
+    private Observable<Set_Item> getHotApply() {
 //        Integer[] icons = {R.mipmap.icon_creditcardofbankofcommunicationsstangards,
 //                R.mipmap.icon_citiclpiatinumcreditcard,
 //                R.mipmap.icon_shanghaipudongdevelopmentbankstandardcreditcard,
@@ -123,17 +140,34 @@ public class CardDataFractory extends BaseFractory {
 //                R.mipmap.icon_everbrightfcreditcard,
 //                R.mipmap.icon_citicqatthegoldcard
 //        };
+        Integer[] icons = {R.mipmap.icon_citiclpiatinumcreditcard,
+                R.mipmap.icon_citiclpiatinumcreditcard,
+                R.mipmap.icon_citiclpiatinumcreditcard,
+                R.mipmap.icon_citiclpiatinumcreditcard,
+                R.mipmap.icon_citiclpiatinumcreditcard,
+                R.mipmap.icon_citiclpiatinumcreditcard,
+                R.mipmap.icon_citiclpiatinumcreditcard
+        };
 
         String[] tittles = context.getResources().getStringArray(R.array.card_hot_apply);
-        for (int i = 0; i < tittles.length; i++) {
-          list.add(  new Set_Item(R.mipmap.icon_citiclpiatinumcreditcard, tittles[i]));
-        }
-        return list;
+
+        return getZip(icons, tittles);
+    }
+
+    @NonNull
+    private Observable<Set_Item> getZip(Integer[] icons, String[] tittles) {
+        return Observable.zip(Observable.from(icons), Observable.from(tittles), new Func2<Integer, String, Set_Item>() {
+            @Override
+            public Set_Item call(Integer integer, String s) {
+                return new Set_Item(integer, s);
+            }
+        }).subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread());
     }
 
 
     /***
      * 获取工具
+     *
      * @return
      */
     public List<Set_Item> getTools() {
@@ -157,22 +191,23 @@ public class CardDataFractory extends BaseFractory {
                 R.mipmap.icon_bankofcommunictions, R.mipmap.icon_minshengbank, R.mipmap.icon_chinamerchants
                 , R.mipmap.icon_more_balabce};
         for (int i = 0; i < tltles.length; i++) {
-            datas.add(new Set_Item(icons[i],tltles[i]));
+            datas.add(new Set_Item(icons[i], tltles[i]));
         }
         return datas;
     }
 
     /**
      * 本期力荐卡
+     *
      * @return
      */
     public List<Set_Item> getCards() {
         List<Set_Item> datas = new ArrayList<>();
 
-        int[] icons = {R.mipmap.home_picture,R.mipmap.home_picture,R.mipmap.home_picture };
+        int[] icons = {R.mipmap.home_picture, R.mipmap.home_picture, R.mipmap.home_picture};
         for (int i = 0; i < icons.length; i++) {
             Set_Item item = new Set_Item();
-            item.icon_id=icons[i];
+            item.icon_id = icons[i];
             datas.add(item);
         }
         return datas;
@@ -180,20 +215,19 @@ public class CardDataFractory extends BaseFractory {
 
     public int getCardLayoutID(int item_id) {
         int id = 0;
-        switch (item_id){
+        switch (item_id) {
             case HOT_APPLY:
-                id=R.layout.item_hot_apply;
+                id = R.layout.item_hot_apply;
                 break;
             case ALL_BALANCE:
-                id=R.layout.item_card_allbalance;
+                id = R.layout.item_card_allbalance;
                 break;
             case APPLY_PROGRESS:
-                id=R.layout.item_card_progress;
+                id = R.layout.item_card_progress;
                 break;
         }
 
         return id;
     }
-
 
 }

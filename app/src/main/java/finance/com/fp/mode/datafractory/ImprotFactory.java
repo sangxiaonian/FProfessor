@@ -1,10 +1,18 @@
 package finance.com.fp.mode.datafractory;
 
+import android.support.annotation.NonNull;
+
 import java.util.ArrayList;
 import java.util.List;
 
 import finance.com.fp.R;
 import finance.com.fp.mode.bean.Set_Item;
+import finance.com.fp.utlis.ParameterException;
+import rx.Observable;
+import rx.android.schedulers.AndroidSchedulers;
+import rx.functions.Func1;
+import rx.functions.Func2;
+import rx.schedulers.Schedulers;
 
 /**
  * Description：
@@ -37,24 +45,42 @@ public class ImprotFactory extends BaseFractory {
 
 
     @Override
-    public List<Set_Item> creatDatas(int item_id) {
-        List<Set_Item> list = null;
-        switch (item_id) {
+    public Observable creatObservable(int itemId) {
+        Observable observable = null;
+        switch (itemId) {
             case LOAN_STRAGE:
-                list = getBalance();
+                observable = getBalance();
                 break;
             case LOAN_ONE_KEY_IPMORT://一键提额
-                list = getOneKey();
+                observable = getOneKey();
                 break;
+            default:
+                throw new ParameterException("传入ID参数错误");
         }
 
-
-        return list;
+        return observable;
     }
 
-    public  List<Set_Item> getOneKey(){
-        List<Set_Item> list = new ArrayList<>();
-        int[] icons = {R.mipmap.icon_thebankofchina_phone,
+    @NonNull
+    private Observable<Set_Item> getZip(Integer[] icons, String[] tittles) {
+        return Observable.zip(Observable.from(icons)
+                , Observable.from(tittles).map(new Func1<String, String[]>() {
+                    @Override
+                    public String[] call(String s) {
+                        return  s.split("_");
+                    }
+                }), new Func2<Integer, String[], Set_Item>() {
+                    @Override
+                    public Set_Item call(Integer integer, String[] split) {
+
+                        return new Set_Item(integer, split[0], split[1]);
+                    }
+                }).subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread());
+    }
+
+
+    public Observable<Set_Item> getOneKey(){
+        Integer[] icons = {R.mipmap.icon_thebankofchina_phone,
                 R.mipmap.icon_agricuralbankof_phone,
                 R.mipmap.icon_icbc_phone,
                 R.mipmap.icon_constructionbankccb_phone,
@@ -72,12 +98,7 @@ public class ImprotFactory extends BaseFractory {
                 R.mipmap.icon_citibank_phone
         };
         String tittles[] = context.getResources().getStringArray(R.array.home_balance_phone);
-        for (int i = 0; i < icons.length; i++) {
-            String[] split = tittles[i].split("_");
-            list.add(new Set_Item(icons[i], split[0], split[1]));
-        }
-
-        return list;
+        return getZip(icons,tittles);
     }
 
 
@@ -89,9 +110,8 @@ public class ImprotFactory extends BaseFractory {
      *
      * @return
      */
-    public List<Set_Item> getBalance() {
-        List<Set_Item> list = new ArrayList<>();
-        int[] icons = {R.mipmap.icon_thebankofchina_phone,
+    public Observable<Set_Item> getBalance() {
+        Integer[] icons = {R.mipmap.icon_thebankofchina_phone,
                 R.mipmap.icon_agricuralbankof_phone,
                 R.mipmap.icon_icbc_phone,
                 R.mipmap.icon_constructionbankccb_phone,
@@ -109,12 +129,7 @@ public class ImprotFactory extends BaseFractory {
                 R.mipmap.icon_citibank_phone
         };
         String tittles[] = context.getResources().getStringArray(R.array.home_balance_phone);
-        for (int i = 0; i < icons.length; i++) {
-            String[] split = tittles[i].split("_");
-            list.add(new Set_Item(icons[i], split[0], split[1]));
-        }
-
-        return list;
+        return getZip(icons,tittles);
     }
 
 

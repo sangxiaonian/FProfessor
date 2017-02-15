@@ -6,29 +6,28 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/text_home_item_cut"
-    android:orientation="vertical"
     android:fitsSystemWindows="true"
+    android:orientation="vertical"
 
     tools:context="finance.com.fp.ui.CardActivity">
 
-    <include
-        layout="@layout/view_toolbar" />
+    <include layout="@layout/view_toolbar" />
 
-   <android.support.v7.widget.RecyclerView
+    <android.support.v7.widget.RecyclerView
         android:id="@+id/rc"
-       android:layout_weight="1"
-       android:layout_height="0dp"
-       android:layout_width="match_parent" />
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1" />
 
 
-        <Button
-            android:layout_gravity="center"
-            android:layout_marginTop="@dimen/app_cut_big"
-            android:layout_marginBottom="@dimen/app_second_image_size"
-            android:layout_centerInParent="true"
-            android:layout_width="325dp"
-            android:layout_height="45dp"
-            android:background="@mipmap/immediatelytoapplyforaloan"
-            />
+    <Button
+        android:onClick="click"
+        android:layout_width="325dp"
+        android:layout_height="45dp"
+        android:layout_centerInParent="true"
+        android:layout_gravity="center"
+        android:layout_marginBottom="@dimen/app_second_image_size"
+        android:layout_marginTop="@dimen/app_cut_big"
+        android:background="@mipmap/immediatelytoapplyforaloan" />
 
 </LinearLayout>

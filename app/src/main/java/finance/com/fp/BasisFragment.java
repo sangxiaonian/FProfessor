@@ -9,6 +9,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 /**
  * Description：
@@ -24,21 +25,17 @@ public class BasisFragment extends Fragment {
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        initToolbar();
+
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         rootView = initViews(inflater, container);
+
         initData();
         return rootView;
     }
 
-    @Override
-    public void onStart() {
-        super.onStart();
-
-    }
 
     @Override
     public void onResume() {
@@ -62,16 +59,20 @@ public class BasisFragment extends Fragment {
         return null;
     }
 
-    public Toolbar initToolbar() {
+    public void initToolBar(String title) {
+       Toolbar toolbar = (Toolbar) rootView.findViewById(R.id.toolbar);
+        if (toolbar != null) {
+            toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
 
-//        Toolbar toolbar = (Toolbar) activity.findViewById(R.id.toolbar);
-//        activity.setSupportActionBar(toolbar);
-//        ActionBar actionBar = activity.getSupportActionBar();
-//        if (actionBar != null) {
-//            actionBar.setDisplayHomeAsUpEnabled(false);
-//        }
-//        return toolbar;
-        return null;
+                }
+            });
+            TextView tvtitle = (TextView) rootView.findViewById(R.id.title);
+            if (tvtitle != null) {
+                tvtitle.setText(title);
+            }
+        }
     }
 
 

@@ -7,6 +7,7 @@
     <string name="set">我的</string>
     <string name="set_msg">消息推送</string>
     <string name="msg_center">消息中心</string>
+    <string name="msg_detail">重要公告</string>
     <string name="feedback">意见反馈</string>
     <string name="id_infor">个人信息</string>
     <string name="friend">朋友圈</string>
@@ -21,6 +22,7 @@
     <string name="find_item_fun">最新金融口子</string>
     <string name="set_item">登陆/注册</string>
 
+
     <string name="card_title">办卡专区</string>
     <string name="card_once_query">立刻查询</string>
     <string name="balance">热门银行</string>
@@ -32,12 +34,30 @@
     <string name="import_title">提额专区</string>
     <string name="import_start">开始</string>
     <string name="import_key">一键提额</string>
+    <string name="import_at_once">立即申请提额</string>
     <string name="import_key_des">(实时查看可提额度)</string>
 
     <string name="set_title">设置</string>
     <string name="set_commit">提交</string>
-    <string name="set_login_out">退出登录</string>
 
+
+    <string name="login">登录</string>
+    <string name="set_login_out">退出登录</string>
+    <string name="login_normal">普通登录</string>
+    <string name="login_dynamic">动态验证码登录</string>
+    <string name="input_phone">请输入手机号</string>
+    <string name="input_password">请输入登陆密码</string>
+    <string name="forget_password">忘记登录密码？</string>
+    <string name="get_dynamic">获取验证码</string>
+    <string name="input_dynamic">请输入验证码</string>
+    <string name="input_register">请输入注册码（必填）</string>
+    <string name="get_register">注册码请联系融教授平台代理商获取哦！</string>
+    <string name="next">下一步</string>
+    <string name="vip_login">会员直接登录 ></string>
+    <string name="agree">同意</string>
+    <string name="agreement"> 《融教授服务条款》</string>
+
+    <string name="register">注册</string>
 
     <string name="set_ps">密码修改</string>
     <string name="phone">手机号</string>
@@ -61,5 +81,11 @@
     <string name="loan_apply_detail">针对常见的申请资料，网贷机构是如何考察的？有哪些改善技巧？融教授为您一一解析。</string>
 
     <string name="msg_sys">[系统公告]</string>
+
+    <string name="balance_query_title">银联跨行交易查询</string>
+    <string name="balance_query_content">只需卡号、金额、日期、急速查询单笔刷卡交易的明细</string>
+    <string name="mcc_title">MCC宝典</string>
+    <string name="mcc_content">快速查询每个MCC对应的行业、是否有积分</string>
+
 
 </resources>

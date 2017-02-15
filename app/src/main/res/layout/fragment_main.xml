@@ -8,14 +8,14 @@
      >
 
 
-    <android.support.v7.widget.RecyclerView
+    <em.sang.com.allrecycleview.PullUPRecycleView
         android:id="@+id/rc_home"
         android:background="@color/text_home_item_cut"
         android:layout_width="match_parent"
         app:layout_behavior="finance.com.fp.utlis.CustomBehavior"
         android:layout_height="match_parent">
 
-    </android.support.v7.widget.RecyclerView>
+    </em.sang.com.allrecycleview.PullUPRecycleView>
 
 
 

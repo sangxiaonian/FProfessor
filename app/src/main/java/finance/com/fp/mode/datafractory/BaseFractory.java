@@ -6,6 +6,7 @@ import java.util.List;
 
 import finance.com.fp.CusApplication;
 import finance.com.fp.mode.bean.Set_Item;
+import rx.Observable;
 
 /**
  * Description：
@@ -29,4 +30,6 @@ public class BaseFractory {
     public List<Set_Item> creatDatas(int item_id) {
         return null;
     }
+
+    public Observable creatObservable(int itemId){return null;}
 }

@@ -17,10 +17,10 @@ import em.sang.com.allrecycleview.holder.CustomHolder;
 import em.sang.com.allrecycleview.inter.DefaultAdapterViewLisenter;
 import em.sang.com.allrecycleview.listener.OnToolsItemClickListener;
 import finance.com.fp.R;
-import finance.com.fp.holder.CardNotifiHolder;
-import finance.com.fp.holder.GrideHolder;
-import finance.com.fp.holder.HomeCarouselHolder;
-import finance.com.fp.holder.HomeMoreHolder;
+import finance.com.fp.ui.holder.CardNotifiHolder;
+import finance.com.fp.ui.holder.GrideHolder;
+import finance.com.fp.ui.holder.HomeCarouselHolder;
+import finance.com.fp.ui.holder.HomeMoreHolder;
 import finance.com.fp.mode.bean.Set_Item;
 import finance.com.fp.mode.inter.ImportDataComl;
 import finance.com.fp.mode.inter.ImportDataInter;
@@ -61,6 +61,8 @@ public class ImportProComl implements ImportInter {
                         Button btn = (Button) itemView.findViewById(R.id.btn_start_item_loan);
                         Glide.with(context)
                                 .load(item.icon_id)
+                                .placeholder(item.placeholder)
+                                .error(item.faildId)
                                 .centerCrop()
                                 .crossFade()
                                 .into(img);

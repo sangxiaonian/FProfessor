@@ -100,7 +100,7 @@
 
 
     <!--小红点-->
-    <dimen name="red_point">5dp</dimen>
+    <dimen name="red_point">10dp</dimen>
 
     <!--GrideView-->
 
@@ -185,5 +185,11 @@
 
     <dimen name="msg_img">40dp</dimen>
     <dimen name="msg_title">12sp</dimen>
+
+
+    <dimen name="login_btn_height">58dp</dimen>
+
+    <dimen name="btn_dynamic_height">42dp</dimen>
+    <dimen name="btn_dynamic_width">98dp</dimen>
 
 </resources>

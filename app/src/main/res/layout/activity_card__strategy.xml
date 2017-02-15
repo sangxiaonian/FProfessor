@@ -6,20 +6,17 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     tools:context="finance.com.fp.ui.Card_StrategyActivity">
-
     <include layout="@layout/view_toolbar" />
 
     <RadioGroup
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="50dp"
         android:layout_marginBottom="@dimen/app_cut_big"
         android:layout_marginTop="@dimen/app_cut_big"
         android:background="@color/white"
         android:orientation="horizontal"
         android:id="@+id/rg_card"
-        android:paddingEnd="@dimen/app_margin_ends"
-        android:paddingStart="@dimen/app_margin_ends"
-        android:paddingTop="@dimen/app_cut_big">
+        >
 
         <RadioButton
             style="@style/card_rb"

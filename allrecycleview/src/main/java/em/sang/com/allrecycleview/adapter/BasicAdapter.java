@@ -25,9 +25,9 @@ public class BasicAdapter<T> extends RecyclerView.Adapter {
     protected List<T> lists = new ArrayList<>();
     public int itemID;
     protected List<CustomPeakHolder> heards = new ArrayList<CustomPeakHolder>();
-    public List<CustomPeakHolder> foots = new ArrayList<CustomPeakHolder>();
-    public List<CustomPeakHolder> tops = new ArrayList<CustomPeakHolder>();
-    public List<CustomPeakHolder> booms = new ArrayList<>();
+    protected List<CustomPeakHolder> foots = new ArrayList<CustomPeakHolder>();
+    protected List<CustomPeakHolder> tops = new ArrayList<CustomPeakHolder>();
+    protected List<CustomPeakHolder> booms = new ArrayList<>();
     public CustomAdapterListener<T> listener;
 
     public Context context;
@@ -193,5 +193,21 @@ public class BasicAdapter<T> extends RecyclerView.Adapter {
         this.lists = list;
         notifyDataSetChanged();
 
+    }
+
+    public List<CustomPeakHolder> getHeards(){
+        return heards;
+    }
+
+    public List<CustomPeakHolder> getFoots() {
+        return foots;
+    }
+
+    public List<CustomPeakHolder> getTops() {
+        return tops;
+    }
+
+    public List<CustomPeakHolder> getBooms() {
+        return booms;
     }
 }

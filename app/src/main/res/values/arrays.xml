@@ -104,6 +104,7 @@
     </string-array>
 
 
+
     <string-array name="home_all_balance">
         <item>中国银行</item>
         <item>农业银行</item>
@@ -319,5 +320,9 @@
         <item>保单缴费半年以上</item>
         <item>保单缴费半年以下</item>
     </string-array>
+
+
+
+
 
 </resources>

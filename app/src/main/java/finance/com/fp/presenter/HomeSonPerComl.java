@@ -5,6 +5,8 @@ import android.content.Context;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 
+import com.orhanobut.logger.Logger;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -81,7 +83,11 @@ public class HomeSonPerComl   implements HomeSonPreInter {
 
     @Override
     public void setDatas(Context context) {
-        data.getData(infor.activity_id, infor.item_id, view).subscribe(getRefrushSubscriber());
+        if (refrushSubscriber!=null){
+            refrushSubscriber.unsubscribe();
+        }
+
+        data.getData(infor.activity_id, infor.item_id).subscribe(getRefrushSubscriber());
     }
 
 
@@ -161,10 +167,7 @@ public class HomeSonPerComl   implements HomeSonPreInter {
     private List<Set_Item> list = new ArrayList<>();
 
     private RecyclerView.Adapter getHomeAdapter(Context context, final int activityID, final int item_id) {
-        List<Set_Item> items = data.getDataByID(activityID, item_id);
-        if (items != null) {
-            list.addAll(items);
-        }
+
         int itemId = data.getItemID(activityID, item_id);
         return adapter = new DefaultAdapter<Set_Item>(context, list, itemId, new DefaultAdapterViewLisenter<Set_Item>() {
             @Override
@@ -195,6 +198,7 @@ public class HomeSonPerComl   implements HomeSonPreInter {
 
             @Override
             public void onCompleted() {
+                adapter.notifyItemRangeChanged(0,list.size()-1);
                 view.loadSuccess();
             }
 
@@ -207,6 +211,7 @@ public class HomeSonPerComl   implements HomeSonPreInter {
             @Override
             public void onNext(Set_Item o) {
                 list.add(o);
+                Logger.i(o.toString());
 
             }
         };

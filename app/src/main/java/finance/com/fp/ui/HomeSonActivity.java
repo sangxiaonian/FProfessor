@@ -13,15 +13,15 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
-import com.orhanobut.logger.Logger;
 
 import em.sang.com.allrecycleview.PullRecycleView;
 import em.sang.com.allrecycleview.adapter.DefaultAdapter;
-import em.sang.com.allrecycleview.inter.RefrushListener;
+import em.sang.com.allrecycleview.inter.DefaultRefrushListener;
 import finance.com.fp.BasisActivity;
 import finance.com.fp.R;
 import finance.com.fp.mode.bean.Config;
 import finance.com.fp.mode.bean.Set_Item;
+import finance.com.fp.mode.bean.TranInfor;
 import finance.com.fp.presenter.HomeSonPerComl;
 import finance.com.fp.presenter.inter.HomeSonPreInter;
 import finance.com.fp.ui.inter.HomeSonView;
@@ -58,11 +58,11 @@ public class HomeSonActivity extends BasisActivity implements HomeSonView {
         rc.addItemDecoration(pre.getDivider(this));
         adapter = (DefaultAdapter) pre.getAdapter(this);
         rc.setAdapter(adapter);
-        rc.setRefrushListener(new RefrushListener() {
+        rc.setRefrushListener(new DefaultRefrushListener() {
            @Override
            public void onLoading() {
+
                pre.setDatas(HomeSonActivity.this);
-               Logger.i("--------------------加载数据---------------------------");
            }
         });
         rc.setLoading();
@@ -78,7 +78,14 @@ public class HomeSonActivity extends BasisActivity implements HomeSonView {
 
     @Override
     public void msgItemClick(View itemView, final Set_Item item) {
-        ToastUtil.showTextToast(getString(R.string.msg_center));
+
+        Intent intent =new Intent(this, NoticeActivity.class);
+        TranInfor infor  =new TranInfor();
+        infor.title=item.title;
+        infor.content=item.content;
+        infor.updatetime=item.updatetime;
+        intent.putExtra(Config.infors,infor);
+        startActivity(intent);
 
     }
 
@@ -107,9 +114,18 @@ public class HomeSonActivity extends BasisActivity implements HomeSonView {
         if (img != null) {
 
             if (!TextUtils.isEmpty(item.img_url)) {
-                Glide.with(this).load(item.img_url).crossFade().into(img);
+                Glide.with(this)
+                        .load(item.img_url)
+                        .placeholder(item.placeholder)
+                        .error(item.faildId)
+                        .crossFade()
+                        .into(img);
             } else if (item.icon_id > 0) {
-                Glide.with(this).load(item.icon_id).crossFade().into(img);
+                Glide.with(this)
+                        .load(item.icon_id)
+                        .placeholder(item.placeholder)
+                        .error(item.faildId)
+                        .crossFade().into(img);
             }
         }
 
@@ -217,6 +233,7 @@ public class HomeSonActivity extends BasisActivity implements HomeSonView {
     @Override
     public void loan_strage_item(View itemView, Set_Item item) {
         ToastUtil.showTextToast(item.title);
+
     }
 
     @Override
@@ -230,12 +247,13 @@ public class HomeSonActivity extends BasisActivity implements HomeSonView {
     public void loadSuccess() {
 
         rc.loadSuccess();
-        adapter.notifyDataSetChanged();
+
     }
 
     @Override
     public void loadFail() {
-        rc.loadFail();
+//        rc.loadFail();
+        rc.loadSuccess();
     }
 
 }

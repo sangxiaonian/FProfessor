@@ -64,7 +64,6 @@ public class DefaultAdapter<T> extends CustomBasicAdapter {
 
     }
 
-    private int topCount,boomCount;
 
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
@@ -72,8 +71,7 @@ public class DefaultAdapter<T> extends CustomBasicAdapter {
         RecyclerView.ViewHolder holder = null;
 
         if (viewType == TOP) {
-            holder = (RecyclerView.ViewHolder) tops.get(topCount);
-            topCount++;
+            holder = (RecyclerView.ViewHolder) tops.get(0);
         } else if (viewType < heards.size()+tops.size()) {
             holder= (RecyclerView.ViewHolder) heards.get(viewType-tops.size());
         } else if (viewType == BODY) {
@@ -81,7 +79,7 @@ public class DefaultAdapter<T> extends CustomBasicAdapter {
         } else if (viewType<heards.size() + lists.size() + tops.size()+foots.size()){
             holder= (RecyclerView.ViewHolder) foots.get(viewType - heards.size() - lists.size()-tops.size());
         }else if (viewType==FOOT){
-            holder = (RecyclerView.ViewHolder) booms.get(boomCount);
+            holder = (RecyclerView.ViewHolder) booms.get(0);
         }
         return holder;
     }

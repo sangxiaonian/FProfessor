@@ -11,6 +11,7 @@ import android.widget.RelativeLayout;
 
 import java.lang.ref.WeakReference;
 
+import em.sang.com.allrecycleview.BasicPullRecycleView;
 import finance.com.fp.R;
 
 /**
@@ -100,7 +101,6 @@ public class CustomBehavior extends CoordinatorLayout.Behavior {
 //            child1.setScaleY(pro);
             child1.setAlpha(pro);
             if (pro < 0.7) {
-
                 child1.setVisibility(View.GONE);
             } else {
                 child1.setVisibility(View.VISIBLE);
@@ -135,16 +135,13 @@ public class CustomBehavior extends CoordinatorLayout.Behavior {
                 int H = (h < minHeard) ? minHeard : h;
                 params.height = H;
                 view.setLayoutParams(params);
+
                 child.setTranslationY(H);
                 consumed[1] = dy;
-            } else {
-                int h = height - dy;
-                params.height = heardSize;
-                view.setLayoutParams(params);
-                child.setTranslationY(h);
-                if (child.getTranslationY()>heardSize){
-                    consumed[1] = dy;
-                }
+//                if (child instanceof BasicPullRecycleView){
+//                    BasicPullRecycleView recycleView = (BasicPullRecycleView) child;
+//                    recycleView.setViewHeight(recycleView.getEndView(),0);
+//                }
             }
 
 
@@ -163,15 +160,15 @@ public class CustomBehavior extends CoordinatorLayout.Behavior {
         int height = (int) child.getTranslationY();
         if (dyUnconsumed < 0) {
             int h = height - dyUnconsumed;
-            params.height = h;
-            if (params.height >= 0 && params.height <= heardSize) {
+
+            if (h >= 0 &&h<= heardSize) {
+                params.height = h;
                 view.setLayoutParams(params);
                 child.setTranslationY(h);
-            } else {
-                params.height = heardSize;
-                view.setLayoutParams(params);
-                int h1 = height - dyUnconsumed / 3;
-                child.setTranslationY(h1);
+                if (child instanceof BasicPullRecycleView){
+                    BasicPullRecycleView recycleView = (BasicPullRecycleView) child;
+                    recycleView.setViewHeight(recycleView.getEndView(),0);
+                }
             }
 
         }

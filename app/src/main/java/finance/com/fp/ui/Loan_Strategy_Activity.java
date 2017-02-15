@@ -13,7 +13,7 @@ import em.sang.com.allrecycleview.holder.CustomHolder;
 import em.sang.com.allrecycleview.inter.DefaultAdapterViewLisenter;
 import finance.com.fp.BasisActivity;
 import finance.com.fp.R;
-import finance.com.fp.holder.Loan_Strategy_Holder;
+import finance.com.fp.ui.holder.Loan_Strategy_Holder;
 import finance.com.fp.mode.bean.Set_Item;
 import finance.com.fp.mode.datafractory.DataLoadLisetner;
 import finance.com.fp.mode.datafractory.LoanDataFractory;

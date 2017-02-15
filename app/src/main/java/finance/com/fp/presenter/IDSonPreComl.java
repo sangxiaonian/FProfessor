@@ -10,7 +10,7 @@ import em.sang.com.allrecycleview.adapter.DefaultAdapter;
 import em.sang.com.allrecycleview.holder.CustomHolder;
 import em.sang.com.allrecycleview.inter.DefaultAdapterViewLisenter;
 import finance.com.fp.R;
-import finance.com.fp.holder.IDHolder;
+import finance.com.fp.ui.holder.IDHolder;
 import finance.com.fp.mode.IDSonDataCom;
 import finance.com.fp.mode.bean.Set_Item;
 import finance.com.fp.mode.bean.TranInfor;

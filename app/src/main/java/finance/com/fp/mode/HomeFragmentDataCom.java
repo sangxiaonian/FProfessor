@@ -1,11 +1,12 @@
 package finance.com.fp.mode;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import finance.com.fp.mode.bean.Set_Item;
 import finance.com.fp.mode.datafractory.HomeDataFractory;
+import finance.com.fp.mode.datafractory.HttpFactory;
 import finance.com.fp.mode.inter.HomeFragmentData;
+import rx.Observable;
 
 /**
  * Description：
@@ -27,9 +28,13 @@ public class HomeFragmentDataCom implements HomeFragmentData {
     }
 
     @Override
-    public List<Set_Item> getfinancialhole() {
-        ArrayList<Set_Item> list = new ArrayList<>();
-        list.add(new Set_Item(0,"测试数据"));
-        return list;
+    public Observable<Set_Item> getfinancialhole() {
+
+        return HttpFactory.getFinance();
+    }
+
+    @Override
+    public Observable<Set_Item> getPartialDoor() {
+        return  HttpFactory.getPartialDoor();
     }
 }

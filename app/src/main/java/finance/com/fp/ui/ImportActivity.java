@@ -95,7 +95,7 @@ public class ImportActivity extends BasisActivity implements ImportView {
                 c = HomeSonActivity.class;
                 break;
             case 1:
-//                c=HomeSonActivity.class;
+                c=TradeAnalysisActivity.class;
                 tranInfor.item_id = HomeDataFractory.BALANCE_CALL;
                 break;
             case 2:

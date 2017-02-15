@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/activity_notice"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/text_home_item_cut"
+    android:orientation="vertical"
+    tools:context="finance.com.fp.ui.NoticeActivity">
+
+    <include layout="@layout/view_toolbar" />
+
+    <TextView
+        android:id="@+id/tv_title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white"
+        android:padding="@dimen/app_margin_ends"
+
+        android:textColor="@color/text_home_item"
+        android:textSize="@dimen/app_title_text_size" />
+
+    <TextView
+        android:id="@+id/tv_time"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white"
+        android:paddingBottom="@dimen/app_margin_ends"
+        android:paddingStart="@dimen/app_margin_ends"
+
+        android:textColor="@color/text_home_item_time"
+        android:textSize="@dimen/app_title_text_size_small" />
+
+    <Space
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@drawable/divider_line_dark" />
+
+    <TextView
+        android:id="@+id/content"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white"
+        android:paddingBottom="@dimen/msg_img"
+        android:paddingEnd="@dimen/app_margin_ends"
+        android:paddingStart="@dimen/app_margin_ends"
+        android:paddingTop="@dimen/app_cut_big"
+
+        android:textSize="@dimen/content_size"
+        android:textColor="@color/text_card_item_more" />
+
+</LinearLayout>

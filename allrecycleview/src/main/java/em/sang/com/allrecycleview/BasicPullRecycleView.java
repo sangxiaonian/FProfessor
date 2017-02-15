@@ -1,5 +1,7 @@
 package em.sang.com.allrecycleview;
 
+import android.animation.Animator;
+import android.animation.AnimatorListenerAdapter;
 import android.animation.ValueAnimator;
 import android.content.Context;
 import android.support.annotation.Nullable;
@@ -10,10 +12,13 @@ import android.util.AttributeSet;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.DecelerateInterpolator;
 import android.widget.LinearLayout;
 
 import em.sang.com.allrecycleview.inter.RefrushListener;
+import em.sang.com.allrecycleview.utils.JLog;
 import em.sang.com.allrecycleview.view.RefrushLinearLayout;
+import em.sang.com.allrecycleview.view.ShapeView;
 
 /**
  * Description：
@@ -77,7 +82,7 @@ public abstract class BasicPullRecycleView extends RecyclerView {
     public float downY;
 
 
-    public boolean isNoTouch=true;
+    public boolean isNoTouch = true;
 
     /**
      * 滑动状态
@@ -91,6 +96,8 @@ public abstract class BasicPullRecycleView extends RecyclerView {
     public float min = 0;
     public int refrush_state = -1;
     public ValueAnimator animator;
+
+    private int nextState;
 
     public BasicPullRecycleView(Context context) {
         super(context);
@@ -108,12 +115,13 @@ public abstract class BasicPullRecycleView extends RecyclerView {
     }
 
 
-
     @Override
     public boolean onTouchEvent(MotionEvent e) {
         if (downY == -1) {
             downY = e.getRawY();
         }
+
+
         clearViewAnimotion();
         switch (e.getAction()) {
             case MotionEvent.ACTION_DOWN:
@@ -127,7 +135,7 @@ public abstract class BasicPullRecycleView extends RecyclerView {
                 if (canDrag()) {
                     if (isFirst()) {
                         setHightVisiable(gap);
-                    } else if (!isFirst()&&isLast()) {
+                    } else if (!isFirst() && isLast()) {
                         setHightVisiable(-gap);
                     }
                 }
@@ -149,7 +157,92 @@ public abstract class BasicPullRecycleView extends RecyclerView {
         return super.onTouchEvent(e);
     }
 
-    protected abstract void moveToChildHight(int refrush_state);
+
+    protected void moveToChildHight(final int refrush_state) {
+        synchronized (BasicPullRecycleView.class) {
+
+            View view = getEndView();
+            float stand = getStandHeightByStated(refrush_state);
+            ViewGroup.LayoutParams layoutParams = view.getLayoutParams();
+            int height = layoutParams.height;
+            if (height == stand) {
+                return;
+            }
+            if (animator != null && animator.isRunning()) {
+                animator.removeAllListeners();
+                animator.cancel();
+                animator = null;
+            }
+            int load = refrush_state;
+            switch (refrush_state) {
+                case LOAD_DOWN_BEFOR:
+                    if (isNoTouch) {
+                        load = LOADING_DOWN;
+                    }
+                    break;
+                case LOAD_BEFOR:
+                    if (isNoTouch) {
+                        load = LOADING;
+                    }
+                    break;
+                case LOADING:
+                case LOADING_DOWN:
+                case LOAD_OVER:
+                case LOAD_DOWN_OVER:
+                    break;
+                case LOAD_SUCCESS:
+                case LOAD_FAIL:
+                    load = LOAD_OVER;
+                    break;
+                case LOAD_DOWN_SUCCESS:
+                case LOAD_DOWN_FAIL:
+                    load = LOAD_DOWN_OVER;
+                    break;
+            }
+
+            this.nextState = load;
+
+            animator = ValueAnimator.ofFloat(height, stand);
+            animator.setInterpolator(new DecelerateInterpolator(1));
+            final View finalView = view;
+            animator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
+                @Override
+                public void onAnimationUpdate(ValueAnimator animation) {
+                    float value = (float) animation.getAnimatedValue();
+                    setViewHeight(finalView, value);
+                }
+            });
+
+            animator.addListener(new AnimatorListenerAdapter() {
+                @Override
+                public void onAnimationEnd(Animator animation) {
+                    super.onAnimationEnd(animation);
+                    if (nextState != BasicPullRecycleView.this.refrush_state) {
+                        upRefrush_state(BasicPullRecycleView.this.nextState);
+                    }
+
+                }
+            });
+
+
+
+            if (isNoTouch) {
+                if (refrush_state == LOAD_SUCCESS || refrush_state == LOAD_FAIL || refrush_state == LOAD_DOWN_SUCCESS || refrush_state == LOAD_DOWN_FAIL) {
+                    animator.setDuration(1000);
+                    animator.setStartDelay(500);
+                    animator.start();
+                }else {
+                    animator.setDuration(200);
+                    animator.start();
+                }
+            }
+        }
+
+    }
+
+
+
+
 
     /**
      * 获取当前控件高度
@@ -163,10 +256,10 @@ public abstract class BasicPullRecycleView extends RecyclerView {
     }
 
 
-    protected void clearViewAnimotion(){
+    protected void clearViewAnimotion() {
         if (animator != null && animator.isRunning()) {
             animator.cancel();
-            animator=null;
+            animator = null;
         }
     }
 
@@ -240,7 +333,10 @@ public abstract class BasicPullRecycleView extends RecyclerView {
      *
      * @return
      */
-    public abstract boolean isChangStateByHeight();
+    public boolean isChangStateByHeight() {
+        return refrush_state == LOAD_DOWN_OVER || refrush_state == LOAD_DOWN_BEFOR || refrush_state == LOAD_OVER || refrush_state == LOAD_BEFOR || refrush_state == -1;
+
+    }
 
     /**
      * 更改View的高度
@@ -260,10 +356,16 @@ public abstract class BasicPullRecycleView extends RecyclerView {
         if (manager instanceof LinearLayoutManager) {
             LinearLayoutManager linearLayoutManager = ((LinearLayoutManager) manager);
             int position = linearLayoutManager.findFirstCompletelyVisibleItemPosition();
-              position = linearLayoutManager.findFirstVisibleItemPosition();
-            return 0 == position;
+            if (position == -1) {
+                position = 0;
+            }
+            return 0 == position && hasTop;
         } else if (manager instanceof StaggeredGridLayoutManager) {
-            return 0 == ((StaggeredGridLayoutManager) manager).findFirstVisibleItemPositions(new int[2])[0];
+            int position = ((StaggeredGridLayoutManager) manager).findFirstVisibleItemPositions(new int[2])[0];
+            if (position <= 0) {
+                position = 0;
+            }
+            return 0 == position && hasTop;
         } else {
             return false;
         }
@@ -274,9 +376,9 @@ public abstract class BasicPullRecycleView extends RecyclerView {
         LayoutManager manager = getLayoutManager();
         if (manager instanceof LinearLayoutManager) {
             LinearLayoutManager linearLayoutManager = ((LinearLayoutManager) manager);
-            return itemCount == linearLayoutManager.findLastVisibleItemPosition();
+            return itemCount == linearLayoutManager.findLastVisibleItemPosition() && hasBoom;
         } else if (manager instanceof StaggeredGridLayoutManager) {
-            return itemCount == ((StaggeredGridLayoutManager) manager).findFirstCompletelyVisibleItemPositions(new int[2])[0];
+            return itemCount == ((StaggeredGridLayoutManager) manager).findFirstCompletelyVisibleItemPositions(new int[2])[0] && hasBoom;
 
         } else {
             return false;
@@ -298,12 +400,6 @@ public abstract class BasicPullRecycleView extends RecyclerView {
      */
     public abstract void loadSuccess();
 
-    /**
-     * 更新状态
-     *
-     * @param refrush_state
-     */
-    public abstract void upRefrush_state(int refrush_state);
 
     /**
      * 刷新失败后调用
@@ -358,11 +454,86 @@ public abstract class BasicPullRecycleView extends RecyclerView {
     /**
      * 正在加载
      */
-    public void setLoading(){
+    public void setLoading() {
 
     }
 
+    private void refrush(int refrush_state) {
+        if (this.refrush_state != refrush_state) {
+            synchronized (BasicPullRecycleView.class) {
 
+                if (this.refrush_state != refrush_state) {
+                    if (refrush_state == LOADING) {
+                        if (listener != null) {
+                            listener.onLoading();
+                        }
+                    }
+                    clearViewAnimotion();
+
+                    switch (refrush_state) {
+                        case LOAD_OVER://4
+                            topView.setTvMsg("下拉刷新数据");
+                            topView.upState(ShapeView.LOAD_OVER);
+                            break;
+                        case LOAD_BEFOR://5
+                            topView.upState(ShapeView.LOAD_BEFOR);
+                            topView.setTvMsg("松手刷新数据");
+                            break;
+                        case LOADING://0
+                            topView.upState(ShapeView.LOADING);
+                            topView.setTvMsg("正在加载数据");
+                            break;
+                        case LOAD_FAIL://2
+                            topView.upState(ShapeView.LOAD_FAIL);
+                            topView.setTvMsg("加载失败");
+                            break;
+                        case LOAD_SUCCESS://1
+                            topView.upState(ShapeView.LOAD_SUCCESS);
+                            topView.setTvMsg("加载成功!");
+                            break;
+
+                        case LOAD_DOWN_OVER:
+                            boomView.upState(ShapeView.LOAD_BEFOR);
+                            boomView.setTvMsg("上拉加载数据");
+                            break;
+                        case LOAD_DOWN_BEFOR:
+                            boomView.setTvMsg("松手刷新数据");
+                            boomView.upState(ShapeView.LOAD_OVER);
+                            break;
+                        case LOADING_DOWN:
+                            boomView.upState(ShapeView.LOADING);
+                            boomView.setTvMsg("正在加载数据");
+
+                            break;
+                        case LOAD_DOWN_FAIL:
+                            boomView.upState(ShapeView.LOAD_FAIL);
+                            boomView.setTvMsg("加载失败");
+                            break;
+                        case LOAD_DOWN_SUCCESS:
+                            boomView.upState(ShapeView.LOAD_SUCCESS);
+                            boomView.setTvMsg("加载成功!");
+                            break;
+                        default:
+                            topView.setTvMsg("加载异常");
+                            boomView.setTvMsg("加载异常");
+                            break;
+                    }
+                    this.refrush_state = refrush_state;
+                    moveToChildHight(refrush_state);
+                }
+            }
+        }
+    }
+
+
+    /**
+     * 更新状态
+     *
+     * @param refrush_state
+     */
+    public void upRefrush_state(int refrush_state) {
+        refrush(refrush_state);
+    }
 
 
 }

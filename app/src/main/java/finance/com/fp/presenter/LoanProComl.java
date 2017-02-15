@@ -15,10 +15,10 @@ import em.sang.com.allrecycleview.holder.HeardHolder;
 import em.sang.com.allrecycleview.holder.SimpleHolder;
 import em.sang.com.allrecycleview.inter.DefaultAdapterViewLisenter;
 import finance.com.fp.R;
-import finance.com.fp.holder.CardNotifiHolder;
-import finance.com.fp.holder.GrideHolder;
-import finance.com.fp.holder.HomeCarouselHolder;
-import finance.com.fp.holder.HomeToolsHolder;
+import finance.com.fp.ui.holder.CardNotifiHolder;
+import finance.com.fp.ui.holder.GrideHolder;
+import finance.com.fp.ui.holder.HomeCarouselHolder;
+import finance.com.fp.ui.holder.HomeToolsHolder;
 import finance.com.fp.mode.LoanDataComl;
 import finance.com.fp.mode.bean.Set_Item;
 import finance.com.fp.mode.inter.LoanDataInter;
@@ -59,6 +59,8 @@ public class LoanProComl implements LoanInter {
                         Set_Item item = lists.get(position);
                         Glide.with(context)
                                 .load(item.icon_id)
+                                .placeholder(item.placeholder)
+                                .error(item.faildId)
                                 .centerCrop()
                                 .crossFade()
                                 .into(img);

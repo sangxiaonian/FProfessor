@@ -10,6 +10,8 @@
         <item name="windowNoTitle">true</item>
         <item name="android:windowTranslucentStatus">true</item>
         <item name="android:windowAnimationStyle">@style/activityAnim</item>
+        <item name="android:textColorPrimaryInverse">@color/colorPrimaryDark</item>
+
     </style>
 
     <!--页面切换动画-->
@@ -26,8 +28,8 @@
         <item name="elevation">0dp</item>
         <item name="android:background">?attr/colorPrimary</item>
     </style>
-  <!--  android:background="?actionBarItemBackground"
-    @drawable/select_item_click-->
+    <!--  android:background="?actionBarItemBackground"
+      @drawable/select_item_click-->
     <style name="item_style">
         <item name="android:background">@drawable/select_item_click</item>
         <item name="android:clickable">true</item>
@@ -99,14 +101,14 @@
 
     <style name="card_rb">
 
-        <item name="android:layout_width">wrap_content</item>
-        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_width">0dp</item>
+        <item name="android:layout_height">match_parent</item>
         <item name="android:layout_weight">1</item>
         <item name="android:textSize">@dimen/app_title_text_size</item>
         <item name="android:button">@null</item>
         <item name="android:textColor">@color/text_home_item</item>
         <item name="android:gravity">center</item>
-        <item name="android:drawablePadding">15dp</item>
+        <item name="android:drawablePadding">0dp</item>
         <item name="android:drawableBottom">@drawable/select_card_bottom</item>
 
     </style>
@@ -120,6 +122,59 @@
 
     </style>
 
+    <style name="login_ll">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:dividerPadding">15dp</item>
+        <item name="android:paddingStart">@dimen/app_margin_ends</item>
+        <item name="android:paddingEnd">@dimen/app_margin_ends</item>
+        <item name="android:showDividers">middle</item>
+        <item name="android:divider">@drawable/divider_line</item>
+        <item name="android:background">@color/white</item>
+        <item name="android:orientation">horizontal</item>
+        <item name="android:gravity">center_vertical</item>
+    </style>
 
+    <style name="login_img">
+        <item name="android:paddingBottom">@dimen/activity_horizontal_margin</item>
+        <item name="android:paddingTop">@dimen/activity_horizontal_margin</item>
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_marginEnd">@dimen/app_cut_big</item>
+    </style>
+
+    <style name="login_edit">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_weight">1</item>
+        <item name="android:layout_height">wrap_content</item>
+
+        <item name="android:layout_marginStart">@dimen/app_cut_big</item>
+        <item name="android:background">@null</item>
+        <item name="android:textColorHint">@color/set_item</item>
+        <item name="android:textSize">@dimen/content_size</item>
+        <item name="android:textColor">@color/text_home_item</item>
+    </style>
+
+    <style name="login_btn">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">@dimen/login_btn_height</item>
+        <item name="android:layout_marginBottom">@dimen/app_cut_big</item>
+        <item name="android:layout_marginTop">@dimen/app_cut_big</item>
+        <item name="android:layout_marginStart">@dimen/app_margin_ends</item>
+        <item name="android:layout_marginEnd">@dimen/app_margin_ends</item>
+        <item name="android:background">@color/colorPrimaryDark</item>
+        <item name="android:gravity">center</item>
+        <item name="android:textColor">@color/white</item>
+        <item name="android:textSize">@dimen/app_title_size</item>
+    </style>
+
+    <style name="login_bt_dynamic">
+
+        <item name="android:layout_width">@dimen/btn_dynamic_width</item>
+        <item name="android:layout_height">@dimen/btn_dynamic_height</item>
+        <item name="android:background">@color/colorPrimaryDark</item>
+        <item name="android:textColor">@color/white</item>
+        <item name="android:gravity">center</item>
+    </style>
 
 </resources>

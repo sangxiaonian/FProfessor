@@ -173,6 +173,8 @@ public class ManagerFractory {
             case HomeDataFractory.UTILITY_TOLL:
                 manager = new GridLayoutManager(context, 3);
                 ((GridLayoutManager) manager).setOrientation(LinearLayoutManager.VERTICAL);
+//                manager = new LinearLayoutManager(context);
+//                ((LinearLayoutManager) manager).setOrientation(LinearLayoutManager.VERTICAL);
                 break;
         }
         return manager;

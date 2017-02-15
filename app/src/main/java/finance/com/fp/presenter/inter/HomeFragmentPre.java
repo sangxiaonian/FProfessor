@@ -24,4 +24,10 @@ public interface HomeFragmentPre  {
      * @return
      */
     RefrushAdapter<Set_Item> initFindAdapter(Context context);
+
+    void getFinceData(int i);
+
+    void unsubscribe();
+
+    void getData();
 }

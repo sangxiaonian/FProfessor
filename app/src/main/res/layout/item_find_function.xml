@@ -21,6 +21,7 @@
             android:paddingTop="@dimen/find_title_item_margin"
             android:id="@+id/rb_lao"
             android:button="@null"
+            android:checked="true"
             android:text="@string/find_item_lao"
             android:background="@drawable/select_item_click"
             style="@style/find_text_item" />
