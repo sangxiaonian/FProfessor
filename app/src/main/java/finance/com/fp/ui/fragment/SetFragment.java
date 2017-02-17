@@ -1,4 +1,4 @@
-package finance.com.fp.ui;
+package finance.com.fp.ui.fragment;
 
 import android.content.Context;
 import android.content.Intent;
@@ -17,6 +17,7 @@ import em.sang.com.allrecycleview.holder.CustomHolder;
 import em.sang.com.allrecycleview.inter.DefaultAdapterViewLisenter;
 import finance.com.fp.BasisFragment;
 import finance.com.fp.R;
+import finance.com.fp.ui.RegisterActivity;
 import finance.com.fp.ui.holder.SetBodyHolder;
 import finance.com.fp.mode.bean.Set_Item;
 import finance.com.fp.utlis.RecycleViewDivider;

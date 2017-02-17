@@ -153,8 +153,6 @@ public class PickerScrollView extends View {
             float v = bassicLine - cellHeight;
 //            float scale = (float) Math.pow(2, Math.abs(v - lineStartY) / (2 * cellHeight));
             float scale = getScrall(v - lineStartY);
-
-
             mPaint.setAlpha((int) (255 / scale));
             String text = datas.get(i);
             mPaint.setTextSize(textSize / scale);

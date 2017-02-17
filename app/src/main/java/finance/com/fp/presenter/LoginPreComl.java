@@ -2,7 +2,6 @@ package finance.com.fp.presenter;
 
 import android.widget.RadioGroup;
 
-import finance.com.fp.R;
 import finance.com.fp.presenter.inter.LoginInter;
 import finance.com.fp.ui.inter.LoginView;
 
@@ -22,13 +21,6 @@ public class LoginPreComl implements LoginInter {
 
     @Override
     public void onRgCheckChanged(RadioGroup group, int checkedId) {
-            switch (checkedId){
-                case R.id.rb_normal://普通登陆
-                    view.showNormal();
-                    break;
-                case R.id.rb_dynamic://动态登陆
-                    view.showDynamic();
-                    break;
-            }
+
     }
 }

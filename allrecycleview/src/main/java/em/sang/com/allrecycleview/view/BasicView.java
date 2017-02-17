@@ -162,6 +162,10 @@ public class BasicView extends View {
                 setShapRotation(0);
                 bitmap = factory.creatCorrect(mWidth, mHeight);
                 break;
+            case LOAD_FAIL:
+                setShapRotation(0);
+                bitmap = factory.creatError(mWidth, mHeight);
+                break;
 
         }
         mPath.reset();

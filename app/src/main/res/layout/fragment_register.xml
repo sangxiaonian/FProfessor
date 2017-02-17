@@ -7,6 +7,7 @@
     android:orientation="vertical"
     android:divider="@drawable/divider_line"
     android:showDividers="middle"
+    android:background="@color/text_home_item_cut"
     tools:context="finance.com.fp.ui.LoginActivity">
 
     <android.support.v7.widget.Toolbar xmlns:android="http://schemas.android.com/apk/res/android"
@@ -74,6 +75,7 @@
         android:layout_width="match_parent"
         android:padding="@dimen/app_margin_ends"
         style="@style/login_edit"
+        android:inputType="textEmailAddress"
         android:background="@color/white"
         android:hint="@string/input_register" />
     <TextView

@@ -131,5 +131,9 @@ public class AlertDialog extends XDialog {
 
     }
 
+    @Override
+    public void show() {
+        super.show();
 
+    }
 }

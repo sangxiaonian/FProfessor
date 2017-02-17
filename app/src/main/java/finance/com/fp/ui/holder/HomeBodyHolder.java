@@ -32,9 +32,10 @@ public class HomeBodyHolder extends CustomHolder<Set_Item> {
     @Override
     public void initView(final int position, final List<Set_Item> datas, final Context context) {
         super.initView(position, datas, context);
-        ImageView img = (ImageView) itemView.findViewById(R.id.img_item);
-        TextView title = (TextView) itemView.findViewById(R.id.tv_details);
-        TextView time = (TextView) itemView.findViewById(R.id.tv_time);
+        ImageView img = (ImageView) itemView.findViewById(R.id.img_item_loan);
+        TextView title = (TextView) itemView.findViewById(R.id.tv_title_item_loan);
+        TextView time = (TextView) itemView.findViewById(R.id.tv_title_sub_item_loan);
+        itemView.findViewById(R.id.more).setVisibility(View.GONE);
         final Set_Item item = datas.get(position);
         if (img != null && !TextUtils.isEmpty(item.img_url)) {
             Glide.with(context)
@@ -47,7 +48,7 @@ public class HomeBodyHolder extends CustomHolder<Set_Item> {
         }
 
         title.setText(item.title);
-        time.setText(item.updatetime);
+        time.setText(item.describe);
         itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

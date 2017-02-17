@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/activity_import_detail"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context="finance.com.fp.ui.ImportDetailActivity">
+
+    <include layout="@layout/view_toolbar" />
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:id="@+id/line_import"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:background="@color/white">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+                <TextView
+                    style="@style/one_key_title"
+                    android:text="@string/online" />
+                <TextView
+                    style="@style/one_key_content"
+                    android:text="@string/online_once" />
+                <Button
+                    android:id="@+id/bt_online"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginBottom="@dimen/app_margin_ends"
+                    android:background="@mipmap/icon_amentiontheforehead"
+                    android:gravity="center"
+                    android:textSize="@dimen/content_size" />
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/phone_import"
+                android:orientation="vertical">
+
+                <TextView
+                    style="@style/one_key_title"
+                    android:text="@string/online_phone" />
+
+                <TextView
+                    android:id="@+id/tv_call"
+                    style="@style/one_key_content"
+                    android:text="@string/online_once" />
+                <TextView
+                    android:id="@+id/tv_call_warn"
+                    style="@style/one_key_content"
+                    android:textColor="@color/colorPrimaryDark"
+                    android:drawableStart="@mipmap/icon_attention_red"
+                    />
+
+                <Button
+
+                    android:id="@+id/bt_call"
+                    style="@style/one_key_btn"
+                    android:drawableStart="@mipmap/phone"
+                    android:text="拨打" />
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/wei_import"
+                android:orientation="vertical">
+
+                <TextView
+                    style="@style/one_key_title"
+                    android:text="@string/online_wei" />
+
+                <TextView
+                    android:id="@+id/tv_wei"
+                    style="@style/one_key_content"
+                    android:text="@string/online_once" />
+
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/msg_import"
+                android:orientation="vertical">
+
+                <TextView
+                    style="@style/one_key_title"
+                    android:text="@string/online_msg" />
+
+                <TextView
+                    style="@style/one_key_content"
+                    android:id="@+id/tv_msg"
+                    android:text="@string/online_once" />
+                <TextView
+                    android:id="@+id/tv_msg_warn"
+                    style="@style/one_key_content"
+                    android:textColor="@color/colorPrimaryDark"
+                    android:drawableStart="@mipmap/icon_attention_red"
+                    />
+                <Button
+                    android:id="@+id/bt_msg"
+                    style="@style/one_key_btn"
+                    android:drawableStart="@mipmap/phone"
+                    android:text="发送短信" />
+            </LinearLayout>
+
+        </LinearLayout>
+    </ScrollView>
+
+
+</LinearLayout>

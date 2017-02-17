@@ -1,4 +1,4 @@
-package finance.com.fp.ui;
+package finance.com.fp.ui.fragment;
 
 import android.content.Intent;
 import android.support.v7.widget.LinearLayoutManager;
@@ -19,6 +19,11 @@ import finance.com.fp.mode.bean.TranInfor;
 import finance.com.fp.mode.datafractory.HomeDataFractory;
 import finance.com.fp.presenter.HomeFragmentPreComl;
 import finance.com.fp.presenter.inter.HomeFragmentPre;
+import finance.com.fp.ui.CardActivity;
+import finance.com.fp.ui.HomeSonActivity;
+import finance.com.fp.ui.ImportActivity;
+import finance.com.fp.ui.LoanActivity;
+import finance.com.fp.ui.PlannerActivity;
 import finance.com.fp.ui.inter.HomeFramentView;
 import finance.com.fp.utlis.RecycleViewDivider;
 import finance.com.fp.utlis.ToastUtil;

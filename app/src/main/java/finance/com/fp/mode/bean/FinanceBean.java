@@ -9,18 +9,6 @@ package finance.com.fp.mode.bean;
 public class FinanceBean {
 
 
-    /**
-     * id : 7
-     * title : 分期嗷嗷叫
-     * thumb : http://localhost/phpcms/uploadfile/2017/0117/20170117041613242.png
-     * description : 嗷嗷叫的大分期
-     * updatetime : 1484644058
-     * content : 分期就是66666666666666666666<br />
-     害怕人<br />
-     666<br />
-     <a href="http://www.baidu.com">www.baidu.com</a><br />
-
-     */
 
     private String id;
     private String title;

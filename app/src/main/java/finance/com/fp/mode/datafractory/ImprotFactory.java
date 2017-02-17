@@ -38,8 +38,6 @@ public class ImprotFactory extends BaseFractory {
                 }
             }
         }
-
-
         return factory;
     }
 
@@ -80,24 +78,24 @@ public class ImprotFactory extends BaseFractory {
 
 
     public Observable<Set_Item> getOneKey(){
-        Integer[] icons = {R.mipmap.icon_thebankofchina_phone,
-                R.mipmap.icon_agricuralbankof_phone,
-                R.mipmap.icon_icbc_phone,
-                R.mipmap.icon_constructionbankccb_phone,
-                R.mipmap.icon_bankofcommunications_phone,
+        Integer[] icons = {
                 R.mipmap.icon_chinamerchants_phone,
-                R.mipmap.icon_shanghaipudongdevelopmentbank_phone,
                 R.mipmap.icon_guangdongdevelopmentbankk_phone,
-                R.mipmap.icon_huaxiabank_phone,
-                R.mipmap.icon_pinganbank_phone,
-                R.mipmap.icon_everbrightbank_phone,
+                R.mipmap.icon_bankofcommunications_phone,
+                R.mipmap.icon_shanghaipudongdevelopmentbank_phone,
+                R.mipmap.icon_constructionbankccb_phone,
                 R.mipmap.icon_chinaciticbank_phone,
+                R.mipmap.icon_agricuralbankof_phone,
+                R.mipmap.icon_pinganbank_phone,
                 R.mipmap.icon_societegenerale_phone,
+                R.mipmap.icon_icbc_phone,
                 R.mipmap.icon_minsheengbank_phone,
-                R.mipmap.icon_zheshangbank_phone,
-                R.mipmap.icon_citibank_phone
+                R.mipmap.icon_thebankofchina_phone,
+                R.mipmap.icon_everbrightbank_phone,
+                R.mipmap.icon_huaxiabank_phone,
         };
-        String tittles[] = context.getResources().getStringArray(R.array.home_balance_phone);
+
+        String tittles[] = context.getResources().getStringArray(R.array.one_key);
         return getZip(icons,tittles);
     }
 

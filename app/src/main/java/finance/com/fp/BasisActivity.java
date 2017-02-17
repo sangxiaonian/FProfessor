@@ -16,8 +16,6 @@ import android.view.WindowManager;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import finance.com.fp.mode.bean.TranInfor;
-
 /**
  * Description：
  *
@@ -27,7 +25,6 @@ import finance.com.fp.mode.bean.TranInfor;
 public class BasisActivity extends AppCompatActivity {
     public Toolbar toolbar;
 
-    public TranInfor tranInfor;
 
 
 

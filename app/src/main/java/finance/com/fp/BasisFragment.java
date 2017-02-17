@@ -59,21 +59,7 @@ public class BasisFragment extends Fragment {
         return null;
     }
 
-    public void initToolBar(String title) {
-       Toolbar toolbar = (Toolbar) rootView.findViewById(R.id.toolbar);
-        if (toolbar != null) {
-            toolbar.setNavigationOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
 
-                }
-            });
-            TextView tvtitle = (TextView) rootView.findViewById(R.id.title);
-            if (tvtitle != null) {
-                tvtitle.setText(title);
-            }
-        }
-    }
 
 
 }

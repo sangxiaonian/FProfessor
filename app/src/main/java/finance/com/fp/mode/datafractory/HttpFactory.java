@@ -1,12 +1,12 @@
 package finance.com.fp.mode.datafractory;
 
 import com.google.gson.Gson;
-import com.google.gson.reflect.TypeToken;
+import com.orhanobut.logger.Logger;
 
-import java.lang.reflect.Type;
-import java.util.List;
+import java.util.Date;
 
 import finance.com.fp.mode.bean.FinanceBean;
+import finance.com.fp.mode.bean.HttpBean;
 import finance.com.fp.mode.bean.Set_Item;
 import finance.com.fp.mode.http.HttpClient;
 import finance.com.fp.mode.http.HttpService;
@@ -23,8 +23,8 @@ import rx.schedulers.Schedulers;
  * @Data：2017/2/10 14:08
  */
 public class HttpFactory {
-    private static String basicUrl = "http://192.168.0.107/phpcms/";
-    private static String a = "192.168.0.107";
+    private static String basicUrl = "http://192.168.0.110/phpcms/";
+    private static String a = "192.168.0.110";
 
     /**
      * 消息中心
@@ -32,38 +32,32 @@ public class HttpFactory {
      * @return
      */
     public static Observable<Set_Item> getMsg() {
+        Date d1=new Date();
+        Logger.i(d1.toLocaleString()+d1.toGMTString());
         HttpService service = HttpClient.getClient(basicUrl);
-        return service.getReslut("content", "doserver", "get_app_content")
+        return service.getReslut("1","10")
                 .subscribeOn(Schedulers.io())
-                .map(new Func1<String, List<FinanceBean>>() {
+                .flatMap(new Func1<HttpBean<FinanceBean>, Observable<Set_Item>>() {
                     @Override
-                    public List<FinanceBean> call(String s) {
-                        Gson gson = new Gson();
-                        Type listType = new TypeToken<List<FinanceBean>>() {
-                        }.getType();
-                        List<FinanceBean> appinfos = gson.fromJson(s, listType);
-                        return appinfos;
+                    public Observable<Set_Item> call(HttpBean<FinanceBean> financeBeanHttpBean) {
+                        return Observable.from(financeBeanHttpBean.getTitle())
+                                .map(new Func1<FinanceBean, Set_Item>() {
+                                    @Override
+                                    public Set_Item call(FinanceBean financeBean) {
+                                        Set_Item item = new Set_Item();
+                                        item.title = financeBean.getTitle();
+                                        item.describe = financeBean.getDescription();
+                                        item.img_url = financeBean.getThumb().replace("localhost", a);
+                                        String s = financeBean.getUpdatetime() + "000";
+                                        item.content = financeBean.getContent();
+                                        item.updatetime = Utils.fromatTime(s);
+                                        return item;
+                                    }
+                                })
+                                ;
                     }
                 })
-                .flatMap(new Func1<List<FinanceBean>, Observable<Set_Item>>() {
-                    @Override
-                    public Observable<Set_Item> call(List<FinanceBean> financeBeen) {
-                        return Observable.from(financeBeen).map(new Func1<FinanceBean, Set_Item>() {
-                            @Override
-                            public Set_Item call(FinanceBean financeBean) {
-                                Set_Item item = new Set_Item();
-                                item.title = financeBean.getTitle();
-                                item.describe = financeBean.getDescription();
-                                item.img_url = financeBean.getThumb().replace("localhost", a);
-                                String s = financeBean.getUpdatetime() + "000";
-                                item.content = financeBean.getContent();
-                                item.updatetime = Utils.fromatTime(s);
 
-                                return item;
-                            }
-                        });
-                    }
-                })
                 .observeOn(AndroidSchedulers.mainThread());
 
     }
@@ -74,38 +68,9 @@ public class HttpFactory {
      * @return
      */
     public static Observable<Set_Item> getFinance() {
-        HttpService service = HttpClient.getClient(basicUrl);
-        return service.getReslut("content", "doserver", "get_app_content")
-                .subscribeOn(Schedulers.io())
-                .map(new Func1<String, List<FinanceBean>>() {
-                    @Override
-                    public List<FinanceBean> call(String s) {
-                        Gson gson = new Gson();
-                        Type listType = new TypeToken<List<FinanceBean>>() {
-                        }.getType();
-                        List<FinanceBean> appinfos = gson.fromJson(s, listType);
-                        return appinfos;
-                    }
-                })
-                .flatMap(new Func1<List<FinanceBean>, Observable<Set_Item>>() {
-                    @Override
-                    public Observable<Set_Item> call(List<FinanceBean> financeBeen) {
-                        return Observable.from(financeBeen).map(new Func1<FinanceBean, Set_Item>() {
-                            @Override
-                            public Set_Item call(FinanceBean financeBean) {
-                                Set_Item item = new Set_Item();
-                                item.title = financeBean.getTitle();
-                                item.describe = financeBean.getDescription();
-                                item.img_url = financeBean.getThumb().replace("localhost", a);
-                                String s = financeBean.getUpdatetime() + "000";
-                                item.updatetime = Utils.fromatTime(s);
-                                item.content = financeBean.getContent();
-                                return item;
-                            }
-                        });
-                    }
-                })
-                .observeOn(AndroidSchedulers.mainThread());
+
+        return  getMsg();
+
 
     }
 
@@ -116,38 +81,8 @@ public class HttpFactory {
      * @return
      */
     public static Observable<Set_Item> getPartialDoor() {
-        HttpService service = HttpClient.getClient(basicUrl);
-        return service.getReslut("content", "doserver", "get_app_content")
-                .subscribeOn(Schedulers.io())
-                .map(new Func1<String, List<FinanceBean>>() {
-                    @Override
-                    public List<FinanceBean> call(String s) {
-                        Gson gson = new Gson();
-                        Type listType = new TypeToken<List<FinanceBean>>() {
-                        }.getType();
-                        List<FinanceBean> appinfos = gson.fromJson(s, listType);
-                        return appinfos;
-                    }
-                })
-                .flatMap(new Func1<List<FinanceBean>, Observable<Set_Item>>() {
-                    @Override
-                    public Observable<Set_Item> call(List<FinanceBean> financeBeen) {
-                        return Observable.from(financeBeen).map(new Func1<FinanceBean, Set_Item>() {
-                            @Override
-                            public Set_Item call(FinanceBean financeBean) {
-                                Set_Item item = new Set_Item();
-                                item.title = financeBean.getTitle();
-                                item.describe = financeBean.getDescription();
-                                item.img_url = financeBean.getThumb().replace("localhost", a);
-                                String s = financeBean.getUpdatetime() + "000";
-                                item.updatetime = Utils.fromatTime(s);
-                                item.content = financeBean.getContent();
-                                return item;
-                            }
-                        });
-                    }
-                })
-                .observeOn(AndroidSchedulers.mainThread());
+
+        return getMsg();
     }
 
     /**
@@ -157,7 +92,13 @@ public class HttpFactory {
      */
     public static Observable<String> login() {
         HttpService service = HttpClient.getClient(basicUrl);
-        return service.getReslut("content", "doserver", "get_app_content")
+        return service.getReslut("1","10")
+                .map(new Func1<HttpBean<FinanceBean>, String>() {
+                    @Override
+                    public String call(HttpBean<FinanceBean> financeBeanHttpBean) {
+                        return new Gson().toJson(financeBeanHttpBean);
+                    }
+                })
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread());
     }
@@ -169,20 +110,29 @@ public class HttpFactory {
      * @return
      */
     public static Observable<String> register() {
-        HttpService service = HttpClient.getClient(basicUrl);
-        return service.getReslut("content", "doserver", "get_app_content")
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread());
+
+        return login();
     }
 
     /**
      * 获取验证码
+     *
      * @return
      */
     public static Observable<String> getDynamic() {
-        HttpService service = HttpClient.getClient(basicUrl);
-        return service.getReslut("content", "doserver", "get_app_content")
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread());
+
+        return login();
     }
+
+    /**
+     * 获取验证码
+     *
+     * @return
+     */
+    public static Observable<String> setPassword() {
+
+        return login();
+    }
+
+
 }

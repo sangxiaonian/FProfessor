@@ -1,20 +1,19 @@
 package finance.com.fp.mode.http;
 
 
-import java.util.Map;
-
-import retrofit2.http.GET;
-import retrofit2.http.Query;
-import retrofit2.http.QueryMap;
+import finance.com.fp.mode.bean.FinanceBean;
+import finance.com.fp.mode.bean.HttpBean;
+import retrofit2.http.Field;
+import retrofit2.http.FormUrlEncoded;
+import retrofit2.http.POST;
 import rx.Observable;
 
 public interface HttpService {
 
 
-        @GET("index.php")
-        Observable<String> getReslut(@QueryMap Map<String,String> map);
 
-        @GET("index.php")
-        Observable<String> getReslut(@Query("m") String city, @Query("c") String key, @Query("a") String a);
+        @FormUrlEncoded
+        @POST("index.php?m=content&c=doserver&a=get_app_content")
+        Observable<HttpBean<FinanceBean>> getReslut(@Field("page") String page, @Field("strip") String strip);
 
 }

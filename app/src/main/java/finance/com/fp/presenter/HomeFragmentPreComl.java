@@ -7,19 +7,19 @@ import java.util.List;
 
 import em.sang.com.allrecycleview.adapter.RefrushAdapter;
 import em.sang.com.allrecycleview.holder.CustomHolder;
-import em.sang.com.allrecycleview.holder.SimpleHolder;
 import em.sang.com.allrecycleview.inter.DefaultAdapterViewLisenter;
 import em.sang.com.allrecycleview.listener.OnToolsItemClickListener;
 import finance.com.fp.R;
+import finance.com.fp.mode.HomeFragmentDataCom;
+import finance.com.fp.mode.bean.Set_Item;
+import finance.com.fp.mode.inter.HomeFragmentData;
+import finance.com.fp.presenter.inter.HomeFragmentPre;
+import finance.com.fp.ui.holder.CardMoreHolder;
 import finance.com.fp.ui.holder.FindFriendHolder;
 import finance.com.fp.ui.holder.FindFunctionHolder;
 import finance.com.fp.ui.holder.HomeBodyHolder;
 import finance.com.fp.ui.holder.HomeCarouselHolder;
 import finance.com.fp.ui.holder.HomeToolsHolder;
-import finance.com.fp.mode.HomeFragmentDataCom;
-import finance.com.fp.mode.bean.Set_Item;
-import finance.com.fp.mode.inter.HomeFragmentData;
-import finance.com.fp.presenter.inter.HomeFragmentPre;
 import finance.com.fp.ui.inter.HomeFramentView;
 import rx.Subscriber;
 
@@ -55,7 +55,7 @@ public class HomeFragmentPreComl implements HomeFragmentPre {
     public RefrushAdapter<Set_Item> initAdapter(Context context) {
         lists = new ArrayList<>();
 
-        adapter = new RefrushAdapter<>(context, lists, R.layout.item_home, new DefaultAdapterViewLisenter<Set_Item>() {
+        adapter = new RefrushAdapter<>(context, lists, R.layout.item_loan_item, new DefaultAdapterViewLisenter<Set_Item>() {
             @Override
             public CustomHolder getBodyHolder(Context context, List<Set_Item> lists, int itemID) {
                 return new HomeBodyHolder(context, lists, itemID);
@@ -72,7 +72,7 @@ public class HomeFragmentPreComl implements HomeFragmentPre {
         toolsHolder.setMagrin(0,dimension,0,dimension);
         toolsHolder.setOnToolsItemClickListener(view);
         adapter.addHead(toolsHolder);
-        adapter.addHead(new SimpleHolder(context,R.layout.item_home_more));
+        adapter.addHead(new CardMoreHolder(context,R.layout.item_card_more,new Set_Item(0,"热门贷款","更多")));
         return adapter;
     }
 

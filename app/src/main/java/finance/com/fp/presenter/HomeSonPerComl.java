@@ -211,7 +211,6 @@ public class HomeSonPerComl   implements HomeSonPreInter {
             @Override
             public void onNext(Set_Item o) {
                 list.add(o);
-                Logger.i(o.toString());
 
             }
         };

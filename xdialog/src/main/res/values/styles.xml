@@ -16,6 +16,8 @@
         <item name="android:windowBackground">@null</item>
         <item name="android:windowNoTitle">true</item>
         <item name="android:windowIsFloating">true</item>
+
+
     </style>
 
     <style name="dialog_down">

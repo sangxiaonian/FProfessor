@@ -18,6 +18,7 @@ import finance.com.fp.BasisActivity;
 import finance.com.fp.R;
 import finance.com.fp.mode.bean.Config;
 import finance.com.fp.mode.bean.Set_Item;
+import finance.com.fp.mode.bean.TranInfor;
 import finance.com.fp.utlis.RecycleViewDivider;
 
 /**
@@ -30,6 +31,7 @@ public class Card_StrategyActivity extends BasisActivity implements RadioGroup.O
     private RadioGroup rg;
     private List<Set_Item> set_items;
     DefaultAdapter<Set_Item> adapter;
+    private TranInfor tranInfor;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

@@ -19,13 +19,27 @@ public class DialogFactory {
     public static final int ALEART_DIALOG = 0;
     public static final int PIKER_DIALOG = 1;
     public static final int SELECT_DIALOG = 2;
+    public static final int LOAD_DIALOG = 3;
 
 
     private DialogFactory(Context context){
-       this.context=context;
+
     }
 
+    private DialogFactory(){
 
+    }
+
+    public static DialogFactory getInstance(){
+        if (factory==null){
+            synchronized (DialogFactory.class){
+                if (factory==null){
+                    factory=new DialogFactory();
+                }
+            }
+        }
+        return factory;
+    }
 
     public static DialogFactory getInstance(Context context){
         if (factory==null){
@@ -49,6 +63,9 @@ public class DialogFactory {
                 break;
             case SELECT_DIALOG:
                 dialog=new SelectDialog(context);
+                break;
+            case LOAD_DIALOG:
+                dialog=new LoadDialog(context);
                 break;
             default:
                 dialog=new PickerDialog(context);

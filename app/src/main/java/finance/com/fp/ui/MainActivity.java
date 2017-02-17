@@ -17,6 +17,9 @@ import java.util.List;
 import finance.com.fp.BasisActivity;
 import finance.com.fp.BasisFragment;
 import finance.com.fp.R;
+import finance.com.fp.ui.fragment.FindFragment;
+import finance.com.fp.ui.fragment.HomeFragment;
+import finance.com.fp.ui.fragment.SetFragment;
 
 public class MainActivity extends BasisActivity implements View.OnClickListener {
 

@@ -4,8 +4,6 @@ import android.os.Bundle;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 
-import com.orhanobut.logger.Logger;
-
 import finance.com.fp.BasisActivity;
 import finance.com.fp.R;
 import finance.com.fp.mode.bean.Config;
@@ -33,6 +31,6 @@ public class ShowDetailActivity extends BasisActivity {
         }else {
             webView.loadUrl(infor.content);
         }
-        Logger.i(infor.toString());
+
     }
 }

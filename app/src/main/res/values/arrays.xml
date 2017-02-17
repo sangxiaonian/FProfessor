@@ -103,6 +103,22 @@
         <item>花旗银行_服务热线:400-821-1880</item>
     </string-array>
 
+    <string-array name="one_key">
+        <item>招商银行_12</item>
+        <item>广发银行_123</item>
+        <item>交通银行_12</item>
+        <item>浦发银行_12</item>
+        <item>建设银行_24</item>
+        <item>中信银行_1234</item>
+        <item>农业银行_2</item>
+        <item>平安银行_2</item>
+        <item>兴业银行_2</item>
+        <item>工商银行_2</item>
+        <item>民生银行_2</item>
+        <item>中国银行_2</item>
+        <item>光大银行_2</item>
+        <item>华夏银行_2</item>
+    </string-array>
 
 
     <string-array name="home_all_balance">
@@ -137,7 +153,6 @@
         <item>中国银行申卡进度查询</item>
         <item>北京银行申卡进度查询</item>
     </string-array>
-
 
 
     <string-array name="card_hot_apply">
@@ -241,7 +256,7 @@
         <item>目前该车是否存在按揭</item>
         <item>目前该车是否抵押</item>
     </string-array>
-<!--保单-->
+    <!--保单-->
     <string-array name="person_chit">
         <item>有无保单</item>
         <item>保单缴费时间</item>
@@ -270,7 +285,7 @@
         <item>征信较差</item>
     </string-array>
 
-    <string-array  name="house">
+    <string-array name="house">
         <item>商品房</item>
         <item>商住两用</item>
         <item>经济适用房</item>
@@ -282,7 +297,7 @@
         <item>小产权房</item>
         <item>其他</item>
     </string-array>
-    <string-array name="house_style"  >
+    <string-array name="house_style">
         <item>无房产</item>
         <item>商品房</item>
         <item>商住两用</item>
@@ -320,9 +335,6 @@
         <item>保单缴费半年以上</item>
         <item>保单缴费半年以下</item>
     </string-array>
-
-
-
 
 
 </resources>

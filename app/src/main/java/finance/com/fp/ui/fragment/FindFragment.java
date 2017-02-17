@@ -1,4 +1,4 @@
-package finance.com.fp.ui;
+package finance.com.fp.ui.fragment;
 
 import android.content.Intent;
 import android.support.v7.widget.LinearLayoutManager;
@@ -15,6 +15,7 @@ import finance.com.fp.R;
 import finance.com.fp.mode.bean.Set_Item;
 import finance.com.fp.presenter.HomeFragmentPreComl;
 import finance.com.fp.presenter.inter.HomeFragmentPre;
+import finance.com.fp.ui.FriendActivity;
 import finance.com.fp.ui.inter.HomeFramentView;
 import finance.com.fp.utlis.RecycleViewDivider;
 
@@ -34,7 +35,7 @@ public class FindFragment extends BasisFragment implements HomeFramentView {
 
     @Override
     public View initViews(LayoutInflater inflater, ViewGroup container) {
-       View view = inflater.inflate(R.layout.activity_register, null);
+       View view = inflater.inflate(R.layout.fragment_find, null);
         rc = (PullRecycleView) view.findViewById(R.id.rc_find);
         return view;
     }

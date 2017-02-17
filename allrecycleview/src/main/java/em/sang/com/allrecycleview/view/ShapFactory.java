@@ -96,4 +96,18 @@ public class ShapFactory {
         canvas.drawPath(mPath, mPaint);
         return bitmap;
     }
+
+    public Bitmap creatError(int mWidth, int mHeight) {
+        Bitmap bitmap = Bitmap.createBitmap(mWidth, mHeight, Bitmap.Config.ARGB_4444);
+        Canvas canvas = new Canvas(bitmap);
+        mPath.reset();
+        mPaint.setStyle(Paint.Style.STROKE);
+        mPaint.setStrokeWidth(3);
+        mPath.moveTo(mWidth/3,mHeight/3);
+        mPath.lineTo(mWidth*2/3,mHeight*2/3);
+        mPath.moveTo(mWidth*2/3,mHeight/3);
+        mPath.lineTo(mWidth/3,mHeight*2/3);
+        canvas.drawPath(mPath, mPaint);
+        return bitmap;
+    }
 }

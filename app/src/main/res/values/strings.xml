@@ -18,7 +18,7 @@
 
 
     <string name="find_item_fcycle">金融中介朋友圈</string>
-    <string name="find_item_lao">捞偏门</string>
+    <string name="find_item_lao">网赚思维</string>
     <string name="find_item_fun">最新金融口子</string>
     <string name="set_item">登陆/注册</string>
 
@@ -47,6 +47,8 @@
     <string name="login_dynamic">动态验证码登录</string>
     <string name="input_phone">请输入手机号</string>
     <string name="input_password">请输入登陆密码</string>
+    <string name="input_password_set">请设置登陆密码</string>
+    <string name="input_password_entry">请确认登陆密码</string>
     <string name="forget_password">忘记登录密码？</string>
     <string name="get_dynamic">获取验证码</string>
     <string name="input_dynamic">请输入验证码</string>
@@ -56,8 +58,16 @@
     <string name="vip_login">会员直接登录 ></string>
     <string name="agree">同意</string>
     <string name="agreement"> 《融教授服务条款》</string>
+    <string name="send_dynamic_success">验证码发送成功</string>
+    <string name="send_dynamic_fail">验证码发送失败，请重试</string>
 
     <string name="register">注册</string>
+    <string name="register_password">设置登录密码</string>
+    <string name="register_password_describe">登录密码至少6个字符</string>
+    <string name="register_finish">注册成功</string>
+    <string name="go_home">去首页</string>
+    <string name="register_success">恭喜你，注册成功</string>
+
 
     <string name="set_ps">密码修改</string>
     <string name="phone">手机号</string>
@@ -87,5 +97,71 @@
     <string name="mcc_title">MCC宝典</string>
     <string name="mcc_content">快速查询每个MCC对应的行业、是否有积分</string>
 
+
+    <string name="online">在线一键提额</string>
+    <string name="online_once">立即进行提额操作</string>
+    <string name="online_phone">电话提额</string>
+    <string name="online_wei">微信提额</string>
+    <string name="online_msg">短信提额</string>
+
+    <string name="zhao_call">拨打4008205555  >  输入身份证号并按#  >  输入查询密码并按#  >  按2（快速查询额度及调整、现金分期）  >  按3（额度调整申请）  >按1（临时额度快速申请）/按2（固定额度快速申请）</string>
+    <string name="zhao_call_warn">调整周期：每三个月即可成功申请一次</string>
+    <string name="zhao_phone">4008205555</string>
+
+    <string name="pu_call">拨打4008208788  >  输入身份证号并按#  >  输入查询密码并按#  >  按1（额度调整及账务查询）>  按7（额度调整）按1（固定额度调整）/按2（临时额度调整）</string>
+    <string name="pu_phone">4008208788</string>
+
+    <string name="guang_call">拨打95508  >  输入电话服务密码  >  按1 （查账还款及额度调整）  >按2（额度调整）  >  按1（申请临时额度）/按2（申请永久额度）</string>
+    <string name="guang_call_warn">调额周期：最快每三个月即可成功申请一次</string>
+    <string name="guang_wei">微信关注公众号：“广发信用卡”，进入后，点击“我的服务”，  >  “我要分期/现金”  >  “大额现金分期”，还可以申请不占用额度的现金分期。</string>
+    <string name="guang_phone">95508</string>
+
+    <string name="xin_call">拨打4008895558  >  输入证件号并按#  >  按0（人工服务）  >  按7（其他业务）</string>
+    <string name="xin_call_warn">可申请固定额度和临时额度</string>
+    <string name="xin_phone">拨打4008895558</string>
+    <string name="xin_msg">发送“LT卡号后4位身份证后6位”至106980095558，例如LT1109240276。</string>
+    <string name="xin_wei">微信关注公众号“中信银行信用卡”，进入后，点击“办卡/分期”  >  “我要借款”，可以申请超过固定额度的现金分期。</string>
+    <string name="xin_msg_worn">只可申请临时额度</string>
+    <string name="xin_msg_phone">106980095558</string>
+
+
+    <string name="jiao_call">拨打4008009888  >  输入查询密码并按#  >  按1（继续其他服务）  >  按2（快速查询额度及调整）  >  按1（额度调整）/按2（好享贷额度查询）只可申请临时额度调整</string>
+    <string name="jiao_call_warn">注：好享贷额度是不占用固定额度的额外的分期额度</string>
+    <string name="jiao_phone">4008009888</string>
+
+    <string name="min_call">拨打4006695568  >  按1（中文服务）  >  按2（额度查询调整）  >  输入查询密码  >  按2（临时额度调整）/按3（固定额度调整）</string>
+    <string name="min_phone">4006695568</string>
+
+    <string name="ping_call">拨打95511  >  按2（信用卡业务）  >  输入查询密码并按#  >  按3（临时额度及固定额度申请）  >按1（临时额度申请）/按2（固定额度申请）</string>
+    <string name="ping_phone">95511</string>
+
+    <string name="xing_call">拨打95561  >  按1（信用卡）  >  按8（人工服务）</string>
+    <string name="xing_call_warn">调整周期：最快每三个月即可成功申请一次</string>
+    <string name="xing_phone">95561</string>
+
+    <string name="gong_call">拨打95588 按语音提示转人工服务</string>
+    <string name="gong_call_warn">可申请固定额度和临时额度</string>
+    <string name="gong_phone">95588</string>
+
+    <string name="zhong_call">拨打4006695566  >  按0（人工）  >  按3（额度调整）</string>
+    <string name="zhong_call_warn">可申请临时额度和固定额度；部分地区，固定额度需要十个工作日出结果，一年只能调整一次</string>
+    <string name="zhong_phone">4006695566</string>
+    
+    
+    <string name="nong_call">拨打4006695599  >  输入身份证号#  >  输入查询密码#  >  按1（账单及信用额度服务）  >  按8（临时额度调整），可调整临时额度。\n拨打4006695599  >  输入身份证号#  >  输入查询密码#  >  按0（人工），可申请固定额度</string>
+    <string name="nong_phone">4006695599</string>
+
+    <string name="jian_call">拨打4008200588  >  输入身份证号并按#  >  输入电话服务密码#  >  按0（人工）</string>
+    <string name="jian_phone">4008200588</string>
+    <string name="jian_call_warn">可申请固定额度和临时额度。</string>
+    <string name="jian_msg">发送“CCTE#卡号后4位#申请提升的额度”至95533。</string>
+    <string name="jian_msg_warn">只可申请临时额度。</string>
+    <string name="jian_msg_phone">95533</string>
+
+    <string name="guangd_call">拨打4007888888  >  按1（自助语音服务）  >  输入卡号末4位并按#  >  按7（额度调整）  >  输入交易密码并按#   >  按1（申请提升固定额度）/按2（申请提升临时额度）</string>
+    <string name="guangd_phone">4007888888</string>
+
+    <string name="hua_call">拨打4006695577  >  输入身份证号并按#  >  输入查询密码并按#  >  按0（人工服务）</string>
+    <string name="hua_phone">4006695577</string>
 
 </resources>

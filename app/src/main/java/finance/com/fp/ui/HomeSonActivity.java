@@ -238,7 +238,13 @@ public class HomeSonActivity extends BasisActivity implements HomeSonView {
 
     @Override
     public void loan_one_key_item(View itemView, Set_Item item) {
-        ToastUtil.showTextToast(item.title);
+
+        TranInfor tranInfor = new TranInfor();
+        tranInfor.title=item.title;
+        tranInfor.describe=item.describe;
+        Intent intent = new Intent(this,ImportDetailActivity.class);
+        intent.putExtra(Config.infors,tranInfor);
+        startActivity(intent);
     }
 
 
@@ -252,8 +258,8 @@ public class HomeSonActivity extends BasisActivity implements HomeSonView {
 
     @Override
     public void loadFail() {
-//        rc.loadFail();
-        rc.loadSuccess();
+        rc.loadFail();
+
     }
 
 }
