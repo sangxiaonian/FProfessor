@@ -26,8 +26,7 @@
             android:layout_toStartOf="@id/img_icon"
             android:background="@drawable/icon_dialog"
             android:textSize="@dimen/app_title_text_size"
-            android:text="fasdfasdfasdfasdf"
-
+            android:textColor="@color/text_home_more_text"
             />
     </RelativeLayout>
 

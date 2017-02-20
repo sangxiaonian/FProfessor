@@ -1,9 +1,6 @@
 package finance.com.fp.mode.datafractory;
 
 import com.google.gson.Gson;
-import com.orhanobut.logger.Logger;
-
-import java.util.Date;
 
 import finance.com.fp.mode.bean.FinanceBean;
 import finance.com.fp.mode.bean.HttpBean;
@@ -32,8 +29,7 @@ public class HttpFactory {
      * @return
      */
     public static Observable<Set_Item> getMsg() {
-        Date d1=new Date();
-        Logger.i(d1.toLocaleString()+d1.toGMTString());
+
         HttpService service = HttpClient.getClient(basicUrl);
         return service.getReslut("1","10")
                 .subscribeOn(Schedulers.io())

@@ -12,7 +12,6 @@ import finance.com.fp.BasisActivity;
 import finance.com.fp.R;
 import finance.com.fp.mode.bean.Config;
 import finance.com.fp.mode.bean.TranInfor;
-import finance.com.fp.utlis.ToastUtil;
 
 public class ImportDetailActivity extends BasisActivity implements View.OnClickListener {
 
@@ -61,6 +60,7 @@ public class ImportDetailActivity extends BasisActivity implements View.OnClickL
                 a = R.string.zhao_call;
                 b = R.string.zhao_call_warn;
                 f = R.string.zhao_phone;
+                g= R.string.zhao_online;
 
                 break;
             case "广发银行":
@@ -68,16 +68,19 @@ public class ImportDetailActivity extends BasisActivity implements View.OnClickL
                 b = R.string.guang_call_warn;
                 f = R.string.guang_phone;
                 e = R.string.guang_wei;
+                g= R.string.guang_online;
 
                 break;
             case "交通银行":
                 a = R.string.jiao_call;
                 b = R.string.jiao_call_warn;
                 f = R.string.jiao_phone;
+
                 break;
             case "浦发银行":
                 a = R.string.pu_call;
                 f = R.string.pu_phone;
+                g=R.string.pu_online;
                 break;
             case "建设银行":
                 a = R.string.jian_call;
@@ -85,6 +88,7 @@ public class ImportDetailActivity extends BasisActivity implements View.OnClickL
                 f = R.string.jian_phone;
                 c = R.string.jian_msg;
                 d = R.string.jian_msg_warn;
+                g=R.string.jian_online;
                 msg_bt = getString(R.string.jian_msg_phone);
                 break;
             case "中信银行":
@@ -94,41 +98,50 @@ public class ImportDetailActivity extends BasisActivity implements View.OnClickL
                 c = R.string.xin_msg;
                 d = R.string.xin_msg_worn;
                 e = R.string.xin_wei;
+                g=R.string.xin_online;
                 msg_bt = getString(R.string.xin_msg_phone);
                 break;
             case "农业银行":
+                g=R.string.nong_online;
                 a = R.string.nong_call;
                 f = R.string.nong_phone;
                 break;
             case "平安银行":
+                g=R.string.ping_online;
                 a = R.string.ping_call;
                 f = R.string.ping_phone;
                 break;
             case "兴业银行":
+                g=R.string.xing_online;
                 a = R.string.xing_call;
                 b = R.string.xing_call_warn;
                 f = R.string.xing_phone;
                 break;
             case "工商银行":
+                g=R.string.gong_online;
                 a = R.string.gong_call;
                 b = R.string.gong_call_warn;
                 f = R.string.gong_phone;
                 break;
             case "民生银行":
+                g=R.string.min_online;
                 a = R.string.min_call;
 
                 f = R.string.min_phone;
                 break;
             case "中国银行":
+                g=R.string.zhong_online;
                 a = R.string.zhong_call;
                 b = R.string.zhong_call_warn;
                 f = R.string.zhong_phone;
                 break;
             case "光大银行":
+                g=R.string.guangd_online;
                 a = R.string.guangd_call;
                 f = R.string.guangd_phone;
                 break;
             case "华夏银行":
+                g=R.string.hua_online;
                 a = R.string.hua_call;
                 f = R.string.hua_phone;
                 break;
@@ -146,7 +159,7 @@ public class ImportDetailActivity extends BasisActivity implements View.OnClickL
 
     }
 
-    private String phone_bt, msg_bt;
+    private String phone_bt, msg_bt,online_bt;
 
     private void getString(int a, int b, int c, int d, int e, int f, int g) {
         if (a != 0) {
@@ -185,6 +198,15 @@ public class ImportDetailActivity extends BasisActivity implements View.OnClickL
         } else {
             ll_wei.setVisibility(View.GONE);
         }
+
+        if (g!=0){
+            ll_onLine.setVisibility(View.VISIBLE);
+            online_bt=getString(g);
+        }else {
+            ll_onLine.setVisibility(View.GONE);
+
+        }
+
     }
 
 
@@ -203,7 +225,13 @@ public class ImportDetailActivity extends BasisActivity implements View.OnClickL
                 startActivity(intent);
                 break;
             case R.id.bt_online:
-                ToastUtil.showTextToast("该功能尚未开放");
+                  intent = new Intent(this, ShowDetailActivity.class);
+                TranInfor infor = new TranInfor();
+                infor.title = this.infor.title ;
+                infor.type=1;
+                infor.content = online_bt;
+                intent.putExtra(Config.infors, infor);
+                startActivity(intent);
                 break;
         }
     }

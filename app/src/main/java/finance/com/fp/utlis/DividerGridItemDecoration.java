@@ -98,14 +98,14 @@ public class DividerGridItemDecoration extends RecyclerView.ItemDecoration {
                                 int childCount) {
         LayoutManager layoutManager = parent.getLayoutManager();
 
-        int heart=0;
-        if (parent.getAdapter() instanceof BasicAdapter){
+        int heart = 0;
+        if (parent.getAdapter() instanceof BasicAdapter) {
             BasicAdapter adapter = (BasicAdapter) parent.getAdapter();
-            heart=adapter.getTops().size()+adapter.getHeards().size();
+            heart = adapter.getTops().size() + adapter.getHeards().size();
         }
 
         if (layoutManager instanceof GridLayoutManager) {
-            if ((pos + 1-heart) % spanCount == 0)// 如果是最后一列，则不需要绘制右边
+            if ((pos + 1 - heart) % spanCount == 0)// 如果是最后一列，则不需要绘制右边
             {
                 return true;
             }
@@ -113,7 +113,7 @@ public class DividerGridItemDecoration extends RecyclerView.ItemDecoration {
             int orientation = ((StaggeredGridLayoutManager) layoutManager)
                     .getOrientation();
             if (orientation == StaggeredGridLayoutManager.VERTICAL) {
-                if ((pos + 1-heart) % spanCount == 0)// 如果是最后一列，则不需要绘制右边
+                if ((pos + 1 - heart) % spanCount == 0)// 如果是最后一列，则不需要绘制右边
                 {
                     return true;
                 }
@@ -128,9 +128,10 @@ public class DividerGridItemDecoration extends RecyclerView.ItemDecoration {
 
     private boolean isLastRaw(RecyclerView parent, int pos, int spanCount,
                               int childCount) {
+
         LayoutManager layoutManager = parent.getLayoutManager();
         if (layoutManager instanceof GridLayoutManager) {
-            childCount = childCount - childCount % spanCount;
+            childCount = childCount - (childCount ) % spanCount;
             if (pos >= childCount)// 如果是最后一行，则不需要绘制底部
                 return true;
         } else if (layoutManager instanceof StaggeredGridLayoutManager) {
@@ -159,10 +160,15 @@ public class DividerGridItemDecoration extends RecyclerView.ItemDecoration {
                                RecyclerView parent) {
         int spanCount = getSpanCount(parent);
         int childCount = parent.getAdapter().getItemCount();
-        if (isLastRaw(parent, itemPosition, spanCount, childCount))// 如果是最后一行，则不需要绘制底部
+        int heardSize = 0;
+        if (parent.getAdapter() instanceof BasicAdapter) {
+            BasicAdapter adapter = (BasicAdapter) parent.getAdapter();
+            heardSize = adapter.getTops().size() + adapter.getHeards().size();
+        }
+        if (isLastRaw(parent, itemPosition-heardSize, spanCount, childCount))// 如果是最后一行，则不需要绘制底部
         {
             outRect.set(0, 0, mDivider.getIntrinsicWidth(), 0);
-        } else if (isLastColum(parent, itemPosition, spanCount, childCount))// 如果是最后一列，则不需要绘制右边
+        } else if (isLastColum(parent, itemPosition-heardSize, spanCount, childCount))// 如果是最后一列，则不需要绘制右边
         {
             outRect.set(0, 0, 0, mDivider.getIntrinsicHeight());
         } else {

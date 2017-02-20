@@ -7,7 +7,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.CheckBox;
 import android.widget.EditText;
 
 import finance.com.fp.BasisFragment;
@@ -20,8 +19,6 @@ import finance.com.fp.ui.inter.RegisterView;
 import sang.com.xdialog.DialogFactory;
 import sang.com.xdialog.XDialog;
 
-import static finance.com.fp.R.id.cb_agree;
-
 /**
  * Description：
  *
@@ -31,7 +28,7 @@ import static finance.com.fp.R.id.cb_agree;
 public class RegisterPhoneFragment extends BasisFragment implements View.OnClickListener, RegisterView {
     private EditText et_user, et_password, et_register;
     private Button bt_next, bt_dynamic, bt_vip;
-    private CheckBox checkBox;
+
     private RegisterInter pre;
     private FragmentListener listener;
     private XDialog dialog;
@@ -45,7 +42,7 @@ public class RegisterPhoneFragment extends BasisFragment implements View.OnClick
         bt_next = (Button) view.findViewById(R.id.bt_login);
         bt_dynamic = (Button) view.findViewById(R.id.bt_dynamic);
         bt_vip = (Button) view.findViewById(R.id.bt_forget);
-        checkBox = (CheckBox) view.findViewById(cb_agree);
+
         return view;
     }
 

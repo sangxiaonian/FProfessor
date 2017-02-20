@@ -99,10 +99,13 @@ public class IDSonPreComl implements IDSonPreInter {
                 break;
             case 1:
                 view.showEditDialog(item.title);
+                break;
             case 2:
                 view.showPickerDialog(data.getStringResous(R.array.car_tiem));
                 break;
             case 3:
+                view.showPickerDialog(data.getStringResous(R.array.isHas));
+                break;
             case 4:
                 view.showPickerDialog(data.getStringResous(R.array.isHas));
                 break;
@@ -119,10 +122,14 @@ public class IDSonPreComl implements IDSonPreInter {
                 view.showPickerDialog(data.getStringResous(R.array.house_style));
                 break;
             case 1:
+                view.showEditDialog(item.title);
+                break;
             case 3:
                 view.showEditDialog(item.title);
                 break;
             case 4:
+                view.showSelectDialog(data.getStringResous(R.array.isHas));
+                break;
             case 5:
                 view.showSelectDialog(data.getStringResous(R.array.isHas));
                 break;

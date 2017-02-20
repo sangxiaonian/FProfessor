@@ -41,10 +41,17 @@ public class SetBodyHolder extends CustomHolder<Set_Item> {
         super.initView(position, datas, context);
         LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
 
+
         if ((position - 1) % 2 == 0) {
             params.setMargins(0, 0, 0, (int) context.getResources().getDimension(R.dimen.home_item_time_margin));
         } else {
-            params.setMargins(0, 0, 0, 0);
+            if (position==0){
+                params.setMargins(0, (int) context.getResources().getDimension(R.dimen.home_item_time_margin), 0, 0);
+            }else {
+                params.setMargins(0, 0, 0, 0);
+            }
+
+//            params.setMargins(0, 0, 0, 0);
         }
 
         itemView.setLayoutParams(params);

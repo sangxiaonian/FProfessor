@@ -35,7 +35,6 @@
             android:layout_alignBottom="@id/img_item_loan"
             android:lineSpacingMultiplier="1.2"
             android:layout_alignStart="@id/tv_title_item_loan"
-
             android:textColor="@color/bg"
             android:textSize="@dimen/loan_item_hot_text_size" />
 

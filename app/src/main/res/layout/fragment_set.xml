@@ -4,7 +4,6 @@
     android:layout_height="match_parent"
     android:background="@color/bg"
     android:orientation="vertical"
-
     >
 
     <LinearLayout
@@ -44,6 +43,7 @@
     </LinearLayout>
 
     <android.support.v7.widget.RecyclerView
+
         android:id="@+id/rc_find"
         android:overScrollMode="never"
         android:layout_width="match_parent"

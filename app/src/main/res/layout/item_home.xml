@@ -1,40 +1,39 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:paddingLeft="@dimen/app_margin_ends"
-    android:paddingRight="@dimen/app_margin_ends"
     style="@style/item_style"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
- >
+    android:paddingLeft="@dimen/app_margin_ends"
+    android:paddingRight="@dimen/app_margin_ends">
 
-        <ImageView
-            android:id="@+id/img_item"
-            android:layout_marginTop="@dimen/app_cut_big"
-            android:layout_marginBottom="@dimen/app_cut_big"
-            android:layout_centerVertical="true"
-            android:layout_marginStart="@dimen/app_margin_ends"
-            android:layout_alignParentEnd="true"
-            android:src="@mipmap/home_picture"
-            android:layout_width="@dimen/home_item_img"
-            android:layout_height="@dimen/home_item_img" />
-        <TextView
-            android:minLines="2"
-            android:layout_toStartOf ="@id/img_item"
-            android:layout_alignTop="@id/img_item"
-            android:id="@+id/tv_details"
+    <ImageView
+        android:id="@+id/img_item_loan"
+        android:layout_width="@dimen/home_item_img"
+        android:layout_height="@dimen/home_item_img"
+        android:layout_alignParentEnd="true"
+        android:layout_centerVertical="true"
+        android:layout_marginBottom="@dimen/app_cut_big"
+        android:layout_marginStart="@dimen/app_margin_ends"
+        android:layout_marginTop="@dimen/app_cut_big"
+        android:src="@mipmap/home_picture" />
 
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="有信用卡和淘宝就可以有信用卡和淘宝就可以,郑州最高五万五万五万"
-            android:textColor="@color/text_home_item"
-            android:textSize="@dimen/home_item_text_big"
-            />
-        <TextView
-            android:id="@+id/tv_time"
-            android:layout_alignBottom="@id/img_item"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="更新时间:刚刚"
-            android:textColor="@color/text_home_item_time"
-            android:textSize="@dimen/home_item_time_text" />
+    <TextView
+        android:id="@+id/tv_title_item_loan"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignTop="@id/img_item_loan"
+        android:layout_toStartOf="@id/img_item_loan"
+        android:minLines="2"
+        android:text="有信用卡和淘宝就可以有信用卡和淘宝就可以,郑州最高五万五万五万"
+        android:textColor="@color/text_home_item"
+        android:textSize="@dimen/home_item_text_big" />
+
+    <TextView
+        android:id="@+id/tv_title_sub_item_loan"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@id/img_item_loan"
+        android:text="更新时间:刚刚"
+        android:textColor="@color/text_home_item_time"
+        android:textSize="@dimen/home_item_time_text" />
 </RelativeLayout>

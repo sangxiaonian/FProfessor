@@ -5,13 +5,9 @@ import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 
-import java.util.List;
-
 import em.sang.com.allrecycleview.adapter.DefaultAdapter;
 import finance.com.fp.BasisActivity;
 import finance.com.fp.R;
-import finance.com.fp.ui.holder.CardNotifiHolder;
-import finance.com.fp.ui.holder.HomeCarouselHolder;
 import finance.com.fp.mode.bean.Config;
 import finance.com.fp.mode.bean.Set_Item;
 import finance.com.fp.mode.bean.TranInfor;
@@ -25,9 +21,6 @@ public class CardActivity extends BasisActivity implements CardView {
 
 
     private RecyclerView recyclerView;
-    private List<Set_Item> tools;
-    private CardNotifiHolder notifiHolder;
-    private HomeCarouselHolder carouselHolder;
 
     private DefaultAdapter<Set_Item> adapter;
     private CardActivityPre pre;
@@ -58,7 +51,6 @@ public class CardActivity extends BasisActivity implements CardView {
 
         adapter = pre.getAdapter(this);
         recyclerView.setAdapter(adapter);
-//        recyclerView.upRefrush_state(PullRecycleView.LOADING);
 
     }
 
@@ -86,12 +78,8 @@ public class CardActivity extends BasisActivity implements CardView {
                 c = HomeSonActivity.class;
                 break;
             case 2:
-                c = FriendActivity.class;
-                break;
-            case 3:
                 c = PlannerActivity.class;
                 break;
-
         }
         if (c == null) {
             ToastUtil.showTextToast(tranInfor.title);

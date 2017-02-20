@@ -74,7 +74,7 @@ public class IDFactory extends BaseFractory {
      */
     public List<Set_Item> getCar(){
         List<Set_Item> list=new ArrayList<>();
-        String[] array = context.getResources().getStringArray(R.array.person_chit);
+        String[] array = context.getResources().getStringArray(R.array.person_card);
         for (int i = 0; i < array.length; i++) {
             Set_Item item = new Set_Item(0, array[i]);
             if (i==1){

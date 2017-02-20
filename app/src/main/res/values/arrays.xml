@@ -13,7 +13,7 @@
     <string-array name="card_items_title">
         <item>办卡攻略</item>
         <item>热申排行榜</item>
-        <item>中介朋友圈</item>
+
         <item>学习・规划师</item>
     </string-array>
 
@@ -28,7 +28,7 @@
         <item>中信银行</item>
         <item>兴业银行</item>
         <item>浦发银行</item>
-        <item>广大银行</item>
+        <item>光大银行</item>
         <item>交通银行</item>
         <item>民生银行</item>
         <item>招商银行</item>
@@ -63,25 +63,23 @@
 
     <!--Home 实用工具-->
     <string-array name="home_utility">
-        <item>企业信息查询</item>
-        <item>企业征信查询</item>
-        <item>个人征信查询</item>
-        <item>身份证挂失</item>
+        <item>企业信息查询_http://weiche.co/ECIUI/Search?provice=BJ#rd</item>
+        <item>企业征信查询_http://www.11315.com/</item>
+        <item>个人征信查询_https://ipcrs.pbccrc.org.cn/</item>
+        <item>身份证挂失_http://safe.idtag.cn/loss-report?forumKey=mrqShlgsxv8PQVs7Lk&amp;forumTheme=dz_skin_custom_main_color</item>
         <item>身份证查询</item>
-        <item>老赖查询</item>
-        <item>MCC码查询</item>
-        <item>银联交易查询</item>
-        <item>安卓root</item>
-        <item>装逼神器</item>
-        <item>海报生成器</item>
+        <item>老赖查询_https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx9383796ae1563eb&amp;redirect_uri=http://www.kuaicha.info/lawMobile/index.html&amp;response_type=code&amp;scope=snsapi_base&amp;state=STATE&amp;connect_redirect=1#wechat_redirect</item>
+        <item>MCC码查询_https://oaweixin.unionpay.com/cup_weixin/amcc.html</item>
+        <item>银联交易查询_https://ctq.unionpay.com/Wxindex.aspx?qd=02</item>
+
         <item>敬请期待</item>
     </string-array>
 
     <string-array name="home_pboc">
-        <item>央行信用报告_查逾期/查房贷/查贷款</item>
-        <item>芝麻信用_大数据个人信用</item>
-        <item>前海信用_第三方商业征信机构</item>
-        <item>考拉信用_考拉信用分/通行证</item>
+        <item>央行信用报告_查逾期/查房贷/查贷款_https://ipcrs.pbccrc.org.cn/</item>
+        <item>芝麻信用_大数据个人信用_https://qhcs-mws.pingan.com.cn/qhcsmws/website/index.html?r=1487313964681#login</item>
+        <item>前海信用_第三方商业征信机构_https://qhcs-mws.pingan.com.cn/qhcsmws/website/index.html?r=1487313964681#login</item>
+        <item>考拉信用_考拉信用分/通行证_https://m.kaolazhengxin.com:8449/apph5/personCreditInfo.html?channelSign=c543e78865002ff0471267d0cf4dfac2&amp;amp type=creditScore</item>
     </string-array>
 
     <string-array name="home_balance_phone">
@@ -102,6 +100,26 @@
         <item>浙商银行_服务热线:95527</item>
         <item>花旗银行_服务热线:400-821-1880</item>
     </string-array>
+
+    <string-array name="card_phone">
+        <item>中国银行_https://apply.mcard.boc.cn/apply/mobile/product/familyProductList/family</item>
+        <item>农业银行_http://abccc.vfengche.cn/memu/card/page1.html</item>
+
+        <item>建设银行_服务热线:95533\n信用卡中心:400-820-0588</item>
+        <item>交通银行_服务热线:95559\n信用卡中心:400-800-9888</item>
+        <item>招商银行_服务热线:95555\n信用卡中心:400-820-5555</item>
+        <item>浦发银行_服务热线:95528\n信用卡中心:400-820-8788</item>
+        <item>广发银行_服务热线:95508\n信用卡中心:400-830-8003</item>
+        <item>华夏银行_服务热线:95577\n信用卡中心:400-669-5577</item>
+        <item>平安银行_服务热线:95511\n信用卡中心:95511</item>
+        <item>光大银行_服务热线:95595\n信用卡中心:400-788-8888</item>
+        <item>中信银行_服务热线:95558\n信用卡中心:400-889-5558</item>
+        <item>兴业银行_服务热线:95561\n信用卡中心:400-889-5561</item>
+        <item>民生银行_服务热线:95568\n信用卡中心:400-669-5568</item>
+        <item>浙商银行_服务热线:95527</item>
+        <item>花旗银行_服务热线:400-821-1880</item>
+    </string-array>
+
 
     <string-array name="one_key">
         <item>招商银行_12</item>
@@ -140,18 +158,18 @@
     </string-array>
 
     <string-array name="card_pro_query">
-        <item>平安银行申卡进度查询</item>
-        <item>广发银行申卡进度查询</item>
-        <item>中信银行申卡进度查询</item>
-        <item>招商银行申卡进度查询</item>
-        <item>光大银行申卡进度查询</item>
-        <item>兴业银行申卡进度查询</item>
-        <item>交通银行申卡进度查询</item>
-        <item>浦发银行申卡进度查询</item>
-        <item>华夏银行申卡进度查询</item>
-        <item>农业银行申卡进度查询</item>
-        <item>中国银行申卡进度查询</item>
-        <item>北京银行申卡进度查询</item>
+        <item>平安银行申卡进度查询_https://c.pingan.com/apply/mobile/modules/queryApp/index.html#queryf</item>
+        <item>广发银行申卡进度查询_https://wap.cgbchina.com.cn/wx.do?PARAMK=626567696E417070677C795374617475735118756572792E646F3F728175657279466C6167273D312674696D65737244616D703D313438371533313537393235333676267778436F64653D166F3648724D6A6B557694427452586C54705114546F794347655F634652427726737263436888616E6E656C3D57538</item>
+        <item>中信银行申卡进度查询_https://creditcard.ecitic.com/citiccard/wap/cardappquery/app_inq.jsp?main=1&amp;left=1</item>
+        <item>招商银行申卡进度查询_https://ccclub.cmbchina.com/mca/MQuery.aspx?WT.mc_id=Z1O00WXA055B412100CC&amp;undefined=&amp;WT.refp=%2Fcard%2Fqueryweixin%2Fquery%24</item>
+        <item>光大银行申卡进度查询_https://xyk.cebbank.com/cebmms/apply/fz/card-app-status.htm</item>
+        <item>兴业银行申卡进度查询_https://3g.cib.com.cn/app/00282.html</item>
+        <item>交通银行申卡进度查询_https://creditcardapp.bankcomm.com/member/apply/status/preinquiry.html?_channel=WC</item>
+        <item>浦发银行申卡进度查询_https://weixin.spdbccc.com.cn/spdbcccWeChatPage/applyProgressPath.do?path=applyProgress&amp;page=index&amp;noCheck=1</item>
+        <item>华夏银行申卡进度查询_https://onlinepay.cupdata.com/wxhx/webApply.do?action=applyProgressInit&amp;bankNum=6304&amp;userId=oTBePjt4B7e0BY99gUrSkdGptDns</item>
+        <item>农业银行申卡进度查询_https://wx.abchina.com/WebSite/B4CardStatusAuthenticationAct.ebf?openId=oHFX_jvtLqWukfZ3GiveXbHFVCYA&amp;appId=wx51fdf61c0de4ab0b</item>
+        <item>中国银行申卡进度查询_https://apply.mcard.boc.cn/apply/mobile/mainAppi/showScheduleQuery</item>
+        <item>北京银行申卡进度查询_https://onlinepay.cupdata.com/weixin/apply.do?action=applyProgressInit&amp;bankNum=6403&amp;userId=weixin</item>
     </string-array>
 
 
@@ -161,7 +179,7 @@
         <item>浦发银行标准信用卡\n(银联，人民币，金卡)</item>
         <item>兴业银行标准信用卡\n(银联，人民币，金卡)</item>
         <item>浦发青春信用卡\n(人民币，美元，普卡)</item>
-        <item>广大福信用卡\n(银联，人民币，金卡)</item>
+        <item>光大福信用卡\n(银联，人民币，金卡)</item>
         <item>中心Q享信用卡\n(银联，人民币，金卡)</item>
     </string-array>
 
@@ -172,7 +190,7 @@
         <item>交通银行</item>
         <item>民生银行</item>
         <item>招商银行</item>
-        <item>广大银行</item>
+        <item>光大银行</item>
         <item>农业银行</item>
         <item>华夏银行</item>
         <item>建设银行</item>

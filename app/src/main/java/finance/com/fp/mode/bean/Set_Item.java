@@ -50,7 +50,7 @@ public class Set_Item {
 
     }
 
-    public Set_Item(int icon_id,String title){
+    public Set_Item(int icon_id, String title){
         this.icon_id=icon_id;
         this.title=title;
     }

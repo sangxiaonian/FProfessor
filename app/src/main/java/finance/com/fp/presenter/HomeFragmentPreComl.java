@@ -72,7 +72,7 @@ public class HomeFragmentPreComl implements HomeFragmentPre {
         toolsHolder.setMagrin(0,dimension,0,dimension);
         toolsHolder.setOnToolsItemClickListener(view);
         adapter.addHead(toolsHolder);
-        adapter.addHead(new CardMoreHolder(context,R.layout.item_card_more,new Set_Item(0,"热门贷款","更多")));
+        adapter.addHead(new CardMoreHolder(context,R.layout.item_card_more,new Set_Item(0,"热门网贷","更多产品")));
         return adapter;
     }
 

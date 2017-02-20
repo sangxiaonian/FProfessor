@@ -125,7 +125,6 @@ public class PullDownRecycleView extends BasicPullRecycleView {
                 if (listener != null) {
                     listener.onLoading();
                 }
-
                 break;
             case LOAD_DOWN_FAIL:
                 boomView.upState(ShapeView.LOAD_FAIL);

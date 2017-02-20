@@ -16,7 +16,7 @@ import android.view.animation.DecelerateInterpolator;
 import android.widget.LinearLayout;
 
 import em.sang.com.allrecycleview.inter.RefrushListener;
-import em.sang.com.allrecycleview.utils.JLog;
+import em.sang.com.allrecycleview.utils.Apputils;
 import em.sang.com.allrecycleview.view.RefrushLinearLayout;
 import em.sang.com.allrecycleview.view.ShapeView;
 
@@ -512,6 +512,7 @@ public abstract class BasicPullRecycleView extends RecyclerView {
                         case LOAD_DOWN_SUCCESS:
                             boomView.upState(ShapeView.LOAD_SUCCESS);
                             boomView.setTvMsg("加载成功!");
+
                             break;
                         default:
                             topView.setTvMsg("加载异常");
@@ -522,6 +523,23 @@ public abstract class BasicPullRecycleView extends RecyclerView {
                     moveToChildHight(refrush_state);
                 }
             }
+        }
+    }
+
+
+    public void setFlag(String flag){
+        if (topView!=null) {
+            topView.setFlag(flag);
+            mearchTop = Apputils.getWidthAndHeight(topView)[1];
+        }
+
+
+
+    }
+    public void setDownFlag(String flag){
+        if (boomView!=null) {
+            boomView.setFlag(flag);
+            mearchBoom = Apputils.getWidthAndHeight(boomView)[1];
         }
     }
 

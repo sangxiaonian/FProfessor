@@ -37,6 +37,7 @@ public class FindFragment extends BasisFragment implements HomeFramentView {
     public View initViews(LayoutInflater inflater, ViewGroup container) {
        View view = inflater.inflate(R.layout.fragment_find, null);
         rc = (PullRecycleView) view.findViewById(R.id.rc_find);
+        rc.setFlag("absdc");
         return view;
     }
 

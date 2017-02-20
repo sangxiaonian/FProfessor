@@ -35,14 +35,6 @@ public class LoanDataFractory  extends BaseFractory {
         return fractory;
     }
 
-
-
-
-
-
-
-
-
     /**
      * 网贷攻略
      *

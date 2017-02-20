@@ -98,7 +98,23 @@ public class HomeDataFractory extends BaseFractory {
         String tittles[] = context.getResources().getStringArray(R.array.home_pboc);
 
 
-        return getZip(icons, tittles);
+        return Observable.zip(Observable.from(icons)
+                , Observable.from(tittles).map(new Func1<String, String[]>() {
+                    @Override
+                    public String[] call(String s) {
+
+                        return s.split("_");
+                    }
+                }), new Func2<Integer, String[], Set_Item>() {
+                    @Override
+                    public Set_Item call(Integer integer, String[] split) {
+                        Set_Item item = new Set_Item(integer, split[0],split[1]);
+                        if (split.length>2){
+                            item.content=split[2];
+                        }
+                        return item;
+                    }
+                }).subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread());
 
     }
 
@@ -116,9 +132,7 @@ public class HomeDataFractory extends BaseFractory {
                 R.mipmap.icon_laolaiquery,
                 R.mipmap.icon_mcccodequery,
                 R.mipmap.icon_unionpaytransactionquery,
-                R.mipmap.icon_androidroot,
-                R.mipmap.icon_packtoforcecrtifact,
-                R.mipmap.icon_postersgenerator,
+
                 R.mipmap.icon_comingsoon
         };
         String tittles[] = context.getResources().getStringArray(R.array.home_utility);
@@ -128,8 +142,16 @@ public class HomeDataFractory extends BaseFractory {
                 , Observable.from(tittles), new Func2<Integer, String, Set_Item>() {
                     @Override
                     public Set_Item call(Integer integer, String split) {
+                        String[] split1 = split.split("_");
+                        Set_Item item = new Set_Item(integer, split1[0]);
+                        if (split1.length>1) {
+                            item.content = split1[1];
+                        }
+                        for (int i=2;i<split1.length;i++){
+                            item.content+="_"+split1[i];
+                        }
 
-                        return new Set_Item(integer, split);
+                        return item;
                     }
                 })
                 .subscribeOn(Schedulers.io())
@@ -207,7 +229,7 @@ public class HomeDataFractory extends BaseFractory {
                 id = R.layout.item_phones;
                 break;
             case 3://使用工具
-                id = R.layout.view_gv_card;
+                id = R.layout.item_card_allbalance;
                 break;
             case 2://征信查询
                 id = R.layout.item_tool_pboc;

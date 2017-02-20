@@ -61,7 +61,6 @@ public class HomeSonActivity extends BasisActivity implements HomeSonView {
         rc.setRefrushListener(new DefaultRefrushListener() {
            @Override
            public void onLoading() {
-
                pre.setDatas(HomeSonActivity.this);
            }
         });
@@ -92,14 +91,34 @@ public class HomeSonActivity extends BasisActivity implements HomeSonView {
     @Override
     public void creditItemClick(View itemView, final Set_Item item) {
 
-
-        ToastUtil.showTextToast(item.title);
+        if (!TextUtils.isEmpty(item.content)) {
+            Intent intent = new Intent(this, ShowDetailActivity.class);
+            TranInfor infor = new TranInfor();
+            infor.title = item.title;
+            infor.type=1;
+            infor.content = item.content;
+            infor.describe = item.describe;
+            intent.putExtra(Config.infors, infor);
+            startActivity(intent);
+        }else {
+            ToastUtil.showTextToast(item.content);
+        }
     }
 
     @Override
     public void utilityItemClick(View itemView, final Set_Item item) {
-
-        ToastUtil.showTextToast(item.title);
+        if (!TextUtils.isEmpty(item.content)) {
+            Intent intent = new Intent(this, ShowDetailActivity.class);
+            TranInfor infor = new TranInfor();
+            infor.title = item.title;
+            infor.type=1;
+            infor.content = item.content;
+            infor.describe = item.describe;
+            intent.putExtra(Config.infors, infor);
+            startActivity(intent);
+        }else {
+            ToastUtil.showTextToast(item.content);
+        }
 
     }
 
@@ -223,6 +242,18 @@ public class HomeSonActivity extends BasisActivity implements HomeSonView {
     @Override
     public void applyQueryItemClick(View itemView, Set_Item item) {
         ToastUtil.showTextToast(item.title);
+        if (!TextUtils.isEmpty(item.content)) {
+            Intent intent = new Intent(this, ShowDetailActivity.class);
+            TranInfor infor = new TranInfor();
+            infor.title = item.title;
+            infor.type=1;
+            infor.content = item.content;
+            infor.describe = item.describe;
+            intent.putExtra(Config.infors, infor);
+            startActivity(intent);
+        }else {
+            ToastUtil.showTextToast(item.content);
+        }
     }
 
     @Override

@@ -1,7 +1,5 @@
 package finance.com.fp.mode.datafractory;
 
-import android.support.annotation.NonNull;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -78,7 +76,25 @@ public class CardDataFractory extends BaseFractory {
         };
         String[] titles = context.getResources().getStringArray(R.array.card_pro_query);
 
-        return getZip(icons, titles);
+        return Observable.zip(Observable.from(icons), Observable.from(titles)
+                        .map(new Func1<String, String[]>() {
+                            @Override
+                            public String[] call(String s) {
+                                return s.split("_");
+                            }
+                        })
+
+                , new Func2<Integer, String[], Set_Item>() {
+                    @Override
+                    public Set_Item call(Integer integer, String[] s) {
+                        Set_Item item = new Set_Item(integer, s[0]);
+                        item.content=s[1];
+                        for (int i = 2; i <s.length ; i++) {
+                            item.content+="_"+s[i];
+                        }
+                        return item;
+                    }
+                }).subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread());
     }
 
 
@@ -104,10 +120,10 @@ public class CardDataFractory extends BaseFractory {
                 R.mipmap.icon_zheshangbank_phone,
                 R.mipmap.icon_citibank_phone
         };
-        String tittles[] = context.getResources().getStringArray(R.array.home_balance_phone);
-
+        String tittles[] = context.getResources().getStringArray(R.array.card_phone);
 
         return Observable.zip(Observable.from(icons),
+
                 Observable.from(tittles).map(new Func1<String, String>() {
                     @Override
                     public String call(String s) {
@@ -132,14 +148,7 @@ public class CardDataFractory extends BaseFractory {
      * @return
      */
     private Observable<Set_Item> getHotApply() {
-//        Integer[] icons = {R.mipmap.icon_creditcardofbankofcommunicationsstangards,
-//                R.mipmap.icon_citiclpiatinumcreditcard,
-//                R.mipmap.icon_shanghaipudongdevelopmentbankstandardcreditcard,
-//                R.mipmap.icon_societegeneralestandardcreditcard,
-//                R.mipmap.icon_shanghaipudongdevelopmentyoungcreditcard,
-//                R.mipmap.icon_everbrightfcreditcard,
-//                R.mipmap.icon_citicqatthegoldcard
-//        };
+
         Integer[] icons = {R.mipmap.icon_citiclpiatinumcreditcard,
                 R.mipmap.icon_citiclpiatinumcreditcard,
                 R.mipmap.icon_citiclpiatinumcreditcard,
@@ -151,10 +160,25 @@ public class CardDataFractory extends BaseFractory {
 
         String[] tittles = context.getResources().getStringArray(R.array.card_hot_apply);
 
-        return getZip(icons, tittles);
+        return Observable.zip(Observable.from(icons), Observable.from(tittles)
+                .map(new Func1<String, String[]>() {
+                    @Override
+                    public String[] call(String s) {
+                        return s.split("_");
+                    }
+                })
+
+                , new Func2<Integer, String[], Set_Item>() {
+            @Override
+            public Set_Item call(Integer integer, String[] s) {
+                Set_Item item = new Set_Item(integer, s[0]);
+
+                return item;
+            }
+        }).subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread());
     }
 
-    @NonNull
+
     private Observable<Set_Item> getZip(Integer[] icons, String[] tittles) {
         return Observable.zip(Observable.from(icons), Observable.from(tittles), new Func2<Integer, String, Set_Item>() {
             @Override
@@ -172,7 +196,8 @@ public class CardDataFractory extends BaseFractory {
      */
     public List<Set_Item> getTools() {
         ArrayList<Set_Item> tools = new ArrayList<>();
-        Integer[] icons = {R.mipmap.icon_handlecardstrategy, R.mipmap.icon_list, R.mipmap.icon_circleoffeiengs,
+        Integer[] icons = {R.mipmap.icon_handlecardstrategy, R.mipmap.icon_list,
+//                R.mipmap.icon_circleoffeiengs,
                 R.mipmap.icon_learningpianner};
         String[] titles = context.getResources().getStringArray(R.array.card_items_title);
         for (int i = 0; i < titles.length; i++) {

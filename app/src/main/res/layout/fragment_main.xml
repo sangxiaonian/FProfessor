@@ -1,28 +1,28 @@
 <android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:clipToPadding="true"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/bg"
+    android:clipToPadding="true"
 
-     >
+    >
 
 
     <em.sang.com.allrecycleview.PullUPRecycleView
         android:id="@+id/rc_home"
-        android:background="@color/text_home_item_cut"
         android:layout_width="match_parent"
-        app:layout_behavior="finance.com.fp.utlis.CustomBehavior"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:background="@color/text_home_item_cut"
+        app:layout_behavior="finance.com.fp.utlis.CustomBehavior">
 
     </em.sang.com.allrecycleview.PullUPRecycleView>
 
 
-
     <RelativeLayout
         android:layout_width="match_parent"
-        android:background="@color/colorPrimary"
-        android:layout_height="200dp">
+        android:layout_height="200dp"
+        android:background="@color/colorPrimary">
+
         <LinearLayout
             android:id="@+id/ll"
             android:layout_width="match_parent"
@@ -30,29 +30,31 @@
             android:background="@color/colorPrimary"
             android:gravity="center_vertical"
             android:orientation="vertical">
+
             <LinearLayout
                 android:id="@+id/ll_et"
                 android:layout_width="match_parent"
                 android:layout_height="?actionBarSize"
-                android:gravity="center_vertical"
                 android:layout_marginLeft="@dimen/home_title_ends"
                 android:layout_marginRight="@dimen/home_title_ends"
+                android:gravity="center_vertical"
                 android:orientation="horizontal">
+
                 <EditText
                     android:id="@+id/et_main_heard"
                     android:layout_width="0dp"
                     android:layout_height="@dimen/home_title_et_height"
                     android:layout_weight="1"
-                    android:ellipsize="end"
                     android:background="#f88889"
-                    android:textColorHint="#55ffffff"
                     android:drawablePadding="@dimen/app_cut_big"
-                    android:maxLines="1"
-                    android:textSize="@dimen/home_title_et_size"
                     android:drawableStart="@mipmap/nav_search"
+                    android:ellipsize="end"
                     android:hint="@string/main_search"
+                    android:maxLines="1"
                     android:paddingLeft="@dimen/app_cut_big"
-                    android:textColor="@color/white" />
+                    android:textColor="@color/white"
+                    android:textColorHint="#55ffffff"
+                    android:textSize="@dimen/home_title_et_size" />
 
                 <ImageButton
                     android:id="@+id/img_main_scan"
@@ -66,14 +68,14 @@
                     android:id="@+id/img_main_msg"
                     android:layout_width="@dimen/home_title_icon"
                     android:layout_height="@dimen/home_title_icon"
-                    android:src="@mipmap/nav_notice"
-                    android:background="@color/transparent" />
+                    android:background="@color/transparent"
+                    android:src="@mipmap/nav_notice" />
             </LinearLayout>
 
             <Space
                 android:layout_width="match_parent"
-                android:layout_weight="2"
-                android:layout_height="0dp"  />
+                android:layout_height="0dp"
+                android:layout_weight="2" />
 
 
             <RelativeLayout
@@ -84,39 +86,89 @@
                 android:layout_marginLeft="@dimen/home_title_img_margin"
                 android:layout_marginRight="@dimen/home_title_img_margin">
 
-                <ImageButton
-                    android:id="@+id/img_main_card"
-                    android:layout_width="@dimen/home_title_img_width"
-                    android:layout_height="@dimen/home_title_img_height"
-                    android:background="@color/transparent"
-                    android:scaleType="centerCrop"
-                    android:src="@mipmap/icon_handlecard" />
+                <LinearLayout
+                    android:id="@+id/tv_card"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:clickable="true"
+                    android:gravity="center"
+                    android:orientation="vertical">
 
-                <ImageButton
+                    <ImageView
+                        android:layout_width="@dimen/home_title_img_width"
+                        android:layout_height="@dimen/home_title_img_height"
+                        android:layout_marginBottom="25dp"
+                        android:background="@color/transparent"
+                        android:scaleType="centerCrop"
+                        android:src="@mipmap/icon_handlecard" />
 
-                    android:id="@+id/img_main_net"
-                    android:layout_width="@dimen/home_title_img_width"
-                    android:layout_height="@dimen/home_title_img_height"
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="办卡"
+                        android:textColor="@color/white"
+                        android:textSize="@dimen/app_title_text_size" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/tv_loan"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
                     android:layout_centerInParent="true"
-                    android:background="@color/transparent"
-                    android:scaleType="centerCrop"
-                    android:src="@mipmap/icon_lending" />
+                    android:gravity="center"
+                    android:clickable="true"
+                    android:orientation="vertical">
 
-                <ImageButton
-                    android:id="@+id/img_main_imp"
-                    android:layout_width="@dimen/home_title_img_width"
-                    android:layout_height="@dimen/home_title_img_height"
+
+                    <ImageView
+                        android:id="@+id/img_main_net"
+                        android:layout_width="@dimen/home_title_img_width"
+                        android:layout_height="@dimen/home_title_img_height"
+                        android:layout_marginBottom="25dp"
+
+                        android:background="@color/transparent"
+                        android:scaleType="centerCrop"
+                        android:src="@mipmap/icon_lending" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+
+                        android:layout_height="wrap_content"
+
+                        android:text="网贷"
+                        android:textColor="@color/white"
+                        android:textSize="@dimen/app_title_text_size" />
+
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:clickable="true"
+                    android:id="@+id/tv_improt"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
                     android:layout_alignParentRight="true"
-                    android:background="@color/transparent"
-                    android:scaleType="centerCrop"
-                    android:src="@mipmap/bab_mentiontheforehead" />
+                    android:gravity="center"
+                    android:orientation="vertical">
 
+                    <ImageView
+                        android:id="@+id/img_main_imp"
+                        android:layout_width="@dimen/home_title_img_width"
+                        android:layout_height="@dimen/home_title_img_height"
+                        android:layout_marginBottom="25dp"
+                        android:background="@color/transparent"
+                        android:scaleType="centerCrop"
+                        android:src="@mipmap/bab_mentiontheforehead" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="提额"
+                        android:textColor="@color/white"
+                        android:textSize="@dimen/app_title_text_size" />
+                </LinearLayout>
             </RelativeLayout>
-
-            <Space
-                android:layout_width="match_parent"
-                android:layout_weight="2"
-                android:layout_height="0dp" />
 
 
             <RelativeLayout
@@ -127,48 +179,24 @@
                 android:layout_marginLeft="44dp"
                 android:layout_marginRight="44dp">
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_centerVertical="true"
-                    android:text="办卡"
-                    android:textColor="@color/white"
-                    android:textSize="@dimen/app_title_text_size" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_centerInParent="true"
-                    android:layout_centerVertical="true"
-                    android:text="网贷"
-                    android:textColor="@color/white"
-                    android:textSize="@dimen/app_title_text_size" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentRight="true"
-                    android:layout_centerVertical="true"
-                    android:text="提额"
-                    android:textColor="@color/white"
-                    android:textSize="@dimen/app_title_text_size" />
 
             </RelativeLayout>
 
             <Space
                 android:layout_width="match_parent"
-                android:layout_weight="2"
-                android:layout_height="0dp"  />
+                android:layout_height="0dp"
+                android:layout_weight="2" />
         </LinearLayout>
+
         <LinearLayout
             android:id="@+id/rl_icon"
             android:layout_width="match_parent"
             android:layout_height="?actionBarSize"
-            android:gravity="center_vertical"
             android:layout_marginLeft="20dp"
             android:layout_marginRight="20dp"
             android:clickable="false"
-            >
+            android:gravity="center_vertical">
+
             <ImageButton
                 android:id="@+id/img_main_card_icon"
                 android:layout_width="30dp"
@@ -178,40 +206,43 @@
                 android:src="@mipmap/icon_handlecard" />
 
             <ImageButton
-                android:layout_marginLeft="40dp"
                 android:id="@+id/img_main_net_icon"
                 android:layout_width="@dimen/home_title_small_img_width"
                 android:layout_height="@dimen/home_title_small_img_height"
+                android:layout_marginLeft="40dp"
                 android:background="@color/transparent"
                 android:scaleType="centerCrop"
                 android:src="@mipmap/icon_lending" />
 
             <ImageButton
-                android:layout_marginLeft="40dp"
                 android:id="@+id/img_main_imp_icon"
                 android:layout_width="@dimen/home_title_small_img_width"
                 android:layout_height="@dimen/home_title_small_img_height"
+                android:layout_marginLeft="40dp"
                 android:background="@color/transparent"
                 android:scaleType="centerCrop"
                 android:src="@mipmap/bab_mentiontheforehead" />
+
             <android.support.v4.widget.Space
                 android:layout_width="0dp"
                 android:layout_height="1dp"
-                android:layout_weight="1"/>
+                android:layout_weight="1" />
+
             <ImageView
-                android:layout_marginEnd="@dimen/app_cut_big"
                 android:layout_width="1dp"
                 android:layout_height="18dp"
-                android:clickable="false"
-                android:src="@mipmap/nav_notice"
+                android:layout_marginEnd="@dimen/app_cut_big"
                 android:alpha="0.3"
-                android:background="@color/text_home_item_cut" />
+                android:background="@color/text_home_item_cut"
+                android:clickable="false"
+                android:src="@mipmap/nav_notice" />
+
             <ImageButton
                 android:id="@+id/img_main_msg_small"
                 android:layout_width="@dimen/home_title_small_img_width"
                 android:layout_height="@dimen/home_title_small_img_height"
-                android:src="@mipmap/nav_notice"
-                android:background="@color/transparent" />
+                android:background="@color/transparent"
+                android:src="@mipmap/nav_notice" />
         </LinearLayout>
 
     </RelativeLayout>

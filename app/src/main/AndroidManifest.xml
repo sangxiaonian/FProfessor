@@ -34,7 +34,6 @@
         <activity android:name=".ui.Loan_Strategy_Activity" />
         <activity android:name=".ui.Loan_Search_Activity" />
         <activity android:name=".ui.HomeSonActivity" />
-        <activity android:name=".ui.OneKeyActivity" />
         <activity android:name=".ui.IDSonActivity" />
         <activity android:name=".ui.ShowDetailActivity" />
         <activity android:name=".ui.NoticeActivity" />

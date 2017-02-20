@@ -40,8 +40,8 @@ public class HomeFragment extends BasisFragment implements View.OnClickListener,
 
     private PullUPRecycleView recyclerView;
 
-    private ImageButton card, lending, forheard, title_card, ltitle_ending, title_forheard,msg,msg_small,img_scan;
-
+    private ImageButton   title_card, ltitle_ending, title_forheard,msg,msg_small,img_scan;
+    private LinearLayout tv_card,tv_loan,tv_import;
     private HomeFragmentPre pre;
     private RefrushAdapter adapter;
 
@@ -49,15 +49,16 @@ public class HomeFragment extends BasisFragment implements View.OnClickListener,
     public View initViews(LayoutInflater inflater, ViewGroup container) {
         View view = inflater.inflate(R.layout.fragment_main, null);
         recyclerView = (PullUPRecycleView) view.findViewById(R.id.rc_home);
-        card = (ImageButton) view.findViewById(R.id.img_main_card);
-        lending = (ImageButton) view.findViewById(R.id.img_main_net);
-        forheard = (ImageButton) view.findViewById(R.id.img_main_imp);
+
         title_card = (ImageButton) view.findViewById(R.id.img_main_card_icon);
         ltitle_ending = (ImageButton) view.findViewById(R.id.img_main_net_icon);
         title_forheard = (ImageButton) view.findViewById(R.id.img_main_imp_icon);
         msg = (ImageButton) view.findViewById(R.id.img_main_msg);
         msg_small = (ImageButton) view.findViewById(R.id.img_main_msg_small);
         img_scan= (ImageButton) view.findViewById(R.id.img_main_scan);
+        tv_card= (LinearLayout) view.findViewById(R.id.tv_card);
+        tv_import= (LinearLayout) view.findViewById(R.id.tv_improt);
+        tv_loan= (LinearLayout) view.findViewById(R.id.tv_loan);
         return view;
     }
 
@@ -65,15 +66,16 @@ public class HomeFragment extends BasisFragment implements View.OnClickListener,
     @Override
     public void initListener() {
         super.initListener();
-        card.setOnClickListener(this);
-        lending.setOnClickListener(this);
-        forheard.setOnClickListener(this);
+
         title_card.setOnClickListener(this);
         ltitle_ending.setOnClickListener(this);
         title_forheard.setOnClickListener(this);
         msg.setOnClickListener(this);
         msg_small.setOnClickListener(this);
         img_scan.setOnClickListener(this);
+        tv_import.setOnClickListener(this);
+        tv_loan.setOnClickListener(this);
+        tv_card.setOnClickListener(this);
     }
 
 
@@ -101,16 +103,19 @@ public class HomeFragment extends BasisFragment implements View.OnClickListener,
         Class c = null;
         Intent intent = new Intent();
         switch (v.getId()) {
-            case R.id.img_main_card:
+
             case R.id.img_main_card_icon:
+            case R.id.tv_card:
                 c = CardActivity.class;
                 break;
             case R.id.img_main_net:
             case R.id.img_main_net_icon:
+            case R.id.tv_loan:
                 c = LoanActivity.class;
                 break;
             case R.id.img_main_imp:
             case R.id.img_main_imp_icon:
+            case R.id.tv_improt:
                 c = ImportActivity.class;
                 break;
             case R.id.img_main_msg:
@@ -125,6 +130,7 @@ public class HomeFragment extends BasisFragment implements View.OnClickListener,
             case R.id.img_main_scan:
                 showDialog();
                 break;
+
 
         }
         if (c == null) {

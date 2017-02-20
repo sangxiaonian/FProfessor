@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    
+    <!--自定义reagioGroup-->
+    <declare-styleable name="MyRadioGroup">
+        <attr name="child_margin_horizontal" format="dimension" />
+        <attr name="child_margin_vertical" format="dimension" />
+        <attr name="child_layout" format="integer" />
+        <attr name="child_count" format="integer" />
+        <attr name="child_values" format="integer" />
+        <attr name="single_choice" format="boolean" />
+        <attr name="gravity" format="integer" />
+    </declare-styleable>
+    
+    <!--自定义进度条-->
+    <declare-styleable name="HorizontalProgress">
+        <attr name="progress_unreached_color" format="color"></attr>
+        <attr name="progress_reached_color" format="color"></attr>
+        <attr name="progress_text_color" format="color"></attr>
+        <attr name="progress_height" format="dimension"></attr>
+        <attr name="progress_text_size" format="dimension"></attr>
+        <attr name="progress_text_offset" format="dimension"></attr>
+        <attr name="progress_text_visibility" format="enum">
+            <enum name="visible" value="0" />
+            <enum name="invisible" value="1" />
+        </attr>
+    </declare-styleable>
+
+    <declare-styleable name="RoundProgressBarWidthNumber" >
+        <attr name="RoundProgressBarWidthNumber_radius" format="dimension"/>
+    </declare-styleable>
+
+
+
+</resources>

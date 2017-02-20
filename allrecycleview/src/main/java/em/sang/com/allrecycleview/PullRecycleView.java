@@ -9,6 +9,7 @@ import android.widget.LinearLayout;
 import em.sang.com.allrecycleview.adapter.BasicAdapter;
 import em.sang.com.allrecycleview.holder.SimpleHolder;
 import em.sang.com.allrecycleview.utils.Apputils;
+import em.sang.com.allrecycleview.utils.JLog;
 import em.sang.com.allrecycleview.view.RefrushLinearLayout;
 
 /**
@@ -62,7 +63,7 @@ public class PullRecycleView extends BasicPullRecycleView {
         topView = new RefrushLinearLayout(context);
         boomView = new RefrushLinearLayout(context);
 
-
+        JLog.i("-----------initView------------");
         mearchTop = Apputils.getWidthAndHeight(topView)[1];
         mearchBoom = Apputils.getWidthAndHeight(boomView)[1];
 
@@ -75,6 +76,9 @@ public class PullRecycleView extends BasicPullRecycleView {
         boomView.setLayoutParams(boom);
         hasTop=true;
         hasBoom=false;
+
+
+
     }
 
 

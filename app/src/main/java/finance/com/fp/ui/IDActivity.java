@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.view.View;
 
 import java.util.ArrayList;
@@ -18,11 +19,11 @@ import em.sang.com.allrecycleview.inter.DefaultAdapterViewLisenter;
 import em.sang.com.allrecycleview.listener.OnToolsItemClickListener;
 import finance.com.fp.BasisActivity;
 import finance.com.fp.R;
-import finance.com.fp.ui.holder.IDHolder;
 import finance.com.fp.mode.bean.Config;
 import finance.com.fp.mode.bean.Set_Item;
 import finance.com.fp.mode.bean.TranInfor;
 import finance.com.fp.mode.datafractory.ImprotFactory;
+import finance.com.fp.ui.holder.IDHolder;
 import finance.com.fp.utlis.RecycleViewDivider;
 import sang.com.xdialog.DialogFactory;
 import sang.com.xdialog.XDialog;
@@ -37,7 +38,7 @@ public class IDActivity extends BasisActivity implements OnToolsItemClickListene
     private List<Set_Item> lists;
     private List<String> titles;
     private XDialog dialog;
-    private DialogFactory factory;
+
     private DefaultAdapter adapter;
     private DialogFactory dialogFactory;
     private final int REQUESTCODE=2;
@@ -62,13 +63,12 @@ public class IDActivity extends BasisActivity implements OnToolsItemClickListene
 
     public void click(View view){
         TranInfor tranInfor = new TranInfor();
-        Intent intent = new Intent(this,HomeSonActivity.class);
+        Intent intent = new Intent(this,Loan_Search_Activity.class);
         tranInfor.activity_id = 2;
         tranInfor.item_id= ImprotFactory.LOAN_ONE_KEY_IPMORT;
         tranInfor.title = getString(R.string.import_at_once);
         intent.putExtra(Config.infors, tranInfor);
         startActivity(intent);
-
     }
 
 
@@ -126,15 +126,19 @@ public class IDActivity extends BasisActivity implements OnToolsItemClickListene
             Intent intent = new Intent(this,IDSonActivity.class);
             intent.putExtra(Config.infors,infor);
             startActivityForResult(intent,REQUESTCODE);
-
         }
     }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode==REQUESTCODE){
-//            Logger.i(data.getStringExtra(Config.infors));
+
+        if (requestCode==REQUESTCODE&&resultCode==1){
+            String extra = data.getStringExtra(Config.infors);
+            if (!TextUtils.isEmpty(extra)){
+                item.describe="已填写";
+                adapter.notifyDataSetChanged();
+            }
         }
     }
 

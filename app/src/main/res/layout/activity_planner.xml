@@ -39,6 +39,8 @@
             android:background="@color/transparent"
             android:layout_width="@dimen/import_item_img_size"
             android:layout_height="match_parent"
+            android:textSize="@dimen/app_title_size"
+            android:textColor="@color/cut_line"
             android:text="发送"/>
     </LinearLayout>
 </LinearLayout>
