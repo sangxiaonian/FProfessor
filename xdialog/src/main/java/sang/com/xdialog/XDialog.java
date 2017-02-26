@@ -24,6 +24,7 @@ public class XDialog<T> extends Dialog {
     public final static int NO_BUTTON = 0;
     public final static int BUTTON_UP = 1;
     public final static int ALEART_EDITTEXT = 2;
+    public static final int ALEART_ONLY_ENTRY =3 ;
 
     protected Button bt_cancel, bt_entry;
     protected OnCancelListener cancleListener;

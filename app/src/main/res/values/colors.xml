@@ -18,5 +18,7 @@
     <color name="loan_item">#1798f2</color>
 
     <color name="click_item">#f3f3f3</color>
+    <color name="friend_title">#5b6d99</color>
+    <color name="friend_detail">#4c69c5</color>
 
 </resources>

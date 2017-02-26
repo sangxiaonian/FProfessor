@@ -64,20 +64,20 @@ public class HomeDataFractory extends BaseFractory {
 //        return list;
 //    }
 
-    public Observable creatObservable(int itemId) {
+    public Observable creatObservable(int itemId, int page) {
         Observable observable;
         switch (itemId) {
             case MSG_CENTER:
-                observable = HttpFactory.getMsg();
+                observable = HttpFactory.getMsg(String.valueOf(page), "20");
                 break;
             case BALANCE_CALL:
-                observable = getBalanceCall();
+                observable = getBalanceCall(page);
                 break;
             case CREDIT:
-                observable = getCredit();
+                observable = getCredit(page);
                 break;
             case UTILITY_TOLL:
-                observable = getUtility();
+                observable = getUtility(page);
                 break;
             default:
                 throw new ParameterException("传入ID参数错误");
@@ -88,15 +88,22 @@ public class HomeDataFractory extends BaseFractory {
 
     /**
      * 征信查询数据
+     *
+     * @param page
      */
-    public Observable<Set_Item> getCredit() {
+    public Observable<Set_Item> getCredit(int page) {
+
         Integer[] icons = {R.mipmap.icon_creditreport,
                 R.mipmap.icon_creditsesame,
                 R.mipmap.icon_hisensebeforeuse,
                 R.mipmap.icon_thekoalainquiry
         };
-        String tittles[] = context.getResources().getStringArray(R.array.home_pboc);
-
+        String[] tittles;
+        if (page==0) {
+            tittles = context.getResources().getStringArray(R.array.home_pboc);
+        }else {
+            tittles=new String[0];
+        }
 
         return Observable.zip(Observable.from(icons)
                 , Observable.from(tittles).map(new Func1<String, String[]>() {
@@ -108,9 +115,9 @@ public class HomeDataFractory extends BaseFractory {
                 }), new Func2<Integer, String[], Set_Item>() {
                     @Override
                     public Set_Item call(Integer integer, String[] split) {
-                        Set_Item item = new Set_Item(integer, split[0],split[1]);
-                        if (split.length>2){
-                            item.content=split[2];
+                        Set_Item item = new Set_Item(integer, split[0], split[1]);
+                        if (split.length > 2) {
+                            item.content = split[2];
                         }
                         return item;
                     }
@@ -121,9 +128,10 @@ public class HomeDataFractory extends BaseFractory {
     /**
      * 获取实用工具
      *
+     * @param page
      * @return
      */
-    public Observable<Set_Item> getUtility() {
+    public Observable<Set_Item> getUtility(int page) {
         Integer[] icons = {R.mipmap.icon_thtenterpriseinformationqueries,
                 R.mipmap.icon_enterprisecreditreportingqueries,
                 R.mipmap.icon_personalcreditregistryquery,
@@ -135,8 +143,12 @@ public class HomeDataFractory extends BaseFractory {
 
                 R.mipmap.icon_comingsoon
         };
-        String tittles[] = context.getResources().getStringArray(R.array.home_utility);
-
+        String[] tittles;
+        if (page==0) {
+          tittles = context.getResources().getStringArray(R.array.home_utility);
+        }else {
+            tittles=new String[0];
+        }
 
         return Observable.zip(Observable.from(icons)
                 , Observable.from(tittles), new Func2<Integer, String, Set_Item>() {
@@ -144,11 +156,11 @@ public class HomeDataFractory extends BaseFractory {
                     public Set_Item call(Integer integer, String split) {
                         String[] split1 = split.split("_");
                         Set_Item item = new Set_Item(integer, split1[0]);
-                        if (split1.length>1) {
+                        if (split1.length > 1) {
                             item.content = split1[1];
                         }
-                        for (int i=2;i<split1.length;i++){
-                            item.content+="_"+split1[i];
+                        for (int i = 2; i < split1.length; i++) {
+                            item.content += "_" + split1[i];
                         }
 
                         return item;
@@ -159,8 +171,9 @@ public class HomeDataFractory extends BaseFractory {
                 ;
     }
 
-    public Observable<Set_Item> getBalanceCall() {
+    public Observable<Set_Item> getBalanceCall(int page) {
 
+        String[] tittles  ;
         Integer[] icons = {R.mipmap.icon_thebankofchina_phone,
                 R.mipmap.icon_agricuralbankof_phone,
                 R.mipmap.icon_icbc_phone,
@@ -178,7 +191,12 @@ public class HomeDataFractory extends BaseFractory {
                 R.mipmap.icon_zheshangbank_phone,
                 R.mipmap.icon_citibank_phone
         };
-        String[] tittles = context.getResources().getStringArray(R.array.home_balance_phone);
+        if (page == 0) {
+            tittles = context.getResources().getStringArray(R.array.home_balance_phone);
+        }else {
+            icons = new Integer[0];
+             tittles = new String[0];
+        }
 
         return getZip(icons, tittles);
 

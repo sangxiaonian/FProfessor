@@ -9,7 +9,6 @@ import android.widget.LinearLayout;
 import em.sang.com.allrecycleview.adapter.BasicAdapter;
 import em.sang.com.allrecycleview.holder.SimpleHolder;
 import em.sang.com.allrecycleview.utils.Apputils;
-import em.sang.com.allrecycleview.utils.JLog;
 import em.sang.com.allrecycleview.view.RefrushLinearLayout;
 
 /**
@@ -41,15 +40,15 @@ public class PullRecycleView extends BasicPullRecycleView {
 
     @Override
     public float getStandHeightByStated(int refrush_state) {
-        float stand ;
+        float stand;
         switch (refrush_state) {
             case LOAD_BEFOR:
             case LOADING:
-                stand=mearchTop;
+                stand = mearchTop;
                 break;
             case LOADING_DOWN:
             case LOAD_DOWN_BEFOR:
-                stand=mearchBoom;
+                stand = mearchBoom;
                 break;
             default:
                 stand = min;
@@ -63,7 +62,7 @@ public class PullRecycleView extends BasicPullRecycleView {
         topView = new RefrushLinearLayout(context);
         boomView = new RefrushLinearLayout(context);
 
-        JLog.i("-----------initView------------");
+
         mearchTop = Apputils.getWidthAndHeight(topView)[1];
         mearchBoom = Apputils.getWidthAndHeight(boomView)[1];
 
@@ -74,9 +73,8 @@ public class PullRecycleView extends BasicPullRecycleView {
         LinearLayout.LayoutParams boom = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
         boom.height = (int) min;
         boomView.setLayoutParams(boom);
-        hasTop=true;
-        hasBoom=false;
-
+        hasTop = true;
+        hasBoom = false;
 
 
     }
@@ -84,33 +82,35 @@ public class PullRecycleView extends BasicPullRecycleView {
 
     @Override
     public boolean isLast() {
-
-        if (refrush_state==LOADING){
-
-            return false;
-        }else {
-            return super.isLast()&&hasBoom;
-        }
-
+        return super.isLast() && hasBoom;
     }
 
     @Override
     public boolean isFirst() {
-            return super.isFirst();
+        return super.isFirst();
     }
 
     /**
      * 刷新成功后调用
      */
     public void loadSuccess() {
-        upRefrush_state(LOAD_SUCCESS);
+        if (isFirst()) {
+            upRefrush_state(LOAD_SUCCESS);
+        } else if (isLast()) {
+            upRefrush_state(LOAD_DOWN_SUCCESS);
+        }
     }
 
     /**
      * 刷新失败后调用
      */
     public void loadFail() {
-        upRefrush_state(LOAD_FAIL);
+        if (isFirst()) {
+            upRefrush_state(LOAD_FAIL);
+        } else if (isLast()) {
+            upRefrush_state(LOAD_DOWN_FAIL);
+        }
+
     }
 
     @Override
@@ -120,36 +120,20 @@ public class PullRecycleView extends BasicPullRecycleView {
             if (getHasBoom()) {
                 basicAdapter.addBoom(new SimpleHolder(boomView));
             }
-
-            if (getHasTop()){
+            if (getHasTop()) {
                 basicAdapter.addTop(new SimpleHolder(topView));
             }
         }
     }
 
     @Override
-    public void setLoading() {
-        super.setLoading();
-        setViewHeight(getEndView(),mearchTop);
-        upRefrush_state(LOADING);
-    }
-    @Override
-    public void setAdapter(Adapter adapter) {
-        super.setAdapter(adapter);
-
-
-    }
-
-
-
-    @Override
     public boolean canDrag() {
-        return isLast()||isFirst();
+        return isLast() || isFirst();
     }
 
 
     public int changeStateByHeight(int height) {
-        int result =refrush_state;
+        int result = refrush_state;
         float stand = getEndHeight();
 
         if (isFirst()) {
@@ -158,7 +142,7 @@ public class PullRecycleView extends BasicPullRecycleView {
             } else {
                 result = LOAD_BEFOR;
             }
-        }else if (isLast()){
+        } else if (isLast()) {
             if (height <= stand) {
                 result = LOAD_DOWN_OVER;
             } else {
@@ -192,17 +176,16 @@ public class PullRecycleView extends BasicPullRecycleView {
 
     @Override
     public boolean isChangStateByHeight() {
-        return canDown()||canUp();
+        return canDown() || canUp();
     }
 
-    private boolean canDown(){
-        return refrush_state == LOAD_DOWN_OVER || refrush_state == LOAD_DOWN_BEFOR||refrush_state==-1||(refrush_state<=5&&isLast());
+    private boolean canDown() {
+        return refrush_state == LOAD_DOWN_OVER || refrush_state == LOAD_DOWN_BEFOR || refrush_state == -1 || (refrush_state <= 5 && isLast());
     }
 
-    private boolean canUp(){
-        return (refrush_state == LOAD_OVER || refrush_state == LOAD_BEFOR||refrush_state==-1)||(refrush_state>5&&isFirst());
+    private boolean canUp() {
+        return (refrush_state == LOAD_OVER || refrush_state == LOAD_BEFOR || refrush_state == -1) || (refrush_state > 5 && isFirst());
     }
-
 
 
 }

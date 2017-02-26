@@ -19,7 +19,7 @@ import em.sang.com.allrecycleview.adapter.DefaultAdapter;
 import em.sang.com.allrecycleview.inter.DefaultRefrushListener;
 import finance.com.fp.BasisActivity;
 import finance.com.fp.R;
-import finance.com.fp.mode.bean.Config;
+import finance.com.fp.mode.http.Config;
 import finance.com.fp.mode.bean.Set_Item;
 import finance.com.fp.mode.bean.TranInfor;
 import finance.com.fp.presenter.HomeSonPerComl;
@@ -47,7 +47,7 @@ public class HomeSonActivity extends BasisActivity implements HomeSonView {
     public void initView() {
         super.initView();
         rc = (PullRecycleView) findViewById(R.id.rc);
-
+        rc.setHasBoom(true);
     }
 
     @Override
@@ -63,7 +63,15 @@ public class HomeSonActivity extends BasisActivity implements HomeSonView {
            public void onLoading() {
                pre.setDatas(HomeSonActivity.this);
            }
+
+            @Override
+            public void onLoadDowning() {
+                super.onLoadDowning();
+                pre.pageAdd();
+                pre.setDatas(HomeSonActivity.this);
+            }
         });
+
         rc.setLoading();
 
     }
@@ -236,12 +244,19 @@ public class HomeSonActivity extends BasisActivity implements HomeSonView {
 
     @Override
     public void allBalanceItemClick(Set_Item item) {
-        ToastUtil.showTextToast(item.title);
+        Intent intent = new Intent(this, ShowDetailActivity.class);
+        TranInfor infor = new TranInfor();
+        infor.title = item.title;
+        infor.type = 1;
+
+        infor.content = item.describe;
+        infor.describe = item.describe;
+        intent.putExtra(Config.infors, infor);
+        startActivity(intent);
     }
 
-    @Override
     public void applyQueryItemClick(View itemView, Set_Item item) {
-        ToastUtil.showTextToast(item.title);
+
         if (!TextUtils.isEmpty(item.content)) {
             Intent intent = new Intent(this, ShowDetailActivity.class);
             TranInfor infor = new TranInfor();
@@ -258,12 +273,27 @@ public class HomeSonActivity extends BasisActivity implements HomeSonView {
 
     @Override
     public void hotapplyItemClick(View itemView, Set_Item item) {
-        ToastUtil.showTextToast(item.title);
+        Intent intent = new Intent(this, ShowDetailActivity.class);
+        TranInfor infor = new TranInfor();
+        infor.title = item.title;
+        infor.type = 1;
+
+        infor.content = item.content;
+        infor.describe = item.describe;
+        intent.putExtra(Config.infors, infor);
+        startActivity(intent);
     }
 
     @Override
     public void loan_strage_item(View itemView, Set_Item item) {
-        ToastUtil.showTextToast(item.title);
+        Intent intent = new Intent(this, ShowDetailActivity.class);
+        TranInfor infor = new TranInfor();
+        infor.title = item.title;
+
+        infor.content = item.content;
+        infor.describe = item.describe;
+        intent.putExtra(Config.infors, infor);
+        startActivity(intent);
 
     }
 
@@ -293,4 +323,26 @@ public class HomeSonActivity extends BasisActivity implements HomeSonView {
 
     }
 
+    @Override
+    public boolean isLoadMore() {
+        return rc.isLoadMore();
+    }
+
+    @Override
+    public void loan_jing_click(View itemView, Set_Item item) {
+        Intent intent = new Intent(this, ShowDetailActivity.class);
+        TranInfor infor = new TranInfor();
+        infor.title = item.title;
+
+        infor.content = item.content;
+        infor.describe = item.describe;
+        intent.putExtra(Config.infors, infor);
+        startActivity(intent);
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        pre.unsubscribe();
+    }
 }

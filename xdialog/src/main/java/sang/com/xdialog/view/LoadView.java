@@ -76,7 +76,13 @@ public class LoadView extends View {
         centerX=mwidth/2;
         centerY=mHeight/2;
         if (!TextUtils.isEmpty(text)){
-            mPaint.setTextSize(DeviceUtils.sp2px(getContext(),25));
+            float scal = 25f/(text.length()/5);
+            if (scal>18){
+                scal=18;
+            }if (scal<12){
+                scal=12;
+            }
+            mPaint.setTextSize(DeviceUtils.sp2px(getContext(),scal));
             mPaint.getTextBounds(text,0,text.length(),textRectF);
             centerY=centerY-textRectF.height()/2-gap;
         }
@@ -108,7 +114,7 @@ public class LoadView extends View {
             canvas.drawText(text,centerX-textRectF.width()/2,mwidth-gap*2,mPaint);
         }
 
-        
+
     }
 
     @Override
@@ -128,6 +134,11 @@ public class LoadView extends View {
     }
 
     ValueAnimator animator;
+
+    public void setText(String text){
+        this.text=text;
+    }
+
     private void startAnimotion(){
 
         if (animator!=null){

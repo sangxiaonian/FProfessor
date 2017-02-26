@@ -13,10 +13,10 @@ import em.sang.com.allrecycleview.adapter.RefrushAdapter;
 import em.sang.com.allrecycleview.inter.DefaultRefrushListener;
 import finance.com.fp.BasisFragment;
 import finance.com.fp.R;
-import finance.com.fp.mode.bean.Config;
 import finance.com.fp.mode.bean.Set_Item;
 import finance.com.fp.mode.bean.TranInfor;
 import finance.com.fp.mode.datafractory.HomeDataFractory;
+import finance.com.fp.mode.http.Config;
 import finance.com.fp.presenter.HomeFragmentPreComl;
 import finance.com.fp.presenter.inter.HomeFragmentPre;
 import finance.com.fp.ui.CardActivity;
@@ -27,7 +27,6 @@ import finance.com.fp.ui.PlannerActivity;
 import finance.com.fp.ui.inter.HomeFramentView;
 import finance.com.fp.utlis.RecycleViewDivider;
 import finance.com.fp.utlis.ToastUtil;
-import sang.com.xdialog.PickerDialog;
 
 /**
  * Description：
@@ -40,7 +39,7 @@ public class HomeFragment extends BasisFragment implements View.OnClickListener,
 
     private PullUPRecycleView recyclerView;
 
-    private ImageButton   title_card, ltitle_ending, title_forheard,msg,msg_small,img_scan;
+    private ImageButton   title_card, ltitle_ending, title_forheard,msg,msg_small;
     private LinearLayout tv_card,tv_loan,tv_import;
     private HomeFragmentPre pre;
     private RefrushAdapter adapter;
@@ -55,7 +54,7 @@ public class HomeFragment extends BasisFragment implements View.OnClickListener,
         title_forheard = (ImageButton) view.findViewById(R.id.img_main_imp_icon);
         msg = (ImageButton) view.findViewById(R.id.img_main_msg);
         msg_small = (ImageButton) view.findViewById(R.id.img_main_msg_small);
-        img_scan= (ImageButton) view.findViewById(R.id.img_main_scan);
+
         tv_card= (LinearLayout) view.findViewById(R.id.tv_card);
         tv_import= (LinearLayout) view.findViewById(R.id.tv_improt);
         tv_loan= (LinearLayout) view.findViewById(R.id.tv_loan);
@@ -72,7 +71,7 @@ public class HomeFragment extends BasisFragment implements View.OnClickListener,
         title_forheard.setOnClickListener(this);
         msg.setOnClickListener(this);
         msg_small.setOnClickListener(this);
-        img_scan.setOnClickListener(this);
+
         tv_import.setOnClickListener(this);
         tv_loan.setOnClickListener(this);
         tv_card.setOnClickListener(this);
@@ -96,6 +95,7 @@ public class HomeFragment extends BasisFragment implements View.OnClickListener,
         });
         recyclerView.setLoading();
 
+
     }
 
     @Override
@@ -108,12 +108,12 @@ public class HomeFragment extends BasisFragment implements View.OnClickListener,
             case R.id.tv_card:
                 c = CardActivity.class;
                 break;
-            case R.id.img_main_net:
+
             case R.id.img_main_net_icon:
             case R.id.tv_loan:
                 c = LoanActivity.class;
                 break;
-            case R.id.img_main_imp:
+
             case R.id.img_main_imp_icon:
             case R.id.tv_improt:
                 c = ImportActivity.class;
@@ -127,27 +127,14 @@ public class HomeFragment extends BasisFragment implements View.OnClickListener,
                 tranInfor.title = getString(R.string.msg_center);
                 intent.putExtra(Config.infors,tranInfor);
                 break;
-            case R.id.img_main_scan:
-                showDialog();
-                break;
-
-
         }
         if (c == null) {
-
             ToastUtil.showTextToast(cnt, "该功能尚未开放");
         } else {
             intent.setClass(cnt, c);
             cnt.startActivity(intent);
         }
-
     }
-
-    private void  showDialog(){
-        PickerDialog dialog = new PickerDialog(getContext());
-        dialog.show();
-    }
-
     @Override
     public void onDestroy() {
         super.onDestroy();

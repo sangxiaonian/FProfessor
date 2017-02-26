@@ -43,6 +43,7 @@
         <EditText
 
             android:inputType="number"
+            android:maxLength="11"
             android:id="@+id/et_user"
             style="@style/login_edit"
             android:hint="@string/input_phone" />
@@ -57,7 +58,7 @@
 
         <EditText
 
-
+            android:maxLength="11"
             android:id="@+id/et_register"
 
             style="@style/login_edit"
@@ -77,6 +78,7 @@
             android:src="@mipmap/login_register_code" />
 
         <EditText
+            android:maxLength="11"
             android:inputType="number"
             android:id="@+id/et_pasword"
             style="@style/login_edit"

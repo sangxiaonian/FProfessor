@@ -25,4 +25,6 @@ public interface IDSonPreInter {
      *
      */
     void changeItem(String o);
+
+    String getData();
 }

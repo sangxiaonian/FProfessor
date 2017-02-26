@@ -105,7 +105,7 @@ public class DividerGridItemDecoration extends RecyclerView.ItemDecoration {
         }
 
         if (layoutManager instanceof GridLayoutManager) {
-            if ((pos + 1 - heart) % spanCount == 0)// 如果是最后一列，则不需要绘制右边
+            if ((pos  + heart) % spanCount == 0)// 如果是最后一列，则不需要绘制右边
             {
                 return true;
             }
@@ -113,7 +113,7 @@ public class DividerGridItemDecoration extends RecyclerView.ItemDecoration {
             int orientation = ((StaggeredGridLayoutManager) layoutManager)
                     .getOrientation();
             if (orientation == StaggeredGridLayoutManager.VERTICAL) {
-                if ((pos + 1 - heart) % spanCount == 0)// 如果是最后一列，则不需要绘制右边
+                if ((pos +  heart) % spanCount == 0)// 如果是最后一列，则不需要绘制右边
                 {
                     return true;
                 }

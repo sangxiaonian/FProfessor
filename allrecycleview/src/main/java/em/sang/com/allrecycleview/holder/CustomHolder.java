@@ -7,6 +7,8 @@ import android.view.View;
 
 import java.util.List;
 
+import em.sang.com.allrecycleview.listener.OnToolsItemClickListener;
+
 /**
  * Description：
  *
@@ -19,7 +21,10 @@ public  class CustomHolder<T> extends RecyclerView.ViewHolder {
     public Context context;
     public View itemView;
     public List<T> datas;
-
+    protected OnToolsItemClickListener<T> listener;
+    public void setOnTOnToolsItemClickListener(OnToolsItemClickListener<T> listener){
+        this.listener=listener;
+    }
 
 
     public CustomHolder(View itemView) {

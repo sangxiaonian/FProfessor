@@ -20,10 +20,6 @@ public class LoanDataComl implements LoanDataInter {
         fractory=LoanDataFractory.getInstance();
     }
 
-    @Override
-    public List<Set_Item> getHotLoan() {
-        return fractory.getHotLoan();
-    }
 
     @Override
     public List<Set_Item> getTools() {

@@ -1,0 +1,163 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/activity_loan_condition"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="finance.com.fp.ui.LoanConditionActivity">
+
+    <include
+        android:id="@+id/toolbar"
+        layout="@layout/view_toolbar" />
+
+    <Button
+        android:id="@+id/bt_apply"
+        style="@style/login_btn"
+        android:layout_alignParentBottom="true"
+        android:text="@string/apply_once" />
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_above="@id/bt_apply"
+        android:layout_below="@id/toolbar">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <RelativeLayout
+                style="@style/item_style"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:clickable="true"
+                android:paddingEnd="@dimen/app_margin_ends">
+
+                <ImageView
+                    android:id="@+id/img_item_loan"
+                    android:layout_width="@dimen/loan_item_hot_img_size"
+                    android:layout_height="@dimen/loan_item_hot_img_size"
+                    android:layout_marginEnd="@dimen/loan_item_hot_img_end"
+                    android:src="@mipmap/icon_cashwhitecard" />
+
+                <TextView
+                    android:id="@+id/tv_title"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignTop="@id/img_item_loan"
+                    android:layout_marginTop="@dimen/app_cut_big"
+                    android:layout_toEndOf="@id/img_item_loan"
+                    android:textColor="@color/text_home_item"
+                    android:textSize="@dimen/app_title_text_size" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignStart="@id/tv_title"
+                    android:layout_below="@id/tv_title"
+                    android:drawableEnd="@mipmap/icon_seccessrate"
+                    android:drawablePadding="@dimen/app_cut_big"
+                    android:lineSpacingMultiplier="1.2"
+                    android:text="@string/apply_rate"
+                    android:textColor="@color/bg"
+                    android:textSize="@dimen/loan_item_hot_text_size" />
+
+                <TextView
+                    android:id="@+id/tv_describe"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignBottom="@id/img_item_loan"
+                    android:layout_alignStart="@id/tv_title"
+                    android:lineSpacingMultiplier="1.2"
+                    android:textColor="@color/bg"
+                    android:textSize="@dimen/loan_item_hot_text_size" />
+
+                <ImageButton
+
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@color/trans"
+                    android:layout_alignParentRight="true"
+                    android:layout_alignTop="@id/tv_title"
+                    android:id="@+id/bt_strategy"
+                    android:src="@mipmap/icon_applicationstrategr"
+                    />
+
+
+            </RelativeLayout>
+
+
+            <LinearLayout
+                android:id="@+id/de"
+                style="@style/loan_parent">
+
+                <TextView
+                    android:id="@+id/tv_money"
+                    style="@style/loan_content"
+                    android:drawablePadding="@dimen/app_cut_big"
+                    android:drawableStart="@mipmap/icon_borrowingamount"
+                    android:gravity="center_vertical" />
+
+                <TextView
+                    android:id="@+id/tv_time"
+                    style="@style/loan_content"
+                    android:drawablePadding="@dimen/app_cut_big"
+                    android:drawableStart="@mipmap/icno_hcc"
+                    android:gravity="center_vertical"
+                    android:text="@string/apply_con" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/ll_con"
+                style="@style/loan_parent">
+
+                <TextView
+                    style="@style/loan_title"
+                    android:text="@string/apply_con" />
+
+                <TextView
+                    android:id="@+id/tv_con"
+                    style="@style/loan_content"
+                    android:text="@string/apply_con" />
+
+            </LinearLayout>
+
+
+            <LinearLayout
+                android:id="@+id/ll_material"
+                style="@style/loan_parent">
+
+                <TextView
+                    style="@style/loan_title"
+                    android:text="@string/apply_material" />
+
+                <TextView
+                    android:id="@+id/tv_material"
+                    style="@style/loan_content"
+                    android:text="@string/apply_con" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/ll_notice"
+                style="@style/loan_parent">
+
+                <TextView
+                    style="@style/loan_title"
+                    android:text="@string/apply_notice" />
+
+                <TextView
+                    android:id="@+id/tv_notice"
+                    style="@style/loan_content"
+                    android:text="@string/apply_con" />
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+
+    </ScrollView>
+
+</RelativeLayout>

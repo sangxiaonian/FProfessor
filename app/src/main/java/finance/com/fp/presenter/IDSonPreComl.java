@@ -3,6 +3,8 @@ package finance.com.fp.presenter;
 import android.app.Activity;
 import android.content.Context;
 
+import com.google.gson.Gson;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -10,12 +12,16 @@ import em.sang.com.allrecycleview.adapter.DefaultAdapter;
 import em.sang.com.allrecycleview.holder.CustomHolder;
 import em.sang.com.allrecycleview.inter.DefaultAdapterViewLisenter;
 import finance.com.fp.R;
-import finance.com.fp.ui.holder.IDHolder;
 import finance.com.fp.mode.IDSonDataCom;
+import finance.com.fp.mode.bean.CarPerson;
+import finance.com.fp.mode.bean.ChitPerson;
+import finance.com.fp.mode.bean.CreditPerson;
+import finance.com.fp.mode.bean.HousePerson;
 import finance.com.fp.mode.bean.Set_Item;
 import finance.com.fp.mode.bean.TranInfor;
 import finance.com.fp.mode.inter.IDSonDataInter;
 import finance.com.fp.presenter.inter.IDSonPreInter;
+import finance.com.fp.ui.holder.IDHolder;
 import finance.com.fp.ui.inter.IDSonView;
 
 /**
@@ -62,9 +68,12 @@ public class IDSonPreComl implements IDSonPreInter {
         });
     }
 
+
+    private  int position;
     @Override
     public void click(int position, Set_Item item) {
         this.item = item;
+        this.position=position;
         switch (infor.item_id) {
             case 5://个人资信
                 personCreditClick(position);
@@ -142,6 +151,7 @@ public class IDSonPreComl implements IDSonPreInter {
     public void changeItem(String o) {
         item.describe = o;
         adapter.notifyDataSetChanged();
+        setData(o,position);
     }
 
     private void personCreditClick(int position) {
@@ -163,5 +173,128 @@ public class IDSonPreComl implements IDSonPreInter {
         }
 
 
+    }
+    private CreditPerson person=new CreditPerson();
+    private HousePerson house=new HousePerson();
+    private CarPerson car = new CarPerson();
+    private ChitPerson chit = new ChitPerson();
+
+    public String getData(){
+        String s = "";
+        Gson gson = new Gson();
+        switch (infor.item_id) {
+            case 5://个人资信
+              s= gson.toJson(person);
+                break;
+            case 6://房产
+                s= gson.toJson(house);
+                break;
+            case 7://车产
+                s= gson.toJson(car);
+                break;
+            case 8://保单
+                s= gson.toJson(chit);
+                break;
+        }
+        return s;
+    }
+
+    public void setData(String data, int position) {
+
+            switch (infor.item_id) {
+                case 5://个人资信
+                    initPerson(data,position);
+                    break;
+                case 6://房产
+                    inithouse(data,position);
+                    break;
+                case 7://车产
+                    initcar(data,position);
+                    break;
+                case 8://保单
+                    initchit(data,position);
+                    break;
+            }
+
+    }
+
+
+    private void initchit(String data, int position) {
+        switch (position) {
+            case 0:
+                chit.policy_condition1= data;
+                break;
+            case 1:
+                chit.policy_condition2= data;
+                break;
+        }
+    }
+
+
+    private void initcar(String data, int position) {
+        switch (position) {
+            case 0:
+                car.car_condition1=data;
+                break;
+            case 1:
+                car.car_condition2=data;
+                break;
+            case 2:
+                car.car_condition3=data;
+                break;
+            case 3:
+                car.car_condition4=data;
+                break;
+            case 4:
+                car.car_condition5=data;
+                break;
+        }
+    }
+
+    private void inithouse(String data, int position) {
+        switch (position) {
+            case 0:
+                house.house_condition1=data;
+                break;
+            case 2:
+                house.house_condition3=data;
+                break;
+            case 1:
+                house.house_condition2=data;
+                break;
+            case 3:
+                house.house_condition4=data;
+
+                break;
+            case 4:
+                house.house_condition5=data;
+                break;
+            case 5:
+                house.house_condition6=data;
+                break;
+        }
+    }
+
+
+
+    private void initPerson(String data, int position) {
+        switch (position) {
+            case 1://信用卡
+                person.credit_condition2=data;
+            case 3://成功贷款记录
+                person.credit_condition4=data;
+            case 4://淘宝
+                person.credit_condition5=data;
+            case 5://公积金
+            case 6://社保
+                person.credit_condition7=data;
+                break;
+            case 0://文化程度
+                person.credit_condition1=data;
+                break;
+            case 2://两年内信用记录
+                person.credit_condition3=data;
+                break;
+        }
     }
 }

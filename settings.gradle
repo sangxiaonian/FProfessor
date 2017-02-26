@@ -1,1 +1,1 @@
-include ':app', ':allrecycleview', ':xdialog'
+include ':app', ':allrecycleview', ':xdialog', ':PushSDK'

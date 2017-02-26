@@ -5,7 +5,7 @@ import android.widget.TextView;
 
 import finance.com.fp.BasisActivity;
 import finance.com.fp.R;
-import finance.com.fp.mode.bean.Config;
+import finance.com.fp.mode.http.Config;
 import finance.com.fp.mode.bean.TranInfor;
 
 public class NoticeActivity extends BasisActivity {

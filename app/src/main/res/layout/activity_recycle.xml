@@ -11,29 +11,8 @@
 
     tools:context="finance.com.fp.ui.CardActivity">
 
-    <android.support.v7.widget.Toolbar xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:app="http://schemas.android.com/apk/res-auto"
 
-        android:id="@+id/toolbar"
-        android:layout_width="match_parent"
-        android:layout_height="?actionBarSize"
-        android:layout_marginBottom="@dimen/title_cut_height"
-        android:background="@color/white"
-        android:gravity="center"
-
-        app:navigationIcon="@mipmap/icon_getback">
-
-        <TextView
-            android:id="@+id/title"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_gravity="center"
-            android:gravity="center"
-            android:text="@string/card_title"
-            android:textColor="@color/text_home_more_text"
-            android:textSize="@dimen/app_title_size" />
-
-    </android.support.v7.widget.Toolbar>
+    <include layout="@layout/view_toolbar"/>
 
    <include
         android:id="@+id/rc"

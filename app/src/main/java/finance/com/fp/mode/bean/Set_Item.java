@@ -46,6 +46,8 @@ public class Set_Item {
 
     public int   type;
     public boolean isCheck;
+    public String turl;
+
     public Set_Item(){
 
     }
@@ -67,5 +69,21 @@ public class Set_Item {
         this.describe_sub = describe_sub;
     }
 
-
+    @Override
+    public String toString() {
+        return "Set_Item{" +
+                "icon_id=" + icon_id +
+                ", placeholder=" + placeholder +
+                ", faildId=" + faildId +
+                ", title='" + title + '\'' +
+                ", describe='" + describe + '\'' +
+                ", describe_sub='" + describe_sub + '\'' +
+                ", updatetime='" + updatetime + '\'' +
+                ", content='" + content + '\'' +
+                ", img_url='" + img_url + '\'' +
+                ", type=" + type +
+                ", isCheck=" + isCheck +
+                ", turl='" + turl + '\'' +
+                '}';
+    }
 }

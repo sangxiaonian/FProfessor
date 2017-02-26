@@ -11,7 +11,6 @@ import finance.com.fp.mode.bean.Set_Item;
  * @Data：2017/1/20 14:19
  */
 public interface LoanDataInter {
-    List<Set_Item> getHotLoan();
 
     List<Set_Item>  getTools();
 

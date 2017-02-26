@@ -1,6 +1,7 @@
 package finance.com.fp.presenter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.drawable.ColorDrawable;
 import android.view.View;
 import android.widget.Button;
@@ -9,6 +10,7 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import em.sang.com.allrecycleview.adapter.DefaultAdapter;
@@ -17,6 +19,10 @@ import em.sang.com.allrecycleview.holder.CustomHolder;
 import em.sang.com.allrecycleview.inter.DefaultAdapterViewLisenter;
 import em.sang.com.allrecycleview.listener.OnToolsItemClickListener;
 import finance.com.fp.R;
+import finance.com.fp.mode.bean.TranInfor;
+import finance.com.fp.mode.datafractory.HttpFactory;
+import finance.com.fp.mode.http.Config;
+import finance.com.fp.ui.ImportDetailActivity;
 import finance.com.fp.ui.holder.CardNotifiHolder;
 import finance.com.fp.ui.holder.GrideHolder;
 import finance.com.fp.ui.holder.HomeCarouselHolder;
@@ -26,6 +32,7 @@ import finance.com.fp.mode.inter.ImportDataComl;
 import finance.com.fp.mode.inter.ImportDataInter;
 import finance.com.fp.presenter.inter.ImportInter;
 import finance.com.fp.ui.inter.ImportView;
+import rx.Subscriber;
 
 /**
  * Description：
@@ -38,7 +45,8 @@ public class ImportProComl implements ImportInter {
     private ImportDataInter data;
     private HomeCarouselHolder carouselHolder;
     private CardNotifiHolder notifiHolder;
-
+    private ArrayList<Object> carouselDatas;
+    RefrushAdapter adapter;
     public ImportProComl(ImportView view) {
         this.view = view;
         data = new ImportDataComl();
@@ -46,9 +54,9 @@ public class ImportProComl implements ImportInter {
 
 
     @Override
-    public DefaultAdapter<Set_Item> getAdapter(Context context) {
+    public DefaultAdapter<Set_Item> getAdapter(final Context context) {
 
-        RefrushAdapter adapter = new RefrushAdapter(context, data.getImport(), R.layout.item_import, new DefaultAdapterViewLisenter() {
+         adapter= new RefrushAdapter(context, data.getImport(), R.layout.item_import, new DefaultAdapterViewLisenter() {
             @Override
             public CustomHolder<Set_Item> getBodyHolder(Context context, List lists, int itemID) {
                 return new CustomHolder<Set_Item>(context, lists, itemID) {
@@ -87,15 +95,62 @@ public class ImportProComl implements ImportInter {
         grideHolder.setItemID(R.layout.gv_import);
         grideHolder.itemView.setBackground(new ColorDrawable(context.getResources().getColor(R.color.transparent)));
         grideHolder.getGridView().setPadding(0, 0, 0, dimension);
-
+        grideHolder.setOnToolsItemClickListener(new OnToolsItemClickListener<Set_Item>() {
+            @Override
+            public void onItemClick(int position, Set_Item item) {
+                TranInfor tranInfor = new TranInfor();
+                tranInfor.title=item.title;
+                tranInfor.describe=item.describe;
+                Intent intent = new Intent(context,ImportDetailActivity.class);
+                intent.putExtra(Config.infors,tranInfor);
+                context.startActivity(intent);
+            }
+        });
 
         adapter.addHead(grideHolder);
-
-        adapter.addHead(new HomeCarouselHolder(context, data.getImport(), R.layout.item_home_carousel));
+        setCarousel(context);
 
 
         return adapter;
     }
+
+
+    private void setCarousel(Context context) {
+        carouselDatas=new ArrayList<>();
+        carouselDatas.add(new Set_Item(R.mipmap.loading,""));
+        carouselHolder = new HomeCarouselHolder(context, carouselDatas, R.layout.item_home_carousel);
+        adapter.addHead(carouselHolder);
+
+
+        HttpFactory.getCarousel("32").subscribe(new Subscriber<Set_Item>() {
+            @Override
+            public void onStart() {
+                super.onStart();
+                carouselDatas.clear();
+
+            }
+
+            @Override
+            public void onCompleted() {
+                adapter.notifyItemRangeChanged(0, 1);
+                adapter.notifyDataSetChanged();
+            }
+
+            @Override
+            public void onError(Throwable e) {
+                e.printStackTrace();
+            }
+
+            @Override
+            public void onNext(Set_Item set_item) {
+                carouselDatas.add(set_item);
+            }
+        });
+
+
+    }
+
+
 
     /**
      * 一键提额

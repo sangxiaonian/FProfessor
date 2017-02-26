@@ -36,7 +36,12 @@
         
     </RelativeLayout>
 
+    <em.sang.com.allrecycleview.PullRecycleView
+        android:layout_width="match_parent"
+        android:id="@+id/rc"
+        android:layout_height="match_parent">
 
+    </em.sang.com.allrecycleview.PullRecycleView>
 
 
 </LinearLayout>

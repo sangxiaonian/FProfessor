@@ -25,14 +25,14 @@
     </string-array>
 
     <string-array name="card_items_balances">
-        <item>中信银行</item>
-        <item>兴业银行</item>
-        <item>浦发银行</item>
-        <item>光大银行</item>
-        <item>交通银行</item>
-        <item>民生银行</item>
-        <item>招商银行</item>
-        <item>更多筛选</item>
+        <item>中信银行_https://creditcard.ecitic.com/citiccard/newwap/pages/AppCreditCard/applayCard-process.html?sid=SJTJBK&amp;pid=CS0141&amp;cid=TJ25307348</item>
+        <item>兴业银行_https://wm.cib.com.cn/application/cardapp/cappl/ApplyCard/toSelectCard?id=efab129137844558bdc5dfb25e2127cd&amp;from=singlemessage&amp;isappinstalled=0</item>
+        <item>浦发银行_https://ecentre.spdbccc.com.cn/creditcard/indexActivity.htm?data=806627335</item>
+        <item>光大银行_https://xyk.cebbank.com/cebmms/apply/ps/card-list.htm?pro_code=ZHTG03ZDTGSJ001C2C&amp;c2c_recom_flag=43178036</item>
+        <item>交通银行_https://creditcardapp.bankcomm.com/applynew/front/apply/mgm/account/wechatEntry.html?recomId=12029295&amp;saleCode=&amp;entryRecomId=&amp;from=singlemessage&amp;isappinstalled=0</item>
+        <item>民生银行_https://creditcard.cmbc.com.cn/wsonline/index/index.jhtml?encryptStr=NKU8vmCmKNrtKXmE9jgowDxMd3u3eBCfN8iws97x+vNhzJeunREzvd9OLb246AbtimR81mDiXInWlZErtgqwH1u053Q3VX85Cr5PQs6h9Lkh0HoGWr2jzjSzuMhv/VTntEocdH2ZIPgHMSu/BE+xR3rGFscYwIL4ayVhoV+m3TQ=</item>
+        <item>招商银行_https://ccclub.cmbchina.com/mca/MPreContract.aspx?cardsel=uc&amp;from=wx&amp;WT.mc_id=N1700WX304A9033100CC&amp;where=&amp;swbrief=&amp;channel=WX&amp;openid=jVxgtCop23IvM4Nar98lwwtSFiNXBM7iFlBK5rYGjWQ%3D</item>
+        <item>更多筛选_more</item>
     </string-array>
 
 
@@ -105,18 +105,18 @@
         <item>中国银行_https://apply.mcard.boc.cn/apply/mobile/product/familyProductList/family</item>
         <item>农业银行_http://abccc.vfengche.cn/memu/card/page1.html</item>
 
-        <item>建设银行_服务热线:95533\n信用卡中心:400-820-0588</item>
-        <item>交通银行_服务热线:95559\n信用卡中心:400-800-9888</item>
-        <item>招商银行_服务热线:95555\n信用卡中心:400-820-5555</item>
-        <item>浦发银行_服务热线:95528\n信用卡中心:400-820-8788</item>
-        <item>广发银行_服务热线:95508\n信用卡中心:400-830-8003</item>
-        <item>华夏银行_服务热线:95577\n信用卡中心:400-669-5577</item>
-        <item>平安银行_服务热线:95511\n信用卡中心:95511</item>
-        <item>光大银行_服务热线:95595\n信用卡中心:400-788-8888</item>
-        <item>中信银行_服务热线:95558\n信用卡中心:400-889-5558</item>
-        <item>兴业银行_服务热线:95561\n信用卡中心:400-889-5561</item>
-        <item>民生银行_服务热线:95568\n信用卡中心:400-669-5568</item>
-        <item>浙商银行_服务热线:95527</item>
+        <item>建设银行_http://creditcard.ccb.com/cn/creditcard/apply/wechat/apply.html?SID=SNS&amp;wParam=QMerSTmogaHKx%2FJD4S7Cw6tDYFENAeQw8rlXBcbI9iuMVi0Q7stBbI1BNVh4qllEJ2ScXQ3OOfqlMHVqVrXoMKgNL7bpKNOpgYAla3%2BtWynVWbkCaMmkxfUqhvWLCerYXtxz9vSD0eyMrHoPhA50s0KiKdUJ7tJBCSsMWur9ciKSk%2B%2FFW%2BAFybQkFYJyFB2R5QQMTSjiTrs%3D</item>
+        <item>交通银行_https://creditcardapp.bankcomm.com/applynew/front/apply/mgm/account/wechatEntry.html?recomId=12029295&amp;saleCode=&amp;entryRecomId=&amp;from=singlemessage&amp;isappinstalled=0</item>
+        <item>招商银行_https://ccclub.cmbchina.com/mca/MPreContract.aspx?cardsel=uc&amp;from=wx&amp;WT.mc_id=N1700WX304A9033100CC&amp;where=&amp;swbrief=&amp;channel=WX&amp;openid=jVxgtCop23IvM4Nar98lwwtSFiNXBM7iFlBK5rYGjWQ%3D</item>
+        <item>浦发银行_https://ecentre.spdbccc.com.cn/creditcard/indexActivity.htm?data=806627335</item>
+        <item>广发银行_http://cgbchina.cn/BKbH45Q</item>
+        <item>华夏银行_https://creditapply.hxb.com.cn/weixin/cardChoice.html</item>
+        <item>平安银行_https://c.pingan.com/apply/mobile/apply/index.html?scc=920000937&amp;ccp=1a2a3a4a5a8a9a10a11a12a13&amp;showt=0???????</item>
+        <item>光大银行_https://xyk.cebbank.com/cebmms/apply/ps/card-list.htm?pro_code=ZHTG03ZDTGSJ001C2C&amp;c2c_recom_flag=43178036</item>
+        <item>中信银行_https://creditcard.ecitic.com/citiccard/newwap/pages/AppCreditCard/applayCard-process.html?sid=SJTJBK&amp;pid=CS0141&amp;cid=TJ25307348</item>
+        <item>兴业银行_https://wm.cib.com.cn/application/cardapp/cappl/ApplyCard/toSelectCard?id=efab129137844558bdc5dfb25e2127cd&amp;from=singlemessage&amp;isappinstalled=0</item>
+        <item>民生银行_https://creditcard.cmbc.com.cn/wsonline/index/index.jhtml?encryptStr=NKU8vmCmKNrtKXmE9jgowDxMd3u3eBCfN8iws97x+vNhzJeunREzvd9OLb246AbtimR81mDiXInWlZErtgqwH1u053Q3VX85Cr5PQs6h9Lkh0HoGWr2jzjSzuMhv/VTntEocdH2ZIPgHMSu/BE+xR3rGFscYwIL4ayVhoV+m3TQ=</item>
+        <item>浙商银行_https://e.czbank.com/weixinHTML/eApply/creditCardCardsApply.html?turnPageWithinFlag=10&amp;wxCustFakeId=9b28bba8-03aa-428b-912c-d068dd26ff55-qQdPJT&amp;wxRandomCode=0</item>
         <item>花旗银行_服务热线:400-821-1880</item>
     </string-array>
 

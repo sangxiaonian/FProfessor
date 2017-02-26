@@ -40,13 +40,8 @@ public class LoanDataFractory  extends BaseFractory {
      *
      * @return
      */
-    public List<Set_Item> getLoanStragety() {
-        lists.clear();
-        String[] titles = context.getResources().getStringArray(R.array.loan_strategy);
-        for (String s : titles) {
-            lists.add(new Set_Item(0, s));
-        }
-        return lists;
+    public Observable<Set_Item> getLoanStragety(int page) {
+        return HttpFactory.getLoanStrage(String.valueOf(page),"20");
     }
 
     ArrayList<Set_Item> lists = new ArrayList<>();
@@ -101,7 +96,7 @@ public class LoanDataFractory  extends BaseFractory {
 
     }
 
-    public void getAllSearch(final DataLoadLisetner<Set_Item> lisetner) {
+    public void getAllSearch(final DataLoadLisetner<Set_Item> lisetner, final int position) {
         String[] titles = context.getResources().getStringArray(R.array.search_items);
         Observable.from(titles)
                 .subscribeOn(Schedulers.io())
@@ -118,8 +113,8 @@ public class LoanDataFractory  extends BaseFractory {
                 .doOnCompleted(new Action0() {
                     @Override
                     public void call() {
-                        if (lists.size() > 0) {
-                            lists.get(0).isCheck = true;
+                        if (lists.size() > position) {
+                            lists.get(position).isCheck = true;
                         }
                     }
                 })
@@ -154,24 +149,6 @@ public class LoanDataFractory  extends BaseFractory {
 
     }
 
-
-    /**
-     * 网袋专区页面三个条目
-     *
-     * @return
-     */
-    public List<Set_Item> getHotLoan() {
-        List<Set_Item> lists = new ArrayList<>();
-        int[] icons = {R.mipmap.icon_peace
-                , R.mipmap.icon_peace
-                , R.mipmap.icon_peace};
-        String[] data = context.getResources().getStringArray(R.array.loan_item);
-        for (int i = 0; i < icons.length; i++) {
-            lists.add(new Set_Item(icons[i], "现金白卡-快速贷", data[i]));
-        }
-
-        return lists;
-    }
 
     public List<Set_Item> getTools() {
         ArrayList<Set_Item> tools = new ArrayList<>();

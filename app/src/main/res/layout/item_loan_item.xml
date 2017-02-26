@@ -5,6 +5,8 @@
 
     <RelativeLayout
         style="@style/item_style"
+        android:id="@+id/click"
+
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_marginBottom="@dimen/app_cut_big"

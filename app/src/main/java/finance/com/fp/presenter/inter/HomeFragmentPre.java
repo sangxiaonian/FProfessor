@@ -30,4 +30,6 @@ public interface HomeFragmentPre  {
     void unsubscribe();
 
     void getData();
+
+    void loadMore();
 }

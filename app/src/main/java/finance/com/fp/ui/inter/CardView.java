@@ -16,4 +16,6 @@ public interface CardView extends OnToolsItemClickListener<Set_Item>{
      * @param item
      */
     void onQueryProClick(Set_Item item);
+
+    void onClickBanance(int position, Set_Item item, int size);
 }

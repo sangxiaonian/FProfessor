@@ -17,6 +17,7 @@ import sang.com.xdialog.utils.DeviceUtils;
  * @Data：2017/2/9 10:10
  */
 public class AlertDialog extends XDialog {
+
     private String msg_titles,msg_content;
     public AlertDialog(Context context) {
         this(context,R.style.DialogCutTheme);
@@ -60,7 +61,7 @@ public class AlertDialog extends XDialog {
                         entryListener.onClick(dialog, 0, content.getText().toString().trim());
                     }
                 }else {
-
+                    dismiss();
                 }
             }
         });
@@ -113,6 +114,9 @@ public class AlertDialog extends XDialog {
         switch (style){
             case ALEART_EDITTEXT:
                 layoutId=R.layout.alert_editext_dialog;
+                break;
+            case ALEART_ONLY_ENTRY:
+                layoutId=R.layout.alert_only_entry_dialog;
                 break;
         }
     }

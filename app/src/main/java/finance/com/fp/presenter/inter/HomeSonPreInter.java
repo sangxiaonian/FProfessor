@@ -27,4 +27,8 @@ public interface HomeSonPreInter {
     void onItemClick(View itemView, Set_Item item);
 
     void setDatas(Context context);
+
+    void unsubscribe();
+
+    void pageAdd();
 }

@@ -55,6 +55,7 @@
             android:text="@string/set_contact" />
 
         <TextView
+            android:id="@+id/tv_phone"
             style="@style/set_item"
             android:text="***********" />
     </LinearLayout>
@@ -64,6 +65,7 @@
         >
 
         <Button
+            android:onClick="submit"
             style="@style/login_btn"
             android:text="@string/set_commit"
             android:layout_centerInParent="true"

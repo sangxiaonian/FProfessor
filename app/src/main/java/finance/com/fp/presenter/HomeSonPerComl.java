@@ -5,14 +5,13 @@ import android.content.Context;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 
-import com.orhanobut.logger.Logger;
-
 import java.util.ArrayList;
 import java.util.List;
 
 import em.sang.com.allrecycleview.adapter.DefaultAdapter;
 import em.sang.com.allrecycleview.holder.CustomHolder;
 import em.sang.com.allrecycleview.inter.DefaultAdapterViewLisenter;
+import finance.com.fp.R;
 import finance.com.fp.mode.HomeSonDataCom;
 import finance.com.fp.mode.bean.Set_Item;
 import finance.com.fp.mode.bean.TranInfor;
@@ -22,7 +21,10 @@ import finance.com.fp.mode.datafractory.ImprotFactory;
 import finance.com.fp.mode.inter.HomeSonDataInter;
 import finance.com.fp.presenter.inter.HomeSonPreInter;
 import finance.com.fp.ui.inter.HomeSonView;
-import rx.Subscriber;
+import finance.com.fp.utlis.ToastUtil;
+import finance.com.fp.utlis.Utils;
+import rx.Observer;
+import rx.Subscription;
 
 /**
  * Description：
@@ -30,13 +32,15 @@ import rx.Subscriber;
  * @Author：桑小年
  * @Data：2017/1/20 16:35
  */
-public class HomeSonPerComl   implements HomeSonPreInter {
+public class HomeSonPerComl   implements HomeSonPreInter ,Observer <Set_Item>{
 
     private HomeSonView view;
     private HomeSonDataInter data;
     private TranInfor infor;
     private ManagerFractory fractory;
     private RecyclerView.Adapter adapter;
+    private int page;
+    Subscription subscribe;
 
     public HomeSonPerComl(HomeSonView view) {
         this.view = view;
@@ -73,21 +77,32 @@ public class HomeSonPerComl   implements HomeSonPreInter {
 
     @Override
     public void onItemClick(final View itemView, final Set_Item item) {
-        itemView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                clickById(itemView, item);
-            }
-        });
+
+            itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    clickById(itemView, item);
+                }
+            });
+
     }
 
     @Override
     public void setDatas(Context context) {
-        if (refrushSubscriber!=null){
-            refrushSubscriber.unsubscribe();
-        }
+          subscribe   = data.getData(infor.activity_id, infor.item_id, page).subscribe(this);
 
-        data.getData(infor.activity_id, infor.item_id).subscribe(getRefrushSubscriber());
+    }
+
+    @Override
+    public void unsubscribe() {
+        if (subscribe!=null&&subscribe.isUnsubscribed()) {
+            subscribe.unsubscribe();
+        }
+    }
+
+    @Override
+    public void pageAdd() {
+        page++;
     }
 
 
@@ -116,6 +131,8 @@ public class HomeSonPerComl   implements HomeSonPreInter {
             case ImprotFactory.LOAN_ONE_KEY_IPMORT://一键提额
                 view.loan_one_key_item(itemView, item);
                 break;
+           case ImprotFactory.LOAN_JING:
+                view.loan_jing_click(itemView,item);
 
 
         }
@@ -165,6 +182,7 @@ public class HomeSonPerComl   implements HomeSonPreInter {
 
 
     private List<Set_Item> list = new ArrayList<>();
+    private List<Set_Item> templist = new ArrayList<>();
 
     private RecyclerView.Adapter getHomeAdapter(Context context, final int activityID, final int item_id) {
 
@@ -185,37 +203,38 @@ public class HomeSonPerComl   implements HomeSonPreInter {
 
     }
 
-    private Subscriber<Set_Item> refrushSubscriber;
 
 
-    private Subscriber<Set_Item> getRefrushSubscriber() {
-        refrushSubscriber = new Subscriber<Set_Item>() {
-            @Override
-            public void onStart() {
-                super.onStart();
+
+
+
+    @Override
+    public void onCompleted() {
+        view.loadSuccess();
+        if (templist.size()==0){
+            page--;
+            ToastUtil.showTextToast(Utils.getResStr(R.string.no_more));
+        }else {
+            if (!view.isLoadMore()){
                 list.clear();
             }
-
-            @Override
-            public void onCompleted() {
-                adapter.notifyItemRangeChanged(0,list.size()-1);
-                view.loadSuccess();
-            }
-
-            @Override
-            public void onError(Throwable e) {
-                e.printStackTrace();
-                view.loadFail();
-            }
-
-            @Override
-            public void onNext(Set_Item o) {
-                list.add(o);
-
-            }
-        };
-        return refrushSubscriber;
+            list.addAll(templist);
+            templist.clear();
+            adapter.notifyDataSetChanged();
+        }
     }
 
+    @Override
+    public void onError(Throwable e) {
+        e.printStackTrace();
+        if (view.isLoadMore()){
+            page--;
+        }
+        view.loadFail();
+    }
 
+    @Override
+    public void onNext(Set_Item set_item) {
+        templist.add(set_item);
+    }
 }

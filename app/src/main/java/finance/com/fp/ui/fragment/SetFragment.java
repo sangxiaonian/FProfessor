@@ -17,10 +17,12 @@ import em.sang.com.allrecycleview.holder.CustomHolder;
 import em.sang.com.allrecycleview.inter.DefaultAdapterViewLisenter;
 import finance.com.fp.BasisFragment;
 import finance.com.fp.R;
+import finance.com.fp.mode.bean.Set_Item;
+import finance.com.fp.mode.http.Config;
 import finance.com.fp.ui.RegisterActivity;
 import finance.com.fp.ui.holder.SetBodyHolder;
-import finance.com.fp.mode.bean.Set_Item;
 import finance.com.fp.utlis.RecycleViewDivider;
+import finance.com.fp.utlis.Utils;
 
 /**
  * Description：
@@ -80,5 +82,32 @@ public class SetFragment extends BasisFragment {
         rc.addItemDecoration(new RecycleViewDivider(getContext(),LinearLayoutManager.VERTICAL));
         rc.setAdapter(adapter);
 
+    }
+
+
+    @Override
+    public void onHiddenChanged(boolean hidden) {
+        super.onHiddenChanged(hidden);
+        if (!hidden){
+            if (Utils.isLogion(getContext())){
+                textView.setText(Utils.getSp(getContext(), Config.login_name));
+                textView.setClickable(false);
+            }else {
+                textView.setClickable(true);
+                textView.setText(getString(R.string.set_item));
+            }
+        }
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        if (Utils.isLogion(getContext())){
+            textView.setText(Utils.getSp(getContext(), Config.login_name));
+            textView.setClickable(false);
+        }else {
+            textView.setClickable(true);
+            textView.setText(getString(R.string.set_item));
+        }
     }
 }

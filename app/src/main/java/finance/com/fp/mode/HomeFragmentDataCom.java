@@ -2,6 +2,7 @@ package finance.com.fp.mode;
 
 import java.util.List;
 
+import finance.com.fp.mode.bean.LoanSearchBean;
 import finance.com.fp.mode.bean.Set_Item;
 import finance.com.fp.mode.datafractory.HomeDataFractory;
 import finance.com.fp.mode.datafractory.HttpFactory;
@@ -16,7 +17,6 @@ import rx.Observable;
  */
 public class HomeFragmentDataCom implements HomeFragmentData {
     private HomeDataFractory fractory;
-
     public HomeFragmentDataCom(){
         fractory = HomeDataFractory.getInstance();
     }
@@ -28,13 +28,20 @@ public class HomeFragmentDataCom implements HomeFragmentData {
     }
 
     @Override
-    public Observable<Set_Item> getfinancialhole() {
+    public Observable<Set_Item> getfinancialhole(int page) {
 
-        return HttpFactory.getFinance();
+        return HttpFactory.getFinance(String.valueOf(page),"10");
     }
 
     @Override
-    public Observable<Set_Item> getPartialDoor() {
-        return  HttpFactory.getPartialDoor();
+    public Observable<Set_Item> getPartialDoor(int page) {
+        return  HttpFactory.getPartialDoor(String.valueOf(page),"10");
     }
+
+    @Override
+    public Observable<LoanSearchBean> getLoanSearch() {
+        return HttpFactory.getLoanSearch(0,0).take(4);
+    }
+
+
 }

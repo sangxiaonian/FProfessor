@@ -1,33 +1,29 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/more"
+
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@color/white">
+    android:layout_height="@dimen/app_margin_ends"
+    android:paddingTop="@dimen/app_margin_ends"
+    android:paddingBottom="@dimen/app_margin_ends"
+    android:paddingStart="@dimen/app_margin_ends"
+    android:paddingEnd="@dimen/app_margin_ends"
+    style="@style/item_style"
+    android:clickable="true"
+    android:gravity="center_vertical"
+    android:orientation="horizontal">
 
-    <LinearLayout
-        android:id="@+id/more"
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/app_margin_ends"
-        android:layout_marginTop="@dimen/app_margin_ends"
-        android:layout_marginBottom="@dimen/app_margin_ends"
-        android:paddingStart="@dimen/app_margin_ends"
-        android:paddingEnd="@dimen/app_margin_ends"
-        android:background="?actionBarItemBackground"
-        android:clickable="true"
-        android:gravity="center_vertical"
 
-        android:orientation="horizontal">
 
         <TextView
-            android:id="@+id/tv_item_loan"
-            android:layout_width="0dp"
+            android:id="@+id/tv_item"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
             android:text="征信数据"
             android:textColor="@color/loan_item"
             android:textSize="@dimen/app_title_text_model" />
 
         <include layout="@layout/img_more" />
-    </LinearLayout>
+
 
 </RelativeLayout>

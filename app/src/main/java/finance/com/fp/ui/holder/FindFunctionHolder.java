@@ -30,10 +30,10 @@ public class FindFunctionHolder extends BasicHolder{
             public void onCheckedChanged(RadioGroup group, int checkedId) {
                 switch (checkedId){
                     case R.id.rb_fun:
-                        listener.onItemClick(0,null);
+                        listener.onItemClick(1,null);
                         break;
                     case R.id.rb_lao:
-                        listener.onItemClick(1,null);
+                        listener.onItemClick(0,null);
                         break;
                 }
             }

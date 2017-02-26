@@ -44,6 +44,7 @@ public class MainActivity extends BasisActivity implements View.OnClickListener 
         initDatas();
         initListener();
 
+
     }
 
     private void initDatas() {
@@ -64,6 +65,11 @@ public class MainActivity extends BasisActivity implements View.OnClickListener 
         ll_set.setOnClickListener(this);
         ll_home.setOnClickListener(this);
         ll_home.performClick();
+
+
+
+
+
     }
 
     public void initView() {

@@ -54,7 +54,9 @@ public class LoadDialog extends XDialog {
     @Override
     protected void initContentView() {
         super.initContentView();
-        setContentView(new LoadView(getContext()));
+        LoadView view = new LoadView(getContext());
+        view.setText(msg_titles);
+        setContentView(view);
     }
 
     @Override
@@ -80,9 +82,18 @@ public class LoadDialog extends XDialog {
 
 
 
+
+
     @Override
     public void show() {
         super.show();
+        setCancelable(false);
+    }
+
+    @Override
+    public void show(Object datas) {
+        setTitle((String) datas);
+        super.show(datas);
         setCancelable(false);
     }
 }

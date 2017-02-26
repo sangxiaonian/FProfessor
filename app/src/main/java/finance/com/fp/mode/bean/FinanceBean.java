@@ -16,6 +16,25 @@ public class FinanceBean {
     private String description;
     private String updatetime;
     private String content;
+    private String turl;
+    private String f_url;
+
+
+    public String getF_url() {
+        return f_url;
+    }
+
+    public void setF_url(String f_url) {
+        this.f_url = f_url;
+    }
+
+    public String getTurl(){
+        return turl;
+    }
+
+    public void setTurl (String turl){
+        this.turl=turl;
+    }
 
     public String getId() {
         return id;
@@ -74,6 +93,7 @@ public class FinanceBean {
                 ", description='" + description + '\'' +
                 ", updatetime='" + updatetime + '\'' +
                 ", content='" + content + '\'' +
+                ", turl='" + turl + '\'' +
                 '}';
     }
 }

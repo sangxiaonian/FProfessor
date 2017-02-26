@@ -17,43 +17,92 @@ import android.widget.RadioButton;
 import java.util.ArrayList;
 import java.util.List;
 
+import em.sang.com.allrecycleview.PullRecycleView;
 import em.sang.com.allrecycleview.adapter.DefaultAdapter;
+import em.sang.com.allrecycleview.adapter.RefrushAdapter;
 import em.sang.com.allrecycleview.holder.CustomHolder;
 import em.sang.com.allrecycleview.inter.DefaultAdapterViewLisenter;
+import em.sang.com.allrecycleview.inter.RefrushListener;
 import finance.com.fp.BasisActivity;
 import finance.com.fp.R;
+import finance.com.fp.mode.bean.LoanSearchBean;
 import finance.com.fp.mode.bean.Set_Item;
 import finance.com.fp.mode.datafractory.DataLoadLisetner;
+import finance.com.fp.mode.datafractory.HttpFactory;
 import finance.com.fp.mode.datafractory.LoanDataFractory;
+import finance.com.fp.mode.http.Config;
+import finance.com.fp.ui.holder.HomeBodyHolder;
 import finance.com.fp.utlis.DividerGridItemDecoration;
+import finance.com.fp.utlis.RecycleViewDivider;
+import finance.com.fp.utlis.ToastUtil;
+import rx.Observer;
+import rx.Subscription;
 
-public class Loan_Search_Activity extends BasisActivity {
+import static finance.com.fp.mode.datafractory.HttpFactory.getLoanSearch;
+
+public class Loan_Search_Activity extends BasisActivity implements Observer<LoanSearchBean> {
 
     private CheckBox cb;
     private ImageView img;
     private LoanDataFractory fractory;
+    private List<LoanSearchBean> lists,tempLists;
+    private int position;
+    RecyclerView view;
+    PullRecycleView rc;
+    private List<Set_Item> searchs;
+    DefaultAdapter adapter,reAdapter;
+    private int page=0;
+    private int id=0;
+    private Subscription subscribe;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_loan__search_);
         setColor(this, getResources().getColor(R.color.statucolor));
+        position=getIntent().getIntExtra(Config.infors,0);
+        id=position;
         initToolBar("网贷搜索");
         initView();
-
         initData();
     }
 
     @Override
     public void initView() {
         super.initView();
+        lists=new ArrayList<>();
+        tempLists=new ArrayList<>();
         cb = (CheckBox) findViewById(R.id.cb_search);
         img = (ImageView) findViewById(R.id.img_icon);
+        rc= (PullRecycleView) findViewById(R.id.rc);
+        LinearLayoutManager manager = new LinearLayoutManager(this);
+        manager.setOrientation(LinearLayoutManager.VERTICAL);
+        rc.setLayoutManager(manager);
+        rc.addItemDecoration(new RecycleViewDivider(this, LinearLayout.VERTICAL));
+        reAdapter = new RefrushAdapter<>(this, lists, R.layout.item_loan_item, new DefaultAdapterViewLisenter<LoanSearchBean>() {
+            @Override
+            public CustomHolder getBodyHolder(Context context, List<LoanSearchBean> lists, int itemID) {
+                return new HomeBodyHolder(context, lists, itemID);
+            }
+        });
+        rc.setHasBoom(true);
+        rc.setAdapter(reAdapter);
+
+        rc.setRefrushListener(new RefrushListener() {
+            @Override
+            public void onLoading() {
+                 subscribe = getLoanSearch(id, page).subscribe(Loan_Search_Activity.this);
+            }
+
+            @Override
+            public void onLoadDowning() {
+                page++;
+               subscribe= HttpFactory.getLoanSearch(id,page).subscribe(Loan_Search_Activity.this);
+            }
+        });
     }
 
-    RecyclerView view;
-    private List<Set_Item> searchs;
-    DefaultAdapter adapter;
+
 
     @Override
     public void initData() {
@@ -79,6 +128,7 @@ public class Loan_Search_Activity extends BasisActivity {
                         final RadioButton button = (RadioButton) this.itemView;
                         (button).setText(item.title);
                         button.setChecked(item.isCheck);
+
                         button.setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View v) {
@@ -91,7 +141,9 @@ public class Loan_Search_Activity extends BasisActivity {
                                     }
                                 }
                                 updata(item);
-
+                                page=0;
+                                id=position;
+                                rc.setLoading();
 
                             }
                         });
@@ -107,8 +159,9 @@ public class Loan_Search_Activity extends BasisActivity {
                 searchs.clear();
                 searchs.addAll(lists);
                 adapter.notifyDataSetChanged();
+                cb.setText(lists.get(position).title);
             }
-        });
+        },position);
 
 
         img.setEnabled(false);
@@ -127,6 +180,7 @@ public class Loan_Search_Activity extends BasisActivity {
             }
         });
 
+        rc.setLoading();
 
     }
 
@@ -145,4 +199,41 @@ public class Loan_Search_Activity extends BasisActivity {
         pop.showAsDropDown(cb,0, (int) getResources().getDimension(R.dimen.home_item_time_margin));
     }
 
+    @Override
+    public void onCompleted() {
+        rc.loadSuccess();
+        if (tempLists.size()==0){
+            page--;
+            ToastUtil.showTextToast(getString(R.string.no_more));
+        }else {
+            if (!rc.isLoadMore()){
+                lists.clear();
+            }
+            lists.addAll(tempLists);
+            tempLists.clear();
+            adapter.notifyDataSetChanged();
+        }
+
+
+    }
+
+    @Override
+    public void onError(Throwable e) {
+        e.printStackTrace();
+        rc.loadFail();
+        if (rc.isLoadMore()){
+            page--;
+        }
+    }
+
+    @Override
+    public void onNext(LoanSearchBean loanSearchBean) {
+        tempLists.add(loanSearchBean);
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        subscribe.unsubscribe();
+    }
 }

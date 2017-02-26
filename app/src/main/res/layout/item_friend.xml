@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    android:paddingBottom="@dimen/tools_cut_home"
+    android:paddingEnd="@dimen/app_margin_ends"
+    android:paddingStart="@dimen/app_margin_ends"
+    android:paddingTop="@dimen/tools_cut_home">
+
+    <ImageView
+        android:id="@+id/img_icon"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_marginEnd="@dimen/app_cut_big"
+        android:src="@mipmap/icon_headportrait" />
+
+    <TextView
+        android:id="@+id/tv_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_toEndOf="@id/img_icon"
+        android:text="金融中介"
+        android:textColor="@color/friend_title"
+        android:textSize="@dimen/app_title_text_size"
+
+        />
+
+    <TextView
+        android:id="@+id/tv_content"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignStart="@id/tv_title"
+        android:layout_below="@id/tv_title"
+        android:maxLines="5"
+        android:layout_marginTop="@dimen/tools_cut_home"
+        android:layout_marginBottom="@dimen/tools_cut_home"
+        android:textColor="@color/text_home_item"
+        android:textSize="@dimen/app_title_text_size" />
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/rc"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignStart="@id/tv_title"
+        android:layout_below="@id/tv_content"
+        android:background="@color/white">
+
+    </android.support.v7.widget.RecyclerView>
+
+
+    <TextView
+        android:id="@+id/tv_time"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignStart="@id/tv_title"
+        android:layout_below="@id/rc"
+        android:layout_marginBottom="@dimen/app_cut_big"
+        android:layout_marginTop="@dimen/app_cut_big"
+        android:textColor="@color/text_card_item_more"
+        android:textSize="@dimen/app_title_text_model" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignStart="@id/tv_title"
+        android:layout_below="@id/tv_time"
+        android:background="@color/alert_bg">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="融教授:"
+            android:textColor="@color/text_home_item"
+            android:textSize="15sp" />
+
+        <TextView
+            android:id="@+id/tv_details"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/app_cut_big"
+            android:clickable="true"
+            android:text="点击查看详情"
+            android:textColor="@color/friend_detail"
+            android:textSize="15sp" />
+    </LinearLayout>
+
+</RelativeLayout>

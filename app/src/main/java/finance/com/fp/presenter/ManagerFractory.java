@@ -69,6 +69,7 @@ public class ManagerFractory {
         switch (item_id) {
             case ImprotFactory.LOAN_STRAGE://提额攻略
             case ImprotFactory.LOAN_ONE_KEY_IPMORT://一键提额
+            case ImprotFactory.LOAN_JING://一键提额
                 itemDecoration = new RecycleViewDivider(context, LinearLayoutManager.VERTICAL,R.drawable.divider_line);
                 break;
 
@@ -128,6 +129,7 @@ public class ManagerFractory {
         switch (item_id) {
             case ImprotFactory.LOAN_STRAGE://提额攻略
             case ImprotFactory.LOAN_ONE_KEY_IPMORT://一键提额
+            case ImprotFactory.LOAN_JING://一键提额
                 manager = new LinearLayoutManager(context);
                 ((LinearLayoutManager) manager).setOrientation(LinearLayoutManager.VERTICAL);
                 break;

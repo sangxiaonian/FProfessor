@@ -1,5 +1,6 @@
 package finance.com.fp.ui.holder;
 
+import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
 import android.view.View;
@@ -14,7 +15,7 @@ import java.util.List;
 
 import em.sang.com.allrecycleview.holder.CustomHolder;
 import finance.com.fp.R;
-import finance.com.fp.mode.bean.Config;
+import finance.com.fp.mode.http.Config;
 import finance.com.fp.mode.bean.Set_Item;
 import finance.com.fp.mode.bean.TranInfor;
 import finance.com.fp.mode.datafractory.CardDataFractory;
@@ -22,8 +23,13 @@ import finance.com.fp.ui.FeedbackActivity;
 import finance.com.fp.ui.HomeSonActivity;
 import finance.com.fp.ui.IDActivity;
 import finance.com.fp.ui.Loan_Search_Activity;
+import finance.com.fp.ui.LoginActivity;
 import finance.com.fp.ui.Set_Activity;
 import finance.com.fp.utlis.ToastUtil;
+import finance.com.fp.utlis.Utils;
+import sang.com.xdialog.DialogFactory;
+import sang.com.xdialog.XDialog;
+import sang.com.xdialog.inter.OnEntryClickListener;
 
 /**
  * Description：
@@ -32,6 +38,7 @@ import finance.com.fp.utlis.ToastUtil;
  * @Data：2017/1/3 10:22
  */
 public class SetBodyHolder extends CustomHolder<Set_Item> {
+
     public SetBodyHolder(Context context, List lists, int itemID) {
         super(context, lists, itemID);
     }
@@ -45,9 +52,9 @@ public class SetBodyHolder extends CustomHolder<Set_Item> {
         if ((position - 1) % 2 == 0) {
             params.setMargins(0, 0, 0, (int) context.getResources().getDimension(R.dimen.home_item_time_margin));
         } else {
-            if (position==0){
+            if (position == 0) {
                 params.setMargins(0, (int) context.getResources().getDimension(R.dimen.home_item_time_margin), 0, 0);
-            }else {
+            } else {
                 params.setMargins(0, 0, 0, 0);
             }
 
@@ -75,7 +82,7 @@ public class SetBodyHolder extends CustomHolder<Set_Item> {
 
     }
 
-    private void jumpToActivity(int position, Context context) {
+    private void jumpToActivity(int position, final Context context) {
         Class c = null;
         Intent intent = new Intent();
         TranInfor tranInfor = new TranInfor();
@@ -87,7 +94,7 @@ public class SetBodyHolder extends CustomHolder<Set_Item> {
                 tranInfor.item_id = CardDataFractory.APPLY_PROGRESS;
                 tranInfor.title = context.getString(R.string.card_pro);
                 intent.putExtra(Config.infors, tranInfor);
-                c=HomeSonActivity.class;
+                c = HomeSonActivity.class;
                 break;
             case 1://网贷进度
                 c = Loan_Search_Activity.class;
@@ -96,11 +103,11 @@ public class SetBodyHolder extends CustomHolder<Set_Item> {
                 c = IDActivity.class;
                 break;
             case 3://消息中心
-                c=HomeSonActivity.class;
+                c = HomeSonActivity.class;
                 tranInfor.activity_id = 0;
                 tranInfor.item_id = 4;
                 tranInfor.title = context.getString(R.string.msg_center);
-                intent.putExtra(Config.infors,tranInfor);
+                intent.putExtra(Config.infors, tranInfor);
                 break;
             case 4://意见反馈
                 c = FeedbackActivity.class;
@@ -111,11 +118,26 @@ public class SetBodyHolder extends CustomHolder<Set_Item> {
 
         }
 
-        if (c != null) {
-            intent.setClass(context, c);
-            context.startActivity(intent);
-        } else {
-            ToastUtil.showTextToast(context, "功能尚未开放");
+        if (!Utils.isLogion(context)) {
+            if (c != null) {
+                intent.setClass(context, c);
+                context.startActivity(intent);
+            } else {
+                ToastUtil.showTextToast(context, "功能尚未开放");
+            }
+        }else {
+            XDialog dialog  = DialogFactory.getInstance().creatDiaolg(context,DialogFactory.ALEART_DIALOG);
+            dialog.setTitle("提示");
+            dialog.setDatas("在登陆后才能进行该操作");
+            dialog.setOnClickListener(new OnEntryClickListener() {
+                @Override
+                public void onClick(Dialog dialog, int which, Object data) {
+                    dialog.dismiss();
+                    context.startActivity(new Intent(context, LoginActivity.class));
+
+                }
+            });
+            dialog.show();
         }
     }
 }

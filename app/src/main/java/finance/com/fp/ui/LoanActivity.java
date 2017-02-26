@@ -5,20 +5,19 @@ import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
-import android.view.View;
 import android.widget.TextView;
 
 import java.util.List;
 
 import finance.com.fp.BasisActivity;
 import finance.com.fp.R;
-import finance.com.fp.ui.holder.CardNotifiHolder;
-import finance.com.fp.ui.holder.HomeCarouselHolder;
-import finance.com.fp.mode.bean.Config;
+import finance.com.fp.mode.http.Config;
 import finance.com.fp.mode.bean.Set_Item;
 import finance.com.fp.mode.bean.TranInfor;
 import finance.com.fp.presenter.LoanProComl;
 import finance.com.fp.presenter.inter.LoanInter;
+import finance.com.fp.ui.holder.CardNotifiHolder;
+import finance.com.fp.ui.holder.HomeCarouselHolder;
 import finance.com.fp.ui.inter.LoanView;
 import finance.com.fp.utlis.ToastUtil;
 
@@ -44,6 +43,7 @@ public class LoanActivity extends BasisActivity implements LoanView {
         setContentView(R.layout.activity_recycle);
         setColor(this, getResources().getColor(R.color.statucolor));
         initView();
+        initToolBar(getString(R.string.loan_title));
 
     }
 
@@ -57,25 +57,15 @@ public class LoanActivity extends BasisActivity implements LoanView {
     @Override
     protected void onResume() {
         super.onResume();
-        initListener();
+
     }
 
     public void initData() {
         pre = new LoanProComl(this);
-        title.setText(getResources().getString(R.string.loan_title));
-
         recyclerView.setAdapter(pre.getAdapter(this));
 
     }
 
-    private void initListener() {
-        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                finish();
-            }
-        });
-    }
 
     public void initView() {
         toolbar = (Toolbar) findViewById(R.id.toolbar);
@@ -148,4 +138,19 @@ public class LoanActivity extends BasisActivity implements LoanView {
             startActivity(intent);
         }
     }
+
+    @Override
+    public void grideLoanClick(int position, Set_Item item) {
+        Intent intent = new Intent(this,Loan_Search_Activity.class);
+        if (position==9){
+            position=0;
+        }else {
+            position++;
+        }
+        intent.putExtra(Config.infors,position);
+        startActivity(intent);
+
+    }
+
+
 }

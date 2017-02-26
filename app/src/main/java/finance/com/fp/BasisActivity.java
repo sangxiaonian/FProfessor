@@ -1,20 +1,20 @@
 package finance.com.fp;
 
 import android.app.Activity;
-import android.content.Context;
 import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.PersistableBundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.util.AttributeSet;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+
+import com.umeng.message.PushAgent;
 
 /**
  * Description：
@@ -28,18 +28,12 @@ public class BasisActivity extends AppCompatActivity {
 
 
 
-    @Override
-    public View onCreateView(String name, Context context, AttributeSet attrs) {
 
-        return super.onCreateView(name, context, attrs);
-
-    }
 
     @Override
     public void onCreate(Bundle savedInstanceState, PersistableBundle persistentState) {
         super.onCreate(savedInstanceState, persistentState);
-
-
+        PushAgent.getInstance(this).onAppStart();
     }
 
 

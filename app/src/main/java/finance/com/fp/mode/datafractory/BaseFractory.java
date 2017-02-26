@@ -31,5 +31,5 @@ public class BaseFractory {
         return null;
     }
 
-    public Observable creatObservable(int itemId){return null;}
+    public Observable creatObservable(int itemId, int page){return null;}
 }

@@ -10,7 +10,6 @@ import em.sang.com.allrecycleview.adapter.BasicAdapter;
 import em.sang.com.allrecycleview.holder.SimpleHolder;
 import em.sang.com.allrecycleview.utils.Apputils;
 import em.sang.com.allrecycleview.view.RefrushLinearLayout;
-import em.sang.com.allrecycleview.view.ShapeView;
 
 
 /**
@@ -97,121 +96,6 @@ public class PullUPRecycleView extends BasicPullRecycleView {
     public LinearLayout getEndView() {
         return topView;
     }
-
-
-    @Override
-    public void upRefrush_state(int refrush_state) {
-        if (this.refrush_state == refrush_state) {
-            return;
-        }
-        this.refrush_state = refrush_state;
-        moveToChildHight(refrush_state);
-        switch (refrush_state) {
-            case LOAD_OVER:
-                topView.setTvMsg("下拉刷新数据");
-                topView.upState(ShapeView.LOAD_OVER);
-                break;
-            case LOAD_BEFOR:
-                topView.upState(ShapeView.LOAD_BEFOR);
-                topView.setTvMsg("松手刷新数据");
-
-                break;
-            case LOADING:
-                topView.upState(ShapeView.LOADING);
-                topView.setTvMsg("正在加载数据");
-                if (listener != null) {
-                    listener.onLoading();
-                }
-
-                break;
-            case LOAD_FAIL:
-                topView.upState(ShapeView.LOAD_FAIL);
-                topView.setTvMsg("加载失败");
-
-
-                break;
-            case LOAD_SUCCESS:
-                topView.upState(ShapeView.LOAD_SUCCESS);
-                topView.setTvMsg("加载成功!");
-                break;
-            default:
-                topView.setTvMsg("加载异常");
-
-                break;
-        }
-
-
-    }
-
-    @Override
-    public void setLoading() {
-        super.setLoading();
-        setViewHeight(getEndView(),mearchTop);
-        upRefrush_state(LOADING);
-
-
-    }
-
-
-
-
-//    protected void moveToChildHight(final int refrush_state) {
-//        final View view = getEndView();
-//        int height = getHeightVisiable(view);
-//        final float stand = getStandHeightByStated(refrush_state);
-//        if (animator != null && animator.isRunning()) {
-//            animator.removeAllListeners();
-//            animator.cancel();
-//        }
-//        if (height == stand) {
-//            return;
-//        }
-//
-//        animator = ValueAnimator.ofFloat(height, stand);
-//
-//
-//        animator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
-//            @Override
-//            public void onAnimationUpdate(ValueAnimator animation) {
-//                float value = (float) animation.getAnimatedValue();
-//                setViewHeight(view, value);
-//            }
-//        });
-//
-//
-//        animator.addListener(new AnimatorListenerAdapter() {
-//            @Override
-//            public void onAnimationEnd(Animator animation) {
-//                super.onAnimationEnd(animation);
-//                int load;
-//                switch (refrush_state) {
-//                    case LOAD_BEFOR:
-//                        load = LOADING;
-//                        break;
-//
-//                    default:
-//                        if (stand == min) {
-//                            load = LOAD_OVER;
-//                        } else {
-//                            load = refrush_state;
-//                        }
-//                        break;
-//                }
-//                upRefrush_state(load);
-//            }
-//        });
-//
-//        animator.setDuration(200);
-//        if (isNoTouch) {
-//            if (isChangStateByHeight() || refrush_state == LOADING) {
-//                animator.start();
-//            } else {
-//                animator.setStartDelay(200);
-//                animator.start();
-//            }
-//        }
-//
-//    }
 
 
     /**

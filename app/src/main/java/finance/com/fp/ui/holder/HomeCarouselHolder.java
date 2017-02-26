@@ -5,6 +5,7 @@ import android.os.Handler;
 import android.os.Message;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
+import android.text.TextUtils;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,6 +19,7 @@ import java.util.List;
 
 import em.sang.com.allrecycleview.utils.Apputils;
 import finance.com.fp.R;
+import finance.com.fp.mode.bean.Set_Item;
 
 /**
  * Description：首页轮播图
@@ -50,6 +52,8 @@ public class HomeCarouselHolder extends BasicHolder {
     }
 
 
+
+    CarousAdapter adapter;
     @Override
     public void initView(int position, Context context) {
 
@@ -57,21 +61,10 @@ public class HomeCarouselHolder extends BasicHolder {
             return;
         }
         vp = (ViewPager) itemView.findViewById(R.id.vp_home_carousel);
-        vp.setAdapter(new CarousAdapter());
+
         ll_tag = (LinearLayout) itemView.findViewById(R.id.ll_home_tag);
         ll_tag.removeAllViews();
         for (int i = 0; i < datas.size(); i++) {
-            ImageView imageView = new ImageView(context);
-            ViewGroup.LayoutParams layoutParams = new ViewGroup.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-            imageView.setLayoutParams(layoutParams);
-
-            builder
-                    .load(R.mipmap.home_banner)
-                    .placeholder(R.mipmap.home_banner)
-                    .error(R.mipmap.home_banner)
-                    .crossFade()
-                    .centerCrop()
-                    .into(imageView);
             ImageView tag = new ImageView(context);
             LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
             params.setMargins(0, 0, Apputils.dip2px(context, 7), 0);
@@ -79,7 +72,8 @@ public class HomeCarouselHolder extends BasicHolder {
             tag.setImageResource(R.drawable.tag_carousel);
             ll_tag.addView(tag);
         }
-
+        adapter = new CarousAdapter();
+        vp.setAdapter(adapter);
         vp.addOnPageChangeListener(new ViewPager.SimpleOnPageChangeListener() {
             @Override
             public void onPageSelected(int position) {
@@ -146,7 +140,6 @@ public class HomeCarouselHolder extends BasicHolder {
 
         @Override
         public int getCount() {
-
             return datas.size();
         }
 
@@ -165,13 +158,26 @@ public class HomeCarouselHolder extends BasicHolder {
             ImageView imageView = new ImageView(context);
             ViewGroup.LayoutParams layoutParams = new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
             imageView.setLayoutParams(layoutParams);
-            Glide.with(context)
-                    .load(R.mipmap.home_banner)
-                    .placeholder(R.mipmap.home_banner)
-                    .error(R.mipmap.home_banner)
-                    .centerCrop()
-                    .crossFade()
-                    .into(imageView);
+            Set_Item item= (Set_Item) datas.get(position);
+
+            if (!TextUtils.isEmpty(item.img_url)) {
+                Glide.with(context)
+                        .load(item.img_url)
+                        .placeholder(R.mipmap.loading_big)
+                        .error(R.mipmap.load_fail_big)
+                        .centerCrop()
+                        .crossFade()
+                        .into(imageView);
+            }else {
+                Glide.with(context)
+                        .load(item.icon_id)
+                        .placeholder(R.mipmap.loading_big)
+                        .error(R.mipmap.load_fail_big)
+                        .centerCrop()
+                        .crossFade()
+                        .into(imageView);
+            }
+
             container.addView(imageView);
             return imageView;
         }

@@ -29,6 +29,12 @@ public class Utils {
         preferences.edit().putLong(flag,System.currentTimeMillis()).commit();
     }
 
+
+    public static String formatDateTime(String dateTime) {
+        long l = Long.parseLong(dateTime);
+        return formatDateTime(l);
+    }
+
     public static String formatDateTime(long dateTime) {
         String text;
         Date date = new Date(dateTime);

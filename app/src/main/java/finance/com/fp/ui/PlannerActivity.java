@@ -20,6 +20,9 @@ import java.util.List;
 import finance.com.fp.BasisActivity;
 import finance.com.fp.R;
 import finance.com.fp.mode.bean.Set_Item;
+import finance.com.fp.mode.datafractory.HttpFactory;
+import finance.com.fp.utlis.ToastUtil;
+import rx.Subscriber;
 
 /**
  * 学习规划师
@@ -43,6 +46,19 @@ public class PlannerActivity extends BasisActivity {
         initData();
     }
 
+    Subscriber<Set_Item> subscriber;
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        unSunsriber();
+    }
+
+    private void unSunsriber(){
+        if (subscriber!=null){
+            subscriber.unsubscribe();
+        }
+    }
 
     public void initData() {
         lists = new ArrayList<>();
@@ -66,6 +82,37 @@ public class PlannerActivity extends BasisActivity {
                     adapter.notifyItemInserted(adapter.getItemCount()-1);
                     rc.scrollToPosition(adapter.getItemCount()-1);
                     et.setText("");
+
+
+                    unSunsriber();
+                     subscriber = new Subscriber<Set_Item>() {
+
+                         @Override
+                         public void onStart() {
+                             super.onStart();
+                             btn.setText("发送中..");
+                             btn.setEnabled(false);
+                         }
+
+                         @Override
+                        public void onCompleted() {
+                            adapter.notifyItemInserted(adapter.getItemCount()-1);
+                             btn.setText("发送");
+                             btn.setEnabled(true);
+                        }
+
+                        @Override
+                        public void onError(Throwable e) {
+                            e.printStackTrace();
+                            ToastUtil.showTextToast(getString(R.string.net_error));
+                        }
+
+                        @Override
+                        public void onNext(Set_Item set_item) {
+                            lists.add(set_item);
+                        }
+                    };
+                    HttpFactory.getPlanner().subscribe(subscriber);
                 }
 
             }

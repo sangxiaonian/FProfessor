@@ -46,7 +46,7 @@
             style="@style/login_btn"
             android:text="@string/set_login_out"
             android:layout_centerInParent="true"
-
+            android:onClick="login_out"
             />
     </RelativeLayout>
 

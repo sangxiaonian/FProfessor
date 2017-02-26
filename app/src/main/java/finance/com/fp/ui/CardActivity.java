@@ -8,7 +8,7 @@ import android.support.v7.widget.RecyclerView;
 import em.sang.com.allrecycleview.adapter.DefaultAdapter;
 import finance.com.fp.BasisActivity;
 import finance.com.fp.R;
-import finance.com.fp.mode.bean.Config;
+import finance.com.fp.mode.http.Config;
 import finance.com.fp.mode.bean.Set_Item;
 import finance.com.fp.mode.bean.TranInfor;
 import finance.com.fp.mode.datafractory.CardDataFractory;
@@ -43,12 +43,11 @@ public class CardActivity extends BasisActivity implements CardView {
         LinearLayoutManager manager = new LinearLayoutManager(this);
         manager.setOrientation(LinearLayoutManager.VERTICAL);
         recyclerView.setLayoutManager(manager);
+
     }
 
     public void initData() {
         pre = new CardActivityComl(this);
-
-
         adapter = pre.getAdapter(this);
         recyclerView.setAdapter(adapter);
 
@@ -112,5 +111,29 @@ public class CardActivity extends BasisActivity implements CardView {
         intent.putExtra(Config.infors, tranInfor);
         intent.setClass(this, HomeSonActivity.class);
         startActivity(intent);
+    }
+
+    @Override
+    public void onClickBanance(int position, Set_Item item, int size) {
+        if (position!=size-1){
+
+            Intent intent = new Intent(this, ShowDetailActivity.class);
+            TranInfor infor = new TranInfor();
+            infor.title = item.title;
+            infor.type = 1;
+            infor.content = item.describe;
+            infor.describe = item.describe;
+            intent.putExtra(Config.infors, infor);
+            startActivity(intent);
+        }else {
+            TranInfor tranInfor = new TranInfor();
+            Intent intent = new Intent();
+            tranInfor.activity_id = 1;
+            tranInfor.item_id = CardDataFractory.ALL_BALANCE;
+            tranInfor.title = item.title;
+            intent.putExtra(Config.infors, tranInfor);
+            intent.setClass(this, HomeSonActivity.class);
+            startActivity(intent);
+        }
     }
 }

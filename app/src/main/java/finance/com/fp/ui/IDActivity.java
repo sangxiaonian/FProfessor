@@ -9,6 +9,8 @@ import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
 import android.view.View;
 
+import com.google.gson.Gson;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -19,12 +21,20 @@ import em.sang.com.allrecycleview.inter.DefaultAdapterViewLisenter;
 import em.sang.com.allrecycleview.listener.OnToolsItemClickListener;
 import finance.com.fp.BasisActivity;
 import finance.com.fp.R;
-import finance.com.fp.mode.bean.Config;
+import finance.com.fp.mode.bean.CarPerson;
+import finance.com.fp.mode.bean.ChitPerson;
+import finance.com.fp.mode.bean.CreditPerson;
+import finance.com.fp.mode.bean.HousePerson;
 import finance.com.fp.mode.bean.Set_Item;
 import finance.com.fp.mode.bean.TranInfor;
-import finance.com.fp.mode.datafractory.ImprotFactory;
+import finance.com.fp.mode.http.Config;
+import finance.com.fp.mode.http.HttpClient;
+import finance.com.fp.mode.http.HttpParams;
 import finance.com.fp.ui.holder.IDHolder;
 import finance.com.fp.utlis.RecycleViewDivider;
+import rx.Observer;
+import rx.android.schedulers.AndroidSchedulers;
+import rx.schedulers.Schedulers;
 import sang.com.xdialog.DialogFactory;
 import sang.com.xdialog.XDialog;
 import sang.com.xdialog.inter.OnEntryClickListener;
@@ -32,7 +42,7 @@ import sang.com.xdialog.inter.OnEntryClickListener;
 /**
  * 账号信息
  */
-public class IDActivity extends BasisActivity implements OnToolsItemClickListener<Set_Item>,OnEntryClickListener<String> {
+public class IDActivity extends BasisActivity implements OnToolsItemClickListener<Set_Item>,OnEntryClickListener<String>, Observer<String> {
 
     private RecyclerView rc;
     private List<Set_Item> lists;
@@ -42,6 +52,7 @@ public class IDActivity extends BasisActivity implements OnToolsItemClickListene
     private DefaultAdapter adapter;
     private DialogFactory dialogFactory;
     private final int REQUESTCODE=2;
+    private HttpParams params;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,18 +68,17 @@ public class IDActivity extends BasisActivity implements OnToolsItemClickListene
         super.initData();
         titles = new ArrayList<>();
         dialogFactory = DialogFactory.getInstance(this);
-
+        params = HttpParams.getInstance();
 
     }
 
     public void click(View view){
-        TranInfor tranInfor = new TranInfor();
-        Intent intent = new Intent(this,Loan_Search_Activity.class);
-        tranInfor.activity_id = 2;
-        tranInfor.item_id= ImprotFactory.LOAN_ONE_KEY_IPMORT;
-        tranInfor.title = getString(R.string.import_at_once);
-        intent.putExtra(Config.infors, tranInfor);
-        startActivity(intent);
+        dialog = dialogFactory.creatDiaolg(this,DialogFactory.LOAD_DIALOG);
+        dialog.show();
+        HttpClient.getClient(Config.base_url).subPerson(params.removeNull()).subscribeOn(Schedulers.io()).
+                observeOn(AndroidSchedulers.mainThread()).subscribe(this);
+
+
     }
 
 
@@ -125,7 +135,7 @@ public class IDActivity extends BasisActivity implements OnToolsItemClickListene
             infor.item_id=position;
             Intent intent = new Intent(this,IDSonActivity.class);
             intent.putExtra(Config.infors,infor);
-            startActivityForResult(intent,REQUESTCODE);
+            startActivityForResult(intent,position);
         }
     }
 
@@ -133,16 +143,20 @@ public class IDActivity extends BasisActivity implements OnToolsItemClickListene
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
-        if (requestCode==REQUESTCODE&&resultCode==1){
+        if (resultCode==1){
             String extra = data.getStringExtra(Config.infors);
             if (!TextUtils.isEmpty(extra)){
+                position=requestCode;
                 item.describe="已填写";
                 adapter.notifyDataSetChanged();
+                putDataByPosition(extra);
             }
         }
     }
 
+
     private void creatAleart(int position, Set_Item item) {
+        this.position=position;
         dialog = dialogFactory.creatDiaolg(this);
         dialog.setTitle(item.title);
         dialog.setDatas("请输入"+item.title);
@@ -168,5 +182,87 @@ public class IDActivity extends BasisActivity implements OnToolsItemClickListene
         item.describe =  data;
         adapter.notifyDataSetChanged();
         dialog.dismiss();
+        putDataByPosition(data);
+    }
+
+    private void putDataByPosition(String data){
+        Gson gson = new Gson();
+        switch (position){
+            case 0:
+                params.put("username",data);
+                break;
+            case 1:
+                params.put("name",data);
+                break;
+            case 2:
+                params.put("card",data);
+                break;
+            case 3:
+                params.put("sex",data);
+                break;
+            case 4:
+                params.put("city",data);
+                break;
+            case 5:
+                CreditPerson person = gson.fromJson(data, CreditPerson.class);
+
+                params.put("credit_condition1",person.credit_condition1);
+                params.put("credit_condition2",person.credit_condition2);
+                params.put("credit_condition3",person.credit_condition3);
+                params.put("credit_condition4",person.credit_condition4);
+                params.put("credit_condition5",person.credit_condition5);
+                params.put("credit_condition6",person.credit_condition6);
+                params.put("credit_condition7",person.credit_condition7);
+                break;
+            case 6:
+                HousePerson house = gson.fromJson(data, HousePerson.class);
+                params.put("house_condition1",house.house_condition1);
+                params.put("house_condition2",house.house_condition2);
+                params.put("house_condition3",house.house_condition3);
+                params.put("house_condition4",house.house_condition4);
+                params.put("house_condition5",house.house_condition5);
+                params.put("house_condition6",house.house_condition6);
+                break;
+            case 7:
+                CarPerson car = gson.fromJson(data, CarPerson.class);
+                params.put("car_condition1",car.car_condition1);
+                params.put("car_condition2",car.car_condition2);
+                params.put("car_condition3",car.car_condition3);
+                params.put("car_condition4",car.car_condition4);
+                params.put("car_condition5",car.car_condition5);
+
+                break;
+            case 8:
+                ChitPerson chit = gson.fromJson(data, ChitPerson.class);
+                params.put("policy_condition1",chit.policy_condition1);
+                params.put("policy_condition2",chit.policy_condition2);
+                break;
+
+        }
+    }
+
+
+    @Override
+    public void onCompleted() {
+        dialog.dismiss();
+
+        Intent intent = new Intent(this,Loan_Search_Activity.class);
+
+        startActivity(intent);
+    }
+
+    @Override
+    public void onError(Throwable e) {
+        dialog.dismiss();
+        e.printStackTrace();
+
+        Intent intent = new Intent(this,Loan_Search_Activity.class);
+
+        startActivity(intent);
+    }
+
+    @Override
+    public void onNext(String s) {
+
     }
 }

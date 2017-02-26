@@ -80,4 +80,13 @@ public interface HomeSonView {
     void loadSuccess();
 
     void loadFail();
+
+    boolean isLoadMore();
+
+    /**
+     * 精养卡提额
+     * @param itemView
+     * @param item
+     */
+    void loan_jing_click(View itemView, Set_Item item);
 }

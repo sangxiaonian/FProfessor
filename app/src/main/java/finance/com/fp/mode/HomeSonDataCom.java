@@ -46,19 +46,18 @@ public class HomeSonDataCom implements HomeSonDataInter {
     }
 
     @Override
-    public Observable getData(int activity_id, int item_id) {
+    public Observable getData(int activity_id, int item_id, int page) {
         Observable observable =null;
         switch (activity_id){
             case 0:
-                observable= fractory.creatObservable(item_id);
+                observable= fractory.creatObservable(item_id,page);
                 break;
             case 1:
-                observable=dataFractory.creatObservable(item_id);
+                observable=dataFractory.creatObservable(item_id,page);
                 break;
             case 2:
-                observable = improtFactory.creatObservable(item_id);
+                observable = improtFactory.creatObservable(item_id,page);
                 break;
-
             default:
                 break;
 

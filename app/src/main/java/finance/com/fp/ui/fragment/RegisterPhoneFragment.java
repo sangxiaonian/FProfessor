@@ -1,8 +1,10 @@
 package finance.com.fp.ui.fragment;
 
+import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
 import android.support.v7.widget.Toolbar;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,8 +18,11 @@ import finance.com.fp.presenter.inter.RegisterInter;
 import finance.com.fp.ui.LoginActivity;
 import finance.com.fp.ui.inter.FragmentListener;
 import finance.com.fp.ui.inter.RegisterView;
+import finance.com.fp.utlis.ToastUtil;
+import finance.com.fp.utlis.Utils;
 import sang.com.xdialog.DialogFactory;
 import sang.com.xdialog.XDialog;
+import sang.com.xdialog.inter.OnEntryClickListener;
 
 /**
  * Description：
@@ -25,13 +30,13 @@ import sang.com.xdialog.XDialog;
  * @Author：桑小年
  * @Data：2017/2/15 11:01
  */
-public class RegisterPhoneFragment extends BasisFragment implements View.OnClickListener, RegisterView {
+public class RegisterPhoneFragment extends BasisFragment implements View.OnClickListener, RegisterView<String> {
     private EditText et_user, et_password, et_register;
     private Button bt_next, bt_dynamic, bt_vip;
 
     private RegisterInter pre;
     private FragmentListener listener;
-    private XDialog dialog;
+    private XDialog dialog,inforDialog;
 
     @Override
     public View initViews(LayoutInflater inflater, ViewGroup container) {
@@ -55,16 +60,19 @@ public class RegisterPhoneFragment extends BasisFragment implements View.OnClick
         pre=new RegisterPreComl(this);
         initToolBar();
         dialog= DialogFactory.getInstance().creatDiaolg(getContext(),DialogFactory.LOAD_DIALOG);
+        inforDialog= DialogFactory.getInstance().creatDiaolg(getContext(),DialogFactory.ALEART_DIALOG);
+        inforDialog.setCancelable(false);
     }
 
     @Override
     public void onClick(View v) {
         switch (v.getId()){
             case R.id.bt_forget:
+
                 startActivity(new Intent(getContext(), LoginActivity.class));
                 break;
             case R.id.bt_dynamic:
-                pre.getDynamic();
+                pre.getDynamic(getString(R.string.input_phone),et_user);
                 break;
             case R.id.bt_login:
                 pre.jumpToNext(getContext(),et_user,et_password,et_register);
@@ -139,6 +147,24 @@ public class RegisterPhoneFragment extends BasisFragment implements View.OnClick
         return R.string.input_dynamic;
     }
 
+    @Override
+    public String getPhone() {
+        return listener.getPhone();
+    }
+
+    @Override
+    public void setPhone(String phone) {
+        listener.setPhone(phone);
+    }
+
+    @Override
+    public void onHiddenChanged(boolean hidden) {
+        super.onHiddenChanged(hidden);
+        if (!hidden){
+            et_user.requestFocus();
+        }
+    }
+
     public void initToolBar() {
         Toolbar toolbar = (Toolbar) rootView.findViewById(R.id.toolbar);
         if (toolbar != null) {
@@ -150,5 +176,59 @@ public class RegisterPhoneFragment extends BasisFragment implements View.OnClick
             });
 
         }
+    }
+
+    @Override
+    public void onCompleted() {
+
+    }
+
+    @Override
+    public void onError(Throwable e) {
+        e.printStackTrace();
+        dissMissDialog();
+        ToastUtil.showTextToast(Utils.getResStr(R.string.net_error));
+    }
+
+    @Override
+    public void onNext( String o) {
+        dissMissDialog();
+
+        final String a =o;
+        inforDialog.setOnClickListener(new OnEntryClickListener() {
+            @Override
+            public void onClick(Dialog dialog, int which, Object data) {
+                dialog.dismiss();
+                if (!TextUtils.equals("1",a)) {
+                    return;
+                }
+                //保存并跳转
+                pre.setSp(getContext(),true);
+                getActivity().finish();
+            }
+        });
+
+
+       switch (o){
+           case "0":
+               inforDialog.setTitle(Utils.getResStr(R.string.attention));
+               inforDialog.setDatas(Utils.getResStr(R.string.no_register));
+               inforDialog.show();
+               break;
+           case "1":
+               inforDialog.setTitle(Utils.getResStr(R.string.attention));
+               inforDialog.setDatas(Utils.getResStr(R.string.temp_register));
+               inforDialog.show();
+               break;
+           case "2":
+               onNextClick();
+               break;
+           default:
+               inforDialog.setTitle(Utils.getResStr(R.string.attention));
+               inforDialog.setDatas(Utils.getResStr(R.string.net_error));
+               inforDialog.show();
+               break;
+       }
+
     }
 }

@@ -29,20 +29,21 @@ import finance.com.fp.utlis.ToastUtil;
 public class GrideHolder extends BasicHolder<Set_Item> {
 
     private RecyclerView gv;
-    private int gvItem=R.layout.view_gv_card;
+    private int gvItem = R.layout.view_gv_card;
 
     private int numColuns = 4;
     private List<Set_Item> list;
 
     public GrideHolder(Context context, List lists, int itemID) {
         super(context, lists, itemID);
-        list=lists;
+        list = lists;
 
     }
 
-    public void setItemID(int itemID){
-        this.gvItem=itemID;
+    public void setItemID(int itemID) {
+        this.gvItem = itemID;
     }
+
     public RecyclerView getGridView() {
         return (RecyclerView) itemView.findViewById(R.id.gridview);
     }
@@ -57,7 +58,7 @@ public class GrideHolder extends BasicHolder<Set_Item> {
     public void initView(final int position, final Context context) {
         super.initView(position, context);
         gv = (RecyclerView) itemView.findViewById(R.id.gridview);
-        LinearLayoutManager manager = new GridLayoutManager(context,numColuns);
+        LinearLayoutManager manager = new GridLayoutManager(context, numColuns);
         manager.setOrientation(LinearLayoutManager.VERTICAL);
         gv.setLayoutManager(manager);
 
@@ -68,16 +69,25 @@ public class GrideHolder extends BasicHolder<Set_Item> {
             public CustomHolder getBodyHolder(Context context, List<Set_Item> lists, final int itemID) {
                 return new CustomHolder<Set_Item>(context, lists, itemID) {
                     @Override
-                    public void initView(int position, List<Set_Item> datas, final Context context) {
+                    public void initView(final int position, List<Set_Item> datas, final Context context) {
                         super.initView(position, datas, context);
                         ImageView imageView = (ImageView) itemView.findViewById(R.id.img_item);
 
                         TextView tv_title = (TextView) itemView.findViewById(R.id.tv_item);
 
 
-                        final Set_Item item =  datas.get(position);
+                        final Set_Item item = datas.get(position);
 
-                        if (item.icon_id > 0) {
+                        if (item.img_url != null && item.img_url.length() > 0) {
+                            Glide.with(context)
+                                    .load(item.img_url)
+                                    .placeholder(item.placeholder)
+                                    .error(item.faildId)
+                                    .centerCrop()
+                                    .crossFade()
+                                    .into(imageView);
+
+                        } else if (item.icon_id > 0) {
                             Glide.with(context)
                                     .load(item.icon_id)
                                     .placeholder(item.placeholder)
@@ -87,14 +97,19 @@ public class GrideHolder extends BasicHolder<Set_Item> {
                                     .into(imageView);
 
                         }
-                        if (!TextUtils.isEmpty(item.title)) {
+                        if (!TextUtils.isEmpty(item.title)&&tv_title!=null) {
                             tv_title.setText(item.title);
                         }
 
                         itemView.setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View v) {
-                                ToastUtil.showTextToast(context, item.title);
+
+                                if (listener!=null){
+                                    listener.onItemClick(position,item);
+                                }else {
+                                    ToastUtil.showTextToast(context, item.title);
+                                }
                             }
                         });
                     }
@@ -104,10 +119,7 @@ public class GrideHolder extends BasicHolder<Set_Item> {
         gv.setAdapter(adapter);
 
 
-
     }
-
-
 
 
 }

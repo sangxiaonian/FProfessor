@@ -39,18 +39,18 @@ public class CardDataFractory extends BaseFractory {
 
 
     @Override
-    public Observable creatObservable(int itemId) {
+    public Observable creatObservable(int itemId, int page) {
         Observable observable;
         switch (itemId) {
 
             case HOT_APPLY://热申排行榜
-                observable = getHotApply();
+                observable = getHotApply(page);
                 break;
             case ALL_BALANCE:
-                observable = getAllBalances();
+                observable = getAllBalances(page);
                 break;
             case APPLY_PROGRESS:
-                observable = getCardProgress();
+                observable = getCardProgress(page);
                 break;
             default:
                 throw new ParameterException("传入ID参数错误");
@@ -59,7 +59,7 @@ public class CardDataFractory extends BaseFractory {
         return observable;
     }
 
-    private Observable<Set_Item> getCardProgress() {
+    private Observable<Set_Item> getCardProgress(int page) {
         Integer[] icons = {R.mipmap.icon_pinganbank_phone,
                 R.mipmap.icon_guangdongdevelopmentbankk_phone,
                 R.mipmap.icon_chinaciticbank_phone,
@@ -74,9 +74,16 @@ public class CardDataFractory extends BaseFractory {
                 R.mipmap.icon_bankofbeijing
 
         };
-        String[] titles = context.getResources().getStringArray(R.array.card_pro_query);
+        String[] tittles;
+        if (page==0){
+            tittles = context.getResources().getStringArray(R.array.card_pro_query);
 
-        return Observable.zip(Observable.from(icons), Observable.from(titles)
+
+        }else {
+            tittles=new String[0];
+        }
+
+        return Observable.zip(Observable.from(icons), Observable.from(tittles)
                         .map(new Func1<String, String[]>() {
                             @Override
                             public String[] call(String s) {
@@ -98,7 +105,7 @@ public class CardDataFractory extends BaseFractory {
     }
 
 
-    public Observable<Set_Item> getAllBalances() {
+    public Observable<Set_Item> getAllBalances(int page) {
 
         Integer[] icons = {R.mipmap.icon_thebankofchina_phone,
                 R.mipmap.icon_agricuralbankof_phone,
@@ -120,23 +127,29 @@ public class CardDataFractory extends BaseFractory {
                 R.mipmap.icon_zheshangbank_phone,
                 R.mipmap.icon_citibank_phone
         };
-        String tittles[] = context.getResources().getStringArray(R.array.card_phone);
+        String[] tittles;
+        if (page==0){
+            tittles = context.getResources().getStringArray(R.array.card_phone);
+
+        }else {
+            tittles=new String[0];
+        }
 
         return Observable.zip(Observable.from(icons),
 
-                Observable.from(tittles).map(new Func1<String, String>() {
+                Observable.from(tittles).map(new Func1<String, String[]>() {
                     @Override
-                    public String call(String s) {
+                    public String[] call(String s) {
                         String[] split = s.split("_");
 
-                        return split[0];
+                        return split;
                     }
                 })
-                , new Func2<Integer, String, Set_Item>() {
+                , new Func2<Integer, String[], Set_Item>() {
                     @Override
-                    public Set_Item call(Integer integer, String s) {
+                    public Set_Item call(Integer integer, String[] s) {
 
-                        return new Set_Item(integer, s);
+                        return new Set_Item(integer, s[0],s[1]);
 
                     }
                 }).subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread());
@@ -146,36 +159,11 @@ public class CardDataFractory extends BaseFractory {
      * 热审排行榜
      *
      * @return
+     * @param page
      */
-    private Observable<Set_Item> getHotApply() {
+    private Observable<Set_Item> getHotApply(int page) {
 
-        Integer[] icons = {R.mipmap.icon_citiclpiatinumcreditcard,
-                R.mipmap.icon_citiclpiatinumcreditcard,
-                R.mipmap.icon_citiclpiatinumcreditcard,
-                R.mipmap.icon_citiclpiatinumcreditcard,
-                R.mipmap.icon_citiclpiatinumcreditcard,
-                R.mipmap.icon_citiclpiatinumcreditcard,
-                R.mipmap.icon_citiclpiatinumcreditcard
-        };
-
-        String[] tittles = context.getResources().getStringArray(R.array.card_hot_apply);
-
-        return Observable.zip(Observable.from(icons), Observable.from(tittles)
-                .map(new Func1<String, String[]>() {
-                    @Override
-                    public String[] call(String s) {
-                        return s.split("_");
-                    }
-                })
-
-                , new Func2<Integer, String[], Set_Item>() {
-            @Override
-            public Set_Item call(Integer integer, String[] s) {
-                Set_Item item = new Set_Item(integer, s[0]);
-
-                return item;
-            }
-        }).subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread());
+        return HttpFactory.getHotApply(page);
     }
 
 
@@ -215,8 +203,10 @@ public class CardDataFractory extends BaseFractory {
                 R.mipmap.icon_shanghaipudongdevelopmentbank, R.mipmap.icon_everbrightbank,
                 R.mipmap.icon_bankofcommunictions, R.mipmap.icon_minshengbank, R.mipmap.icon_chinamerchants
                 , R.mipmap.icon_more_balabce};
+
         for (int i = 0; i < tltles.length; i++) {
-            datas.add(new Set_Item(icons[i], tltles[i]));
+            String[] tltle = tltles[i].split("_");
+            datas.add(new Set_Item(icons[i], tltle[0],tltle[1]));
         }
         return datas;
     }

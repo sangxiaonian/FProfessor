@@ -12,7 +12,7 @@ import java.util.List;
 
 import finance.com.fp.BasisActivity;
 import finance.com.fp.R;
-import finance.com.fp.mode.bean.Config;
+import finance.com.fp.mode.http.Config;
 import finance.com.fp.mode.bean.Set_Item;
 import finance.com.fp.presenter.IDSonPreComl;
 import finance.com.fp.presenter.inter.IDSonPreInter;
@@ -73,7 +73,7 @@ public class IDSonActivity extends BasisActivity implements IDSonView, OnEntryCl
             @Override
             public boolean onMenuItemClick(MenuItem item) {
                 Intent intent = new Intent(IDSonActivity.this, IDActivity.class);
-                String passString = "火星来的消息:Hello,我是火星的Jack，非常高兴你能来火星";
+                String passString = pre.getData();
                 intent.putExtra(Config.infors, passString);
                 setResult(1, intent);
                 finish();
@@ -111,5 +111,6 @@ public class IDSonActivity extends BasisActivity implements IDSonView, OnEntryCl
     public void onClick(Dialog dialog, int which, String data) {
         pre.changeItem(data);
         dialog.dismiss();
+
     }
 }

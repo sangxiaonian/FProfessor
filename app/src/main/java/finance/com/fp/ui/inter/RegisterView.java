@@ -3,7 +3,10 @@ package finance.com.fp.ui.inter;
 
 import android.widget.EditText;
 
-public interface RegisterView {
+import rx.Observer;
+
+
+public interface RegisterView<T> extends Observer<T> {
 
 
 
@@ -12,7 +15,7 @@ public interface RegisterView {
     void showEtError(EditText et, int input_dynamic);
 
     /**
-     * 更新验证码上面是数据
+     * 更新验证码上面是数
      * @param time
      * @param b
      */
@@ -29,4 +32,8 @@ public interface RegisterView {
     int getPhoneNotic();
 
     int getPasswordNotic();
+
+    String getPhone();
+
+    void setPhone(String phone);
 }

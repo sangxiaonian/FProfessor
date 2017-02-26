@@ -14,5 +14,5 @@ public interface HomeSonDataInter {
 
     int getItemID(int activityID, int item_id);
 
-    Observable<Set_Item> getData(int activity_id, int item_id);
+    Observable<Set_Item> getData(int activity_id, int item_id, int page);
 }

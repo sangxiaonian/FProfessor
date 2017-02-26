@@ -26,6 +26,7 @@ public class ImprotFactory extends BaseFractory {
      */
     public static final int LOAN_STRAGE = 0;
     public static final int LOAN_ONE_KEY_IPMORT = 4;
+    public static final int LOAN_JING = 2;
 
 
     private static ImprotFactory factory;
@@ -34,7 +35,7 @@ public class ImprotFactory extends BaseFractory {
         if (factory == null) {
             synchronized (ImprotFactory.class) {
                 if (factory == null) {
-                    factory = new ImprotFactory(  );
+                    factory = new ImprotFactory();
                 }
             }
         }
@@ -43,14 +44,17 @@ public class ImprotFactory extends BaseFractory {
 
 
     @Override
-    public Observable creatObservable(int itemId) {
+    public Observable creatObservable(int itemId, int page) {
         Observable observable = null;
         switch (itemId) {
             case LOAN_STRAGE:
-                observable = getBalance();
+                observable = getBalance(page);
                 break;
             case LOAN_ONE_KEY_IPMORT://一键提额
-                observable = getOneKey();
+                observable = getOneKey(page);
+                break;
+            case LOAN_JING:
+                observable = getJingCard(page);
                 break;
             default:
                 throw new ParameterException("传入ID参数错误");
@@ -65,7 +69,7 @@ public class ImprotFactory extends BaseFractory {
                 , Observable.from(tittles).map(new Func1<String, String[]>() {
                     @Override
                     public String[] call(String s) {
-                        return  s.split("_");
+                        return s.split("_");
                     }
                 }), new Func2<Integer, String[], Set_Item>() {
                     @Override
@@ -77,7 +81,7 @@ public class ImprotFactory extends BaseFractory {
     }
 
 
-    public Observable<Set_Item> getOneKey(){
+    public Observable<Set_Item> getOneKey(int page) {
         Integer[] icons = {
                 R.mipmap.icon_chinamerchants_phone,
                 R.mipmap.icon_guangdongdevelopmentbankk_phone,
@@ -95,39 +99,37 @@ public class ImprotFactory extends BaseFractory {
                 R.mipmap.icon_huaxiabank_phone,
         };
 
-        String tittles[] = context.getResources().getStringArray(R.array.one_key);
-        return getZip(icons,tittles);
+        String[] tittles;
+        if (page == 0) {
+            tittles = context.getResources().getStringArray(R.array.one_key);
+        } else {
+            tittles = new String[0];
+        }
+        return getZip(icons, tittles);
     }
 
 
 
-
-
     /**
-     * 获取所有银行
+     * 提额攻略
      *
      * @return
      */
-    public Observable<Set_Item> getBalance() {
-        Integer[] icons = {R.mipmap.icon_thebankofchina_phone,
-                R.mipmap.icon_agricuralbankof_phone,
-                R.mipmap.icon_icbc_phone,
-                R.mipmap.icon_constructionbankccb_phone,
-                R.mipmap.icon_bankofcommunications_phone,
-                R.mipmap.icon_chinamerchants_phone,
-                R.mipmap.icon_shanghaipudongdevelopmentbank_phone,
-                R.mipmap.icon_guangdongdevelopmentbankk_phone,
-                R.mipmap.icon_huaxiabank_phone,
-                R.mipmap.icon_pinganbank_phone,
-                R.mipmap.icon_everbrightbank_phone,
-                R.mipmap.icon_chinaciticbank_phone,
-                R.mipmap.icon_societegenerale_phone,
-                R.mipmap.icon_minsheengbank_phone,
-                R.mipmap.icon_zheshangbank_phone,
-                R.mipmap.icon_citibank_phone
-        };
-        String tittles[] = context.getResources().getStringArray(R.array.home_balance_phone);
-        return getZip(icons,tittles);
+    public Observable<Set_Item> getBalance(int page) {
+
+        return HttpFactory.getLoan(String.valueOf(page), "20");
+
+    }
+
+    /**
+     * 精养卡提额
+     *
+     * @return
+     */
+    public Observable<Set_Item> getJingCard(int page) {
+
+        return HttpFactory.getJingCard(String.valueOf(page));
+
     }
 
 
@@ -143,18 +145,20 @@ public class ImprotFactory extends BaseFractory {
 
     public List<Set_Item> getBalances() {
         List<Set_Item> datas = new ArrayList<>();
-        int[] icons = {R.mipmap.icon_chinamerchants_small
-                , R.mipmap.icon_chinaciticbank_small,
-                R.mipmap.icon_thebankofchina,
-                R.mipmap.icon_bankofcommunications,
-                R.mipmap.icon_shanghaipudongdevelopmentbank_small,
-                R.mipmap.icon_constructionbankccb,
-                R.mipmap.icon_thebankofchina,
-                R.mipmap.icon_other
+        int[] icons = {R.mipmap.icon_chinamerchants_small//招商银行
+                , R.mipmap.icon_chinaciticbank_small,//中信银行
+                R.mipmap.icon_thebankofchina,//中国银行
+                R.mipmap.icon_bankofcommunications,//交通银行
+                R.mipmap.icon_shanghaipudongdevelopmentbank_small,//浦发银行
+                R.mipmap.icon_constructionbankccb,//建设银行
+                R.mipmap.icon_guangdongdevelopmentbankk_icon,//广发银行
+                R.mipmap.icon_other//其他
         };
+        String[] titles={"招商银行","中信银行","中国银行","交通银行","浦发银行","建设银行","广发银行","其他"};
         for (int i = 0; i < icons.length; i++) {
             Set_Item item = new Set_Item();
             item.icon_id = icons[i];
+            item.title=titles[i];
             datas.add(item);
         }
         return datas;
@@ -168,6 +172,9 @@ public class ImprotFactory extends BaseFractory {
                 break;
             case LOAN_ONE_KEY_IPMORT:
                 id = R.layout.item_import_one_key_import;
+                break;
+            case LOAN_JING:
+                id = R.layout.item_loan_strategy;
                 break;
         }
         return id;

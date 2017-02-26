@@ -10,11 +10,10 @@ import android.widget.TextView;
 
 import finance.com.fp.BasisActivity;
 import finance.com.fp.R;
-import finance.com.fp.mode.bean.Config;
 import finance.com.fp.mode.bean.Set_Item;
 import finance.com.fp.mode.bean.TranInfor;
-import finance.com.fp.mode.datafractory.HomeDataFractory;
 import finance.com.fp.mode.datafractory.ImprotFactory;
+import finance.com.fp.mode.http.Config;
 import finance.com.fp.presenter.ImportProComl;
 import finance.com.fp.presenter.inter.ImportInter;
 import finance.com.fp.ui.inter.ImportView;
@@ -96,11 +95,10 @@ public class ImportActivity extends BasisActivity implements ImportView {
                 break;
             case 1:
                 c=TradeAnalysisActivity.class;
-                tranInfor.item_id = HomeDataFractory.BALANCE_CALL;
                 break;
             case 2:
-//                c=HomeSonActivity.class;
-                tranInfor.item_id = HomeDataFractory.CREDIT;
+                c=HomeSonActivity.class;
+                tranInfor.item_id = ImprotFactory.LOAN_JING;
                 break;
 
 

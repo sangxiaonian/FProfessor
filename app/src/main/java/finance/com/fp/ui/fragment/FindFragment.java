@@ -52,7 +52,9 @@ public class FindFragment extends BasisFragment implements HomeFramentView {
         rc.addItemDecoration(new RecycleViewDivider(getContext(), LinearLayout.VERTICAL));
         pre = new HomeFragmentPreComl(this);
         adapter = pre.initFindAdapter(getActivity());
+        rc.setHasBoom(true);
         rc.setAdapter(adapter);
+
         rc.setRefrushListener(new RefrushListener() {
             @Override
             public void onLoading() {
@@ -62,8 +64,7 @@ public class FindFragment extends BasisFragment implements HomeFramentView {
 
             @Override
             public void onLoadDowning() {
-
-                pre.getData();
+                pre.loadMore();
             }
         });
         rc.setLoading();
@@ -85,6 +86,7 @@ public class FindFragment extends BasisFragment implements HomeFramentView {
     @Override
     public void loadFail() {
         rc.loadFail();
+
     }
 
     @Override
