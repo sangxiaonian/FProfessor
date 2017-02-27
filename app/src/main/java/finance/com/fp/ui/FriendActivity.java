@@ -123,7 +123,7 @@ public class FriendActivity extends BasisActivity implements Observer<FriendBean
         Intent intent = new Intent(this, ShowDetailActivity.class);
         TranInfor infor = new TranInfor();
         infor.title = item.getTitle();
-        infor.content = item.getContent();
+        infor.content = item.getCurl();
         infor.describe = item.getUpdatetime();
         intent.putExtra(Config.infors, infor);
         startActivity(intent);

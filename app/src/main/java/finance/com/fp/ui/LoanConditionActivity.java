@@ -92,12 +92,14 @@ public class LoanConditionActivity extends BasisActivity implements View.OnClick
         Intent intent = new Intent(this, ShowDetailActivity.class);
         TranInfor infor = new TranInfor();
         infor.title = bean.getTitle();
-        infor.type=1;
+
         switch (v.getId()){
             case R.id.bt_apply:
+                infor.type=1;
                 infor.content = bean.getLjsq_url();
                 break;
             case R.id.bt_strategy:
+                infor.type=0;
                 infor.content = bean.getSq_url();
                 break;
         }

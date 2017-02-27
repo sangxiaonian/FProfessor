@@ -15,7 +15,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
-            android:name=".ui.MainActivity"
+            android:name=".ui.SplishActivity"
             android:label="@string/app_name"
             android:launchMode="singleTask">
             <intent-filter>
@@ -24,6 +24,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name=".ui.MainActivity" />
         <activity android:name=".ui.CardActivity" />
         <activity android:name=".ui.LoanActivity" />
         <activity android:name=".ui.ImportActivity" />
@@ -43,18 +44,19 @@
         <activity android:name=".ui.LoginActivity" />
         <activity android:name=".ui.RegisterActivity" />
         <activity android:name=".ui.ImportDetailActivity" />
+        <activity android:name=".ui.LoanConditionActivity" />
 
         <meta-data
             android:name="UMENG_APPKEY"
-            android:value="58ab92d8aed17920a1001627"></meta-data>
+            android:value="58ab92d8aed17920a1001627" />
         <meta-data
             android:name="UMENG_MESSAGE_SECRET"
-            android:value="866c0d09bc419f7324bc5025ad4f513c"></meta-data>
+            android:value="866c0d09bc419f7324bc5025ad4f513c" />
         <meta-data
             android:name="UMENG_CHANNEL"
-            android:value="自定义"></meta-data>
+            android:value="自定义" />
 
-        <activity android:name=".ui.LoanConditionActivity"></activity>
+        <activity android:name=".ui.GuideActivity"></activity>
     </application>
 
 </manifest>

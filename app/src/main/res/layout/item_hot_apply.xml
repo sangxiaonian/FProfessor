@@ -28,6 +28,20 @@
         android:textSize="@dimen/app_title_text_model" />
 
     <TextView
+        android:id="@+id/tv_sub_item"
+        android:layout_below="@id/tv_item"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+
+        android:layout_marginTop="@dimen/home_item_time_margin"
+        android:layout_toEndOf="@id/img_item"
+        android:textColor="@color/text_home_item"
+        android:textSize="@dimen/app_title_text_model" />
+
+
+
+
+    <TextView
         android:id="@+id/icon_flag"
         android:layout_width="@dimen/app_margin_ends"
         android:layout_height="@dimen/loan_item_tools_size"

@@ -21,7 +21,9 @@ import em.sang.com.allrecycleview.listener.OnToolsItemClickListener;
 import finance.com.fp.R;
 import finance.com.fp.mode.bean.TranInfor;
 import finance.com.fp.mode.datafractory.HttpFactory;
+import finance.com.fp.mode.datafractory.ImprotFactory;
 import finance.com.fp.mode.http.Config;
+import finance.com.fp.ui.HomeSonActivity;
 import finance.com.fp.ui.ImportDetailActivity;
 import finance.com.fp.ui.holder.CardNotifiHolder;
 import finance.com.fp.ui.holder.GrideHolder;
@@ -33,6 +35,7 @@ import finance.com.fp.mode.inter.ImportDataInter;
 import finance.com.fp.presenter.inter.ImportInter;
 import finance.com.fp.ui.inter.ImportView;
 import rx.Subscriber;
+import rx.Subscription;
 
 /**
  * Description：
@@ -47,6 +50,7 @@ public class ImportProComl implements ImportInter {
     private CardNotifiHolder notifiHolder;
     private ArrayList<Object> carouselDatas;
     RefrushAdapter adapter;
+
     public ImportProComl(ImportView view) {
         this.view = view;
         data = new ImportDataComl();
@@ -56,7 +60,7 @@ public class ImportProComl implements ImportInter {
     @Override
     public DefaultAdapter<Set_Item> getAdapter(final Context context) {
 
-         adapter= new RefrushAdapter(context, data.getImport(), R.layout.item_import, new DefaultAdapterViewLisenter() {
+        adapter = new RefrushAdapter(context, data.getImport(), R.layout.item_import, new DefaultAdapterViewLisenter() {
             @Override
             public CustomHolder<Set_Item> getBodyHolder(Context context, List lists, int itemID) {
                 return new CustomHolder<Set_Item>(context, lists, itemID) {
@@ -79,7 +83,7 @@ public class ImportProComl implements ImportInter {
                         btn.setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View v) {
-                               view.onItemClick(item,position);
+                                view.onItemClick(item, position);
                             }
                         });
                     }
@@ -98,12 +102,24 @@ public class ImportProComl implements ImportInter {
         grideHolder.setOnToolsItemClickListener(new OnToolsItemClickListener<Set_Item>() {
             @Override
             public void onItemClick(int position, Set_Item item) {
-                TranInfor tranInfor = new TranInfor();
-                tranInfor.title=item.title;
-                tranInfor.describe=item.describe;
-                Intent intent = new Intent(context,ImportDetailActivity.class);
-                intent.putExtra(Config.infors,tranInfor);
-                context.startActivity(intent);
+
+
+                if (position==data.getBalances().size()-1){
+                    TranInfor tranInfor = new TranInfor();
+                    Intent intent = new Intent(context,HomeSonActivity.class);
+                    tranInfor.activity_id = 2;
+                    tranInfor.title = context.getString(R.string.import_key);
+                    tranInfor.item_id = ImprotFactory.LOAN_ONE_KEY_IPMORT;
+                    intent.putExtra(Config.infors, tranInfor);
+                    context.startActivity(intent);
+                }else {
+                    TranInfor tranInfor = new TranInfor();
+                    tranInfor.title = item.title;
+                    tranInfor.describe = item.describe;
+                    Intent intent = new Intent(context, ImportDetailActivity.class);
+                    intent.putExtra(Config.infors, tranInfor);
+                    context.startActivity(intent);
+                }
             }
         });
 
@@ -114,15 +130,14 @@ public class ImportProComl implements ImportInter {
         return adapter;
     }
 
+    private Subscription Carouselsubscribe;
 
     private void setCarousel(Context context) {
-        carouselDatas=new ArrayList<>();
-        carouselDatas.add(new Set_Item(R.mipmap.loading,""));
+        carouselDatas = new ArrayList<>();
+        carouselDatas.add(new Set_Item(R.mipmap.loading, ""));
         carouselHolder = new HomeCarouselHolder(context, carouselDatas, R.layout.item_home_carousel);
         adapter.addHead(carouselHolder);
-
-
-        HttpFactory.getCarousel("32").subscribe(new Subscriber<Set_Item>() {
+        Carouselsubscribe = HttpFactory.getCarousel("32").subscribe(new Subscriber<Set_Item>() {
             @Override
             public void onStart() {
                 super.onStart();
@@ -151,9 +166,9 @@ public class ImportProComl implements ImportInter {
     }
 
 
-
     /**
      * 一键提额
+     *
      * @param context
      * @param adapter
      */
@@ -172,5 +187,8 @@ public class ImportProComl implements ImportInter {
     public void stopCarousel() {
         carouselHolder.stopCarousel();
         notifiHolder.stopCarousel();
+        if (Carouselsubscribe!=null){
+            Carouselsubscribe.unsubscribe();
+        }
     }
 }

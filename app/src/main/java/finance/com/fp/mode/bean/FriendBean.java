@@ -24,6 +24,16 @@ public class FriendBean {
     private String updatetime;
     private String content;
     private String thumb;
+
+    public String getCurl() {
+        return curl;
+    }
+
+    public void setCurl(String curl) {
+        this.curl = curl;
+    }
+
+    private String curl;
     private List<ImagesBean> images;
 
     public String getThumb() {

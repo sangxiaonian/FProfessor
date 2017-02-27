@@ -60,6 +60,7 @@ public class ImportDetailActivity extends BasisActivity implements View.OnClickL
                 a = R.string.zhao_call;
                 b = R.string.zhao_call_warn;
                 f = R.string.zhao_phone;
+                e=R.string.zhao_wei;
                 g= R.string.zhao_online;
 
                 break;
@@ -75,7 +76,6 @@ public class ImportDetailActivity extends BasisActivity implements View.OnClickL
                 a = R.string.jiao_call;
                 b = R.string.jiao_call_warn;
                 f = R.string.jiao_phone;
-
                 break;
             case "浦发银行":
                 a = R.string.pu_call;
@@ -88,7 +88,6 @@ public class ImportDetailActivity extends BasisActivity implements View.OnClickL
                 f = R.string.jian_phone;
                 c = R.string.jian_msg;
                 d = R.string.jian_msg_warn;
-                g=R.string.jian_online;
                 msg_bt = getString(R.string.jian_msg_phone);
                 break;
             case "中信银行":
@@ -98,21 +97,19 @@ public class ImportDetailActivity extends BasisActivity implements View.OnClickL
                 c = R.string.xin_msg;
                 d = R.string.xin_msg_worn;
                 e = R.string.xin_wei;
-                g=R.string.xin_online;
                 msg_bt = getString(R.string.xin_msg_phone);
                 break;
             case "农业银行":
-                g=R.string.nong_online;
                 a = R.string.nong_call;
                 f = R.string.nong_phone;
+                e=R.string.nong_wei;
                 break;
             case "平安银行":
-                g=R.string.ping_online;
                 a = R.string.ping_call;
                 f = R.string.ping_phone;
+
                 break;
             case "兴业银行":
-                g=R.string.xing_online;
                 a = R.string.xing_call;
                 b = R.string.xing_call_warn;
                 f = R.string.xing_phone;
@@ -124,24 +121,20 @@ public class ImportDetailActivity extends BasisActivity implements View.OnClickL
                 f = R.string.gong_phone;
                 break;
             case "民生银行":
-                g=R.string.min_online;
                 a = R.string.min_call;
 
                 f = R.string.min_phone;
                 break;
             case "中国银行":
-                g=R.string.zhong_online;
                 a = R.string.zhong_call;
                 b = R.string.zhong_call_warn;
                 f = R.string.zhong_phone;
                 break;
             case "光大银行":
-                g=R.string.guangd_online;
                 a = R.string.guangd_call;
                 f = R.string.guangd_phone;
                 break;
             case "华夏银行":
-                g=R.string.hua_online;
                 a = R.string.hua_call;
                 f = R.string.hua_phone;
                 break;

@@ -70,6 +70,7 @@ public class RegisterPhoneFragment extends BasisFragment implements View.OnClick
             case R.id.bt_forget:
 
                 startActivity(new Intent(getContext(), LoginActivity.class));
+                getActivity().finish();
                 break;
             case R.id.bt_dynamic:
                 pre.getDynamic(getString(R.string.input_phone),et_user);

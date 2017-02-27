@@ -146,6 +146,17 @@ public class Utils {
         SharedPreferences preferences = context.getSharedPreferences(Config.sp_name, 0);
        return preferences.getString(phone,"");
     }
+    /**
+     *  设置配置文件
+     * @param context
+
+     */
+    public static void setSp(Context context,String name,String value) {
+        SharedPreferences preferences = context.getSharedPreferences(Config.sp_name, 0);
+        SharedPreferences.Editor edit = preferences.edit();
+        edit.putString(name, value);
+        edit.commit();
+    }
 
 
     public static boolean isLogion( Context context) {

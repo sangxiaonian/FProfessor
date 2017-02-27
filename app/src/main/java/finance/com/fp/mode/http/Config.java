@@ -22,5 +22,6 @@ public class Config {
 
     public static String login_name="login_name";
     public static String login_password="login_password";
+    public static String isFirst="isFirst";
 
 }

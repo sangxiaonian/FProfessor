@@ -6,7 +6,10 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.text.TextUtils;
 import android.view.View;
+import android.view.ViewGroup;
+import android.view.WindowManager;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
@@ -19,6 +22,8 @@ import em.sang.com.allrecycleview.inter.DefaultAdapterViewLisenter;
 import finance.com.fp.R;
 import finance.com.fp.mode.bean.FriendBean;
 import finance.com.fp.utlis.GlideUtils;
+import sang.com.xdialog.DialogFactory;
+import sang.com.xdialog.XDialog;
 
 import static finance.com.fp.R.id.img_icon;
 
@@ -67,7 +72,7 @@ public class FriendHolder extends CustomHolder<FriendBean> {
                 .crossFade().into((ImageView) itemView.findViewById(img_icon));
 
         RecyclerView recyclerView = (RecyclerView) itemView.findViewById(R.id.rc);
-        List<FriendBean.ImagesBean> images = bean.getImages();
+        final List<FriendBean.ImagesBean> images = bean.getImages();
         if (bean.getImages()==null||bean.getImages().size()==0){
             recyclerView.setVisibility(View.GONE);
         }else {
@@ -78,13 +83,31 @@ public class FriendHolder extends CustomHolder<FriendBean> {
                 public CustomHolder getBodyHolder(Context context, List<FriendBean.ImagesBean> lists, int itemID) {
                     return new CustomHolder<FriendBean.ImagesBean>(context, lists, itemID){
                         @Override
-                        public void initView(int position, List<FriendBean.ImagesBean> datas, Context context) {
+                        public void initView(int position, List<FriendBean.ImagesBean> datas, final Context context) {
                             super.initView(position, datas, context);
-                            FriendBean.ImagesBean imagesBean = datas.get(position);
+                            final FriendBean.ImagesBean imagesBean = datas.get(position);
                             ImageView imageView = (ImageView) itemView.findViewById(img_icon);
-
                             GlideUtils.loadImage(context,imageView,imagesBean.getUrl());
-
+                            imageView.setOnClickListener(new View.OnClickListener() {
+                                @Override
+                                public void onClick(View v) {
+                                    final XDialog dialog = DialogFactory.getInstance().creatDiaolg(context,DialogFactory.ALEART_DIALOG);
+                                    ImageView view = new ImageView(context);
+                                    view.setClickable(true);
+                                    view.setOnClickListener(new View.OnClickListener() {
+                                        @Override
+                                        public void onClick(View v) {
+                                            dialog.dismiss();
+                                        }
+                                    });
+                                    LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
+                                    view.setLayoutParams(params);
+                                    GlideUtils.loadImage(context,view,imagesBean.getUrl());
+                                    dialog.show();
+                                    dialog.setContentView(view);
+                                    dialog.getWindow().setLayout(WindowManager.LayoutParams.MATCH_PARENT,WindowManager.LayoutParams.MATCH_PARENT);
+                                }
+                            });
                         }
                     };
                 }

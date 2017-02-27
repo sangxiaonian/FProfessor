@@ -27,7 +27,6 @@ public class HttpClient {
         interceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
         builder.addInterceptor(interceptor);
         Retrofit retrofit = new Retrofit.Builder()
-
                 .client(builder.build())
                 .addConverterFactory(ScalarsConverterFactory.create())
                 .addCallAdapterFactory(RxJavaCallAdapterFactory.create())

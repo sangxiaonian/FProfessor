@@ -78,6 +78,12 @@ public class XDialog<T> extends Dialog {
 
     }
 
+    @Override
+    public void setContentView(View view) {
+        super.setContentView(view);
+        this.view=view;
+    }
+
     protected void initContentView(){
 
     }

@@ -18,16 +18,18 @@ import sang.com.xdialog.utils.DeviceUtils;
  */
 public class AlertDialog extends XDialog {
 
-    private String msg_titles,msg_content;
+    private String msg_titles, msg_content;
+
     public AlertDialog(Context context) {
-        this(context,R.style.DialogCutTheme);
+        this(context, R.style.DialogCutTheme);
 //        super(context);
     }
 
     public AlertDialog(Context context, int themeResId) {
         super(context, themeResId);
     }
-    private TextView txt_title,content;
+
+    private TextView txt_title, content;
     private EditText et;
 
     protected AlertDialog(Context context, boolean cancelable, OnCancelListener cancelListener) {
@@ -37,8 +39,8 @@ public class AlertDialog extends XDialog {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        int  width= (int) DeviceUtils.getScreenWidth(getContext());
-        dialog.getWindow().setLayout(width*5/6, WindowManager.LayoutParams.WRAP_CONTENT);
+        int width = (int) DeviceUtils.getScreenWidth(getContext());
+        dialog.getWindow().setLayout(width * 5 / 6, WindowManager.LayoutParams.WRAP_CONTENT);
 
     }
 
@@ -54,13 +56,13 @@ public class AlertDialog extends XDialog {
         bt_entry.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (entryListener!=null){
-                    if (style==ALEART_EDITTEXT) {
+                if (entryListener != null) {
+                    if (style == ALEART_EDITTEXT) {
                         entryListener.onClick(dialog, 0, et.getText().toString().trim());
-                    }else {
+                    } else {
                         entryListener.onClick(dialog, 0, content.getText().toString().trim());
                     }
-                }else {
+                } else {
                     dismiss();
                 }
             }
@@ -70,27 +72,27 @@ public class AlertDialog extends XDialog {
     @Override
     protected void iniViews() {
         super.iniViews();
-        txt_title= (TextView) findViewById(R.id.txt_title);
+        txt_title = (TextView) findViewById(R.id.txt_title);
 
-        if (TextUtils.isEmpty(msg_titles)){
+        if (TextUtils.isEmpty(msg_titles)) {
             txt_title.setVisibility(View.GONE);
-        }else {
+        } else {
             txt_title.setVisibility(View.VISIBLE);
             txt_title.setText(msg_titles);
         }
-        if (style==ALEART_EDITTEXT){
-            et= (EditText) findViewById(R.id.txt_msg);
-            if (!TextUtils.isEmpty(msg_content)){
+        if (style == ALEART_EDITTEXT) {
+            et = (EditText) findViewById(R.id.txt_msg);
+            if (!TextUtils.isEmpty(msg_content)) {
                 et.setVisibility(View.VISIBLE);
                 et.setHint(msg_content);
                 et.requestFocus();
 
             }
-        }else {
-            content= (TextView) findViewById(R.id.txt_msg);
-            if (TextUtils.isEmpty(msg_content)){
+        } else {
+            content = (TextView) findViewById(R.id.txt_msg);
+            if (TextUtils.isEmpty(msg_content)) {
                 content.setVisibility(View.GONE);
-            }else {
+            } else {
                 content.setVisibility(View.VISIBLE);
                 content.setText(msg_content);
             }
@@ -111,12 +113,12 @@ public class AlertDialog extends XDialog {
 
     @Override
     protected void changeLayoutByStyle(int style) {
-        switch (style){
+        switch (style) {
             case ALEART_EDITTEXT:
-                layoutId=R.layout.alert_editext_dialog;
+                layoutId = R.layout.alert_editext_dialog;
                 break;
             case ALEART_ONLY_ENTRY:
-                layoutId=R.layout.alert_only_entry_dialog;
+                layoutId = R.layout.alert_only_entry_dialog;
                 break;
         }
     }
@@ -125,13 +127,13 @@ public class AlertDialog extends XDialog {
     @Override
     public void setTitle(CharSequence title) {
         super.setTitle(title);
-        msg_titles= (String) title;
+        msg_titles = (String) title;
     }
 
     @Override
     public void setDatas(Object datas) {
         super.setDatas(datas);
-        msg_content= (String) datas;
+        msg_content = (String) datas;
 
     }
 
