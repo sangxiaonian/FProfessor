@@ -118,7 +118,7 @@ public class SetBodyHolder extends CustomHolder<Set_Item> {
 
         }
 
-        if (!Utils.isLogion(context)) {
+        if (Utils.isLogion(context)) {
             if (c != null) {
                 intent.setClass(context, c);
                 context.startActivity(intent);

@@ -9,8 +9,6 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.bumptech.glide.Glide;
-
 import java.util.List;
 
 import em.sang.com.allrecycleview.adapter.DefaultAdapter;
@@ -18,6 +16,7 @@ import em.sang.com.allrecycleview.holder.CustomHolder;
 import em.sang.com.allrecycleview.inter.DefaultAdapterViewLisenter;
 import finance.com.fp.R;
 import finance.com.fp.mode.bean.Set_Item;
+import finance.com.fp.utlis.GlideUtils;
 import finance.com.fp.utlis.ToastUtil;
 
 /**
@@ -79,23 +78,10 @@ public class GrideHolder extends BasicHolder<Set_Item> {
                         final Set_Item item = datas.get(position);
 
                         if (item.img_url != null && item.img_url.length() > 0) {
-                            Glide.with(context)
-                                    .load(item.img_url)
-                                    .placeholder(item.placeholder)
-                                    .error(item.faildId)
-                                    .centerCrop()
-                                    .crossFade()
-                                    .into(imageView);
 
+                            GlideUtils.loadImage(context,imageView,item.img_url);
                         } else if (item.icon_id > 0) {
-                            Glide.with(context)
-                                    .load(item.icon_id)
-                                    .placeholder(item.placeholder)
-                                    .error(item.faildId)
-                                    .centerCrop()
-                                    .crossFade()
-                                    .into(imageView);
-
+                            GlideUtils.loadImage(context,imageView,item.icon_id);
                         }
                         if (!TextUtils.isEmpty(item.title)&&tv_title!=null) {
                             tv_title.setText(item.title);
@@ -105,8 +91,8 @@ public class GrideHolder extends BasicHolder<Set_Item> {
                             @Override
                             public void onClick(View v) {
 
-                                if (listener!=null){
-                                    listener.onItemClick(position,item);
+                                if (GrideHolder.this.listener!=null){
+                                    GrideHolder.this.listener.onItemClick(position,item);
                                 }else {
                                     ToastUtil.showTextToast(context, item.title);
                                 }

@@ -7,15 +7,14 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.bumptech.glide.Glide;
-
 import java.util.List;
 
 import em.sang.com.allrecycleview.holder.CustomHolder;
 import finance.com.fp.R;
-import finance.com.fp.mode.http.Config;
 import finance.com.fp.mode.bean.LoanSearchBean;
+import finance.com.fp.mode.http.Config;
 import finance.com.fp.ui.LoanConditionActivity;
+import finance.com.fp.utlis.GlideUtils;
 
 /**
  * Description：
@@ -38,13 +37,8 @@ public class HomeBodyHolder extends CustomHolder<LoanSearchBean> {
 
         final LoanSearchBean item = (LoanSearchBean) datas.get(position);
         if (img != null && !TextUtils.isEmpty(item.getThumb())) {
-            Glide.with(context)
-                    .load(item.getThumb())
-                    .placeholder(R.mipmap.loading)
-                    .error(R.mipmap.load_fail)
-                    .centerCrop()
-                    .crossFade()
-                    .into(img);
+
+            GlideUtils.loadImage(context,img,item.getThumb());
         }
 
         title.setText(item.getTitle());

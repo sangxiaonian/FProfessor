@@ -255,9 +255,7 @@ public class IDActivity extends BasisActivity implements OnToolsItemClickListene
     public void onError(Throwable e) {
         dialog.dismiss();
         e.printStackTrace();
-
         Intent intent = new Intent(this,Loan_Search_Activity.class);
-
         startActivity(intent);
     }
 

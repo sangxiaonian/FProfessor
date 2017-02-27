@@ -1,5 +1,6 @@
 package finance.com.fp.ui;
 
+import android.Manifest;
 import android.app.AlertDialog;
 import android.content.Intent;
 import android.graphics.drawable.ColorDrawable;
@@ -11,6 +12,7 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 
@@ -19,12 +21,13 @@ import em.sang.com.allrecycleview.adapter.DefaultAdapter;
 import em.sang.com.allrecycleview.inter.DefaultRefrushListener;
 import finance.com.fp.BasisActivity;
 import finance.com.fp.R;
-import finance.com.fp.mode.http.Config;
 import finance.com.fp.mode.bean.Set_Item;
 import finance.com.fp.mode.bean.TranInfor;
+import finance.com.fp.mode.http.Config;
 import finance.com.fp.presenter.HomeSonPerComl;
 import finance.com.fp.presenter.inter.HomeSonPreInter;
 import finance.com.fp.ui.inter.HomeSonView;
+import finance.com.fp.utlis.PermissionUtil;
 import finance.com.fp.utlis.ToastUtil;
 
 public class HomeSonActivity extends BasisActivity implements HomeSonView {
@@ -192,51 +195,61 @@ public class HomeSonActivity extends BasisActivity implements HomeSonView {
 
         View inflate = inflater.inflate(R.layout.dialog_item, null);
         dialog.setView(inflate);
-        final AlertDialog show = dialog.show();
-        show.getWindow().setBackgroundDrawable(new ColorDrawable(getResources().getColor(R.color.transparent)));
-        TextView tv_phone = (TextView) inflate.findViewById(R.id.tv_phone);
-        TextView tv_phonenumber = (TextView) inflate.findViewById(R.id.tv_phonenumber);
-        TextView tv_credit = (TextView) inflate.findViewById(R.id.tv_credit);
-        TextView tv_creditnumber = (TextView) inflate.findViewById(R.id.tv_creditnumber);
-        LinearLayout phone_call = (LinearLayout) inflate.findViewById(R.id.ll_phone);
-        LinearLayout credit_call = (LinearLayout) inflate.findViewById(R.id.ll_credit);
+        if (PermissionUtil.has(this, Manifest.permission.CALL_PHONE)) {
+            final AlertDialog show = dialog.show();
+            show.getWindow().setBackgroundDrawable(new ColorDrawable(getResources().getColor(R.color.transparent)));
+            TextView tv_phone = (TextView) inflate.findViewById(R.id.tv_phone);
+            TextView tv_phonenumber = (TextView) inflate.findViewById(R.id.tv_phonenumber);
+            TextView tv_credit = (TextView) inflate.findViewById(R.id.tv_credit);
+            TextView tv_creditnumber = (TextView) inflate.findViewById(R.id.tv_creditnumber);
+            LinearLayout phone_call = (LinearLayout) inflate.findViewById(R.id.ll_phone);
+            LinearLayout credit_call = (LinearLayout) inflate.findViewById(R.id.ll_credit);
 
-        try {
-            String[] split = data.describe.split("\n");
-            final String[] phone = split[0].split(":");
-            tv_phone.setText(phone[1]);
-            tv_phonenumber.setText(phone[0]);
-            if (split.length > 1) {
-                credit_call.setVisibility(View.VISIBLE);
-                final String[] credit = split[1].split(":");
-                tv_credit.setText(credit[1]);
-                tv_creditnumber.setText(credit[0]);
-                credit_call.setOnClickListener(new View.OnClickListener() {
+            try {
+                String[] split = data.describe.split("\n");
+                final String[] phone = split[0].split(":");
+                tv_phone.setText(phone[1]);
+                tv_phonenumber.setText(phone[0]);
+                if (split.length > 1) {
+                    credit_call.setVisibility(View.VISIBLE);
+                    final String[] credit = split[1].split(":");
+                    tv_credit.setText(credit[1]);
+                    tv_creditnumber.setText(credit[0]);
+                    credit_call.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            show.dismiss();
+                            Intent intent = new Intent("android.intent.action.CALL", Uri.parse("tel:" + credit[1].replace("-", "")));
+                            startActivity(intent);
+
+                        }
+                    });
+                } else {
+                    credit_call.setVisibility(View.GONE);
+                }
+                final String phoneNumber = phone[1];
+                phone_call.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
                         show.dismiss();
-                        Intent intent = new Intent("android.intent.action.CALL", Uri.parse("tel:" + credit[1].replace("-", "")));
+                        Intent intent = new Intent("android.intent.action.CALL", Uri.parse("tel:" + phoneNumber));
                         startActivity(intent);
 
                     }
                 });
-            } else {
-                credit_call.setVisibility(View.GONE);
+
+
+            } catch (Exception e) {
+                e.printStackTrace();
             }
-            final String phoneNumber = phone[1];
-            phone_call.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    show.dismiss();
-                    Intent intent = new Intent("android.intent.action.CALL", Uri.parse("tel:" + phoneNumber));
-                    startActivity(intent);
+        }else {
+            if (PermissionUtil.hasCallPhonePermReason(this)) { // 是否显示申请权限的原因(被拒一次后再次申请时候)
+                Toast.makeText( this, "没有授予打电话权限的话,打不了电话哦!", Toast.LENGTH_SHORT).show();
 
-                }
-            });
-
-
-        } catch (Exception e) {
-            e.printStackTrace();
+                PermissionUtil.requestCallPhonePerm(this, 1); // 申请权限
+            } else {
+                PermissionUtil.requestCallPhonePerm(this, 1);
+            }
         }
 
 

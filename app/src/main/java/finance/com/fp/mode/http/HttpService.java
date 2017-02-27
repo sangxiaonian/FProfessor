@@ -123,11 +123,12 @@ public interface HttpService {
      *
      * @param username 用户名
      * @param member   注册码
+     * @param dynamic 是否是动态登陆
      * @return
      */
     @FormUrlEncoded
     @POST("index.php?m=content&c=doserver&a=app_member_login")
-    Observable<String> login(@Field("username") String username, @Field("pass") String member);
+    Observable<String> login(@Field("username") String username, @Field("pass") String member, @Field("dynamic")boolean dynamic);
 
     /**
      * 办卡攻略

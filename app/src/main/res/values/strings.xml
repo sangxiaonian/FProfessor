@@ -191,6 +191,8 @@
     <string name="no_more">没有更多数据了</string>
     <string name="attention">注意</string>
     <string name="no_register">注册码无效,注册失败!</string>
+    <string name="register_fail">注册失败!</string>
+    <string name="register_has">注册失败,账号已经存在!</string>
     <string name="psd_fail">设置密码失败</string>
     <string name="psd_change">修改密码</string>
     <string name="psd_change_succ">恭喜你,密码修改成功</string>

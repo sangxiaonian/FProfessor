@@ -7,12 +7,11 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.bumptech.glide.Glide;
-
 import java.util.List;
 
 import finance.com.fp.R;
 import finance.com.fp.mode.bean.Set_Item;
+import finance.com.fp.utlis.GlideUtils;
 import finance.com.fp.utlis.ToastUtil;
 
 /**
@@ -57,11 +56,8 @@ public class HomeToolsHolder extends BasicHolder {
             ll.setLayoutParams(params);
             final ImageView icon = (ImageView) ll.findViewById(R.id.img_tools);
             final Set_Item item = lists.get(i);
-            Glide.with(context)
-                    .load(item.icon_id)
-                    .error(item.faildId)
-                    .placeholder(item.placeholder)
-                    .into(icon);
+
+            GlideUtils.loadImage(context,icon,item.icon_id);
             final int id = i;
             ll.setOnClickListener(new View.OnClickListener() {
                 @Override

@@ -7,16 +7,15 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.bumptech.glide.Glide;
-
 import java.util.List;
 
 import em.sang.com.allrecycleview.holder.CustomHolder;
 import finance.com.fp.R;
-import finance.com.fp.mode.http.Config;
 import finance.com.fp.mode.bean.Set_Item;
 import finance.com.fp.mode.bean.TranInfor;
+import finance.com.fp.mode.http.Config;
 import finance.com.fp.ui.ShowDetailActivity;
+import finance.com.fp.utlis.GlideUtils;
 
 /**
  * Description：
@@ -40,13 +39,8 @@ public class HomeFindHolder extends CustomHolder<Set_Item> {
 
         final Set_Item item = datas.get(position);
         if (img != null && !TextUtils.isEmpty(item.img_url)) {
-            Glide.with(context)
-                    .load(item.img_url)
-                    .placeholder(item.placeholder)
-                    .error(item.faildId)
-                    .centerCrop()
-                    .crossFade()
-                    .into(img);
+
+            GlideUtils.loadImage(context,img,item.img_url);
         }
 
         title.setText(item.title);

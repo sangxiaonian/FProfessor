@@ -104,7 +104,7 @@ public class RegisterPreComl implements RegisterInter {
         }
 
 
-          trim = et_password.getText().toString().trim();
+
         if (et_register!=null){
             register_code = et_register.getText().toString().trim();
             if (TextUtils.isEmpty(register_code)) {
@@ -117,14 +117,11 @@ public class RegisterPreComl implements RegisterInter {
             }
         }
 
-
-
+        trim = et_password.getText().toString().trim();
         if (et_password!=null&&TextUtils.isEmpty(trim)){
             view.showEtError(et_password, view.getPasswordNotic());
             return;
         }
-
-
 
         if (view instanceof RegisterPasswordFragment){
 
@@ -140,7 +137,8 @@ public class RegisterPreComl implements RegisterInter {
             view.showDialog();
             HttpFactory.register(phone,register_code).subscribe(view);
         }else {
-            HttpFactory.register(phone,register_code).subscribe(view);
+
+            HttpFactory.login(phone,trim,view.getPasswordNotic()==R.string.input_dynamic).subscribe(view);
         }
 
     }

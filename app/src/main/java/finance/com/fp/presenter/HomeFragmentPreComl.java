@@ -1,6 +1,7 @@
 package finance.com.fp.presenter;
 
 import android.content.Context;
+import android.content.Intent;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -16,6 +17,7 @@ import finance.com.fp.mode.bean.Set_Item;
 import finance.com.fp.mode.datafractory.HttpFactory;
 import finance.com.fp.mode.inter.HomeFragmentData;
 import finance.com.fp.presenter.inter.HomeFragmentPre;
+import finance.com.fp.ui.Loan_Search_Activity;
 import finance.com.fp.ui.holder.CardMoreHolder;
 import finance.com.fp.ui.holder.FindFriendHolder;
 import finance.com.fp.ui.holder.FindFunctionHolder;
@@ -62,7 +64,7 @@ public class HomeFragmentPreComl implements HomeFragmentPre {
     }
 
     @Override
-    public RefrushAdapter<Set_Item> initAdapter(Context context) {
+    public RefrushAdapter<Set_Item> initAdapter(final Context context) {
 
         adapter = new RefrushAdapter<>(context, homeList, R.layout.item_loan_item, new DefaultAdapterViewLisenter<LoanSearchBean>() {
             @Override
@@ -79,7 +81,14 @@ public class HomeFragmentPreComl implements HomeFragmentPre {
         toolsHolder.setMagrin(0, dimension, 0, dimension);
         toolsHolder.setOnToolsItemClickListener(view);
         adapter.addHead(toolsHolder);
-        adapter.addHead(new CardMoreHolder(context, R.layout.item_card_more, new Set_Item(0, "热门网贷", "更多产品")));
+        CardMoreHolder moreHolder = new CardMoreHolder(context, R.layout.item_card_more, new Set_Item(0, "热门网贷", "更多产品"));
+        moreHolder.setOnToolsItemClickListener(new OnToolsItemClickListener() {
+            @Override
+            public void onItemClick(int position, Object item) {
+                context.startActivity(new Intent(context, Loan_Search_Activity.class));
+            }
+        });
+        adapter.addHead(moreHolder);
         return adapter;
     }
     List<Set_Item> temp;

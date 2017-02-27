@@ -2,18 +2,22 @@ package finance.com.fp.ui;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.Html;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
+
 import finance.com.fp.BasisActivity;
 import finance.com.fp.R;
-import finance.com.fp.mode.http.Config;
 import finance.com.fp.mode.bean.LoanSearchBean;
 import finance.com.fp.mode.bean.TranInfor;
+import finance.com.fp.mode.http.Config;
 
 /**
  * 贷款详情
@@ -24,6 +28,7 @@ public class LoanConditionActivity extends BasisActivity implements View.OnClick
     private TextView tv_con,tv_material,tv_notice,tv_money,tv_tiem,tv_title,tv_describe;
     private Button bt_apply;
     private ImageButton bt_strategy;
+    private ImageView img_item_loan;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,6 +55,7 @@ public class LoanConditionActivity extends BasisActivity implements View.OnClick
         tv_describe= (TextView) findViewById(R.id.tv_describe);
         bt_apply= (Button) findViewById(R.id.bt_apply);
         bt_strategy= (ImageButton) findViewById(R.id.bt_strategy);
+        img_item_loan= (ImageView) findViewById(R.id.img_item_loan);
     }
 
     @Override
@@ -57,6 +63,10 @@ public class LoanConditionActivity extends BasisActivity implements View.OnClick
         setViewText(ll_con,tv_con,bean.getTiaojian());
         setViewText(ll_material,tv_material,bean.getSuoxu());
         setViewText(ll_notice,tv_notice,bean.getZhushi());
+        Glide.with(this).load(bean.getThumb())
+                .placeholder(R.mipmap.loading)
+                .error(R.mipmap.load_fail)
+                .crossFade().into(img_item_loan);
         tv_tiem.setText(bean.getFenqi());
         tv_money.setText(bean.getMoney());
         tv_title.setText(bean.getTitle());
@@ -72,7 +82,7 @@ public class LoanConditionActivity extends BasisActivity implements View.OnClick
             ll_con.setVisibility(View.GONE);
         }else {
             ll_con.setVisibility(View.VISIBLE);
-            tv_con.setText(bean.getTiaojian());
+            tv_con.setText(Html.fromHtml(tiaojian));
         }
     }
 

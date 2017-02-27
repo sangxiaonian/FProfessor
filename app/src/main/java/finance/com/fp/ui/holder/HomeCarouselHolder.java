@@ -20,6 +20,7 @@ import java.util.List;
 import em.sang.com.allrecycleview.utils.Apputils;
 import finance.com.fp.R;
 import finance.com.fp.mode.bean.Set_Item;
+import finance.com.fp.utlis.GlideUtils;
 
 /**
  * Description：首页轮播图
@@ -161,21 +162,11 @@ public class HomeCarouselHolder extends BasicHolder {
             Set_Item item= (Set_Item) datas.get(position);
 
             if (!TextUtils.isEmpty(item.img_url)) {
-                Glide.with(context)
-                        .load(item.img_url)
-                        .placeholder(R.mipmap.loading_big)
-                        .error(R.mipmap.load_fail_big)
-                        .centerCrop()
-                        .crossFade()
-                        .into(imageView);
+
+                GlideUtils.loadImage(context,imageView,item.img_url);
             }else {
-                Glide.with(context)
-                        .load(item.icon_id)
-                        .placeholder(R.mipmap.loading_big)
-                        .error(R.mipmap.load_fail_big)
-                        .centerCrop()
-                        .crossFade()
-                        .into(imageView);
+                GlideUtils.loadImage(context,imageView,item.icon_id);
+
             }
 
             container.addView(imageView);

@@ -18,6 +18,9 @@ import em.sang.com.allrecycleview.holder.CustomHolder;
 import em.sang.com.allrecycleview.inter.DefaultAdapterViewLisenter;
 import finance.com.fp.R;
 import finance.com.fp.mode.bean.FriendBean;
+import finance.com.fp.utlis.GlideUtils;
+
+import static finance.com.fp.R.id.img_icon;
 
 /**
  * Description：
@@ -48,6 +51,7 @@ public class FriendHolder extends CustomHolder<FriendBean> {
             time.setText(em.sang.com.allrecycleview.utils.Utils.formatDateTime(bean.getUpdatetime()+"000"));
         }
 
+
         TextView textView = (TextView) itemView.findViewById(R.id.tv_details);
         textView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -58,6 +62,9 @@ public class FriendHolder extends CustomHolder<FriendBean> {
                 }
             }
         });
+        Glide.with(context).load(bean.getThumb()).placeholder(R.mipmap.loading)
+                .fitCenter().error(R.mipmap.load_fail)
+                .crossFade().into((ImageView) itemView.findViewById(img_icon));
 
         RecyclerView recyclerView = (RecyclerView) itemView.findViewById(R.id.rc);
         List<FriendBean.ImagesBean> images = bean.getImages();
@@ -74,9 +81,10 @@ public class FriendHolder extends CustomHolder<FriendBean> {
                         public void initView(int position, List<FriendBean.ImagesBean> datas, Context context) {
                             super.initView(position, datas, context);
                             FriendBean.ImagesBean imagesBean = datas.get(position);
-                            Glide.with(context).load(imagesBean.getUrl()).placeholder(R.mipmap.loading)
-                                    .fitCenter().error(R.mipmap.load_fail)
-                                    .crossFade().into((ImageView) itemView.findViewById(R.id.img_icon));
+                            ImageView imageView = (ImageView) itemView.findViewById(img_icon);
+
+                            GlideUtils.loadImage(context,imageView,imagesBean.getUrl());
+
                         }
                     };
                 }

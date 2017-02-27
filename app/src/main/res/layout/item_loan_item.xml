@@ -31,10 +31,14 @@
             android:textSize="@dimen/app_title_text_size" />
 
         <TextView
+
             android:id="@+id/tv_title_sub_item_loan"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_below="@id/tv_title_item_loan"
+            android:ellipsize="end"
             android:layout_alignBottom="@id/img_item_loan"
+            android:maxLines="2"
             android:lineSpacingMultiplier="1.2"
             android:layout_alignStart="@id/tv_title_item_loan"
             android:textColor="@color/bg"

@@ -6,10 +6,9 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.bumptech.glide.Glide;
-
 import finance.com.fp.R;
 import finance.com.fp.mode.bean.Set_Item;
+import finance.com.fp.utlis.GlideUtils;
 
 /**
  * Description：
@@ -36,13 +35,8 @@ public class CardMoreHolder extends BasicHolder<Set_Item> {
         TextView tv_describe= (TextView) itemView.findViewById(R.id.tv_card_item_small);
         if (item.icon_id>0) {
             imageView.setVisibility(View.VISIBLE);
-            Glide.with(context)
-                    .load(item.icon_id)
-                    .placeholder(item.placeholder)
-                    .error(item.faildId)
-                    .centerCrop()
-                    .crossFade()
-                    .into(imageView);
+
+            GlideUtils.loadImage(context,imageView,item.icon_id);
         }else {
             imageView.setVisibility(View.GONE);
         }

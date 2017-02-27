@@ -15,7 +15,6 @@ import finance.com.fp.R;
 import finance.com.fp.presenter.RegisterPreComl;
 import finance.com.fp.presenter.inter.RegisterInter;
 import finance.com.fp.ui.inter.RegisterView;
-import finance.com.fp.utlis.ToastUtil;
 import sang.com.xdialog.DialogFactory;
 import sang.com.xdialog.XDialog;
 
@@ -117,18 +116,18 @@ public class LoginActivity extends BasisActivity implements RegisterView<String>
         et_password.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PASSWORD);
     }
 
+    private boolean dynamic;
+
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.bt_login:
+                dynamic = false;
                 pre.jumpToNext(this, et_user, et_password, null);
                 break;
             case R.id.bt_dynamic:
-                if (true) {
-                    ToastUtil.showTextToast("暂不支持验证码登陆");
-                } else {
-                    pre.getDynamic(getString(R.string.input_phone), et_user);
-                }
+                dynamic = true;
+                pre.getDynamic(getString(R.string.input_phone), et_user);
                 break;
             case R.id.bt_forget:
 

@@ -268,9 +268,9 @@ public class HttpFactory {
      *
      * @return
      */
-    public static Observable<String> login(String username,String password) {
+    public static Observable<String> login(String username,String password,boolean dynamic) {
         HttpService service = HttpClient.getClient(Config.base_url);
-        return service.login( username, password)
+        return service.login( username, password,dynamic)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread());
     }

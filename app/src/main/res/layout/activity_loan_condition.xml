@@ -51,7 +51,7 @@
                     android:textColor="@color/text_home_item"
                     android:textSize="@dimen/app_title_text_size" />
 
-                <TextView
+      <!--          <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignStart="@id/tv_title"
@@ -62,15 +62,16 @@
                     android:text="@string/apply_rate"
                     android:textColor="@color/bg"
                     android:textSize="@dimen/loan_item_hot_text_size" />
-
+-->
                 <TextView
                     android:id="@+id/tv_describe"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignBottom="@id/img_item_loan"
+                    android:maxLines="2"
                     android:layout_alignStart="@id/tv_title"
                     android:lineSpacingMultiplier="1.2"
-                    android:textColor="@color/bg"
+                    android:textColor="@color/text_card_item_more"
                     android:textSize="@dimen/loan_item_hot_text_size" />
 
                 <ImageButton

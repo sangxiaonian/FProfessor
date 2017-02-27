@@ -211,7 +211,7 @@ public class RegisterPhoneFragment extends BasisFragment implements View.OnClick
 
        switch (o){
            case "0":
-               inforDialog.setTitle(Utils.getResStr(R.string.attention));
+               inforDialog.setTitle(Utils.getResStr(R.string.register_fail));
                inforDialog.setDatas(Utils.getResStr(R.string.no_register));
                inforDialog.show();
                break;
@@ -223,8 +223,13 @@ public class RegisterPhoneFragment extends BasisFragment implements View.OnClick
            case "2":
                onNextClick();
                break;
+           case "3":
+               inforDialog.setTitle(Utils.getResStr(R.string.register_fail));
+               inforDialog.setDatas(Utils.getResStr(R.string.register_has));
+               inforDialog.show();
+               break;
            default:
-               inforDialog.setTitle(Utils.getResStr(R.string.attention));
+               inforDialog.setTitle(Utils.getResStr(R.string.register_fail));
                inforDialog.setDatas(Utils.getResStr(R.string.net_error));
                inforDialog.show();
                break;
