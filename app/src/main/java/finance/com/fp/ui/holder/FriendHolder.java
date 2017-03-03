@@ -4,6 +4,7 @@ import android.content.Context;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
+import android.text.Html;
 import android.text.TextUtils;
 import android.view.View;
 import android.view.ViewGroup;
@@ -48,7 +49,7 @@ public class FriendHolder extends CustomHolder<FriendBean> {
         }
         TextView content = (TextView) itemView.findViewById(R.id.tv_content);
         if (bean.getContent()!=null){
-            content.setText(bean.getContent());
+            content.setText(Html.fromHtml(bean.getContent()));
         }
 
         TextView time = (TextView) itemView.findViewById(R.id.tv_time);

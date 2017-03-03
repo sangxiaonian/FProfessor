@@ -15,4 +15,5 @@ public interface LoanDataInter {
     List<Set_Item>  getTools();
 
     List<Set_Item>  getGVLoan();
+    List<Set_Item>  getJi();
 }

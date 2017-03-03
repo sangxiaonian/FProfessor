@@ -27,6 +27,7 @@ import finance.com.fp.ui.PlannerActivity;
 import finance.com.fp.ui.inter.HomeFramentView;
 import finance.com.fp.utlis.RecycleViewDivider;
 import finance.com.fp.utlis.ToastUtil;
+import finance.com.fp.utlis.Utils;
 
 /**
  * Description：
@@ -100,6 +101,11 @@ public class HomeFragment extends BasisFragment implements View.OnClickListener,
 
     @Override
     public void onClick(View v) {
+        if(!Utils.isLogion(getContext())){
+            Utils.showLoginDialog(getContext());
+            return;
+        }
+
         Class c = null;
         Intent intent = new Intent();
         switch (v.getId()) {

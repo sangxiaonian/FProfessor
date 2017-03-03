@@ -1,6 +1,7 @@
 package finance.com.fp.ui.holder;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Handler;
 import android.os.Message;
 import android.support.v4.view.PagerAdapter;
@@ -20,7 +21,11 @@ import java.util.List;
 import em.sang.com.allrecycleview.utils.Apputils;
 import finance.com.fp.R;
 import finance.com.fp.mode.bean.Set_Item;
+import finance.com.fp.mode.bean.TranInfor;
+import finance.com.fp.mode.http.Config;
+import finance.com.fp.ui.ShowDetailActivity;
 import finance.com.fp.utlis.GlideUtils;
+import sang.com.xdialog.utils.DeviceUtils;
 
 /**
  * Description：首页轮播图
@@ -62,6 +67,12 @@ public class HomeCarouselHolder extends BasicHolder {
             return;
         }
         vp = (ViewPager) itemView.findViewById(R.id.vp_home_carousel);
+        float screenWidth = DeviceUtils.getScreenWidth(context);
+//        ViewGroup.LayoutParams layoutParams = new ViewGroup.LayoutParams((int)screenWidth, (int) (screenWidth*720/164));
+        ViewGroup.LayoutParams layoutParams = vp.getLayoutParams();
+        layoutParams.width= (int) screenWidth;
+        layoutParams.height=(int) (screenWidth*164/720);
+        vp.setLayoutParams(layoutParams);
 
         ll_tag = (LinearLayout) itemView.findViewById(R.id.ll_home_tag);
         ll_tag.removeAllViews();
@@ -157,17 +168,35 @@ public class HomeCarouselHolder extends BasicHolder {
         @Override
         public Object instantiateItem(ViewGroup container, int position) {
             ImageView imageView = new ImageView(context);
+
             ViewGroup.LayoutParams layoutParams = new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
+
+
             imageView.setLayoutParams(layoutParams);
-            Set_Item item= (Set_Item) datas.get(position);
+            final Set_Item item= (Set_Item) datas.get(position);
 
             if (!TextUtils.isEmpty(item.img_url)) {
-
                 GlideUtils.loadImage(context,imageView,item.img_url);
             }else {
                 GlideUtils.loadImage(context,imageView,item.icon_id);
 
             }
+            imageView.setEnabled(true);
+            imageView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if (!TextUtils.isEmpty(item.describe)){
+                        Intent intent = new Intent(context, ShowDetailActivity.class);
+                        TranInfor infor = new TranInfor();
+                        infor.title = item.title;
+                        infor.type = 1;
+                        infor.content = item.describe;
+                        infor.describe = item.describe;
+                        intent.putExtra(Config.infors, infor);
+                       context. startActivity(intent);
+                    }
+                }
+            });
 
             container.addView(imageView);
             return imageView;

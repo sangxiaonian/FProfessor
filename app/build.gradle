@@ -10,6 +10,10 @@ android {
         versionCode 1
         versionName "1.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+        ndk {
+            // 设置支持的SO库架构
+            abiFilters 'armeabi' //, 'x86', 'armeabi-v7a', 'x86_64', 'arm64-v8a'
+        }
     }
     android {
         aaptOptions.cruncherEnabled = false
@@ -17,9 +21,36 @@ android {
     }
     buildTypes {
         release {
-            minifyEnabled false
+            minifyEnabled true
+            zipAlignEnabled true
+            shrinkResources true
+
+            // 不显示Log
+//            buildConfigField "boolean", "LOG_DEBUG", "false"
+
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
+    }
+    lintOptions{
+        abortOnError false
+    }
+
+
+    productFlavors {
+        wandoujia {}
+        baidu {}
+        c360 {}
+        uc {}
+        tencent {}
+        xiaomi {}
+        huawei {}
+        anzhi {}
+        vivo {}
+
+        productFlavors.all { flavor ->
+            flavor.manifestPlaceholders = [UMENG_CHANNEL_VALUE: name]
+        }
+
     }
 }
 
@@ -45,5 +76,6 @@ dependencies {
     compile 'com.squareup.retrofit2:converter-scalars:2.1.0'
     compile 'com.android.support:cardview-v7:24.2.1'
     compile 'com.google.code.gson:gson:2.8.0'
-    compile project(':PushSDK')
+    compile 'com.tencent.bugly:crashreport:latest.release' //其中latest.release指代最新Bugly SDK版本号，也可以指定明确的版本号，例如2.1.9
+    compile 'com.tencent.bugly:nativecrashreport:latest.release'
 }

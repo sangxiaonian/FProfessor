@@ -192,6 +192,12 @@ public class LoginActivity extends BasisActivity implements RegisterView<String>
                 finish();
                 pre.setSp(this, false);
                 break;
+            case "2":
+                inforDialog.setDatas(getString(R.string.attention));
+                inforDialog.setTitle(getString(R.string.temp_login));
+                inforDialog.showStyle(XDialog.ALEART_ONLY_ENTRY);
+
+                break;
         }
     }
 }

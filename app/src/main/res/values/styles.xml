@@ -224,9 +224,11 @@
     <style name="loan_content" parent="one_key_content">
         <item name="android:textColor">@color/text_home_item_time</item>
         <item name="android:background">@color/white</item>
+        <item name="android:textSize">@dimen/app_title_text_model</item>
+        <item name="android:layout_height">wrap_content</item>
+
     </style>
     <style name="loan_parent">
-
         <item name="android:layout_width">match_parent</item>
         <item name="android:orientation">vertical</item>
         <item name="android:layout_height">wrap_content</item>

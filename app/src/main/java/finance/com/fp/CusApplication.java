@@ -4,6 +4,7 @@ import android.app.Application;
 import android.content.Context;
 
 import com.orhanobut.logger.Logger;
+import com.tencent.bugly.crashreport.CrashReport;
 
 import finance.com.fp.utlis.ToastUtil;
 
@@ -23,10 +24,8 @@ public class CusApplication extends Application {
         ToastUtil.init(this);
         Logger.init("PING");
         context = this;
-//        PushAgent mPushAgent = PushAgent.getInstance(this);
-//
-//        mPushAgent.setDebugMode(false);
-////注册推送服务，每次调用register方法都会回调该接口
+        CrashReport.initCrashReport(getApplicationContext(), "b038c087da", false);
+//注册推送服务，每次调用register方法都会回调该接口
 //        mPushAgent.register(new IUmengRegisterCallback() {
 //
 //            @Override

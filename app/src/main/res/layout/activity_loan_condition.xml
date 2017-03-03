@@ -94,6 +94,7 @@
                 style="@style/loan_parent">
 
                 <TextView
+                    android:textSize="@dimen/content_size"
                     android:id="@+id/tv_money"
                     style="@style/loan_content"
                     android:drawablePadding="@dimen/app_cut_big"
@@ -104,6 +105,7 @@
                     android:id="@+id/tv_time"
                     style="@style/loan_content"
                     android:drawablePadding="@dimen/app_cut_big"
+                    android:textSize="@dimen/content_size"
                     android:drawableStart="@mipmap/icno_hcc"
                     android:gravity="center_vertical"
                     android:text="@string/apply_con" />
@@ -155,6 +157,44 @@
                     android:text="@string/apply_con" />
 
             </LinearLayout>
+            <RelativeLayout
+                style="@style/item_style"
+                android:layout_marginTop="1dp"
+                android:id="@+id/rl_sqgl"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:paddingBottom="17dp"
+                android:paddingLeft="@dimen/app_margin_ends"
+                android:paddingRight="@dimen/app_margin_ends"
+                android:paddingTop="17dp">
+
+                <ImageView
+                    android:id="@+id/img_card_item"
+                    android:src="@mipmap/icon_theapplicationstrategr"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="@dimen/init_float_margin"
+                    android:layout_centerVertical="true"
+                    android:scaleType="centerCrop" />
+
+                <TextView
+                    android:id="@+id/tv_card_item_big"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:text="申请攻略"
+                    android:layout_toRightOf="@id/img_card_item"
+                    android:textColor="@color/text_home_item"
+                    android:textSize="@dimen/content_size" />
+
+                <include
+                    android:id="@+id/more_icon"
+                    layout="@layout/img_more"
+                    />
+
+            </RelativeLayout>
 
         </LinearLayout>
 

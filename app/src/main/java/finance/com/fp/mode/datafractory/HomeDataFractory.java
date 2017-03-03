@@ -231,7 +231,7 @@ public class HomeDataFractory extends BaseFractory {
         context = CusApplication.getContext();
         String[] titles = context.getResources().getStringArray(R.array.home_items_title);
 
-        Integer[] icons = {R.mipmap.icon_planner, R.mipmap.icon_telephone, R.mipmap.icon_creditreportingqueries, R.mipmap.icon_tool};
+        Integer[] icons = {R.mipmap.icon_planner, R.mipmap.icon_telephone, R.mipmap.icon_creditreportingqueries};
 
         for (int i = 0; i < icons.length; i++) {
             list.add(new Set_Item(icons[i], titles[i]));

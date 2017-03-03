@@ -87,7 +87,7 @@ public class RegisterPreComl implements RegisterInter {
             bean.setProduct(CusApplication.getContext().getString(R.string.app_name));
             register=bean.getCode();
             Logger.i(register);
-//            HttpFactory.getDynamic(phone,bean).subscribe(getDynamic_subscriber());
+            HttpFactory.getDynamic(phone,bean).subscribe(getDynamic_subscriber());
         }
 
     }
@@ -95,6 +95,9 @@ public class RegisterPreComl implements RegisterInter {
     @Override
     public void jumpToNext(Context context, EditText et_user, EditText et_password, EditText et_register) {
 
+        /**
+         * 手机号
+         */
         if (et_user!=null){
             phone = et_user.getText().toString().trim();
             if (TextUtils.isEmpty(phone)) {
@@ -104,19 +107,21 @@ public class RegisterPreComl implements RegisterInter {
         }
 
 
-
+        /**
+         * 注册码
+         */
         if (et_register!=null){
             register_code = et_register.getText().toString().trim();
             if (TextUtils.isEmpty(register_code)) {
                 view.showEtError(et_register, R.string.input_register);
                 return;
             }
-            if (TextUtils.isEmpty(this.register)||!TextUtils.equals(this.register, trim)){
-                ToastUtil.showTextToast("证码错误");
-                return;
-            }
+
         }
 
+        /**
+         * 验证码/登陆密码
+         */
         trim = et_password.getText().toString().trim();
         if (et_password!=null&&TextUtils.isEmpty(trim)){
             view.showEtError(et_password, view.getPasswordNotic());
@@ -134,6 +139,10 @@ public class RegisterPreComl implements RegisterInter {
             HttpFactory.setPassword(phoneNumber,trim).subscribe(view);
         }else if (view instanceof RegisterPhoneFragment){
             view.setPhone(phone);
+            if (TextUtils.isEmpty(this.register)||!TextUtils.equals(this.register, trim)){
+                ToastUtil.showTextToast("证码错误");
+                return;
+            }
             view.showDialog();
             HttpFactory.register(phone,register_code).subscribe(view);
         }else {
@@ -206,7 +215,12 @@ public class RegisterPreComl implements RegisterInter {
                     }
                 }catch (Exception e){
                     time=0;
-                    ToastUtil.showTextToast(CusApplication.getContext().getString(R.string.send_dynamic_fail));
+                    if (o.contains("触发业务流控")) {
+                        ToastUtil.showTextToast(CusApplication.getContext().getString(R.string.send_dynamic));
+                    }else {
+                        ToastUtil.showTextToast(CusApplication.getContext().getString(R.string.send_dynamic_fail));
+
+                    }
                     e.printStackTrace();
                 }
 

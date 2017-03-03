@@ -29,7 +29,6 @@ public class GlideUtils {
     public static void loadImage(Context context, ImageView img, int img_id) {
         Glide.with(context).load(img_id).placeholder(R.mipmap.loading)
                 .error(R.mipmap.load_fail)
-
                 .centerCrop()
                 .diskCacheStrategy(DiskCacheStrategy.ALL)
                 .crossFade().into(img);

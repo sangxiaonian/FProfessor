@@ -14,14 +14,14 @@
         <item>办卡攻略</item>
         <item>热申排行榜</item>
 
-        <item>学习・规划师</item>
+
     </string-array>
 
     <string-array name="home_items_title">
-        <item>学习・规划师</item>
+        <item>规划师</item>
         <item>银行电话</item>
         <item>征信查询</item>
-        <item>实用工具</item>
+
     </string-array>
 
     <string-array name="card_items_balances">
@@ -38,7 +38,7 @@
 
     <string-array name="loan_tools">
         <item>网贷攻略</item>
-        <item>学习・规划师</item>
+
         <item>网贷搜索</item>
     </string-array>
     <string-array name="loan_grid">
@@ -77,7 +77,7 @@
 
     <string-array name="home_pboc">
         <item>央行信用报告_查逾期/查房贷/查贷款_https://ipcrs.pbccrc.org.cn/</item>
-        <item>芝麻信用_大数据个人信用_https://qhcs-mws.pingan.com.cn/qhcsmws/website/index.html?r=1487313964681#login</item>
+        <item>芝麻信用_大数据个人信用_ali</item>
         <item>前海信用_第三方商业征信机构_https://qhcs-mws.pingan.com.cn/qhcsmws/website/index.html?r=1487313964681#login</item>
         <item>考拉信用_考拉信用分/通行证_https://m.kaolazhengxin.com:8449/apph5/personCreditInfo.html?channelSign=c543e78865002ff0471267d0cf4dfac2&amp;amp type=creditScore</item>
     </string-array>
@@ -111,13 +111,13 @@
         <item>浦发银行_https://ecentre.spdbccc.com.cn/creditcard/indexActivity.htm?data=806627335</item>
         <item>广发银行_http://cgbchina.cn/BKbH45Q</item>
         <item>华夏银行_https://creditapply.hxb.com.cn/weixin/cardChoice.html</item>
-        <item>平安银行_https://c.pingan.com/apply/mobile/apply/index.html?scc=920000937&amp;ccp=1a2a3a4a5a8a9a10a11a12a13&amp;showt=0???????</item>
+        <item>平安银行_https://c.pingan.com/apply/mobile/apply/index.html?scc=920000937&amp;ccp=1a2a3a4a5a8a9a10a11a12a13&amp;showt=0#mainPage</item>
         <item>光大银行_https://xyk.cebbank.com/cebmms/apply/ps/card-list.htm?pro_code=ZHTG03ZDTGSJ001C2C&amp;c2c_recom_flag=43178036</item>
         <item>中信银行_https://creditcard.ecitic.com/citiccard/newwap/pages/AppCreditCard/applayCard-process.html?sid=SJTJBK&amp;pid=CS0141&amp;cid=TJ25307348</item>
         <item>兴业银行_https://wm.cib.com.cn/application/cardapp/cappl/ApplyCard/toSelectCard?id=efab129137844558bdc5dfb25e2127cd&amp;from=singlemessage&amp;isappinstalled=0</item>
         <item>民生银行_https://creditcard.cmbc.com.cn/wsonline/index/index.jhtml?encryptStr=NKU8vmCmKNrtKXmE9jgowDxMd3u3eBCfN8iws97x+vNhzJeunREzvd9OLb246AbtimR81mDiXInWlZErtgqwH1u053Q3VX85Cr5PQs6h9Lkh0HoGWr2jzjSzuMhv/VTntEocdH2ZIPgHMSu/BE+xR3rGFscYwIL4ayVhoV+m3TQ=</item>
-        <item>浙商银行_https://e.czbank.com/weixinHTML/eApply/creditCardCardsApply.html?turnPageWithinFlag=10&amp;wxCustFakeId=9b28bba8-03aa-428b-912c-d068dd26ff55-qQdPJT&amp;wxRandomCode=0</item>
-        <item>花旗银行_服务热线:400-821-1880</item>
+        <item>浙商银行_https://directbank.czbank.com/APPINSPECT/finance/creditCardApyOnlineCardSel.jsp</item>
+        <item>花旗银行_https://www.citibank.com.cn/sim/ICARD/RCE/index.html?card=RW&amp;icid=CNCCARCCNDWECHAT</item>
     </string-array>
 
 
@@ -159,15 +159,14 @@
 
     <string-array name="card_pro_query">
         <item>平安银行申卡进度查询_https://c.pingan.com/apply/mobile/modules/queryApp/index.html#queryf</item>
-        <item>广发银行申卡进度查询_https://wap.cgbchina.com.cn/wx.do?PARAMK=626567696E417070677C795374617475735118756572792E646F3F728175657279466C6167273D312674696D65737244616D703D313438371533313537393235333676267778436F64653D166F3648724D6A6B557694427452586C54705114546F794347655F634652427726737263436888616E6E656C3D57538</item>
+        <item>广发银行申卡进度查询_https://ebanks.cgbchina.com.cn/channelsLink/applyStatusQuery.do</item>
         <item>中信银行申卡进度查询_https://creditcard.ecitic.com/citiccard/wap/cardappquery/app_inq.jsp?main=1&amp;left=1</item>
         <item>招商银行申卡进度查询_https://ccclub.cmbchina.com/mca/MQuery.aspx?WT.mc_id=Z1O00WXA055B412100CC&amp;undefined=&amp;WT.refp=%2Fcard%2Fqueryweixin%2Fquery%24</item>
         <item>光大银行申卡进度查询_https://xyk.cebbank.com/cebmms/apply/fz/card-app-status.htm</item>
         <item>兴业银行申卡进度查询_https://3g.cib.com.cn/app/00282.html</item>
         <item>交通银行申卡进度查询_https://creditcardapp.bankcomm.com/member/apply/status/preinquiry.html?_channel=WC</item>
         <item>浦发银行申卡进度查询_https://weixin.spdbccc.com.cn/spdbcccWeChatPage/applyProgressPath.do?path=applyProgress&amp;page=index&amp;noCheck=1</item>
-        <item>华夏银行申卡进度查询_https://onlinepay.cupdata.com/wxhx/webApply.do?action=applyProgressInit&amp;bankNum=6304&amp;userId=oTBePjt4B7e0BY99gUrSkdGptDns</item>
-        <item>农业银行申卡进度查询_https://wx.abchina.com/WebSite/B4CardStatusAuthenticationAct.ebf?openId=oHFX_jvtLqWukfZ3GiveXbHFVCYA&amp;appId=wx51fdf61c0de4ab0b</item>
+        <item>农业银行申卡进度查询_https://wx.abchina.com/WebSite/B4CardStatusAuthenticationAct.ebf?openId=oHFX_jvtLqWukfZ3GiveXbHFVCYA&amp;amp;appId=wx51fdf61c0de4ab0b</item>
         <item>中国银行申卡进度查询_https://apply.mcard.boc.cn/apply/mobile/mainAppi/showScheduleQuery</item>
         <item>北京银行申卡进度查询_https://onlinepay.cupdata.com/weixin/apply.do?action=applyProgressInit&amp;bankNum=6403&amp;userId=weixin</item>
     </string-array>
@@ -201,8 +200,47 @@
         <item>花旗银行</item>
     </string-array>
 
+
+    <string-array name="phones">
+        <item>135</item>
+        <item>136</item>
+        <item>137</item>
+        <item>138</item>
+        <item>139</item>
+        <item>150</item>
+        <item>151</item>
+        <item>152</item>
+        <item>157</item>
+        <item>158</item>
+        <item>159</item>
+        <item>182</item>
+        <item>183</item>
+        <item>184</item>
+        <item>185</item>
+        <item>187</item>
+        <item>188</item>
+        <item>189</item>
+        <item>130</item>
+        <item>131</item>
+        <item>132</item>
+        <item>155</item>
+        <item>135</item>
+        <item>156</item>
+        <item>185</item>
+        <item>176</item>
+        <item>175</item>
+        <item>133</item>
+        <item>134</item>
+        <item>153</item>
+        <item>180</item>
+        <item>181</item>
+        <item>189</item>
+        <item>177</item>
+        <item>173</item>
+    </string-array>
+
     <string-array name="search_items">
-        <item>所有贷款类型</item>
+        <item>所有类型</item>
         <item>信用卡贷</item>
         <item>账单贷</item>
         <item>代还信用卡</item>
@@ -216,6 +254,10 @@
         <item>公积金贷</item>
         <item>电商贷</item>
         <item>按揭房贷</item>
+        <item>快速微贷</item>
+        <item>小额速贷</item>
+        <item>热门信贷</item>
+        <item>大额贷款</item>
     </string-array>
 
     <!--网贷攻略-->

@@ -29,6 +29,7 @@
         android:layout_height="wrap_content"
         android:layout_toEndOf="@id/img_item"
         android:ellipsize="end"
+
         android:singleLine="true"
         android:text="@string/msg_sys"
         android:textColor="@color/bg"
@@ -41,6 +42,8 @@
         android:layout_alignBottom="@id/img_item"
         android:layout_toEndOf="@id/img_item"
         android:text="@string/msg_sys"
+        android:ellipsize="end"
+        android:singleLine="true"
         android:textColor="@color/text_home_item"
         android:textSize="@dimen/app_title_text_model" />
 

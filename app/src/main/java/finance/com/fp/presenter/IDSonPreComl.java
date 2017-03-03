@@ -147,8 +147,11 @@ public class IDSonPreComl implements IDSonPreInter {
 
     private Set_Item item;
 
+    private boolean isChange=false;
+
     @Override
     public void changeItem(String o) {
+        isChange=true;
         item.describe = o;
         adapter.notifyDataSetChanged();
         setData(o,position);
@@ -197,6 +200,11 @@ public class IDSonPreComl implements IDSonPreInter {
                 break;
         }
         return s;
+    }
+
+    @Override
+    public boolean getIsChange() {
+        return isChange;
     }
 
     public void setData(String data, int position) {

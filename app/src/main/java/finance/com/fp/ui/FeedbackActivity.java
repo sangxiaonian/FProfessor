@@ -1,5 +1,6 @@
 package finance.com.fp.ui;
 
+import android.app.Dialog;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextUtils;
@@ -17,6 +18,7 @@ import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
 import sang.com.xdialog.DialogFactory;
 import sang.com.xdialog.XDialog;
+import sang.com.xdialog.inter.OnEntryClickListener;
 
 /**
  * 意见反馈
@@ -78,7 +80,7 @@ public class FeedbackActivity extends BasisActivity implements rx.Observer<Strin
             String trim = et.getText().toString().trim();
             if (!TextUtils.isEmpty(trim)) {
                 dialog.show();
-                HttpClient.getClient(Config.base_url).submit( trim,Utils.getSp(this, Config.sp_name)).subscribeOn(Schedulers.io())
+                HttpClient.getClient(Config.base_url).submit( trim,Utils.getSp(this, Config.login_name)).subscribeOn(Schedulers.io())
                         .observeOn(AndroidSchedulers.mainThread()).subscribe(this);
             }else {
                 infDialog.setTitle(getString(R.string.attention));
@@ -98,6 +100,16 @@ public class FeedbackActivity extends BasisActivity implements rx.Observer<Strin
     @Override
     public void onCompleted() {
         dialog.dismiss();
+        infDialog.setTitle("反馈成功");
+        infDialog.setDatas("融教授感谢您的宝贵意见,我们将认真修正");
+        infDialog.setOnClickListener(new OnEntryClickListener() {
+            @Override
+            public void onClick(Dialog dialog, int which, Object data) {
+                dialog.dismiss();
+                finish();
+            }
+        });
+        infDialog.showStyle(XDialog.ALEART_ONLY_ENTRY);
     }
 
     @Override

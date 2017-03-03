@@ -11,6 +11,8 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 
+import com.orhanobut.logger.Logger;
+
 import finance.com.fp.BasisFragment;
 import finance.com.fp.R;
 import finance.com.fp.presenter.RegisterPreComl;
@@ -208,8 +210,9 @@ public class RegisterPhoneFragment extends BasisFragment implements View.OnClick
                 getActivity().finish();
             }
         });
+        inforDialog.setStyle(XDialog.ALEART_ONLY_ENTRY);
 
-
+        Logger.i(o+"");
        switch (o){
            case "0":
                inforDialog.setTitle(Utils.getResStr(R.string.register_fail));
@@ -219,6 +222,7 @@ public class RegisterPhoneFragment extends BasisFragment implements View.OnClick
            case "1":
                inforDialog.setTitle(Utils.getResStr(R.string.attention));
                inforDialog.setDatas(Utils.getResStr(R.string.temp_register));
+               inforDialog.setCancelable(false);
                inforDialog.show();
                break;
            case "2":

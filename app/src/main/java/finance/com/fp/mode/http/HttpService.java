@@ -6,6 +6,7 @@ import java.util.Map;
 import finance.com.fp.mode.bean.FinanceBean;
 import finance.com.fp.mode.bean.FriendBean;
 import finance.com.fp.mode.bean.HttpBean;
+import finance.com.fp.mode.bean.IDBean;
 import finance.com.fp.mode.bean.LoanSearchBean;
 import finance.com.fp.mode.bean.MsgContentBean;
 import retrofit2.http.Field;
@@ -70,9 +71,11 @@ public interface HttpService {
      * 学习规划师
      *
      * @return
+     * @param msg
      */
-    @GET("index.php?m=content&c=doserver&a=get_study")
-    Observable<HttpBean<FinanceBean>> getPlanner();
+    @FormUrlEncoded
+    @POST("index.php?m=content&c=doserver&a=get_study")
+    Observable<HttpBean<FinanceBean>> getPlanner(@Field("msg")String msg,@Field("username") String phone);
 
     /**
      * 获最搜索信息
@@ -175,10 +178,13 @@ public interface HttpService {
 
     @FormUrlEncoded
     @POST("index.php?m=content&c=doserver&a=opinion")
-    Observable<String> submit(String sp, String phone);
+    Observable<String> submit(@Field("opinion") String sp, @Field("username")String phone);
 
 
     @FormUrlEncoded
-    @POST("index.php?m=content&c=doserver&a=opinion")
-    Observable<String> subPerson(@FieldMap Map<String,String> params);
+    @POST("index.php?m=content&c=doserver&a=app_member_add")
+    Observable<String> subPerson(@FieldMap Map<String,String> params); @FormUrlEncoded
+
+    @POST("index.php?m=content&c=doserver&a=app_member_select")
+    Observable<IDBean> getPerson(@Field("username") String username);
 }

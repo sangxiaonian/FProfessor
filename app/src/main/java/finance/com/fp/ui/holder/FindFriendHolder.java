@@ -6,6 +6,7 @@ import android.view.View;
 import java.util.List;
 
 import finance.com.fp.R;
+import finance.com.fp.utlis.Utils;
 
 /**
  * Description：
@@ -29,7 +30,11 @@ public class FindFriendHolder extends BasicHolder{
         itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-               listener.onItemClick(position,data);
+                if(!Utils.isLogion(context)){
+                    Utils.showLoginDialog(context);
+                }else {
+                    listener.onItemClick(position, data);
+                }
             }
         });
     }

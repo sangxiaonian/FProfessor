@@ -94,14 +94,9 @@ public class ImportActivity extends BasisActivity implements ImportView {
                 c = HomeSonActivity.class;
                 break;
             case 1:
-                c=TradeAnalysisActivity.class;
-                break;
-            case 2:
                 c=HomeSonActivity.class;
                 tranInfor.item_id = ImprotFactory.LOAN_JING;
                 break;
-
-
         }
         if (c == null) {
             ToastUtil.showTextToast("该功能尚未开放");

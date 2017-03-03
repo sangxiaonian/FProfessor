@@ -1,6 +1,8 @@
 package finance.com.fp.utlis;
 
+import android.app.Dialog;
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.text.TextUtils;
 
@@ -8,11 +10,19 @@ import java.math.BigDecimal;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 import java.util.Random;
 
 import finance.com.fp.CusApplication;
+import finance.com.fp.R;
+import finance.com.fp.mode.bean.Set_Item;
 import finance.com.fp.mode.http.Config;
+import finance.com.fp.ui.RegisterActivity;
+import sang.com.xdialog.DialogFactory;
+import sang.com.xdialog.XDialog;
+import sang.com.xdialog.inter.OnEntryClickListener;
 
 /**
  * Description：
@@ -172,7 +182,7 @@ public class Utils {
         }else {
             String name = preferences.getString(Config.login_name, "");
             String pas = preferences.getString(Config.login_password, "");
-            if (!TextUtils.isEmpty(name)&&!TextUtils.isEmpty(pas)){
+            if (!TextUtils.isEmpty(name)){
                 return true;
             }else {
                 return false;
@@ -185,5 +195,68 @@ public class Utils {
         SharedPreferences preferences = context.getSharedPreferences(Config.sp_name, 0);
         SharedPreferences.Editor edit = preferences.edit();
         edit.clear().commit();
+    }
+
+    public static void showLoginDialog(final Context context){
+        XDialog dialog  = DialogFactory.getInstance().creatDiaolg(context,DialogFactory.ALEART_DIALOG);
+        dialog.setTitle("提示");
+        dialog.setDatas("登录后才能进行该操作");
+        dialog.setOnClickListener(new OnEntryClickListener() {
+            @Override
+            public void onClick(Dialog dialog, int which, Object data) {
+                dialog.dismiss();
+                context.startActivity(new Intent(context, RegisterActivity.class));
+
+            }
+        });
+        dialog.show();
+    }
+
+    public static List<Set_Item> getRandomData(String msg,String msg2) {
+        List<Set_Item> list = new ArrayList<>();
+        Random random = new Random();
+        random.nextInt();
+        String[] balances = CusApplication.getContext().getResources().getStringArray(R.array.all_balances);
+        String[] phones = CusApplication.getContext().getResources().getStringArray(R.array.phones);
+
+        for (int i = 0; i < 100; i++) {
+            String phone = phones[random.nextInt(phones.length)];
+            StringBuffer buffer = new StringBuffer();
+            buffer
+                    .append(phone)
+                    .append("****")
+                    .append(getRound(4))
+                    .append(msg)
+                    .append(balances[random.nextInt(balances.length)])
+                    .append(msg2)
+
+            ;
+            Set_Item item = new Set_Item(0,buffer.toString(),random.nextInt(60)+1+"分钟前");
+            list.add(item);
+        }
+        return list;
+    }
+    public static List<Set_Item> getRandomLoanData() {
+        List<Set_Item> list = new ArrayList<>();
+        Random random = new Random();
+        random.nextInt();
+        String[] balances = CusApplication.getContext().getResources().getStringArray(R.array.all_balances);
+        String[] phones = CusApplication.getContext().getResources().getStringArray(R.array.phones);
+
+        for (int i = 0; i < 100; i++) {
+            String phone = phones[random.nextInt(phones.length)];
+            StringBuffer buffer = new StringBuffer();
+            buffer.append(phone)
+                    .append("****")
+                    .append(getRound(4))
+                    .append("成功申请贷款")
+                    .append((random.nextInt(100)+1)/10f)
+                    .append("万元")
+
+            ;
+            Set_Item item = new Set_Item(0,buffer.toString(),random.nextInt(60)+1+"分钟前");
+            list.add(item);
+        }
+        return list;
     }
 }

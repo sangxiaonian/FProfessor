@@ -153,7 +153,7 @@ public class LoanDataFractory  extends BaseFractory {
     public List<Set_Item> getTools() {
         ArrayList<Set_Item> tools = new ArrayList<>();
         int[] icons = {R.mipmap.icon_strategy,
-                R.mipmap.icon_learningpianner, R.mipmap.icon_netcreditsearch};
+                R.mipmap.icon_netcreditsearch};
         String[] titles = context.getResources().getStringArray(R.array.loan_tools);
         for (int i = 0; i < titles.length; i++) {
             Set_Item item = new Set_Item(icons[i], titles[i]);
@@ -178,6 +178,23 @@ public class LoanDataFractory  extends BaseFractory {
 
         for (int i = 0; i < 10; i++) {
             Set_Item item = new Set_Item(icons[i], titles[i]);
+
+            tools.add(item);
+        }
+
+        return tools;
+    }
+
+    public List<Set_Item> getJi() {
+        ArrayList<Set_Item> tools = new ArrayList<>();
+        int[] icons = {R.mipmap.icon_thehot,
+                R.mipmap.icon_hot,
+                R.mipmap.icon_door,
+                R.mipmap.icon_big,
+             };
+
+        for (int i = 0; i < icons.length; i++) {
+            Set_Item item = new Set_Item(icons[i],"");
 
             tools.add(item);
         }

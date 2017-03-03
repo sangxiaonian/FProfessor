@@ -21,6 +21,7 @@
             android:paddingTop="@dimen/home_item_time_margin">
 
             <ImageView
+                android:clickable="true"
                 android:id="@+id/img1"
                 android:layout_width="125dp"
                 android:layout_height="40dp"
@@ -29,6 +30,7 @@
                 android:src="@mipmap/icon_talkaboutthemediation" />
 
             <ImageView
+                android:clickable="true"
                 android:id="@+id/img2"
                 android:layout_width="125dp"
                 android:layout_height="40dp"
@@ -36,6 +38,7 @@
                 android:src="@mipmap/icon_graspapplyforrhythm" />
 
             <ImageView
+                android:clickable="true"
                 android:id="@+id/img3"
                 android:layout_width="125dp"
                 android:layout_height="40dp"

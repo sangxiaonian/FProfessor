@@ -9,6 +9,9 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
+
 import java.util.List;
 
 import em.sang.com.allrecycleview.adapter.DefaultAdapter;
@@ -79,11 +82,19 @@ public class GrideHolder extends BasicHolder<Set_Item> {
 
                         if (item.img_url != null && item.img_url.length() > 0) {
 
-                            GlideUtils.loadImage(context,imageView,item.img_url);
+                            GlideUtils.loadImage(context, imageView, item.img_url);
                         } else if (item.icon_id > 0) {
-                            GlideUtils.loadImage(context,imageView,item.icon_id);
+                            if (TextUtils.isEmpty(item.title)) {
+                                Glide.with(context).load(item.icon_id ).placeholder(R.mipmap.loading)
+                                        .error(R.mipmap.load_fail)
+                                        .fitCenter()
+                                        .diskCacheStrategy(DiskCacheStrategy.ALL)
+                                        .crossFade().into(imageView);
+                            } else {
+                                GlideUtils.loadImage(context, imageView, item.icon_id);
+                            }
                         }
-                        if (!TextUtils.isEmpty(item.title)&&tv_title!=null) {
+                        if (!TextUtils.isEmpty(item.title) && tv_title != null) {
                             tv_title.setText(item.title);
                         }
 
@@ -91,9 +102,9 @@ public class GrideHolder extends BasicHolder<Set_Item> {
                             @Override
                             public void onClick(View v) {
 
-                                if (GrideHolder.this.listener!=null){
-                                    GrideHolder.this.listener.onItemClick(position,item);
-                                }else {
+                                if (GrideHolder.this.listener != null) {
+                                    GrideHolder.this.listener.onItemClick(position, item);
+                                } else {
                                     ToastUtil.showTextToast(context, item.title);
                                 }
                             }

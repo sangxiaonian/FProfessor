@@ -167,4 +167,22 @@ public class LoanSearchBean implements Parcelable {
         dest.writeString(ljsq_url);
         dest.writeString(thumb);
     }
+
+    @Override
+    public String toString() {
+        return "LoanSearchBean{" +
+                "id='" + id + '\'' +
+                ", title='" + title + '\'' +
+                ", description='" + description + '\'' +
+                ", updatetime='" + updatetime + '\'' +
+                ", money='" + money + '\'' +
+                ", fenqi='" + fenqi + '\'' +
+                ", tiaojian='" + tiaojian + '\'' +
+                ", suoxu='" + suoxu + '\'' +
+                ", zhushi='" + zhushi + '\'' +
+                ", sq_url='" + sq_url + '\'' +
+                ", ljsq_url='" + ljsq_url + '\'' +
+                ", thumb='" + thumb + '\'' +
+                '}';
+    }
 }

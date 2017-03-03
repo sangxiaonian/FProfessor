@@ -19,6 +19,7 @@ import finance.com.fp.BasisFragment;
 import finance.com.fp.R;
 import finance.com.fp.mode.bean.Set_Item;
 import finance.com.fp.mode.http.Config;
+import finance.com.fp.ui.IDActivity;
 import finance.com.fp.ui.RegisterActivity;
 import finance.com.fp.ui.holder.SetBodyHolder;
 import finance.com.fp.utlis.RecycleViewDivider;
@@ -56,8 +57,13 @@ public class SetFragment extends BasisFragment {
         textView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(getActivity(),RegisterActivity.class);
-                startActivity(intent);
+                if (!Utils.isLogion(getContext())) {
+                    Intent intent = new Intent(getActivity(), RegisterActivity.class);
+                    startActivity(intent);
+                }else {
+                    Intent intent = new Intent(getActivity(), IDActivity.class);
+                    startActivity(intent);
+                }
             }
         });
 
@@ -91,9 +97,7 @@ public class SetFragment extends BasisFragment {
         if (!hidden){
             if (Utils.isLogion(getContext())){
                 textView.setText(Utils.getSp(getContext(), Config.login_name));
-                textView.setClickable(false);
             }else {
-                textView.setClickable(true);
                 textView.setText(getString(R.string.set_item));
             }
         }
@@ -104,9 +108,7 @@ public class SetFragment extends BasisFragment {
         super.onStart();
         if (Utils.isLogion(getContext())){
             textView.setText(Utils.getSp(getContext(), Config.login_name));
-            textView.setClickable(false);
         }else {
-            textView.setClickable(true);
             textView.setText(getString(R.string.set_item));
         }
     }

@@ -95,8 +95,6 @@ public class LoanActivity extends BasisActivity implements LoanView {
         if (position == 0) {
             c = Loan_Strategy_Activity.class;
         } else if (position == 1) {
-            c = PlannerActivity.class;
-        } else if (position == 2) {
             c = Loan_Search_Activity.class;
         }
         if (c!=null) {

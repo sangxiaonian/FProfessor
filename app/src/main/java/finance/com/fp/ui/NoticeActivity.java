@@ -1,6 +1,7 @@
 package finance.com.fp.ui;
 
 import android.os.Bundle;
+import android.text.Html;
 import android.widget.TextView;
 
 import finance.com.fp.BasisActivity;
@@ -26,6 +27,6 @@ public class NoticeActivity extends BasisActivity {
 
         title.setText(infro.title);
         time.setText(infro.updatetime);
-        content.setText(infro.content);
+        content.setText(Html.fromHtml(infro.content));
     }
 }

@@ -6,7 +6,6 @@ import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 
-import static anetwork.channel.http.NetworkSdkSetting.context;
 
 /**
  * PermissionUtil.
@@ -61,7 +60,7 @@ public class PermissionUtils {
         boolean hasPermission = true;
         boolean isTry = true;
         for (int i = 0; i < permissions.length; i++) {
-            if (ContextCompat.checkSelfPermission(context, permissions[i]) != PackageManager.PERMISSION_GRANTED){
+            if (ContextCompat.checkSelfPermission(activity, permissions[i]) != PackageManager.PERMISSION_GRANTED){
                 hasPermission=false;
                 isTry=hasReason(activity,permissions[i]);
             }

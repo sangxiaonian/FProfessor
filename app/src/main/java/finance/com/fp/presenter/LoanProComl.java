@@ -1,14 +1,12 @@
 package finance.com.fp.presenter;
 
 import android.content.Context;
-import android.view.LayoutInflater;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import em.sang.com.allrecycleview.adapter.DefaultAdapter;
 import em.sang.com.allrecycleview.holder.CustomHolder;
-import em.sang.com.allrecycleview.holder.HeardHolder;
 import em.sang.com.allrecycleview.holder.SimpleHolder;
 import em.sang.com.allrecycleview.inter.DefaultAdapterViewLisenter;
 import em.sang.com.allrecycleview.listener.OnToolsItemClickListener;
@@ -27,6 +25,7 @@ import finance.com.fp.ui.holder.HomeCarouselHolder;
 import finance.com.fp.ui.holder.HomeToolsHolder;
 import finance.com.fp.ui.inter.LoanView;
 import finance.com.fp.utlis.ToastUtil;
+import finance.com.fp.utlis.Utils;
 import rx.Subscriber;
 
 /**
@@ -69,7 +68,7 @@ public class LoanProComl extends Subscriber<LoanSearchBean> implements LoanInter
 
         int dimension = setCarousel(context);
 
-        notifiHolder = new CardNotifiHolder(context, data.getTools(), R.layout.item_card_navi);
+        notifiHolder = new CardNotifiHolder(context, Utils.getRandomLoanData(), R.layout.item_card_navi);
         notifiHolder.setMagrin(0, 0, 0, dimension);
         adapter.addHead(notifiHolder);
 
@@ -86,7 +85,21 @@ public class LoanProComl extends Subscriber<LoanSearchBean> implements LoanInter
         });
         adapter.addHead(grideHolder);
 
-        adapter.addHead(new HeardHolder(LayoutInflater.from(context).inflate(R.layout.item_loan_icons, null)));
+
+        GrideHolder ji = new GrideHolder(context, data.getJi(), R.layout.item_grideview);
+        ji.setItemID(R.layout.view_img1);
+        ji.setMagrin(0, 0, 0, dimension);
+        ji.setnumColuns(4);
+        ji.setOnToolsItemClickListener(new OnToolsItemClickListener<Set_Item>() {
+            @Override
+            public void onItemClick(int position, Set_Item item) {
+                view.grideLoanClick(position+13,item);
+            }
+        });
+
+
+        adapter.addHead(ji);
+
         adapter.addHead(new SimpleHolder(context, R.layout.item_loan_hot));
 
         return adapter;

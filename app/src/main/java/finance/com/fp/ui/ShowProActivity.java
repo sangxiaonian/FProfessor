@@ -8,18 +8,23 @@ import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 
-import com.orhanobut.logger.Logger;
-
 import finance.com.fp.BasisActivity;
 import finance.com.fp.R;
-import finance.com.fp.mode.http.Config;
-import finance.com.fp.mode.bean.TranInfor;
+import finance.com.fp.mode.bean.FinanceBean;
+import finance.com.fp.mode.bean.HttpBean;
+import finance.com.fp.mode.http.HttpClient;
 import finance.com.fp.utlis.HorizontalProgress;
+import rx.Observer;
+import rx.android.schedulers.AndroidSchedulers;
+import rx.schedulers.Schedulers;
+import sang.com.xdialog.DialogFactory;
+import sang.com.xdialog.XDialog;
 
-public class ShowDetailActivity extends BasisActivity {
+public class ShowProActivity extends BasisActivity implements Observer<HttpBean<FinanceBean>>{
 
     public WebView webView;
     HorizontalProgress progress;
+    XDialog dialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,15 +33,15 @@ public class ShowDetailActivity extends BasisActivity {
 
         progress = (HorizontalProgress) findViewById(R.id.pb);
         progress.setProgress(0);
+        dialog= DialogFactory.getInstance().creatDiaolg(this,DialogFactory.LOAD_DIALOG);
 
-        TranInfor infor = getIntent().getParcelableExtra(Config.infors);
         setColor(this, getResources().getColor(R.color.statucolor));
-        initToolBar(infor.title);
+        initToolBar("网贷进度查询");
         webView = (WebView) findViewById(R.id.web);
         WebSettings mWebSettings = webView.getSettings();
-
         mWebSettings.setLoadWithOverviewMode(true);
-
+        dialog.show();
+        HttpClient.getClient().getContent("38","0","1").subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread()).subscribe(this);
 
         webView.setWebViewClient(new WebViewClient() {
             @Override
@@ -67,23 +72,7 @@ public class ShowDetailActivity extends BasisActivity {
         });
 
 
-        Logger.i(infor.content);
-        if (infor.type == 0) {
-//            <meta name="viewport" content="width=device-width, initial-scale=1">
-            String a = "<meta name=\"viewport\" content=\"width=device-width, initial-scale=1\">";
-            webView.loadDataWithBaseURL("", a+infor.content, "text/html", "utf-8", "");
-        } else {
-            mWebSettings.setDisplayZoomControls(false);
-            mWebSettings.setUseWideViewPort(true);
-            mWebSettings.setLoadsImagesAutomatically(true);
-            mWebSettings.setDomStorageEnabled(true);
-            mWebSettings.setJavaScriptEnabled(true);
-            mWebSettings.setBuiltInZoomControls(true);
-            mWebSettings.setLayoutAlgorithm(WebSettings.LayoutAlgorithm.NARROW_COLUMNS);
-            webView.loadUrl(infor.content);
 
-
-        }
 
 
     }
@@ -97,6 +86,30 @@ public class ShowDetailActivity extends BasisActivity {
             super.finish();
         }
 
+
+    }
+
+    @Override
+    public void onCompleted() {
+
+    }
+
+    @Override
+    public void onError(Throwable e) {
+        dialog.dismiss();
+        e.printStackTrace();
+    }
+
+    @Override
+    public void onNext(HttpBean<FinanceBean> financeBeanHttpBean) {
+        dialog.dismiss();
+        try {
+
+            String content = financeBeanHttpBean.getTitle().get(0).getContent();
+            webView.loadDataWithBaseURL("", content, "text/html", "utf-8", "");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
 
     }
 }

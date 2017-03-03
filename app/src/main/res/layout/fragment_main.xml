@@ -31,15 +31,15 @@
             android:gravity="center_vertical"
             android:orientation="vertical">
 
-            <LinearLayout
+            <RelativeLayout
                 android:id="@+id/ll_et"
                 android:layout_width="match_parent"
                 android:layout_height="?actionBarSize"
-                android:layout_marginLeft="@dimen/home_title_ends"
+                android:layout_marginLeft="@dimen/app_cut_big"
                 android:layout_marginRight="@dimen/home_title_ends"
                 android:gravity="center_vertical"
                 android:orientation="horizontal">
-
+<!--
                 <EditText
                     android:id="@+id/et_main_heard"
                     android:layout_width="0dp"
@@ -54,23 +54,32 @@
                     android:paddingLeft="@dimen/app_cut_big"
                     android:textColor="@color/white"
                     android:textColorHint="#55ffffff"
-                    android:textSize="@dimen/home_title_et_size" />
+                    android:textSize="@dimen/home_title_et_size" />-->
 
 
 
                 <ImageButton
                     android:layout_marginLeft="@dimen/app_cut_big"
                     android:id="@+id/img_main_msg"
-                    android:layout_width="@dimen/home_title_icon"
-                    android:layout_height="@dimen/home_title_icon"
+                    android:layout_width="25dp"
+                    android:layout_height="25dp"
+                    android:scaleType="fitCenter"
                     android:background="@color/transparent"
                     android:src="@mipmap/nav_notice" />
-            </LinearLayout>
+
+                <!--<TextView
+                    android:layout_centerHorizontal="true"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/app_name"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/app_title_size" />-->
+            </RelativeLayout>
 
             <Space
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
-                android:layout_weight="2" />
+                android:layout_weight="1" />
 
 
             <RelativeLayout

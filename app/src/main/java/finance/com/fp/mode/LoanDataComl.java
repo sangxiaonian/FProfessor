@@ -30,4 +30,8 @@ public class LoanDataComl implements LoanDataInter {
     public List<Set_Item> getGVLoan() {
         return fractory.getGVLoan();
     }
+    @Override
+    public List<Set_Item> getJi() {
+        return fractory.getJi();
+    }
 }

@@ -9,9 +9,11 @@ import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.orhanobut.logger.Logger;
 
 import finance.com.fp.BasisActivity;
 import finance.com.fp.R;
@@ -25,10 +27,12 @@ import finance.com.fp.mode.http.Config;
 public class LoanConditionActivity extends BasisActivity implements View.OnClickListener{
     LoanSearchBean bean;
     private LinearLayout ll_con,ll_material,ll_notice;
+    private RelativeLayout rl_sqgl;
     private TextView tv_con,tv_material,tv_notice,tv_money,tv_tiem,tv_title,tv_describe;
     private Button bt_apply;
     private ImageButton bt_strategy;
     private ImageView img_item_loan;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,6 +60,7 @@ public class LoanConditionActivity extends BasisActivity implements View.OnClick
         bt_apply= (Button) findViewById(R.id.bt_apply);
         bt_strategy= (ImageButton) findViewById(R.id.bt_strategy);
         img_item_loan= (ImageView) findViewById(R.id.img_item_loan);
+        rl_sqgl= (RelativeLayout) findViewById(R.id.rl_sqgl);
     }
 
     @Override
@@ -73,6 +78,7 @@ public class LoanConditionActivity extends BasisActivity implements View.OnClick
         tv_describe.setText(bean.getDescription());
         bt_apply.setOnClickListener(this);
         bt_strategy.setOnClickListener(this);
+        rl_sqgl.setOnClickListener(this);
 
 
     }
@@ -82,6 +88,7 @@ public class LoanConditionActivity extends BasisActivity implements View.OnClick
             ll_con.setVisibility(View.GONE);
         }else {
             ll_con.setVisibility(View.VISIBLE);
+            Logger.i(tiaojian);
             tv_con.setText(Html.fromHtml(tiaojian));
         }
     }
@@ -99,6 +106,8 @@ public class LoanConditionActivity extends BasisActivity implements View.OnClick
                 infor.content = bean.getLjsq_url();
                 break;
             case R.id.bt_strategy:
+            case R.id.rl_sqgl:
+
                 infor.type=0;
                 infor.content = bean.getSq_url();
                 break;

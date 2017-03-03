@@ -76,6 +76,7 @@ public class ImportDetailActivity extends BasisActivity implements View.OnClickL
                 a = R.string.jiao_call;
                 b = R.string.jiao_call_warn;
                 f = R.string.jiao_phone;
+                g= R.string.jiao_online;
                 break;
             case "浦发银行":
                 a = R.string.pu_call;
@@ -115,7 +116,6 @@ public class ImportDetailActivity extends BasisActivity implements View.OnClickL
                 f = R.string.xing_phone;
                 break;
             case "工商银行":
-                g=R.string.gong_online;
                 a = R.string.gong_call;
                 b = R.string.gong_call_warn;
                 f = R.string.gong_phone;

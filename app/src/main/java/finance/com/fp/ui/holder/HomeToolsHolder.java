@@ -12,7 +12,7 @@ import java.util.List;
 import finance.com.fp.R;
 import finance.com.fp.mode.bean.Set_Item;
 import finance.com.fp.utlis.GlideUtils;
-import finance.com.fp.utlis.ToastUtil;
+import finance.com.fp.utlis.Utils;
 
 /**
  * Description：
@@ -26,7 +26,7 @@ public class HomeToolsHolder extends BasicHolder {
     LinearLayout.LayoutParams params;
 
 
-    private int itemId=R.layout.view_tools_home;
+    private int itemId=R.layout.view_tools_card;
 
 
     public void setView(int itemId) {
@@ -63,10 +63,11 @@ public class HomeToolsHolder extends BasicHolder {
                 @Override
                 public void onClick(View v) {
                     if (listener != null) {
-                        listener.onItemClick(id, item);
-                    } else {
-                        ToastUtil.showTextToast(context, item.title);
-
+                        if(!Utils.isLogion(context)){
+                            Utils.showLoginDialog(context);
+                        }else {
+                            listener.onItemClick(id, item);
+                        }
                     }
                 }
             });

@@ -13,6 +13,7 @@ import finance.com.fp.mode.bean.DynamicBean;
 import finance.com.fp.mode.bean.FinanceBean;
 import finance.com.fp.mode.bean.FriendBean;
 import finance.com.fp.mode.bean.HttpBean;
+import finance.com.fp.mode.bean.IDBean;
 import finance.com.fp.mode.bean.LoanSearchBean;
 import finance.com.fp.mode.bean.MsgContentBean;
 import finance.com.fp.mode.bean.Set_Item;
@@ -338,9 +339,10 @@ public class HttpFactory {
      * 学习规划师
      *
      * @return
+     * @param msg
      */
-    public static Observable<Set_Item> getPlanner() {
-        return HttpClient.getClient().getPlanner().subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread())
+    public static Observable<Set_Item> getPlanner(String msg,String phone) {
+        return HttpClient.getClient().getPlanner(msg,phone).subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread())
                 .flatMap(new Func1<HttpBean<FinanceBean>, Observable<Set_Item>>() {
                     @Override
                     public Observable<Set_Item> call(HttpBean<FinanceBean> financeBeanHttpBean) {
@@ -350,9 +352,7 @@ public class HttpFactory {
                                     public Set_Item call(FinanceBean financeBean) {
                                         Set_Item item = new Set_Item();
                                         item.title = financeBean.getContent();
-                                        if (TextUtils.isEmpty(item.title)) {
-                                            item.title = CusApplication.getContext().getString(R.string.card_hot);
-                                        }
+
                                         item.turl = financeBean.getTurl();
                                         item.content = financeBean.getTurl();
                                         item.img_url = financeBean.getThumb();
@@ -415,7 +415,7 @@ public class HttpFactory {
                                     public Set_Item call(FinanceBean financeBean) {
                                         Set_Item item = new Set_Item();
                                         item.title = financeBean.getTitle();
-                                        item.describe = financeBean.getDescription();
+                                        item.describe = financeBean.getTurl();
                                         String s = financeBean.getUpdatetime() + "000";
                                         item.content = financeBean.getContent();
                                         item.updatetime = em.sang.com.allrecycleview.utils.Utils.formatDateTime(s);
@@ -578,5 +578,9 @@ public class HttpFactory {
                     }
                 })
                 .observeOn(AndroidSchedulers.mainThread());
+    }
+
+    public static Observable<IDBean> getID(String phone){
+        return HttpClient.getClient( ).getPerson(phone).subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread());
     }
 }

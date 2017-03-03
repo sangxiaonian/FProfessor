@@ -16,6 +16,7 @@ import finance.com.fp.mode.bean.TranInfor;
 import finance.com.fp.mode.http.Config;
 import finance.com.fp.ui.ShowDetailActivity;
 import finance.com.fp.utlis.GlideUtils;
+import finance.com.fp.utlis.Utils;
 
 /**
  * Description：
@@ -48,13 +49,17 @@ public class HomeFindHolder extends CustomHolder<Set_Item> {
         itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(context, ShowDetailActivity.class);
-                TranInfor infor = new TranInfor();
-                infor.title = item.title;
-                infor.content = item.content;
-                infor.describe = item.describe;
-                intent.putExtra(Config.infors, infor);
-                context.startActivity(intent);
+                if(!Utils.isLogion(context)){
+                    Utils.showLoginDialog(context);
+                }else {
+                    Intent intent = new Intent(context, ShowDetailActivity.class);
+                    TranInfor infor = new TranInfor();
+                    infor.title = item.title;
+                    infor.content = item.content;
+                    infor.describe = item.describe;
+                    intent.putExtra(Config.infors, infor);
+                    context.startActivity(intent);
+                }
             }
         });
     }

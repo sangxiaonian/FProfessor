@@ -2,7 +2,9 @@ package finance.com.fp.ui;
 
 import android.Manifest;
 import android.app.AlertDialog;
+import android.app.Dialog;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
 import android.os.Bundle;
@@ -29,6 +31,9 @@ import finance.com.fp.presenter.inter.HomeSonPreInter;
 import finance.com.fp.ui.inter.HomeSonView;
 import finance.com.fp.utlis.PermissionUtil;
 import finance.com.fp.utlis.ToastUtil;
+import sang.com.xdialog.DialogFactory;
+import sang.com.xdialog.XDialog;
+import sang.com.xdialog.inter.OnEntryClickListener;
 
 public class HomeSonActivity extends BasisActivity implements HomeSonView {
 
@@ -103,14 +108,42 @@ public class HomeSonActivity extends BasisActivity implements HomeSonView {
     public void creditItemClick(View itemView, final Set_Item item) {
 
         if (!TextUtils.isEmpty(item.content)) {
-            Intent intent = new Intent(this, ShowDetailActivity.class);
-            TranInfor infor = new TranInfor();
-            infor.title = item.title;
-            infor.type=1;
-            infor.content = item.content;
-            infor.describe = item.describe;
-            intent.putExtra(Config.infors, infor);
-            startActivity(intent);
+
+            if (TextUtils.equals(item.content,"ali")){
+                try {
+                    PackageManager packageManager
+                            = this.getApplicationContext().getPackageManager();
+                    Intent intent = packageManager.
+                            getLaunchIntentForPackage("com.eg.android.AlipayGphone");
+                    startActivity(intent);
+                }catch (Exception e) {
+                    e.printStackTrace();
+                    XDialog dialog = DialogFactory.getInstance().creatDiaolg(this, DialogFactory.ALEART_DIALOG);
+                    dialog.setTitle(getString(R.string.attention));
+                    dialog.setDatas(getString(R.string.no_ali));
+                    dialog.setOnClickListener(new OnEntryClickListener() {
+                        @Override
+                        public void onClick(Dialog dialog, int which, Object data) {
+                            String url = "https://ds.alipay.com/?from=mobileweb";
+                            Intent intent = new Intent(Intent.ACTION_VIEW);
+                            intent.setData(Uri.parse(url));
+                            startActivity(intent);
+                        }
+                    });
+                    dialog.show();
+
+                }
+            }else {
+
+                Intent intent = new Intent(this, ShowDetailActivity.class);
+                TranInfor infor = new TranInfor();
+                infor.title = item.title;
+                infor.type = 1;
+                infor.content = item.content;
+                infor.describe = item.describe;
+                intent.putExtra(Config.infors, infor);
+                startActivity(intent);
+            }
         }else {
             ToastUtil.showTextToast(item.content);
         }

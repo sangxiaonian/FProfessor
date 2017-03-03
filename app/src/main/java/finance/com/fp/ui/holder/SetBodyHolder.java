@@ -1,6 +1,5 @@
 package finance.com.fp.ui.holder;
 
-import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
 import android.view.View;
@@ -15,21 +14,17 @@ import java.util.List;
 
 import em.sang.com.allrecycleview.holder.CustomHolder;
 import finance.com.fp.R;
-import finance.com.fp.mode.http.Config;
 import finance.com.fp.mode.bean.Set_Item;
 import finance.com.fp.mode.bean.TranInfor;
 import finance.com.fp.mode.datafractory.CardDataFractory;
+import finance.com.fp.mode.http.Config;
 import finance.com.fp.ui.FeedbackActivity;
 import finance.com.fp.ui.HomeSonActivity;
 import finance.com.fp.ui.IDActivity;
-import finance.com.fp.ui.Loan_Search_Activity;
-import finance.com.fp.ui.LoginActivity;
 import finance.com.fp.ui.Set_Activity;
+import finance.com.fp.ui.ShowProActivity;
 import finance.com.fp.utlis.ToastUtil;
 import finance.com.fp.utlis.Utils;
-import sang.com.xdialog.DialogFactory;
-import sang.com.xdialog.XDialog;
-import sang.com.xdialog.inter.OnEntryClickListener;
 
 /**
  * Description：
@@ -58,7 +53,7 @@ public class SetBodyHolder extends CustomHolder<Set_Item> {
                 params.setMargins(0, 0, 0, 0);
             }
 
-//            params.setMargins(0, 0, 0, 0);
+
         }
 
         itemView.setLayoutParams(params);
@@ -89,7 +84,6 @@ public class SetBodyHolder extends CustomHolder<Set_Item> {
 
         switch (position) {
             case 0://办卡进度
-
                 tranInfor.activity_id = 1;
                 tranInfor.item_id = CardDataFractory.APPLY_PROGRESS;
                 tranInfor.title = context.getString(R.string.card_pro);
@@ -97,7 +91,7 @@ public class SetBodyHolder extends CustomHolder<Set_Item> {
                 c = HomeSonActivity.class;
                 break;
             case 1://网贷进度
-                c = Loan_Search_Activity.class;
+                c = ShowProActivity.class;
                 break;
             case 2://个人信息
                 c = IDActivity.class;
@@ -126,18 +120,9 @@ public class SetBodyHolder extends CustomHolder<Set_Item> {
                 ToastUtil.showTextToast(context, "功能尚未开放");
             }
         }else {
-            XDialog dialog  = DialogFactory.getInstance().creatDiaolg(context,DialogFactory.ALEART_DIALOG);
-            dialog.setTitle("提示");
-            dialog.setDatas("在登陆后才能进行该操作");
-            dialog.setOnClickListener(new OnEntryClickListener() {
-                @Override
-                public void onClick(Dialog dialog, int which, Object data) {
-                    dialog.dismiss();
-                    context.startActivity(new Intent(context, LoginActivity.class));
-
-                }
-            });
-            dialog.show();
+            if(!Utils.isLogion(context)){
+                Utils.showLoginDialog(context);
+            }
         }
     }
 }

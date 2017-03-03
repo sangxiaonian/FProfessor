@@ -27,6 +27,7 @@ import finance.com.fp.ui.holder.HomeFindHolder;
 import finance.com.fp.ui.holder.HomeToolsHolder;
 import finance.com.fp.ui.inter.HomeFramentView;
 import finance.com.fp.utlis.ToastUtil;
+import finance.com.fp.utlis.Utils;
 import rx.Subscriber;
 import rx.Subscription;
 
@@ -85,7 +86,11 @@ public class HomeFragmentPreComl implements HomeFragmentPre {
         moreHolder.setOnToolsItemClickListener(new OnToolsItemClickListener() {
             @Override
             public void onItemClick(int position, Object item) {
-                context.startActivity(new Intent(context, Loan_Search_Activity.class));
+                if(!Utils.isLogion(context)){
+                    Utils.showLoginDialog(context);
+                }else {
+                    context.startActivity(new Intent(context, Loan_Search_Activity.class));
+                }
             }
         });
         adapter.addHead(moreHolder);

@@ -14,7 +14,6 @@ import android.view.WindowManager;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.umeng.message.PushAgent;
 
 /**
  * Description：
@@ -26,26 +25,22 @@ public class BasisActivity extends AppCompatActivity {
     public Toolbar toolbar;
 
 
-
-
-
-
     @Override
     public void onCreate(Bundle savedInstanceState, PersistableBundle persistentState) {
         super.onCreate(savedInstanceState, persistentState);
-        PushAgent.getInstance(this).onAppStart();
-    }
-
-
-    public void initData(){
 
     }
 
-    public void loadData(){
+
+    public void initData() {
 
     }
 
-    public void  initView() {
+    public void loadData() {
+
+    }
+
+    public void initView() {
 
     }
 
@@ -126,5 +121,13 @@ public class BasisActivity extends AppCompatActivity {
         return statusView;
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+    }
 
+    @Override
+    protected void onPause() {
+        super.onPause();
+    }
 }

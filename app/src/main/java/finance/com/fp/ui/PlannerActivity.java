@@ -21,13 +21,16 @@ import finance.com.fp.BasisActivity;
 import finance.com.fp.R;
 import finance.com.fp.mode.bean.Set_Item;
 import finance.com.fp.mode.datafractory.HttpFactory;
+import finance.com.fp.mode.http.Config;
 import finance.com.fp.utlis.ToastUtil;
-import rx.Subscriber;
+import finance.com.fp.utlis.Utils;
+import rx.Observer;
+import rx.Subscription;
 
 /**
  * 学习规划师
  */
-public class PlannerActivity extends BasisActivity {
+public class PlannerActivity extends BasisActivity implements Observer<Set_Item> {
 
     private RecyclerView rc;
     private EditText et;
@@ -38,15 +41,19 @@ public class PlannerActivity extends BasisActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_planner);
-        initToolBar("学习・规划师");
+        initToolBar("规划师");
         setColor(this, getResources().getColor(R.color.statucolor));
         rc = (RecyclerView) findViewById(R.id.rc);
         et = (EditText) findViewById(R.id.et_planner);
         btn = (Button) findViewById(R.id.btn_planner_send);
+        lists = new ArrayList<>();
+        Set_Item item = new Set_Item();
+        item.title = getString(R.string.planner_start);
+        lists.add(item);
         initData();
     }
 
-    Subscriber<Set_Item> subscriber;
+    Subscription subscribe;
 
     @Override
     protected void onDestroy() {
@@ -54,71 +61,65 @@ public class PlannerActivity extends BasisActivity {
         unSunsriber();
     }
 
-    private void unSunsriber(){
-        if (subscriber!=null){
-            subscriber.unsubscribe();
+    private void unSunsriber() {
+        if (subscribe != null) {
+            subscribe.unsubscribe();
         }
     }
 
+    PlannerAdapter adapter;
+
     public void initData() {
-        lists = new ArrayList<>();
-        final Set_Item item = new Set_Item();
-        item.title = getString(R.string.planner_start);
-        lists.add(item);
+
         StaggeredGridLayoutManager manage = new StaggeredGridLayoutManager(1, LinearLayoutManager.VERTICAL);
         rc.setLayoutManager(manage);
-        final PlannerAdapter adapter = new PlannerAdapter();
+        adapter = new PlannerAdapter();
         rc.setAdapter(adapter);
         btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 String msg = et.getText().toString().trim();
-                if (!TextUtils.isEmpty(msg)){
+                if (!TextUtils.isEmpty(msg)) {
                     Set_Item item1 = new Set_Item();
-                    item1.title=msg;
-                    item1.type=1;
-                    item1.icon_id=R.mipmap.login_boyhead;
+                    item1.title = msg;
+                    item1.type = 1;
+                    item1.icon_id = R.mipmap.login_boyhead;
                     lists.add(item1);
-                    adapter.notifyItemInserted(adapter.getItemCount()-1);
-                    rc.scrollToPosition(adapter.getItemCount()-1);
+                    adapter.notifyDataSetChanged( );
+                    rc.scrollToPosition(adapter.getItemCount() - 1);
                     et.setText("");
-
-
+                    btn.setText("发送中..");
+                    btn.setEnabled(false);
                     unSunsriber();
-                     subscriber = new Subscriber<Set_Item>() {
-
-                         @Override
-                         public void onStart() {
-                             super.onStart();
-                             btn.setText("发送中..");
-                             btn.setEnabled(false);
-                         }
-
-                         @Override
-                        public void onCompleted() {
-                            adapter.notifyItemInserted(adapter.getItemCount()-1);
-                             btn.setText("发送");
-                             btn.setEnabled(true);
-                        }
-
-                        @Override
-                        public void onError(Throwable e) {
-                            e.printStackTrace();
-                            ToastUtil.showTextToast(getString(R.string.net_error));
-                        }
-
-                        @Override
-                        public void onNext(Set_Item set_item) {
-                            lists.add(set_item);
-                        }
-                    };
-                    HttpFactory.getPlanner().subscribe(subscriber);
+                    subscribe = HttpFactory.getPlanner(msg, Utils.getSp(PlannerActivity.this, Config.login_name)).subscribe(PlannerActivity.this);
                 }
 
             }
         });
 
 
+    }
+
+    @Override
+    public void onCompleted() {
+        adapter.notifyDataSetChanged();
+        btn.setText("发送");
+        btn.setEnabled(true);
+    }
+
+    @Override
+    public void onError(Throwable e) {
+        btn.setText("发送");
+        btn.setEnabled(true);
+        e.printStackTrace();
+        ToastUtil.showTextToast(getString(R.string.net_error));
+    }
+
+    @Override
+    public void onNext(Set_Item set_item) {
+        if (!TextUtils.isEmpty(set_item.title)) {
+            lists.add(set_item);
+        }
     }
 
 
@@ -144,14 +145,20 @@ public class PlannerActivity extends BasisActivity {
 
         @Override
         public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
-            ((PlannerHolder)holder).initView(lists.get(position));
-
+            ((PlannerHolder) holder).initView(lists.get(position));
         }
 
         @Override
         public int getItemCount() {
             return lists.size();
         }
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        unSunsriber();
+
     }
 
     public class PlannerHolder extends RecyclerView.ViewHolder {
@@ -168,11 +175,11 @@ public class PlannerActivity extends BasisActivity {
             view = (ImageView) itemView.findViewById(R.id.img_icon);
             if (item.icon_id != 0) {
                 Glide.with(PlannerActivity.this).load(item.icon_id).placeholder(R.mipmap.icon_tcacher).crossFade().into(view);
-            }else {
+            } else {
                 Glide.with(PlannerActivity.this).load(R.mipmap.icon_tcacher).placeholder(R.mipmap.icon_tcacher).crossFade().into(view);
             }
 
-            if (!TextUtils.isEmpty(item.title)){
+            if (!TextUtils.isEmpty(item.title)) {
                 text = (TextView) itemView.findViewById(R.id.tv_planner);
                 text.setText(item.title);
             }

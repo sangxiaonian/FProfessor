@@ -91,12 +91,14 @@ public class Loan_Search_Activity extends BasisActivity implements Observer<Loan
         rc.setRefrushListener(new RefrushListener() {
             @Override
             public void onLoading() {
+
                  subscribe = getLoanSearch(id, page).subscribe(Loan_Search_Activity.this);
             }
 
             @Override
             public void onLoadDowning() {
                 page++;
+
                subscribe= HttpFactory.getLoanSearch(id,page).subscribe(Loan_Search_Activity.this);
             }
         });
@@ -162,8 +164,6 @@ public class Loan_Search_Activity extends BasisActivity implements Observer<Loan
                 cb.setText(lists.get(position).title);
             }
         },position);
-
-
         img.setEnabled(false);
         cb.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
@@ -202,7 +202,7 @@ public class Loan_Search_Activity extends BasisActivity implements Observer<Loan
     @Override
     public void onCompleted() {
         rc.loadSuccess();
-        if (tempLists.size()==0){
+        if (tempLists.size()==0&&rc.isLoadMore()){
             page--;
             ToastUtil.showTextToast(getString(R.string.no_more));
         }else {
@@ -210,9 +210,10 @@ public class Loan_Search_Activity extends BasisActivity implements Observer<Loan
                 lists.clear();
             }
             lists.addAll(tempLists);
+            reAdapter.notifyDataSetChanged();
             tempLists.clear();
-            adapter.notifyDataSetChanged();
         }
+
 
 
     }
@@ -229,6 +230,8 @@ public class Loan_Search_Activity extends BasisActivity implements Observer<Loan
     @Override
     public void onNext(LoanSearchBean loanSearchBean) {
         tempLists.add(loanSearchBean);
+
+
     }
 
     @Override

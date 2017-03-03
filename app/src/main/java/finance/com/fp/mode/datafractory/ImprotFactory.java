@@ -136,7 +136,7 @@ public class ImprotFactory extends BaseFractory {
     public List<Set_Item> getImport() {
         List<Set_Item> datas = new ArrayList<>();
         datas.add(new Set_Item(R.mipmap.icon_mentionthefrontalstrategy, "提额攻略", "各家银行提额攻略"));
-        datas.add(new Set_Item(R.mipmap.icon_transactionanalysis, "交易分析", "刷卡多元化，贡献度权威评测"));
+
         datas.add(new Set_Item(R.mipmap.icon_aquiculturecardtotheforehead, "精养卡提额", "手把手教你最利于提额的用卡姿势"));
 
         return datas;

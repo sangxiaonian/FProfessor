@@ -24,6 +24,7 @@ import finance.com.fp.ui.holder.GrideHolder;
 import finance.com.fp.ui.holder.HomeCarouselHolder;
 import finance.com.fp.ui.holder.HomeToolsHolder;
 import finance.com.fp.ui.inter.CardView;
+import finance.com.fp.utlis.Utils;
 import rx.Observer;
 import rx.Subscription;
 
@@ -66,7 +67,10 @@ public class CardActivityComl implements CardActivityPre {
 
 
         getCarouselHolder(context);
-        notifiHolder = new CardNotifiHolder(context, data.getTools(), R.layout.item_card_navi);
+
+
+
+        notifiHolder = new CardNotifiHolder(context, Utils.getRandomData("成功申请","信用卡") , R.layout.item_card_navi);
         adapter.addHead(notifiHolder);
 
         Set_Item more = new Set_Item();

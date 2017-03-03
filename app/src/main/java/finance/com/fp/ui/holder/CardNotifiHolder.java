@@ -27,7 +27,7 @@ import finance.com.fp.mode.bean.Set_Item;
  */
 public class CardNotifiHolder extends BasicHolder {
 
-    private TextSwitcher ts;
+    private TextSwitcher ts,tt;
     private int item;
     private Handler handler = new Handler(){
         @Override
@@ -39,6 +39,7 @@ public class CardNotifiHolder extends BasicHolder {
             }
 
             ts.setText(((Set_Item)datas.get(item)).title);
+            tt.setText(((Set_Item)datas.get(item)).describe);
 
 //            ts.showNext();
             handler.sendEmptyMessageDelayed(0,3000);
@@ -56,10 +57,11 @@ public class CardNotifiHolder extends BasicHolder {
         LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
         params.setMargins(0,0,0, (int) context.getResources().getDimension(R.dimen.home_item_time_margin));
 
-        if (ts!=null){
+        if (ts!=null||tt!=null){
             return;
         }
         ts= (TextSwitcher) itemView.findViewById(R.id.ts_card);
+        tt= (TextSwitcher) itemView.findViewById(R.id.ts_time);
 
         ts.setFactory(new ViewSwitcher.ViewFactory() {
             @Override
@@ -75,10 +77,29 @@ public class CardNotifiHolder extends BasicHolder {
             }
         });
 
+        tt.setFactory(new ViewSwitcher.ViewFactory() {
+            @Override
+            public View makeView() {
+                TextView textView = new TextView(context);
+                FrameLayout.LayoutParams params = new FrameLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.MATCH_PARENT,1);
+                textView.setLayoutParams(params);
+                textView.setMaxLines(1);
+                textView.setEllipsize(TextUtils.TruncateAt.END);
+                textView.setTextColor(context.getResources().getColor(R.color.text_card_item_more));
+                textView.setTextSize(TypedValue.COMPLEX_UNIT_PX,context.getResources().getDimensionPixelSize(R.dimen.home_item_time_text));
+                return textView;
+            }
+        });
+
         // 设置切入动画
         ts.setInAnimation(AnimationUtils.loadAnimation(context, R.anim.slide_bottom_in));
         // 设置切出动画
         ts.setOutAnimation(AnimationUtils.loadAnimation(context, R.anim.slide_top_out));
+
+        // 设置切入动画
+        tt.setInAnimation(AnimationUtils.loadAnimation(context, R.anim.slide_bottom_in));
+        // 设置切出动画
+        tt.setOutAnimation(AnimationUtils.loadAnimation(context, R.anim.slide_top_out));
         handler.sendEmptyMessage(0);
 
     }

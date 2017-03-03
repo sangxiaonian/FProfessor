@@ -67,9 +67,6 @@ public class MainActivity extends BasisActivity implements View.OnClickListener 
         ll_home.performClick();
 
 
-
-
-
     }
 
     public void initView() {
@@ -95,6 +92,9 @@ public class MainActivity extends BasisActivity implements View.OnClickListener 
 
     @Override
     public void onClick(View v) {
+
+
+
         FragmentManager fm = getSupportFragmentManager();
         // 开启Fragment事务
 
@@ -104,6 +104,7 @@ public class MainActivity extends BasisActivity implements View.OnClickListener 
         }
         switch (v.getId()) {
             case R.id.ll_home:
+
 
                 if (homeFragment == null) {
 
@@ -116,6 +117,7 @@ public class MainActivity extends BasisActivity implements View.OnClickListener 
                 changeState(0);
                 break;
             case R.id.ll_find:
+
                 if (findFragment == null) {
                     findFragment = new FindFragment();
                     transaction.add(R.id.container, findFragment);
