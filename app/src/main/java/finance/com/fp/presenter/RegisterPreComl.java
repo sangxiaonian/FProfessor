@@ -76,12 +76,19 @@ public class RegisterPreComl implements RegisterInter {
 
 
     @Override
-    public void getDynamic(String string, EditText et_user) {
+    public void getDynamic(String string, EditText et_user, EditText et_register) {
         String phone = et_user.getText().toString().trim();
         if (TextUtils.isEmpty(phone)){
+            et_user.requestFocus();
             et_user.setError(string);
             return;
-        }else {
+
+        }else if (et_register!=null&&TextUtils.isEmpty(et_register.getText().toString().trim())){
+            et_register.setError(Utils.getResStr(R.string.input_register));
+            et_register.requestFocus();
+            return;
+        }
+        else {
             DynamicBean bean = new DynamicBean();
             bean.setCode(Utils.getRound(6));
             bean.setProduct(CusApplication.getContext().getString(R.string.app_name));
@@ -230,36 +237,5 @@ public class RegisterPreComl implements RegisterInter {
     }
 
 
-    private Subscriber<String> getSubscriber() {
-        if (subscriber!=null&&!subscriber.isUnsubscribed()){
-            subscriber.unsubscribe();
-        }
-        return subscriber =new Subscriber<String>() {
 
-            @Override
-            public void onStart() {
-                super.onStart();
-                view.showDialog();
-            }
-
-            @Override
-            public void onCompleted() {
-
-            }
-
-            @Override
-            public void onError(Throwable e) {
-                e.printStackTrace();
-                view.dissMissDialog();
-                ToastUtil.showTextToast("请检查网络环境是否正常");
-
-            }
-
-            @Override
-            public void onNext(String o) {
-                view.dissMissDialog();
-                view.onNextClick();
-            }
-        };
-    }
 }

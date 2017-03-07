@@ -129,8 +129,6 @@ public class HomeFragmentPreComl implements HomeFragmentPre {
                 temp.add(set_item);
             }
         });
-
-
     }
 
 
@@ -159,7 +157,6 @@ public class HomeFragmentPreComl implements HomeFragmentPre {
             @Override
             public void onItemClick(int position, Object item) {
                 checkId = position;
-
                 view.showLoad();
             }
         });
@@ -179,7 +176,7 @@ public class HomeFragmentPreComl implements HomeFragmentPre {
         }
         if (i > 0) {
 
-            data.getLoanSearch().subscribe(new Subscriber<LoanSearchBean>() {
+            data.getLoanSearch(i).subscribe(new Subscriber<LoanSearchBean>() {
 
                 @Override
                 public void onStart() {

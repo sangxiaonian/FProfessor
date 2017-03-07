@@ -114,7 +114,8 @@ public class Loan_Search_Activity extends BasisActivity implements Observer<Loan
         view = (RecyclerView) View.inflate(this, R.layout.view_recycleview, null);
         int dimension = (int) getResources().getDimension(R.dimen.app_margin_ends);
         view.setPadding(dimension,0,dimension, (int) (dimension*2.0/3));
-        view.setBackground(new ColorDrawable(getResources().getColor(R.color.statucolor)));
+
+        view.setBackground(new ColorDrawable(getResources().getColor(R.color.white)));
         GridLayoutManager manager = new GridLayoutManager(this, 3);
         manager.setOrientation(LinearLayoutManager.VERTICAL);
         view.addItemDecoration(new DividerGridItemDecoration(this,R.drawable.divider_line_rectangle));
@@ -196,6 +197,8 @@ public class Loan_Search_Activity extends BasisActivity implements Observer<Loan
     private void showPopuWindow() {
 
         pop = new PopupWindow(view, LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT, false);
+
+
         pop.showAsDropDown(cb,0, (int) getResources().getDimension(R.dimen.home_item_time_margin));
     }
 

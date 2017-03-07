@@ -9,6 +9,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.orhanobut.logger.Logger;
 
 import java.util.List;
 
@@ -45,16 +46,21 @@ public class SetBodyHolder extends CustomHolder<Set_Item> {
 
 
         if ((position - 1) % 2 == 0) {
-            params.setMargins(0, 0, 0, (int) context.getResources().getDimension(R.dimen.home_item_time_margin));
+            params.setMargins(0, 0, 0, (int) context.getResources().getDimension(R.dimen.home_item_margin));
         } else {
             if (position == 0) {
-                params.setMargins(0, (int) context.getResources().getDimension(R.dimen.home_item_time_margin), 0, 0);
+                params.setMargins(0, (int) context.getResources().getDimension(R.dimen.home_item_margin), 0, 0);
             } else {
                 params.setMargins(0, 0, 0, 0);
             }
 
 
         }
+        Logger.i(position+"");
+        if ((position - 1) == 3) {
+            params.setMargins(0, 0, 0, (int) context.getResources().getDimension(R.dimen.home_item_margin));
+        }
+
 
         itemView.setLayoutParams(params);
         final Set_Item item = datas.get(position);

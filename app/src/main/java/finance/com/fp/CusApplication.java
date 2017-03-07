@@ -51,6 +51,7 @@ public class CusApplication extends Application {
 //            public void dealWithCustomMessage(final Context context, final UMessage msg) {
 //                new Handler().post(new Runnable() {
 //
+
 //                    @Override
 //                    public void run() {
 //                        // TODO Auto-generated method stub

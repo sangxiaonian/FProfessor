@@ -23,6 +23,7 @@ import em.sang.com.allrecycleview.inter.DefaultAdapterViewLisenter;
 import finance.com.fp.R;
 import finance.com.fp.mode.bean.FriendBean;
 import finance.com.fp.utlis.GlideUtils;
+import finance.com.fp.view.FloatView;
 import sang.com.xdialog.DialogFactory;
 import sang.com.xdialog.XDialog;
 
@@ -47,7 +48,7 @@ public class FriendHolder extends CustomHolder<FriendBean> {
         if (!TextUtils.isEmpty(bean.getTitle())){
             title.setText(bean.getTitle());
         }
-        TextView content = (TextView) itemView.findViewById(R.id.tv_content);
+        FloatView content = (FloatView) itemView.findViewById(R.id.tv_content);
         if (bean.getContent()!=null){
             content.setText(Html.fromHtml(bean.getContent()));
         }

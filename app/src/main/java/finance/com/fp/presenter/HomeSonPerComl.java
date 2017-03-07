@@ -213,6 +213,7 @@ public class HomeSonPerComl   implements HomeSonPreInter ,Observer <Set_Item>{
         view.loadSuccess();
         if (templist.size()==0){
             page--;
+            page= page<0?0:page;
             ToastUtil.showTextToast(Utils.getResStr(R.string.no_more));
         }else {
             if (!view.isLoadMore()){
@@ -229,6 +230,7 @@ public class HomeSonPerComl   implements HomeSonPreInter ,Observer <Set_Item>{
         e.printStackTrace();
         if (view.isLoadMore()){
             page--;
+            page= page<0?0:page;
         }
         view.loadFail();
     }

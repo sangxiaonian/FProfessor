@@ -39,8 +39,8 @@ public class HomeFragmentDataCom implements HomeFragmentData {
     }
 
     @Override
-    public Observable<LoanSearchBean> getLoanSearch() {
-        return HttpFactory.getLoanSearch(0,0).take(4);
+    public Observable<LoanSearchBean> getLoanSearch(int i) {
+        return HttpFactory.getLoanSearch(0,0).take(i);
     }
 
 

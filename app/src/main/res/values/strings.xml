@@ -13,13 +13,12 @@
     <string name="friend">朋友圈</string>
 
     <string name="main_search">搜索最新金融口子,中介广告</string>
-    <string name="main_item_more_title">最新金融口子</string>
     <string name="main_item_more">更多</string>
 
 
     <string name="find_item_fcycle">金融中介朋友圈</string>
     <string name="find_item_lao">网赚思维</string>
-    <string name="find_item_fun">最新金融口子</string>
+    <string name="find_item_fun">金融口子</string>
     <string name="set_item">登录/注册</string>
 
 
@@ -83,12 +82,12 @@
     <string name="phone">手机号</string>
     <string name="set_add">添加</string>
     <string name="set_contact">联系方式:</string>
-    <string name="feedback_hind">您对融教授app的任何宝贵以及那都可以反馈给我们(100字以内)</string>
+    <string name="feedback_hind">您对融教授app的任何宝贵意见,都可以反馈给我们哦!(100字以内)</string>
 
 
     <string name="hot_loan">热门网贷</string>
 
-    <string name="planner_start">哈喽，同学你好，想了解更多关于融资师和网赚相关玩法么？留下你的微信、QQ号码，老师会把相关教程和素材发你给哦！</string>
+    <string name="planner_start">哈喽，同学你好，您对融教授app的任何宝贵意见都可以反馈给我们哦！</string>
 
     <!--办卡二级界面-->
     <string name="card_primer">新手入门</string>

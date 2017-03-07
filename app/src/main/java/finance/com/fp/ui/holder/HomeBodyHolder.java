@@ -43,7 +43,7 @@ public class HomeBodyHolder extends CustomHolder<LoanSearchBean> {
         }
 
         title.setText(item.getTitle());
-        time.setText(item.getDescription());
+        time.setText(item.getZhaiyao());
         itemView.findViewById(R.id.click).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -52,7 +52,6 @@ public class HomeBodyHolder extends CustomHolder<LoanSearchBean> {
                     Utils.showLoginDialog(context);
                 } else {
                     Intent intent = new Intent(context, LoanConditionActivity.class);
-
                     intent.putExtra(Config.infors, item);
                     context.startActivity(intent);
                 }

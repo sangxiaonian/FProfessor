@@ -4,9 +4,9 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 
@@ -19,12 +19,12 @@ import java.util.List;
 import finance.com.fp.BasisActivity;
 import finance.com.fp.R;
 import finance.com.fp.mode.http.Config;
+import finance.com.fp.utlis.DeviceUtils;
 import finance.com.fp.utlis.Utils;
 
 public class GuideActivity extends BasisActivity {
 
     private ViewPager vp;
-    private Button bt;
     private List<Integer> datas;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,27 +38,35 @@ public class GuideActivity extends BasisActivity {
         datas.add(R.mipmap.vp2);
 
         vp.setAdapter(new MyAdapter());
-        bt= (Button) findViewById(R.id.bt);
-        bt.setVisibility(View.GONE);
-        vp.addOnPageChangeListener(new ViewPager.SimpleOnPageChangeListener(){
+
+
+
+        vp.setOnTouchListener(new View.OnTouchListener() {
             @Override
-            public void onPageSelected(int position) {
-                super.onPageSelected(position);
-                if (position==datas.size()-1){
-                    bt.setVisibility(View.VISIBLE);
-                }else {
-                    bt.setVisibility(View.GONE);
+            public boolean onTouch(View v, MotionEvent event) {
+                switch (event.getAction()){
+                    case MotionEvent.ACTION_DOWN:
+                        x= (int) event.getRawX();
+                        break;
+                    case MotionEvent.ACTION_MOVE:
+                        float v1 = event.getRawX() - x;
+                        if (v1<-2*DeviceUtils.getMinTouchSlop(GuideActivity.this)&&vp.getCurrentItem()==datas.size()-1){
+                            Utils.setSp( GuideActivity.this, Config.isFirst,"true");
+                            startActivity(new Intent(GuideActivity.this,MainActivity.class));
+                            finish();
+                            overridePendingTransition(R.anim.slide_right_in,R.anim.slide_left_out);
+                        }
+                        break;
                 }
+
+                return false;
             }
         });
 
     }
 
-    public void click(View view){
-        Utils.setSp( this, Config.isFirst,"true");
-        finish();
-        startActivity(new Intent(this,MainActivity.class));
-    }
+    private int x;
+
 
     public class MyAdapter extends PagerAdapter{
 

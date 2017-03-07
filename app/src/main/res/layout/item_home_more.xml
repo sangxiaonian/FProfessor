@@ -13,7 +13,6 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_weight="1"
-        android:text="@string/main_item_more_title"
         android:textColor="@color/text_home_more_text"
         android:textSize="@dimen/app_title_text_size" />
 

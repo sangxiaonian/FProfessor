@@ -1,5 +1,6 @@
 package finance.com.fp.ui;
 
+import android.content.res.Configuration;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -44,6 +45,12 @@ public class MainActivity extends BasisActivity implements View.OnClickListener 
         initDatas();
         initListener();
 
+
+    }
+
+    @Override
+    public void onConfigurationChanged(Configuration newConfig) {
+        super.onConfigurationChanged(newConfig);
 
     }
 
@@ -104,10 +111,7 @@ public class MainActivity extends BasisActivity implements View.OnClickListener 
         }
         switch (v.getId()) {
             case R.id.ll_home:
-
-
                 if (homeFragment == null) {
-
                     homeFragment = new HomeFragment();
                     transaction.add(R.id.container, homeFragment);
                 } else {
@@ -117,7 +121,6 @@ public class MainActivity extends BasisActivity implements View.OnClickListener 
                 changeState(0);
                 break;
             case R.id.ll_find:
-
                 if (findFragment == null) {
                     findFragment = new FindFragment();
                     transaction.add(R.id.container, findFragment);

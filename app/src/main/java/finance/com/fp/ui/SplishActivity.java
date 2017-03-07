@@ -56,10 +56,9 @@ public class SplishActivity extends BasisActivity {
                             startActivity(new Intent(SplishActivity.this,MainActivity.class));
                             finish();
                         }
+                        overridePendingTransition(R.anim.slide_right_in,R.anim.slide_left_out);
 
                     }
                 });
-
-
     }
 }

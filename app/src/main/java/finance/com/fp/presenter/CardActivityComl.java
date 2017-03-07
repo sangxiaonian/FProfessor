@@ -118,7 +118,7 @@ public class CardActivityComl implements CardActivityPre {
         CardMoreHolder card = new CardMoreHolder(context, R.layout.item_card_more, card_hot);
         card.itemView.setClickable(false);
         card.itemView.findViewById(R.id.more_icon).setVisibility(View.INVISIBLE);
-        card.itemView.setBackgroundColor(context.getResources().getColor(R.color.statucolor));
+        card.itemView.setBackgroundColor(context.getResources().getColor(R.color.white));
 
         card.setMagrin(0, 0, 0, item_cut_line);
         adapter.addHead(card);

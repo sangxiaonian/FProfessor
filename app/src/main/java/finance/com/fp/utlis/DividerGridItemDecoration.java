@@ -101,11 +101,15 @@ public class DividerGridItemDecoration extends RecyclerView.ItemDecoration {
         int heart = 0;
         if (parent.getAdapter() instanceof BasicAdapter) {
             BasicAdapter adapter = (BasicAdapter) parent.getAdapter();
-            heart = adapter.getTops().size() + adapter.getHeards().size();
+//            heart = adapter.getTops().size() + adapter.getHeards().size();
         }
 
         if (layoutManager instanceof GridLayoutManager) {
-            if ((pos  + heart) % spanCount == 0)// 如果是最后一列，则不需要绘制右边
+            if (pos==1){
+                BasicAdapter adapter = (BasicAdapter) parent.getAdapter();
+
+            }
+            if ((pos - heart+1) % spanCount == 0)// 如果是最后一列，则不需要绘制右边
             {
                 return true;
             }
@@ -113,7 +117,7 @@ public class DividerGridItemDecoration extends RecyclerView.ItemDecoration {
             int orientation = ((StaggeredGridLayoutManager) layoutManager)
                     .getOrientation();
             if (orientation == StaggeredGridLayoutManager.VERTICAL) {
-                if ((pos +  heart) % spanCount == 0)// 如果是最后一列，则不需要绘制右边
+                if ((pos - heart+1) % spanCount == 0)// 如果是最后一列，则不需要绘制右边
                 {
                     return true;
                 }

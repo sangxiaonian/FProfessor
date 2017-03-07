@@ -24,5 +24,5 @@ public interface HomeFragmentData {
      */
     Observable<Set_Item> getPartialDoor(int d);
 
-    Observable<LoanSearchBean> getLoanSearch();
+    Observable<LoanSearchBean> getLoanSearch(int i);
 }

@@ -23,41 +23,7 @@ public class LoanSearchBean implements Parcelable {
     private String sq_url;
     private String ljsq_url;
     private String thumb;
-
-    protected LoanSearchBean(Parcel in) {
-        id = in.readString();
-        title = in.readString();
-        description = in.readString();
-        updatetime = in.readString();
-        money = in.readString();
-        fenqi = in.readString();
-        tiaojian = in.readString();
-        suoxu = in.readString();
-        zhushi = in.readString();
-        sq_url = in.readString();
-        ljsq_url = in.readString();
-        thumb = in.readString();
-    }
-
-    public static final Creator<LoanSearchBean> CREATOR = new Creator<LoanSearchBean>() {
-        @Override
-        public LoanSearchBean createFromParcel(Parcel in) {
-            return new LoanSearchBean(in);
-        }
-
-        @Override
-        public LoanSearchBean[] newArray(int size) {
-            return new LoanSearchBean[size];
-        }
-    };
-
-    public String getThumb() {
-        return thumb;
-    }
-
-    public void setThumb(String thumb) {
-        this.thumb = thumb;
-    }
+    private String zhaiyao;
 
     public String getId() {
         return id;
@@ -147,25 +113,20 @@ public class LoanSearchBean implements Parcelable {
         this.ljsq_url = ljsq_url;
     }
 
-    @Override
-    public int describeContents() {
-        return 0;
+    public String getThumb() {
+        return thumb;
     }
 
-    @Override
-    public void writeToParcel(Parcel dest, int flags) {
-        dest.writeString(id);
-        dest.writeString(title);
-        dest.writeString(description);
-        dest.writeString(updatetime);
-        dest.writeString(money);
-        dest.writeString(fenqi);
-        dest.writeString(tiaojian);
-        dest.writeString(suoxu);
-        dest.writeString(zhushi);
-        dest.writeString(sq_url);
-        dest.writeString(ljsq_url);
-        dest.writeString(thumb);
+    public void setThumb(String thumb) {
+        this.thumb = thumb;
+    }
+
+    public String getZhaiyao() {
+        return zhaiyao;
+    }
+
+    public void setZhaiyao(String zhaiyao) {
+        this.zhaiyao = zhaiyao;
     }
 
     @Override
@@ -183,6 +144,57 @@ public class LoanSearchBean implements Parcelable {
                 ", sq_url='" + sq_url + '\'' +
                 ", ljsq_url='" + ljsq_url + '\'' +
                 ", thumb='" + thumb + '\'' +
+                ", zhaiyao='" + zhaiyao + '\'' +
                 '}';
     }
+
+    protected LoanSearchBean(Parcel in) {
+        id = in.readString();
+        title = in.readString();
+        description = in.readString();
+        updatetime = in.readString();
+        money = in.readString();
+        fenqi = in.readString();
+        tiaojian = in.readString();
+        suoxu = in.readString();
+        zhushi = in.readString();
+        sq_url = in.readString();
+        ljsq_url = in.readString();
+        thumb = in.readString();
+        zhaiyao = in.readString();
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(id);
+        dest.writeString(title);
+        dest.writeString(description);
+        dest.writeString(updatetime);
+        dest.writeString(money);
+        dest.writeString(fenqi);
+        dest.writeString(tiaojian);
+        dest.writeString(suoxu);
+        dest.writeString(zhushi);
+        dest.writeString(sq_url);
+        dest.writeString(ljsq_url);
+        dest.writeString(thumb);
+        dest.writeString(zhaiyao);
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    public static final Creator<LoanSearchBean> CREATOR = new Creator<LoanSearchBean>() {
+        @Override
+        public LoanSearchBean createFromParcel(Parcel in) {
+            return new LoanSearchBean(in);
+        }
+
+        @Override
+        public LoanSearchBean[] newArray(int size) {
+            return new LoanSearchBean[size];
+        }
+    };
 }

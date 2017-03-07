@@ -65,6 +65,7 @@
         <EditText
             android:inputType="number"
             android:id="@+id/et_user"
+            android:maxLength="11"
             style="@style/login_edit"
             android:hint="@string/input_phone" />
     </LinearLayout>

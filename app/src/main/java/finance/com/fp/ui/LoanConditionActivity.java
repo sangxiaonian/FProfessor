@@ -40,6 +40,7 @@ public class LoanConditionActivity extends BasisActivity implements View.OnClick
         setContentView(R.layout.activity_loan_condition);
         setColor(this,getResources().getColor(R.color.statucolor));
          bean = getIntent().getParcelableExtra(Config.infors);
+        Logger.i(bean.toString());
         initToolBar(bean.getTitle());
         initView();
         initData();
@@ -75,7 +76,7 @@ public class LoanConditionActivity extends BasisActivity implements View.OnClick
         tv_tiem.setText(bean.getFenqi());
         tv_money.setText(bean.getMoney());
         tv_title.setText(bean.getTitle());
-        tv_describe.setText(bean.getDescription());
+        tv_describe.setText(bean.getZhaiyao());
         bt_apply.setOnClickListener(this);
         bt_strategy.setOnClickListener(this);
         rl_sqgl.setOnClickListener(this);
@@ -88,7 +89,6 @@ public class LoanConditionActivity extends BasisActivity implements View.OnClick
             ll_con.setVisibility(View.GONE);
         }else {
             ll_con.setVisibility(View.VISIBLE);
-            Logger.i(tiaojian);
             tv_con.setText(Html.fromHtml(tiaojian));
         }
     }

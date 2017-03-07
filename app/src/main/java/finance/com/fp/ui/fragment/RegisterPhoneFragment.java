@@ -75,7 +75,7 @@ public class RegisterPhoneFragment extends BasisFragment implements View.OnClick
                 getActivity().finish();
                 break;
             case R.id.bt_dynamic:
-                pre.getDynamic(getString(R.string.input_phone),et_user);
+                pre.getDynamic(getString(R.string.input_phone),et_user,et_register);
                 break;
             case R.id.bt_login:
                 pre.jumpToNext(getContext(),et_user,et_password,et_register);

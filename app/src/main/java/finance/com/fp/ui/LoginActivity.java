@@ -127,7 +127,7 @@ public class LoginActivity extends BasisActivity implements RegisterView<String>
                 break;
             case R.id.bt_dynamic:
                 dynamic = true;
-                pre.getDynamic(getString(R.string.input_phone), et_user);
+                pre.getDynamic(getString(R.string.input_phone), et_user, null);
                 break;
             case R.id.bt_forget:
 

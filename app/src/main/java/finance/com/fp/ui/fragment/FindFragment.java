@@ -58,7 +58,6 @@ public class FindFragment extends BasisFragment implements HomeFramentView {
         rc.setRefrushListener(new RefrushListener() {
             @Override
             public void onLoading() {
-
                 pre.getData();
             }
 

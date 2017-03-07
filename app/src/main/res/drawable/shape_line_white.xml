@@ -3,7 +3,7 @@
     android:shape="rectangle">
 
     <!-- 如果注释掉solid，放开stroke，没有预览图，不知道为什么-->
-    <solid android:color="@color/statucolor"/>
+    <solid android:color="@color/white"/>
     <!--<stroke android:color="#dbbdb"/>-->
     <size android:width="300dp"
         android:height="3dp"/>

@@ -91,7 +91,7 @@ public class HomeFragment extends BasisFragment implements View.OnClickListener,
         recyclerView.setRefrushListener(new DefaultRefrushListener(){
             @Override
             public void onLoading() {
-                pre.getFinceData(3);
+                pre.getFinceData(6);
             }
         });
         recyclerView.setLoading();

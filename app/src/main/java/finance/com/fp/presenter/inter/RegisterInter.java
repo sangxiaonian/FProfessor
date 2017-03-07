@@ -19,8 +19,9 @@ public interface RegisterInter {
      * 获取验证码
      * @param string
      * @param et_user
+     * @param et_register
      */
-    void getDynamic(String string, EditText et_user);
+    void getDynamic(String string, EditText et_user, EditText et_register);
 
     void jumpToNext(Context context, EditText et_user, EditText et_password, EditText et_register);
 
