@@ -12,7 +12,7 @@ import android.widget.TextView;
 import java.util.ArrayList;
 import java.util.List;
 
-import em.sang.com.allrecycleview.PullRecycleView;
+import em.sang.com.allrecycleview.RefrushRecycleView;
 import em.sang.com.allrecycleview.adapter.DefaultAdapter;
 import em.sang.com.allrecycleview.holder.CustomHolder;
 import em.sang.com.allrecycleview.inter.DefaultAdapterViewLisenter;
@@ -34,7 +34,7 @@ import rx.Subscription;
 public class Card_StrategyActivity extends BasisActivity implements RadioGroup.OnCheckedChangeListener {
 
 
-    private PullRecycleView rc;
+    private RefrushRecycleView rc;
     private RadioGroup rg;
     private List<Set_Item> set_items, newLists, howLists, godLists;
     DefaultAdapter<Set_Item> adapter;
@@ -54,7 +54,7 @@ public class Card_StrategyActivity extends BasisActivity implements RadioGroup.O
     @Override
     public void initView() {
         super.initView();
-        rc = (PullRecycleView) findViewById(R.id.rc);
+        rc = (RefrushRecycleView) findViewById(R.id.rc);
         rc.setHasBoom(true);
         rg = (RadioGroup) findViewById(R.id.rg_card);
         rg.setOnCheckedChangeListener(this);

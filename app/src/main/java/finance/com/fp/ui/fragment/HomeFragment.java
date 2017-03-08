@@ -8,7 +8,7 @@ import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
 
-import em.sang.com.allrecycleview.PullUPRecycleView;
+import em.sang.com.allrecycleview.RefrushRecycleView;
 import em.sang.com.allrecycleview.adapter.RefrushAdapter;
 import em.sang.com.allrecycleview.inter.DefaultRefrushListener;
 import finance.com.fp.BasisFragment;
@@ -38,7 +38,7 @@ import finance.com.fp.utlis.Utils;
 public class HomeFragment extends BasisFragment implements View.OnClickListener, HomeFramentView {
 
 
-    private PullUPRecycleView recyclerView;
+    private RefrushRecycleView recyclerView;
 
     private ImageButton   title_card, ltitle_ending, title_forheard,msg,msg_small;
     private LinearLayout tv_card,tv_loan,tv_import;
@@ -48,7 +48,7 @@ public class HomeFragment extends BasisFragment implements View.OnClickListener,
     @Override
     public View initViews(LayoutInflater inflater, ViewGroup container) {
         View view = inflater.inflate(R.layout.fragment_main, null);
-        recyclerView = (PullUPRecycleView) view.findViewById(R.id.rc_home);
+        recyclerView = (RefrushRecycleView) view.findViewById(R.id.rc_home);
 
         title_card = (ImageButton) view.findViewById(R.id.img_main_card_icon);
         ltitle_ending = (ImageButton) view.findViewById(R.id.img_main_net_icon);

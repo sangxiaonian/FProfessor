@@ -10,7 +10,7 @@ import android.widget.TextView;
 import java.util.ArrayList;
 import java.util.List;
 
-import em.sang.com.allrecycleview.PullRecycleView;
+import em.sang.com.allrecycleview.RefrushRecycleView;
 import em.sang.com.allrecycleview.adapter.RefrushAdapter;
 import em.sang.com.allrecycleview.holder.CustomHolder;
 import em.sang.com.allrecycleview.inter.DefaultAdapterViewLisenter;
@@ -32,7 +32,7 @@ import rx.Subscription;
  */
 public class Loan_Strategy_Activity extends BasisActivity implements Observer<Set_Item>{
 
-    private PullRecycleView rc;
+    private RefrushRecycleView rc;
     private RefrushAdapter adapter;
     private List<Set_Item> lists;
     private int page;
@@ -44,7 +44,7 @@ public class Loan_Strategy_Activity extends BasisActivity implements Observer<Se
         setContentView(R.layout.activity_refush);
         setColor(this,getResources().getColor(R.color.statucolor));
         initToolBar(getString(R.string.loan_strategy));
-        rc = (PullRecycleView) findViewById(R.id.rc);
+        rc = (RefrushRecycleView) findViewById(R.id.rc);
         rc.setHasBoom(true);
         initData();
     }

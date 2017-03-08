@@ -175,7 +175,6 @@ public class HomeFragmentPreComl implements HomeFragmentPre {
             Dsubscriber.unsubscribe();
         }
         if (i > 0) {
-
             data.getLoanSearch(i).subscribe(new Subscriber<LoanSearchBean>() {
 
                 @Override

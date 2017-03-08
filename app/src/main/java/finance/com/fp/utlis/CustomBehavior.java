@@ -11,7 +11,7 @@ import android.widget.RelativeLayout;
 
 import java.lang.ref.WeakReference;
 
-import em.sang.com.allrecycleview.BasicPullRecycleView;
+import em.sang.com.allrecycleview.BasicRefrushRecycleView;
 import finance.com.fp.R;
 
 /**
@@ -165,8 +165,8 @@ public class CustomBehavior extends CoordinatorLayout.Behavior {
                 params.height = h;
                 view.setLayoutParams(params);
                 child.setTranslationY(h);
-                if (child instanceof BasicPullRecycleView){
-                    BasicPullRecycleView recycleView = (BasicPullRecycleView) child;
+                if (child instanceof BasicRefrushRecycleView){
+                    BasicRefrushRecycleView recycleView = (BasicRefrushRecycleView) child;
                     recycleView.setViewHeight(recycleView.getEndView(),0);
                 }
             }

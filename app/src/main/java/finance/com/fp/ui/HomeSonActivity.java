@@ -18,7 +18,7 @@ import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 
-import em.sang.com.allrecycleview.PullRecycleView;
+import em.sang.com.allrecycleview.RefrushRecycleView;
 import em.sang.com.allrecycleview.adapter.DefaultAdapter;
 import em.sang.com.allrecycleview.inter.DefaultRefrushListener;
 import finance.com.fp.BasisActivity;
@@ -37,7 +37,7 @@ import sang.com.xdialog.inter.OnEntryClickListener;
 
 public class HomeSonActivity extends BasisActivity implements HomeSonView {
 
-    private PullRecycleView rc;
+    private RefrushRecycleView rc;
     private HomeSonPreInter pre;
     private DefaultAdapter adapter;
 
@@ -54,7 +54,7 @@ public class HomeSonActivity extends BasisActivity implements HomeSonView {
     @Override
     public void initView() {
         super.initView();
-        rc = (PullRecycleView) findViewById(R.id.rc);
+        rc = (RefrushRecycleView) findViewById(R.id.rc);
         rc.setHasBoom(true);
     }
 

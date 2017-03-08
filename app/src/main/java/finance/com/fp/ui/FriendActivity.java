@@ -9,7 +9,7 @@ import android.support.v7.widget.StaggeredGridLayoutManager;
 import java.util.ArrayList;
 import java.util.List;
 
-import em.sang.com.allrecycleview.PullRecycleView;
+import em.sang.com.allrecycleview.RefrushRecycleView;
 import em.sang.com.allrecycleview.adapter.RefrushAdapter;
 import em.sang.com.allrecycleview.holder.CustomHolder;
 import em.sang.com.allrecycleview.inter.DefaultAdapterViewLisenter;
@@ -29,7 +29,7 @@ import rx.Observer;
 
 public class FriendActivity extends BasisActivity implements Observer<FriendBean>,OnToolsItemClickListener<FriendBean> {
 
-    private PullRecycleView recycleView;
+    private RefrushRecycleView recycleView;
     private List<FriendBean> lists, tempLists;
     private int page;
 
@@ -46,7 +46,7 @@ public class FriendActivity extends BasisActivity implements Observer<FriendBean
     @Override
     public void initView() {
 
-        recycleView = (PullRecycleView) findViewById(R.id.rc);
+        recycleView = (RefrushRecycleView) findViewById(R.id.rc);
         recycleView.setHasBoom(true);
         StaggeredGridLayoutManager manager = new StaggeredGridLayoutManager(1, LinearLayoutManager.VERTICAL);
         recycleView.setLayoutManager(manager);

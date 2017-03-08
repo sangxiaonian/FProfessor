@@ -7,7 +7,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 
-import em.sang.com.allrecycleview.PullRecycleView;
+import com.orhanobut.logger.Logger;
+
+import em.sang.com.allrecycleview.RefrushRecycleView;
 import em.sang.com.allrecycleview.adapter.RefrushAdapter;
 import em.sang.com.allrecycleview.inter.RefrushListener;
 import finance.com.fp.BasisFragment;
@@ -28,7 +30,7 @@ import finance.com.fp.utlis.RecycleViewDivider;
 public class FindFragment extends BasisFragment implements HomeFramentView {
 
 
-    private PullRecycleView rc;
+    private RefrushRecycleView rc;
     private HomeFragmentPre pre;
     private RefrushAdapter<Set_Item> adapter;
 
@@ -36,7 +38,7 @@ public class FindFragment extends BasisFragment implements HomeFramentView {
     @Override
     public View initViews(LayoutInflater inflater, ViewGroup container) {
        View view = inflater.inflate(R.layout.fragment_find, null);
-        rc = (PullRecycleView) view.findViewById(R.id.rc_find);
+        rc = (RefrushRecycleView) view.findViewById(R.id.rc_find);
         rc.setFlag("absdc");
         return view;
     }
@@ -80,11 +82,13 @@ public class FindFragment extends BasisFragment implements HomeFramentView {
     @Override
     public void loadSuccess() {
         rc.loadSuccess();
+        Logger.i("加载成功调用了");
     }
 
     @Override
     public void loadFail() {
         rc.loadFail();
+        Logger.i("加载失败调用了");
 
     }
 

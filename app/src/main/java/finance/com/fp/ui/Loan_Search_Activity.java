@@ -17,7 +17,7 @@ import android.widget.RadioButton;
 import java.util.ArrayList;
 import java.util.List;
 
-import em.sang.com.allrecycleview.PullRecycleView;
+import em.sang.com.allrecycleview.RefrushRecycleView;
 import em.sang.com.allrecycleview.adapter.DefaultAdapter;
 import em.sang.com.allrecycleview.adapter.RefrushAdapter;
 import em.sang.com.allrecycleview.holder.CustomHolder;
@@ -48,7 +48,7 @@ public class Loan_Search_Activity extends BasisActivity implements Observer<Loan
     private List<LoanSearchBean> lists,tempLists;
     private int position;
     RecyclerView view;
-    PullRecycleView rc;
+    RefrushRecycleView rc;
     private List<Set_Item> searchs;
     DefaultAdapter adapter,reAdapter;
     private int page=0;
@@ -74,7 +74,7 @@ public class Loan_Search_Activity extends BasisActivity implements Observer<Loan
         tempLists=new ArrayList<>();
         cb = (CheckBox) findViewById(R.id.cb_search);
         img = (ImageView) findViewById(R.id.img_icon);
-        rc= (PullRecycleView) findViewById(R.id.rc);
+        rc= (RefrushRecycleView) findViewById(R.id.rc);
         LinearLayoutManager manager = new LinearLayoutManager(this);
         manager.setOrientation(LinearLayoutManager.VERTICAL);
         rc.setLayoutManager(manager);

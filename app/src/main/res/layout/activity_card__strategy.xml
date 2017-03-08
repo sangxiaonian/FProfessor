@@ -35,12 +35,12 @@
             android:text="@string/card_god" />
     </RadioGroup>
 
-    <em.sang.com.allrecycleview.PullRecycleView
+    <em.sang.com.allrecycleview.RefrushRecycleView
         android:layout_width="match_parent"
         android:id="@+id/rc"
         android:layout_height="match_parent">
 
-    </em.sang.com.allrecycleview.PullRecycleView>
+    </em.sang.com.allrecycleview.RefrushRecycleView>
 
 
 </LinearLayout>
