@@ -14,10 +14,12 @@ import android.widget.LinearLayout;
 import android.widget.PopupWindow;
 import android.widget.RadioButton;
 
+import com.orhanobut.logger.Logger;
+
 import java.util.ArrayList;
 import java.util.List;
 
-import em.sang.com.allrecycleview.RefrushRecycleView;
+import em.sang.com.allrecycleview.RefrushSlideRecycleView;
 import em.sang.com.allrecycleview.adapter.DefaultAdapter;
 import em.sang.com.allrecycleview.adapter.RefrushAdapter;
 import em.sang.com.allrecycleview.holder.CustomHolder;
@@ -34,7 +36,6 @@ import finance.com.fp.mode.http.Config;
 import finance.com.fp.ui.holder.HomeBodyHolder;
 import finance.com.fp.utlis.DividerGridItemDecoration;
 import finance.com.fp.utlis.RecycleViewDivider;
-import finance.com.fp.utlis.ToastUtil;
 import rx.Observer;
 import rx.Subscription;
 
@@ -48,7 +49,7 @@ public class Loan_Search_Activity extends BasisActivity implements Observer<Loan
     private List<LoanSearchBean> lists,tempLists;
     private int position;
     RecyclerView view;
-    RefrushRecycleView rc;
+    RefrushSlideRecycleView rc;
     private List<Set_Item> searchs;
     DefaultAdapter adapter,reAdapter;
     private int page=0;
@@ -74,7 +75,7 @@ public class Loan_Search_Activity extends BasisActivity implements Observer<Loan
         tempLists=new ArrayList<>();
         cb = (CheckBox) findViewById(R.id.cb_search);
         img = (ImageView) findViewById(R.id.img_icon);
-        rc= (RefrushRecycleView) findViewById(R.id.rc);
+        rc= (RefrushSlideRecycleView) findViewById(R.id.rc);
         LinearLayoutManager manager = new LinearLayoutManager(this);
         manager.setOrientation(LinearLayoutManager.VERTICAL);
         rc.setLayoutManager(manager);
@@ -204,17 +205,19 @@ public class Loan_Search_Activity extends BasisActivity implements Observer<Loan
 
     @Override
     public void onCompleted() {
-        rc.loadSuccess();
-        if (tempLists.size()==0&&rc.isLoadMore()){
+        Logger.i(tempLists.size()+"");
+        if (tempLists.size()==0){
             page--;
-            ToastUtil.showTextToast(getString(R.string.no_more));
+            rc.LoadNoMore();
         }else {
+            rc.loadSuccess();
             if (!rc.isLoadMore()){
                 lists.clear();
             }
             lists.addAll(tempLists);
             reAdapter.notifyDataSetChanged();
             tempLists.clear();
+            Logger.i( "加载成功");
         }
 
 

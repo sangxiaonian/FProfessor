@@ -8,7 +8,8 @@ import android.view.WindowManager;
 import android.widget.EditText;
 import android.widget.TextView;
 
-import sang.com.xdialog.utils.DeviceUtils;
+import com.sang.viewfractory.utils.DeviceUtils;
+
 
 /**
  * Description：

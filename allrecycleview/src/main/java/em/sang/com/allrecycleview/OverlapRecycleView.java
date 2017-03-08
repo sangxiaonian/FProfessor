@@ -20,13 +20,13 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.sang.viewfractory.utils.Apputils;
+import com.sang.viewfractory.utils.JLog;
+
 import java.util.ArrayList;
 import java.util.List;
 
 import em.sang.com.allrecycleview.adapter.BasicAdapter;
-import em.sang.com.allrecycleview.layoutmanager.OverlapManager;
-import em.sang.com.allrecycleview.utils.Apputils;
-import em.sang.com.allrecycleview.utils.JLog;
 
 /**
  * Description：

@@ -1,4 +1,4 @@
-package finance.com.fp.view;
+package com.sang.viewfractory.view;
 
 
 import android.content.Context;
@@ -10,8 +10,12 @@ import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import finance.com.fp.R;
+import com.sang.viewfractory.R;
 
+
+/**
+ * 折叠view,模仿微信朋友圈,可折叠消息
+ */
 public class FloatView extends LinearLayout {
 
     private TextView tv;

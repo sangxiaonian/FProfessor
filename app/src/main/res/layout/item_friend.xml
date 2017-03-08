@@ -38,7 +38,7 @@
         android:layout_marginBottom="@dimen/tools_cut_home"
         android:textColor="@color/text_home_item"
         android:textSize="@dimen/app_title_text_size" />-->
-  <finance.com.fp.view.FloatView
+  <com.sang.viewfractory.view.FloatView
         android:id="@+id/tv_content"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

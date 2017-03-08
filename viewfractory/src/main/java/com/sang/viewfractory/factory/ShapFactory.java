@@ -1,9 +1,14 @@
-package em.sang.com.allrecycleview.view;
+package com.sang.viewfractory.factory;
 
+import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
+import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Path;
+import android.graphics.RectF;
+
+import com.sang.viewfractory.utils.DeviceUtils;
 
 /**
  * Description：
@@ -16,15 +21,26 @@ public class ShapFactory {
     private Path mPath;
     private Paint mPaint;
     private static ShapFactory factory;
+    private Context context;
 
     public static ShapFactory getInstance(Path mPath, Paint mPaint) {
         factory = new ShapFactory(mPath, mPaint);
+        return factory;
+    }
+    public static ShapFactory getInstance(Path mPath, Paint mPaint,Context context) {
+        factory = new ShapFactory(mPath, mPaint,context);
         return factory;
     }
 
     private ShapFactory(Path mPath, Paint mPaint) {
         this.mPaint = mPaint;
         this.mPath = mPath;
+    }
+    private ShapFactory(Path mPath, Paint mPaint,Context context) {
+        this.mPaint = mPaint;
+        this.mPath = mPath;
+        this.context = context;
+
     }
 
     /**
@@ -84,19 +100,41 @@ public class ShapFactory {
         return bitmap;
     }
 
+    /**
+     * 绘制对号
+     * @param mWidth
+     * @param mHeight
+     * @return
+     */
     public Bitmap creatCorrect(int mWidth, int mHeight) {
         Bitmap bitmap = Bitmap.createBitmap(mWidth, mHeight, Bitmap.Config.ARGB_4444);
         Canvas canvas = new Canvas(bitmap);
         mPath.reset();
         mPaint.setStyle(Paint.Style.STROKE);
-        mPaint.setStrokeWidth(3);
-        mPath.moveTo(0,mHeight*2/3);
-        mPath.lineTo(mWidth/3,mHeight);
-        mPath.lineTo(mWidth,0);
+        mPaint.setStrokeWidth(2);
+        int radius = mWidth / 2-3;
+        mPath.moveTo(mWidth/8,mHeight/3);
+        mPath.lineTo(mWidth/4,mHeight/4);
+        mPath.lineTo(mWidth*3/8,mHeight/3);
+        mPath.moveTo(mWidth*5/8,mHeight/3);
+        mPath.lineTo(mWidth*3/4,mHeight/4);
+        mPath.lineTo(mWidth*7/8,mHeight/3);
+
+        mPath.moveTo(mWidth/4,mHeight*3/5);
+        mPath.cubicTo(mWidth/4,mHeight*3/5,mWidth/2,mHeight,mWidth*3/4,mHeight*3/5);
+        int centerX = mWidth / 2;
+        int centerY = mHeight / 2;
+        mPath.addCircle(centerX,centerY,radius, Path.Direction.CCW);
         canvas.drawPath(mPath, mPaint);
         return bitmap;
     }
 
+    /**
+     * 绘制错号
+     * @param mWidth
+     * @param mHeight
+     * @return
+     */
     public Bitmap creatError(int mWidth, int mHeight) {
         Bitmap bitmap = Bitmap.createBitmap(mWidth, mHeight, Bitmap.Config.ARGB_4444);
         Canvas canvas = new Canvas(bitmap);
@@ -110,4 +148,35 @@ public class ShapFactory {
         canvas.drawPath(mPath, mPaint);
         return bitmap;
     }
+
+    /**
+     * 绘制加载
+     * @param mWidth
+     * @param mHeight
+     * @return
+     */
+    public Bitmap creatLoading(int mWidth, int mHeight) {
+        Bitmap bitmap = Bitmap.createBitmap(mWidth, mHeight, Bitmap.Config.ARGB_4444);
+        Canvas canvas = new Canvas(bitmap);
+
+        mPaint.setStyle(Paint.Style.STROKE);
+        mPaint.setColor(   Color.GRAY);
+        mPaint.setStrokeWidth( DeviceUtils.dip2px(context,4));
+        int radius = mWidth / 4;
+        int centerX = mWidth / 2;
+        int centerY = mHeight / 2;
+        RectF rectF = new RectF();
+        rectF.left=centerX-radius;
+        rectF.top=centerY-radius;
+        rectF.right=centerX+radius;
+        rectF.bottom=centerY+radius;
+        for (int i = 0; i < 120; i++) {
+            if (i%10==0){
+                canvas.drawArc(rectF, 3*i,3,false,mPaint);
+            }
+        }
+        return bitmap;
+    }
+
+
 }

@@ -194,7 +194,6 @@ public class CustomBehavior extends CoordinatorLayout.Behavior {
     @Override
     public boolean onNestedFling(CoordinatorLayout coordinatorLayout, View child, View target, float velocityX, float velocityY, boolean consumed) {
         return true;
-//        return super.onNestedFling(coordinatorLayout, child, target, velocityX, velocityY, consumed);
     }
 
 

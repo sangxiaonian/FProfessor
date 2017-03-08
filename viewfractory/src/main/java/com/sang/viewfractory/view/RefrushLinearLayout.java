@@ -1,15 +1,17 @@
-package em.sang.com.allrecycleview.view;
+package com.sang.viewfractory.view;
 
 import android.content.Context;
+import android.text.TextUtils;
 import android.util.AttributeSet;
 import android.util.TypedValue;
 import android.view.Gravity;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import em.sang.com.allrecycleview.utils.Apputils;
-import em.sang.com.allrecycleview.utils.Config;
-import em.sang.com.allrecycleview.utils.Utils;
+import com.sang.viewfractory.BasicView;
+import com.sang.viewfractory.utils.Apputils;
+import com.sang.viewfractory.utils.ViewUtils;
+
 
 /**
  * Description：
@@ -23,6 +25,7 @@ public class RefrushLinearLayout extends LinearLayout {
     private BasicView shapeView;
 
     private String flag;
+    private int style;
 
     public RefrushLinearLayout(Context context) {
         super(context);
@@ -40,10 +43,10 @@ public class RefrushLinearLayout extends LinearLayout {
     }
 
     LinearLayout l;
-
+    int gap;
     private void initView(Context context, AttributeSet attrs, int defStyleAttr) {
 
-        int gap = Apputils.dip2px(context, 5);
+          gap = Apputils.dip2px(context, 5);
         setGravity(Gravity.CENTER);
         setOrientation(HORIZONTAL);
         shapeView = new ShapeView(context);
@@ -54,18 +57,21 @@ public class RefrushLinearLayout extends LinearLayout {
         tvMsg.setText("准备刷新数据");
         tvTime = new TextView(context);
         tvTime.setTextSize(TypedValue.COMPLEX_UNIT_PX, Apputils.sp2px(context, 12));
-        tvTime.setVisibility(INVISIBLE);
-
         l = new LinearLayout(context);
         l.addView(tvMsg);
         l.addView(tvTime);
-        tvTime.setVisibility(GONE);
         l.setOrientation(LinearLayout.VERTICAL);
         l.setPadding(gap, 0, 0, 0);
         addView(shapeView);
         addView(l);
         setPadding(gap, gap, gap, gap);
     }
+
+    public void setSyle(int style){
+        this.style=style;
+        shapeView.setStyle(style);
+    }
+
 
 
 
@@ -84,14 +90,6 @@ public class RefrushLinearLayout extends LinearLayout {
         tvMsg.setText(msg);
     }
 
-    /**
-     * 设置刷新时间
-     *
-     * @param context
-     */
-    public void setTvTime(Context context) {
-        tvTime.setText("上次刷新:" + Utils.getTime(Config.sp_name, context));
-    }
 
     /**
      * 设置刷新时间
@@ -100,7 +98,7 @@ public class RefrushLinearLayout extends LinearLayout {
      * @param context 上下文
      */
     public void setTvTime(String flag, Context context) {
-        tvTime.setText("上次刷新:" + Utils.getTime(flag, context));
+        tvTime.setText("上次刷新:" + ViewUtils.getTime(flag, context));
 
     }
 
@@ -118,9 +116,17 @@ public class RefrushLinearLayout extends LinearLayout {
     public void upState(int state) {
         shapeView.upState(state);
         if (state == ShapeView.LOAD_SUCCESS) {
-            Utils.setTime(flag,getContext());
+            if (!TextUtils.isEmpty(flag)) {
+                ViewUtils.setTime(flag, getContext());
+            }
         }else {
-            setTvTime(flag,getContext());
+            if (!TextUtils.isEmpty(flag)) {
+                setTvTime(flag,getContext());
+                tvTime.setVisibility(VISIBLE);
+            }else {
+                tvTime.setVisibility(GONE);
+
+            }
         }
     }
 

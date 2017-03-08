@@ -1,12 +1,10 @@
-package sang.com.xdialog.utils;
+package com.sang.viewfractory.utils;
 
 import android.content.Context;
 import android.hardware.SensorManager;
 import android.view.VelocityTracker;
 import android.view.ViewConfiguration;
 import android.view.animation.Interpolator;
-
-import com.sang.viewfractory.utils.DeviceUtils;
 
 /**
  * Description：关于滑动的工具类

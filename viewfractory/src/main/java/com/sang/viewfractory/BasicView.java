@@ -1,4 +1,4 @@
-package em.sang.com.allrecycleview.view;
+package com.sang.viewfractory;
 
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
@@ -12,8 +12,10 @@ import android.graphics.Path;
 import android.util.AttributeSet;
 import android.view.View;
 
-import em.sang.com.allrecycleview.utils.Apputils;
-import em.sang.com.allrecycleview.utils.UnOverWriteException;
+import com.sang.viewfractory.factory.ShapFactory;
+import com.sang.viewfractory.utils.Apputils;
+import com.sang.viewfractory.utils.UnOverWriteException;
+
 
 /**
  * Description：
@@ -45,15 +47,15 @@ public class BasicView extends View {
      */
     public static final int LOAD_BEFOR = 5;//即将开始加载
 
+    
+    public static final int STYLE_LOAD = 6; 
+
 
     /**
      * 当前状态
      */
     protected int state;
-    /**
-     * 前一个状态
-     */
-    protected int lastState = -1;
+
     /**
      * 间隙
      */
@@ -101,7 +103,7 @@ public class BasicView extends View {
         upState(LOAD_BEFOR);
         gap = Apputils.dip2px(getContext(), 5);
         mPath = new Path();
-        factory = ShapFactory.getInstance(mPath, mPaint);
+        factory = ShapFactory.getInstance(mPath, mPaint,context);
     }
 
     @Override
@@ -196,11 +198,10 @@ public class BasicView extends View {
      */
     private void round(final int state) {
 
-        if (state == lastState) {
+        if (state == this.state) {
             return;
         }
 
-        lastState = state;
         clearViewAnimation();
         startAng = getRotation();
         switch (state) {
@@ -250,11 +251,10 @@ public class BasicView extends View {
 
 
     private void flip(final int state) {
-        if (state == lastState) {
+        if (state == this.state) {
             return;
         }
       clearViewAnimation();
-        lastState = state;
         switch (state) {
             case LOADING:
                 flipAnimation();
@@ -284,7 +284,7 @@ public class BasicView extends View {
             return;
         }
         clearViewAnimation();
-        this.state = state;
+
         if (state == LOAD_BEFOR || state == LOAD_OVER) {
             round(state);
         } else if (state == LOADING) {
@@ -292,7 +292,7 @@ public class BasicView extends View {
         }else if (state==LOAD_SUCCESS){
             clearViewAnimation();
         }
-
+        this.state = state;
         postInvalidate();
     }
 
@@ -313,6 +313,7 @@ public class BasicView extends View {
         setRotation(rotation);
     }
 
+
     @Override
     protected void onAttachedToWindow() {
         super.onAttachedToWindow();
@@ -321,6 +322,8 @@ public class BasicView extends View {
         }
     }
 
+
+
     @Override
     protected void onDetachedFromWindow() {
         super.onDetachedFromWindow();
@@ -328,5 +331,10 @@ public class BasicView extends View {
             flip.cancel();
         }
         clearViewAnimation();
+    }
+
+    protected int style;
+    public void setStyle(int style) {
+        this.style=style;
     }
 }

@@ -6,7 +6,8 @@ import android.support.v7.widget.RecyclerView;
 import android.util.AttributeSet;
 import android.view.View;
 
-import em.sang.com.allrecycleview.utils.Apputils;
+import com.sang.viewfractory.utils.Apputils;
+
 
 /**
  * Description：

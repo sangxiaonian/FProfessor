@@ -14,6 +14,8 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.sang.viewfractory.utils.ViewUtils;
+import com.sang.viewfractory.view.FloatView;
 
 import java.util.List;
 
@@ -23,7 +25,6 @@ import em.sang.com.allrecycleview.inter.DefaultAdapterViewLisenter;
 import finance.com.fp.R;
 import finance.com.fp.mode.bean.FriendBean;
 import finance.com.fp.utlis.GlideUtils;
-import finance.com.fp.view.FloatView;
 import sang.com.xdialog.DialogFactory;
 import sang.com.xdialog.XDialog;
 
@@ -55,7 +56,7 @@ public class FriendHolder extends CustomHolder<FriendBean> {
 
         TextView time = (TextView) itemView.findViewById(R.id.tv_time);
         if (bean.getUpdatetime()!=null){
-            time.setText(em.sang.com.allrecycleview.utils.Utils.formatDateTime(bean.getUpdatetime()+"000"));
+            time.setText(ViewUtils.formatDateTime(bean.getUpdatetime()+"000"));
         }
 
 

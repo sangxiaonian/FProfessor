@@ -1,15 +1,15 @@
-package sang.com.xdialog.utils;
+package com.sang.viewfractory.utils;
 
 import android.content.Context;
-import android.view.ViewConfiguration;
+import android.view.View;
 
 /**
  * Description：
  *
  * @Author：桑小年
- * @Data：2017/1/4 10:44
+ * @Data：2016/11/11 15:03
  */
-public class DeviceUtils {
+public class Apputils {
     /**
      * 根据手机的分辨率从 dp 的单位 转成为 px(像素)
      */
@@ -25,12 +25,11 @@ public class DeviceUtils {
         final float scale = context.getResources().getDisplayMetrics().density;
         return (int) (pxValue / scale + 0.5f);
     }
+
     /**
      * 将px值转换为sp值，保证文字大小不变
      *
-     * @param context
      * @param pxValue
-     *            （DisplayMetrics类中属性scaledDensity）
      * @return
      */
     public static int px2sp(Context context, float pxValue) {
@@ -42,8 +41,6 @@ public class DeviceUtils {
      * 将sp值转换为px值，保证文字大小不变
      *
      * @param spValue
-     * @param spValue
-     *            （DisplayMetrics类中属性scaledDensity）
      * @return
      */
     public static int sp2px(Context context, float spValue) {
@@ -52,30 +49,28 @@ public class DeviceUtils {
     }
 
     /**
-     * 获取判断滑动的最小滑动距离
-     * @param context
-     * @return
+     * 获取控件宽高
+     * @param view
+     * @return 0为宽
      */
-    public static int getMinTouchSlop(Context context){
-        return ViewConfiguration.get(context).getScaledTouchSlop();
+    public static int[] getWidthAndHeight(View view){
+        int[] res = new int[2];
+        int w = View.MeasureSpec.makeMeasureSpec(0,
+                View.MeasureSpec.UNSPECIFIED);
+        int h = View.MeasureSpec.makeMeasureSpec(0,
+                View.MeasureSpec.UNSPECIFIED);
+        view.measure(w, h);
+        res[1] = view.getMeasuredHeight();
+        res[0]= view.getMeasuredWidth();
+        return res;
     }
 
     /**
-     * 获取屏幕密度
+     * 获取屏幕的高度
      * @param context
      * @return
      */
-    public static float getInch(Context context){
-        float density = context.getResources().getDisplayMetrics().density;
-        return density;
-    }
-    /**
-     * 获取屏幕密度
-     * @param context
-     * @return
-     */
-    public static float getScreenWidth(Context context){
-        float density = context.getResources().getDisplayMetrics().widthPixels;
-        return density;
+    public static float getScreenWidth(Context context) {
+        return context.getResources().getDisplayMetrics().widthPixels;
     }
 }

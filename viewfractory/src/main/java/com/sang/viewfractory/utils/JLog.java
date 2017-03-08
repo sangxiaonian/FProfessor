@@ -1,6 +1,7 @@
-package em.sang.com.allrecycleview.utils;
+package com.sang.viewfractory.utils;
 
 import android.util.Log;
+
 public class JLog {
     /**
      *  tag

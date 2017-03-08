@@ -13,8 +13,9 @@ import android.util.AttributeSet;
 import android.view.View;
 import android.view.animation.LinearInterpolator;
 
+import com.sang.viewfractory.utils.DeviceUtils;
+
 import sang.com.xdialog.R;
-import sang.com.xdialog.utils.DeviceUtils;
 
 /**
  * Description：
@@ -51,7 +52,7 @@ public class LoadView extends View {
 
     private void initView(Context context){
         cellWidth= DeviceUtils.dip2px(context,8);
-        gap=DeviceUtils.dip2px(context,10);
+        gap= DeviceUtils.dip2px(context,10);
         cellAngle=3;
         counts= (int) (360/cellAngle);
         rectF = new RectF();
@@ -101,7 +102,6 @@ public class LoadView extends View {
         mPaint.setColor(startColor);
         mPaint.setStrokeWidth(cellWidth);
         for (int i = 0; i < counts; i++) {
-
             if (i%5==0){
                 canvas.drawArc(rectF,startAngle+cellAngle*i,cellAngle,false,mPaint);
             }

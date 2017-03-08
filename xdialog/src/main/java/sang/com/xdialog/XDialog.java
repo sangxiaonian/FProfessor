@@ -9,8 +9,9 @@ import android.view.View;
 import android.view.Window;
 import android.widget.Button;
 
+import com.sang.viewfractory.view.PickerScrollView;
+
 import sang.com.xdialog.inter.OnEntryClickListener;
-import sang.com.xdialog.view.PickerScrollView;
 
 /**
  * Description：
@@ -24,7 +25,7 @@ public class XDialog<T> extends Dialog {
     public final static int NO_BUTTON = 0;
     public final static int BUTTON_UP = 1;
     public final static int ALEART_EDITTEXT = 2;
-    public static final int ALEART_ONLY_ENTRY =3 ;
+    public static final int ALEART_ONLY_ENTRY = 3;
 
     protected Button bt_cancel, bt_entry;
     protected OnCancelListener cancleListener;
@@ -55,36 +56,36 @@ public class XDialog<T> extends Dialog {
         window = getWindow();
         window.setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
 
-        if (layoutId==0){
+        if (layoutId == 0) {
             initContentView();
-        }else {
+        } else {
             setContentView(layoutId);
         }
-        if (view!=null){
+        if (view != null) {
             setContentView(view);
         }
-        bt_cancel= (Button) findViewById(R.id.bt_cancel);
-        bt_entry= (Button) findViewById(R.id.bt_entry);
+        bt_cancel = (Button) findViewById(R.id.bt_cancel);
+        bt_entry = (Button) findViewById(R.id.bt_entry);
         dialog = this;
     }
 
     @Override
     public void setContentView(int layoutResID) {
         super.setContentView(layoutResID);
-        layoutId=layoutResID;
+        layoutId = layoutResID;
     }
 
-    protected void iniViews(){
+    protected void iniViews() {
 
     }
 
     @Override
     public void setContentView(View view) {
         super.setContentView(view);
-        this.view=view;
+        this.view = view;
     }
 
-    protected void initContentView(){
+    protected void initContentView() {
 
     }
 
@@ -132,7 +133,7 @@ public class XDialog<T> extends Dialog {
                 @Override
                 public void onClick(View v) {
                     if (entryListener != null) {
-                        entryListener.onClick(dialog, 0,null);
+                        entryListener.onClick(dialog, 0, null);
                     } else {
                         dismiss();
                     }
@@ -180,21 +181,21 @@ public class XDialog<T> extends Dialog {
     }
 
     protected void changeLayoutByStyle(int style) {
-        if (style==ALEART_EDITTEXT){
-            layoutId=R.layout.alert_editext_dialog;
+        if (style == ALEART_EDITTEXT) {
+            layoutId = R.layout.alert_editext_dialog;
         }
     }
 
     /**
      * 设置风格
+     *
      * @param style
      */
-    public void setStyle(int style){
+    public void setStyle(int style) {
         changeLayoutByStyle(style);
     }
 
     protected int animationstyle;
-
 
 
     protected void initAnimotion() {
@@ -205,7 +206,7 @@ public class XDialog<T> extends Dialog {
                 break;
         }
 
-        if (style>0) {
+        if (style > 0) {
             window.setWindowAnimations(style);
         }
     }

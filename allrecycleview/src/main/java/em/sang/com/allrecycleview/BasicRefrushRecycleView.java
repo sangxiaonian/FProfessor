@@ -8,6 +8,7 @@ import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
+import android.text.TextUtils;
 import android.util.AttributeSet;
 import android.view.MotionEvent;
 import android.view.View;
@@ -15,9 +16,11 @@ import android.view.ViewGroup;
 import android.view.animation.DecelerateInterpolator;
 import android.widget.LinearLayout;
 
+import com.sang.viewfractory.view.RefrushLinearLayout;
+import com.sang.viewfractory.view.ShapeView;
+
 import em.sang.com.allrecycleview.inter.RefrushListener;
-import em.sang.com.allrecycleview.view.RefrushLinearLayout;
-import em.sang.com.allrecycleview.view.ShapeView;
+
 
 /**
  * Description：
@@ -95,8 +98,6 @@ public abstract class BasicRefrushRecycleView extends RecyclerView {
     public int upstate = -1;
     public int downstate = -1;
 
-    protected int nextUpState = -1;
-    protected int nextDownState = -1;
 
     public BasicRefrushRecycleView(Context context) {
         super(context);
@@ -115,7 +116,8 @@ public abstract class BasicRefrushRecycleView extends RecyclerView {
 
     }
 
-    protected void initView(Context context, @Nullable AttributeSet attrs, int defStyle) {}
+    protected void initView(Context context, @Nullable AttributeSet attrs, int defStyle) {
+    }
 
     protected int getNextState(int refrush_state) {
         int load = refrush_state;
@@ -170,33 +172,33 @@ public abstract class BasicRefrushRecycleView extends RecyclerView {
                 float gap = (e.getRawY() - downY) / muli;
                 downY = e.getRawY();
                 isNoTouch = false;
-                    if (isFirst()) {
-                        clearUpAnimotion();
-                        setUpHeightVisible(gap);
-                    } else if (isLast()) {
-                        clearDownAnimotion();
-                        setDownHeightVisible(-gap);
-                    }
+                if (isFirst()) {
+                    clearUpAnimotion();
+                    setUpHeightVisible(gap);
+                } else if (isLast()) {
+                    clearDownAnimotion();
+                    setDownHeightVisible(-gap);
+                }
 
                 break;
             case MotionEvent.ACTION_UP:
             case MotionEvent.ACTION_CANCEL:
                 downY = -1;
                 isNoTouch = true;
-                    if (isFirst()) {
-                        startUpAnimotion(upstate);
-                    } else if (isLast()) {
-                        startDownAnimotion(downstate);
-                    }
+                if (isFirst()) {
+                    startUpAnimotion(upstate);
+                } else if (isLast()) {
+                    startDownAnimotion(downstate);
+                }
                 break;
             default:
                 downY = -1;
                 isNoTouch = true;
-                    if (isFirst()) {
-                        startUpAnimotion(upstate);
-                    } else if (isLast()) {
-                        startDownAnimotion(downstate);
-                    }
+                if (isFirst()) {
+                    startUpAnimotion(upstate);
+                } else if (isLast()) {
+                    startDownAnimotion(downstate);
+                }
                 break;
         }
 
@@ -404,7 +406,7 @@ public abstract class BasicRefrushRecycleView extends RecyclerView {
     public void setLoading() {
         clearViewAnimotion();
         setViewHeight(topView, mearchTop + 1);
-        upRefushState(LOAD_BEFOR);
+        upRefushState(LOADING);
     }
 
 
@@ -499,26 +501,50 @@ public abstract class BasicRefrushRecycleView extends RecyclerView {
     }
 
 
+    public void LoadNoMore(){
+        LoadNoMore(null);
+    }
+    public void LoadNoMore(String msg){
+
+        if (isFirst()){
+            if (TextUtils.isEmpty(msg)){
+                msg=getContext().getString(R.string.no_data);
+            }
+            upRefushState(LOAD_FAIL,msg);
+        }else {
+            if (TextUtils.isEmpty(msg)){
+                msg=getContext().getString(R.string.no_more);
+            }
+            downRefrushState(LOAD_DOWN_FAIL,msg);
+        }
+    }
+
+
     /**
      * 上拉加载更多
      *
      * @param refrush_state
+     *  @param s
      */
-    protected void downRefrushState(int refrush_state) {
+    protected void downRefrushState(int refrush_state,String s) {
         if (this.downstate != refrush_state) {
-
+            int loadstate =-1;
+            String msg = null;
+            System.out.println("--------------boomView--------------:"+downstate+">>"+refrush_state);
+            boomView.setVisibility(VISIBLE);
             switch (refrush_state) {
                 case LOAD_DOWN_OVER:
-                    boomView.upState(ShapeView.LOAD_BEFOR);
-                    boomView.setTvMsg("上拉加载数据");
+                    loadstate=ShapeView.LOAD_BEFOR;
+                    msg="上拉加载数据";
                     break;
                 case LOAD_DOWN_BEFOR:
-                    boomView.setTvMsg("松手刷新数据");
-                    boomView.upState(ShapeView.LOAD_OVER);
+                    loadstate=ShapeView.LOAD_OVER;
+                    msg="松手刷新数据";
+
                     break;
                 case LOADING_DOWN:
-                    boomView.upState(ShapeView.LOADING);
-                    boomView.setTvMsg("正在加载数据");
+                    loadstate=ShapeView.LOADING;
+                    msg="正在加载数据";
                     if (listener != null) {
                         isLoadMore = true;
                         listener.onLoadDowning();
@@ -526,17 +552,24 @@ public abstract class BasicRefrushRecycleView extends RecyclerView {
                     upRefushState(LOAD_OVER);
                     break;
                 case LOAD_DOWN_FAIL:
-                    boomView.upState(ShapeView.LOAD_FAIL);
-                    boomView.setTvMsg("加载失败");
+                    loadstate=ShapeView.LOAD_FAIL;
+                    msg="加载失败";
                     break;
                 case LOAD_DOWN_SUCCESS:
-                    boomView.upState(ShapeView.LOAD_SUCCESS);
-                    boomView.setTvMsg("加载成功!");
+                    loadstate=ShapeView.LOAD_SUCCESS;
+                    msg="加载成功";
                     break;
                 default:
-                    topView.setTvMsg("加载异常");
-                    boomView.setTvMsg("加载异常");
+                    loadstate=ShapeView.LOAD_FAIL;
+                    msg="加载异常";
                     break;
+            }
+
+            boomView.upState(loadstate);
+            if (TextUtils.isEmpty(s)) {
+                boomView.setTvMsg(msg);
+            }else {
+                boomView.setTvMsg(s);
             }
             this.downstate = refrush_state;
             startDownAnimotion(downstate);
@@ -544,47 +577,71 @@ public abstract class BasicRefrushRecycleView extends RecyclerView {
     }
 
     /**
-     * 下拉状态刷新
-     *
+     * 上拉加载更多
      * @param refrush_state
+
      */
-    protected void upRefushState(int refrush_state) {
+    protected void downRefrushState(int refrush_state) {
+        downRefrushState(refrush_state,null);
+    }
+
+    public void upRefushState(int refrush_state,String s) {
+
         if (this.upstate != refrush_state) {
+
+            int loadstate =-1;
+            String msg = null;
             switch (refrush_state) {
                 case LOAD_OVER://4
-                    topView.setTvMsg("下拉刷新数据");
-                    topView.upState(ShapeView.LOAD_OVER);
+                      loadstate =ShapeView.LOAD_OVER;
+                      msg = "下拉刷新数据";
                     break;
                 case LOAD_BEFOR://5
-                    topView.upState(ShapeView.LOAD_BEFOR);
-                    topView.setTvMsg("松手刷新数据");
+                    loadstate =ShapeView.LOAD_BEFOR;
+                    msg = "松手刷新数据";
                     break;
                 case LOADING://0
-
-                    topView.upState(ShapeView.LOADING);
-                    topView.setTvMsg("正在加载数据");
+                    loadstate =ShapeView.LOADING;
+                    msg = "正在加载数据";
                     if (listener != null) {
                         isLoadMore = false;
                         listener.onLoading();
                     }
                     downRefrushState(LOAD_DOWN_OVER);
+                    boomView.setVisibility(INVISIBLE);
                     break;
                 case LOAD_FAIL://2
-                    topView.upState(ShapeView.LOAD_FAIL);
-                    topView.setTvMsg("加载失败");
+                    loadstate =ShapeView.LOAD_FAIL;
+                    msg = "加载失败";
                     break;
                 case LOAD_SUCCESS://1
-                    topView.upState(ShapeView.LOAD_SUCCESS);
-                    topView.setTvMsg("加载成功!");
+                    loadstate =ShapeView.LOAD_SUCCESS;
+                    msg = "加载成功";
+
                     break;
                 default:
-                    topView.setTvMsg("加载异常");
-                    boomView.setTvMsg("加载异常");
+                    loadstate =ShapeView.LOAD_FAIL;
+                    msg = "加载异常";
                     break;
+            }
+            topView.upState(loadstate);
+            if (TextUtils.isEmpty(s)){
+                topView.setTvMsg(msg);
+            }else {
+                topView.setTvMsg(s);
             }
             this.upstate = refrush_state;
             startUpAnimotion(upstate);
         }
+    }
+    /**
+     * 下拉状态刷新
+     *
+     * @param refrush_state
+     */
+    protected void upRefushState(int refrush_state) {
+            upRefushState(refrush_state,null);
+
     }
 
 
@@ -672,19 +729,46 @@ public abstract class BasicRefrushRecycleView extends RecyclerView {
     /**
      * 刷新成功后调用
      */
-    public abstract void loadSuccess();
+    public void loadSuccess() {
+        loadSuccess(null);
+    }
 
 
     /**
-     * 刷新失败后调用
+     * 刷新成功后调用
      */
-    public abstract void loadFail();
+    public void loadSuccess(String msg) {
 
+        if (!isLoadMore()) {
+            upRefushState(LOAD_SUCCESS);
+        } else {
+            downRefrushState(LOAD_DOWN_SUCCESS);
+        }
+    }
+
+        /**
+         * 刷新失败后调用
+         */
+    public void loadFail() {
+        loadFail(null);
+
+    }
+    /**
+         * 刷新失败后调用
+         */
+    public void loadFail(String msg) {
+        if ( !isLoadMore()) {
+            upRefushState(LOAD_FAIL, msg);
+        } else  {
+            downRefrushState(LOAD_DOWN_FAIL,msg);
+        }
+
+    }
 
     public View getEndView() {
-        if (isFirst()){
+        if (isFirst()) {
             return topView;
-        }else if (isLast()){
+        } else if (isLast()) {
             return boomView;
         }
         return null;

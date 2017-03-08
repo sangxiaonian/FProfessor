@@ -15,17 +15,17 @@ import android.widget.LinearLayout;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.RequestManager;
+import com.sang.viewfractory.utils.Apputils;
+import com.sang.viewfractory.utils.DeviceUtils;
 
 import java.util.List;
 
-import em.sang.com.allrecycleview.utils.Apputils;
 import finance.com.fp.R;
 import finance.com.fp.mode.bean.Set_Item;
 import finance.com.fp.mode.bean.TranInfor;
 import finance.com.fp.mode.http.Config;
 import finance.com.fp.ui.ShowDetailActivity;
 import finance.com.fp.utlis.GlideUtils;
-import sang.com.xdialog.utils.DeviceUtils;
 
 /**
  * Description：首页轮播图

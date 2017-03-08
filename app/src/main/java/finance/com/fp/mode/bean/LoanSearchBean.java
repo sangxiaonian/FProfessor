@@ -147,7 +147,7 @@ public class LoanSearchBean implements Parcelable {
                 ", zhaiyao='" + zhaiyao + '\'' +
                 '}';
     }
-
+public LoanSearchBean(){};
     protected LoanSearchBean(Parcel in) {
         id = in.readString();
         title = in.readString();

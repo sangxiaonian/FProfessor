@@ -1,9 +1,11 @@
 package finance.com.fp.mode.datafractory;
 
+import android.os.SystemClock;
 import android.text.TextUtils;
 
 import com.google.gson.Gson;
 import com.orhanobut.logger.Logger;
+import com.sang.viewfractory.utils.ViewUtils;
 
 import java.util.List;
 
@@ -63,7 +65,7 @@ public class HttpFactory {
 
                                         String s = financeBean.updatetime + "000";
                                         item.content = financeBean.content;
-                                        item.updatetime = em.sang.com.allrecycleview.utils.Utils.formatDateTime(s);
+                                        item.updatetime =  ViewUtils.formatDateTime(s);
                                         return item;
                                     }
                                 })
@@ -99,7 +101,7 @@ public class HttpFactory {
                                         item.describe = financeBean.getDescription();
                                         String s = financeBean.getUpdatetime() + "000";
                                         item.content = financeBean.getContent();
-                                        item.updatetime = em.sang.com.allrecycleview.utils.Utils.formatDateTime(s);
+                                        item.updatetime = ViewUtils.formatDateTime(s);
                                         item.img_url = financeBean.getThumb();
                                         return item;
                                     }
@@ -139,7 +141,7 @@ public class HttpFactory {
                                         item.describe = financeBean.getDescription();
                                         String s = financeBean.getUpdatetime() + "000";
                                         item.content = financeBean.getContent();
-                                        item.updatetime = em.sang.com.allrecycleview.utils.Utils.formatDateTime(s);
+                                        item.updatetime = ViewUtils.formatDateTime(s);
                                         item.img_url = financeBean.getThumb();
                                         return item;
                                     }
@@ -174,7 +176,7 @@ public class HttpFactory {
                                         item.describe = financeBean.getDescription();
                                         String s = financeBean.getUpdatetime() + "000";
                                         item.content = financeBean.getContent();
-                                        item.updatetime = em.sang.com.allrecycleview.utils.Utils.formatDateTime(s);
+                                        item.updatetime = ViewUtils.formatDateTime(s);
                                         item.img_url = financeBean.getThumb();
                                         return item;
                                     }
@@ -212,7 +214,7 @@ public class HttpFactory {
                                         item.describe = financeBean.getDescription();
                                         String s = financeBean.getUpdatetime() + "000";
                                         item.content = financeBean.getContent();
-                                        item.updatetime = em.sang.com.allrecycleview.utils.Utils.formatDateTime(s);
+                                        item.updatetime = ViewUtils.formatDateTime(s);
                                         item.img_url = financeBean.getThumb();
                                         return item;
                                     }
@@ -250,7 +252,7 @@ public class HttpFactory {
                                         item.describe = financeBean.getDescription();
                                         String s = financeBean.getUpdatetime() + "000";
                                         item.content = financeBean.getContent();
-                                        item.updatetime = em.sang.com.allrecycleview.utils.Utils.formatDateTime(s);
+                                        item.updatetime = ViewUtils.formatDateTime(s);
                                         item.img_url = financeBean.getThumb();
                                         return item;
                                     }
@@ -418,7 +420,7 @@ public class HttpFactory {
                                         item.describe = financeBean.getTurl();
                                         String s = financeBean.getUpdatetime() + "000";
                                         item.content = financeBean.getContent();
-                                        item.updatetime = em.sang.com.allrecycleview.utils.Utils.formatDateTime(s);
+                                        item.updatetime = ViewUtils.formatDateTime(s);
                                         item.img_url = financeBean.getThumb();
                                         return item;
                                     }
@@ -435,23 +437,22 @@ public class HttpFactory {
 
 
     /**
-     * 网袋搜索
+     * 网贷搜索
      *
      * @param position
      * @param page
      * @return
      */
-    public static Observable<LoanSearchBean> getLoanSearch(int position, int page) {
-        return HttpClient.getClient().getLoanSearch(position, page, 15).subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread())
+    public static Observable<LoanSearchBean> getLoanSearch(int position, final int page) {
+
+        return HttpClient.getClient().getLoanSearch(position, page, 15).subscribeOn(Schedulers.io())
+
                 .flatMap(new Func1<HttpBean<LoanSearchBean>, Observable<LoanSearchBean>>() {
                     @Override
                     public Observable<LoanSearchBean> call(HttpBean<LoanSearchBean> financeBeanHttpBean) {
                         return Observable.from(financeBeanHttpBean.getTitle());
                     }
-                })
-
-
-                ;
+                }).observeOn(AndroidSchedulers.mainThread());
     }
 
     /**
@@ -471,13 +472,13 @@ public class HttpFactory {
                                 .map(new Func1<FinanceBean, Set_Item>() {
                                     @Override
                                     public Set_Item call(FinanceBean financeBean) {
-
+//                                        SystemClock.sleep(20000);
                                         Set_Item item = new Set_Item();
                                         item.title = financeBean.getTitle();
                                         item.describe = financeBean.getDescription();
                                         String s = financeBean.getUpdatetime() + "000";
                                         item.content = financeBean.getContent();
-                                        item.updatetime = em.sang.com.allrecycleview.utils.Utils.formatDateTime(s);
+                                        item.updatetime = ViewUtils.formatDateTime(s);
                                         item.img_url = financeBean.getThumb();
                                         return item;
                                     }
@@ -511,7 +512,7 @@ public class HttpFactory {
                                         item.describe = financeBean.getDescription();
                                         String s = financeBean.getUpdatetime() + "000";
                                         item.content = financeBean.getContent();
-                                        item.updatetime = em.sang.com.allrecycleview.utils.Utils.formatDateTime(s);
+                                        item.updatetime = ViewUtils.formatDateTime(s);
                                         item.img_url = financeBean.getThumb();
                                         item.content = financeBean.getF_url();
                                         return item;
@@ -546,7 +547,7 @@ public class HttpFactory {
                                         item.describe = financeBean.getDescription();
                                         String s = financeBean.getUpdatetime() + "000";
                                         item.content = financeBean.getContent();
-                                        item.updatetime = em.sang.com.allrecycleview.utils.Utils.formatDateTime(s);
+                                        item.updatetime = ViewUtils.formatDateTime(s);
                                         item.img_url = financeBean.getThumb();
                                         return item;
                                     }

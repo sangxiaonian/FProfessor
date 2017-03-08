@@ -1,4 +1,4 @@
-package sang.com.xdialog.view;
+package com.sang.viewfractory.view;
 
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
@@ -13,12 +13,14 @@ import android.view.MotionEvent;
 import android.view.VelocityTracker;
 import android.view.View;
 
+import com.sang.viewfractory.utils.ScrollUtils;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import sang.com.xdialog.utils.ScrollUtils;
+
 
 /**
  * Description：仿Ios滚动选择控件
@@ -368,7 +370,7 @@ public class PickerScrollView extends View {
 
 
     public interface OnPickerSelecterListener{
-        void onSelecter(String content,int position);
+        void onSelecter(String content, int position);
     }
 
 }

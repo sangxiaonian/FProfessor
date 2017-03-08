@@ -1,4 +1,4 @@
-package em.sang.com.allrecycleview.utils;
+package com.sang.viewfractory.utils;
 
 /**
  * Description：

@@ -1,7 +1,8 @@
-package em.sang.com.allrecycleview.utils;
+package com.sang.viewfractory.utils;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.text.TextUtils;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -15,7 +16,7 @@ import java.util.Locale;
  * @Author：桑小年
  * @Data：2017/2/20 10:29
  */
-public class Utils {
+public class ViewUtils {
 
 
     public static String getTime(String flag, Context context){
@@ -25,8 +26,10 @@ public class Utils {
 
     }
   public static void setTime(String flag,Context context){
-        SharedPreferences preferences = context.getSharedPreferences(Config.sp_name, 0);
-        preferences.edit().putLong(flag,System.currentTimeMillis()).commit();
+        if (!TextUtils.isEmpty(flag)) {
+            SharedPreferences preferences = context.getSharedPreferences(Config.sp_name, 0);
+            preferences.edit().putLong(flag, System.currentTimeMillis()).commit();
+        }
     }
 
 

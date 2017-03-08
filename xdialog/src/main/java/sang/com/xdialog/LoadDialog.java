@@ -5,7 +5,8 @@ import android.os.Bundle;
 import android.widget.EditText;
 import android.widget.TextView;
 
-import sang.com.xdialog.utils.DeviceUtils;
+import com.sang.viewfractory.utils.DeviceUtils;
+
 import sang.com.xdialog.view.LoadView;
 
 /**

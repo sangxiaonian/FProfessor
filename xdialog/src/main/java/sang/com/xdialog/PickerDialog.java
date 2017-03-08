@@ -7,11 +7,12 @@ import android.view.Gravity;
 import android.view.View;
 import android.view.WindowManager;
 
+import com.sang.viewfractory.utils.DeviceUtils;
+import com.sang.viewfractory.view.PickerScrollView;
+
 import java.util.ArrayList;
 import java.util.List;
 
-import sang.com.xdialog.utils.DeviceUtils;
-import sang.com.xdialog.view.PickerScrollView;
 
 /**
  * Description：

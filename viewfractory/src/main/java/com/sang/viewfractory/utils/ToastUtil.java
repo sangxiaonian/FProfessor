@@ -1,4 +1,4 @@
-package em.sang.com.allrecycleview.utils;
+package com.sang.viewfractory.utils;
 
 import android.content.Context;
 import android.widget.Toast;
