@@ -26,7 +26,6 @@ import finance.com.fp.ui.holder.HomeCarouselHolder;
 import finance.com.fp.ui.holder.HomeFindHolder;
 import finance.com.fp.ui.holder.HomeToolsHolder;
 import finance.com.fp.ui.inter.HomeFramentView;
-import finance.com.fp.utlis.ToastUtil;
 import finance.com.fp.utlis.Utils;
 import rx.Subscriber;
 import rx.Subscription;
@@ -44,7 +43,7 @@ public class HomeFragmentPreComl implements HomeFragmentPre {
     private HomeFramentView view;
     private HomeFragmentData data;
     private List<Set_Item> lists, carouselList, finLists, dLists;
-    private List<LoanSearchBean>  homeList;
+    private List<LoanSearchBean> homeList;
     private RefrushAdapter<Set_Item> adapter;
     HomeCarouselHolder carouselHolder;
 
@@ -86,9 +85,9 @@ public class HomeFragmentPreComl implements HomeFragmentPre {
         moreHolder.setOnToolsItemClickListener(new OnToolsItemClickListener() {
             @Override
             public void onItemClick(int position, Object item) {
-                if(!Utils.isLogion(context)){
+                if (!Utils.isLogion(context)) {
                     Utils.showLoginDialog(context);
-                }else {
+                } else {
                     context.startActivity(new Intent(context, Loan_Search_Activity.class));
                 }
             }
@@ -96,12 +95,14 @@ public class HomeFragmentPreComl implements HomeFragmentPre {
         adapter.addHead(moreHolder);
         return adapter;
     }
+
     List<Set_Item> temp;
+
     private void getCarouselHolder(Context context) {
-        carouselList.add(new Set_Item(R.mipmap.loading,""));
+        carouselList.add(new Set_Item(R.mipmap.loading, ""));
         carouselHolder = new HomeCarouselHolder(context, carouselList, R.layout.item_home_carousel);
         adapter.addHead(carouselHolder);
-        temp= new ArrayList<>();
+        temp = new ArrayList<>();
         HttpFactory.getCarousel("29").subscribe(new Subscriber<Set_Item>() {
             @Override
             public void onStart() {
@@ -255,7 +256,7 @@ public class HomeFragmentPreComl implements HomeFragmentPre {
     Subscriber<Set_Item> subscriber;
 
     private Subscriber<Set_Item> getSubscribre() {
-            unsubscribe();
+        unsubscribe();
         return subscriber = new Subscriber<Set_Item>() {
 
             @Override
@@ -263,7 +264,7 @@ public class HomeFragmentPreComl implements HomeFragmentPre {
                 super.onStart();
                 lists.clear();
                 lists.addAll(finLists);
-                adapter.notifyDataSetChanged();
+//                adapter.notifyDataSetChanged();
                 if (!isloadMore) {
                     finLists.clear();
                 }
@@ -272,13 +273,17 @@ public class HomeFragmentPreComl implements HomeFragmentPre {
             @Override
             public void onCompleted() {
 
-                if (isloadMore) {
-                    if (finLists.size() == lists.size()) {
-                        ToastUtil.showTextToast("没有更多数据了");
+
+                if (finLists.size() == lists.size()) {
+                    if (isloadMore) {
+                        view.loadNoMore();
                         fin--;
+                    }else {
+                        view.loadSuccess();
                     }
+                } else {
+                    view.loadSuccess();
                 }
-                view.loadSuccess();
                 lists.clear();
                 lists.addAll(finLists);
                 adapter.notifyDataSetChanged();
@@ -313,7 +318,7 @@ public class HomeFragmentPreComl implements HomeFragmentPre {
                 super.onStart();
                 lists.clear();
                 lists.addAll(dLists);
-                adapter.notifyDataSetChanged();
+//                adapter.notifyDataSetChanged();
                 if (!isloadMore) {
                     dLists.clear();
                 }
@@ -321,21 +326,27 @@ public class HomeFragmentPreComl implements HomeFragmentPre {
 
             @Override
             public void onCompleted() {
+
                 if (isloadMore) {
                     if (dLists.size() == lists.size()) {
-                        ToastUtil.showTextToast("没有更多数据了");
-                        fin--;
+                        view.loadNoMore();
+                        d--;
+                    }else {
+                        view.loadSuccess();
                     }
+                }else {
+                    view.loadSuccess();
                 }
                 lists.clear();
                 lists.addAll(dLists);
                 adapter.notifyDataSetChanged();
-                view.loadSuccess();
+
             }
 
             @Override
             public void onError(Throwable e) {
                 e.printStackTrace();
+                d--;
                 view.loadFail();
             }
 

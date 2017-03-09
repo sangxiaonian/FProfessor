@@ -10,6 +10,7 @@ import android.view.MenuItem;
 
 import java.util.List;
 
+import em.sang.com.allrecycleview.cutline.RecycleViewDivider;
 import finance.com.fp.BasisActivity;
 import finance.com.fp.R;
 import finance.com.fp.mode.bean.Set_Item;
@@ -17,7 +18,6 @@ import finance.com.fp.mode.http.Config;
 import finance.com.fp.presenter.IDSonPreComl;
 import finance.com.fp.presenter.inter.IDSonPreInter;
 import finance.com.fp.ui.inter.IDSonView;
-import finance.com.fp.utlis.RecycleViewDivider;
 import sang.com.xdialog.DialogFactory;
 import sang.com.xdialog.XDialog;
 import sang.com.xdialog.inter.OnEntryClickListener;

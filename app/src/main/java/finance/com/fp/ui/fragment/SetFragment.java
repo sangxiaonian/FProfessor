@@ -13,6 +13,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import em.sang.com.allrecycleview.adapter.DefaultAdapter;
+import em.sang.com.allrecycleview.cutline.RecycleViewDivider;
 import em.sang.com.allrecycleview.holder.CustomHolder;
 import em.sang.com.allrecycleview.inter.DefaultAdapterViewLisenter;
 import finance.com.fp.BasisFragment;
@@ -22,7 +23,6 @@ import finance.com.fp.mode.http.Config;
 import finance.com.fp.ui.IDActivity;
 import finance.com.fp.ui.RegisterActivity;
 import finance.com.fp.ui.holder.SetBodyHolder;
-import finance.com.fp.utlis.RecycleViewDivider;
 import finance.com.fp.utlis.Utils;
 
 /**

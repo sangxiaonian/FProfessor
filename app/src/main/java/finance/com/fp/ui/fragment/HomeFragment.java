@@ -10,6 +10,7 @@ import android.widget.LinearLayout;
 
 import em.sang.com.allrecycleview.RefrushRecycleView;
 import em.sang.com.allrecycleview.adapter.RefrushAdapter;
+import em.sang.com.allrecycleview.cutline.RecycleViewDivider;
 import em.sang.com.allrecycleview.inter.DefaultRefrushListener;
 import finance.com.fp.BasisFragment;
 import finance.com.fp.R;
@@ -25,7 +26,6 @@ import finance.com.fp.ui.ImportActivity;
 import finance.com.fp.ui.LoanActivity;
 import finance.com.fp.ui.PlannerActivity;
 import finance.com.fp.ui.inter.HomeFramentView;
-import finance.com.fp.utlis.RecycleViewDivider;
 import finance.com.fp.utlis.ToastUtil;
 import finance.com.fp.utlis.Utils;
 
@@ -196,5 +196,10 @@ public class HomeFragment extends BasisFragment implements View.OnClickListener,
     @Override
     public void showLoad() {
         recyclerView.setLoading();
+    }
+
+    @Override
+    public void loadNoMore() {
+        recyclerView.LoadNoMore();
     }
 }

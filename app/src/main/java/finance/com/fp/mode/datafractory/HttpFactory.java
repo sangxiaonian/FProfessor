@@ -1,6 +1,5 @@
 package finance.com.fp.mode.datafractory;
 
-import android.os.SystemClock;
 import android.text.TextUtils;
 
 import com.google.gson.Gson;

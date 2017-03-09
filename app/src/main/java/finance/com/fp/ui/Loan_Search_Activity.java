@@ -19,9 +19,11 @@ import com.orhanobut.logger.Logger;
 import java.util.ArrayList;
 import java.util.List;
 
-import em.sang.com.allrecycleview.RefrushSlideRecycleView;
+import em.sang.com.allrecycleview.RefrushRecycleView;
 import em.sang.com.allrecycleview.adapter.DefaultAdapter;
 import em.sang.com.allrecycleview.adapter.RefrushAdapter;
+import em.sang.com.allrecycleview.cutline.DividerGridItemDecoration;
+import em.sang.com.allrecycleview.cutline.RecycleViewDivider;
 import em.sang.com.allrecycleview.holder.CustomHolder;
 import em.sang.com.allrecycleview.inter.DefaultAdapterViewLisenter;
 import em.sang.com.allrecycleview.inter.RefrushListener;
@@ -34,8 +36,6 @@ import finance.com.fp.mode.datafractory.HttpFactory;
 import finance.com.fp.mode.datafractory.LoanDataFractory;
 import finance.com.fp.mode.http.Config;
 import finance.com.fp.ui.holder.HomeBodyHolder;
-import finance.com.fp.utlis.DividerGridItemDecoration;
-import finance.com.fp.utlis.RecycleViewDivider;
 import rx.Observer;
 import rx.Subscription;
 
@@ -49,7 +49,7 @@ public class Loan_Search_Activity extends BasisActivity implements Observer<Loan
     private List<LoanSearchBean> lists,tempLists;
     private int position;
     RecyclerView view;
-    RefrushSlideRecycleView rc;
+    RefrushRecycleView rc;
     private List<Set_Item> searchs;
     DefaultAdapter adapter,reAdapter;
     private int page=0;
@@ -69,13 +69,19 @@ public class Loan_Search_Activity extends BasisActivity implements Observer<Loan
     }
 
     @Override
+    public void onTitlClick(View v) {
+        super.onTitlClick(v);
+        rc.smoothScrollToPosition(0);
+    }
+
+    @Override
     public void initView() {
         super.initView();
         lists=new ArrayList<>();
         tempLists=new ArrayList<>();
         cb = (CheckBox) findViewById(R.id.cb_search);
         img = (ImageView) findViewById(R.id.img_icon);
-        rc= (RefrushSlideRecycleView) findViewById(R.id.rc);
+        rc= (RefrushRecycleView) findViewById(R.id.rc);
         LinearLayoutManager manager = new LinearLayoutManager(this);
         manager.setOrientation(LinearLayoutManager.VERTICAL);
         rc.setLayoutManager(manager);
@@ -196,11 +202,10 @@ public class Loan_Search_Activity extends BasisActivity implements Observer<Loan
     private PopupWindow pop;
 
     private void showPopuWindow() {
-
-        pop = new PopupWindow(view, LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT, false);
-
-
-        pop.showAsDropDown(cb,0, (int) getResources().getDimension(R.dimen.home_item_time_margin));
+        if (!isDestroyed()) {
+            pop = new PopupWindow(view, LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT, false);
+            pop.showAsDropDown(cb, 0, (int) getResources().getDimension(R.dimen.home_item_time_margin));
+        }
     }
 
     @Override
@@ -244,5 +249,13 @@ public class Loan_Search_Activity extends BasisActivity implements Observer<Loan
     protected void onDestroy() {
         super.onDestroy();
         subscribe.unsubscribe();
+    }
+
+    @Override
+    public void finish() {
+        if (pop != null && pop.isShowing()) {
+            pop.dismiss();
+        }
+        super.finish();
     }
 }

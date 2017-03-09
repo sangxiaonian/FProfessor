@@ -43,7 +43,7 @@ public class RefrushRecycleView extends BasicRefrushRecycleView {
         downY = -1;
         topView = new RefrushLinearLayout(context);
         boomView = new RefrushLinearLayout(context);
-
+        setStyle(style);
         mearchTop = Apputils.getWidthAndHeight(topView)[1];
         mearchBoom = Apputils.getWidthAndHeight(boomView)[1];
         LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
@@ -73,6 +73,44 @@ public class RefrushRecycleView extends BasicRefrushRecycleView {
     }
 
     @Override
+    protected boolean isDownChangeStateByHeight() {
+        if (style == STYLE_PULL) {
+            return super.isDownChangeStateByHeight();
+        } else {
+            return false;
+        }
+    }
+
+    private long lastTime ;
+    @Override
+    public void onScrolled(int dx, int dy) {
+        super.onScrolled(dx, dy);
+        if (downstate != LOADING_DOWN ) {
+            synchronized (RefrushRecycleView.class) {
+                if (dy > 0 && style == STYLE_SLIPE) {
+                    if (!isFirst() && isLast() && downstate != LOADING_DOWN ) {
+                        long l =System.currentTimeMillis() - lastTime;
+                        if (l >200) {
+                            lastTime = System.currentTimeMillis();
+                            downRefrushState(LOADING_DOWN);
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+
+    @Override
+    protected float getDownHeightByState(int upState) {
+        if (style == STYLE_PULL) {
+            return super.getDownHeightByState(upState);
+        } else {
+            return mearchBoom;
+        }
+    }
+
+    @Override
     protected int downChangeStateByHeight(int height) {
         int state;
         if (height > mearchBoom) {
@@ -84,8 +122,39 @@ public class RefrushRecycleView extends BasicRefrushRecycleView {
         return state;
     }
 
+    @Override
+    protected int getNextState(int refrush_state) {
+        int load = refrush_state;
+        switch (refrush_state) {
+            case LOAD_DOWN_BEFOR:
+                if (isNoTouch) {
+                    load = LOADING_DOWN;
+                }
+                break;
+            case LOAD_BEFOR:
+                if (isNoTouch) {
+                    load = LOADING;
+                }
+                break;
+            case LOAD_SUCCESS:
+            case LOAD_FAIL:
+                load = LOAD_OVER;
+                break;
+            case LOADING:
+            case LOADING_DOWN:
+            case LOAD_OVER:
+            case LOAD_DOWN_OVER:
+                break;
 
-
+            case LOAD_DOWN_SUCCESS:
+            case LOAD_DOWN_FAIL:
+                if (style != STYLE_SLIPE) {
+                    load = LOAD_DOWN_OVER;
+                }
+                break;
+        }
+        return load;
+    }
 
     @Override
     public void addUpDataItem(Adapter adapter) {
@@ -99,6 +168,7 @@ public class RefrushRecycleView extends BasicRefrushRecycleView {
             }
         }
     }
+
 
     @Override
     public boolean canDrag() {

@@ -56,7 +56,6 @@ public class SetBodyHolder extends CustomHolder<Set_Item> {
 
 
         }
-        Logger.i(position+"");
         if ((position - 1) == 3) {
             params.setMargins(0, 0, 0, (int) context.getResources().getDimension(R.dimen.home_item_margin));
         }

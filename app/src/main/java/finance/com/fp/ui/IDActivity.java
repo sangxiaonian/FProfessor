@@ -15,6 +15,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import em.sang.com.allrecycleview.adapter.DefaultAdapter;
+import em.sang.com.allrecycleview.cutline.RecycleViewDivider;
 import em.sang.com.allrecycleview.holder.CustomHolder;
 import em.sang.com.allrecycleview.holder.SimpleHolder;
 import em.sang.com.allrecycleview.inter.DefaultAdapterViewLisenter;
@@ -33,7 +34,6 @@ import finance.com.fp.mode.http.Config;
 import finance.com.fp.mode.http.HttpClient;
 import finance.com.fp.mode.http.HttpParams;
 import finance.com.fp.ui.holder.IDHolder;
-import finance.com.fp.utlis.RecycleViewDivider;
 import finance.com.fp.utlis.Utils;
 import rx.Observer;
 import rx.Subscriber;

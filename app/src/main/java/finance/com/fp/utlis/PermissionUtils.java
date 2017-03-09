@@ -1,10 +1,16 @@
 package finance.com.fp.utlis;
 
 import android.app.Activity;
+import android.app.Dialog;
 import android.content.pm.PackageManager;
 import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
+import android.text.TextUtils;
+
+import sang.com.xdialog.DialogFactory;
+import sang.com.xdialog.XDialog;
+import sang.com.xdialog.inter.OnEntryClickListener;
 
 
 /**
@@ -68,8 +74,22 @@ public class PermissionUtils {
 
         if (!hasPermission) {
             if (isTry){
+                if (TextUtils.isEmpty(title)&&TextUtils.isEmpty(msg)) {
+                    request(activity, permissions, REQUEST_QUDE);
+                }else {
+                    XDialog xDialog = DialogFactory.getInstance().creatDiaolg(activity, DialogFactory.ALEART_DIALOG);
+                    xDialog.setTitle(title);
+                    xDialog.setDatas(msg);
+                    xDialog.setOnClickListener(new OnEntryClickListener() {
+                        @Override
+                        public void onClick(Dialog dialog, int which, Object data) {
+                            dialog.dismiss();
+                            request(activity, permissions, REQUEST_QUDE);
+                        }
+                    });
+                    xDialog.show();
 
-                request(activity,permissions,REQUEST_QUDE);
+                }
             }else {
                 request(activity,permissions,REQUEST_QUDE);
             }
@@ -127,4 +147,17 @@ public class PermissionUtils {
     }
 
 
+    private String msg,title;
+
+    /**
+     * 如果被拒一次之后,展示的信息
+     * @param title
+     * @param msg
+     * @return
+     */
+    public PermissionUtils showMsg(String title,String msg) {
+        this.title=title;
+        this.msg=msg;
+        return instance;
+    }
 }

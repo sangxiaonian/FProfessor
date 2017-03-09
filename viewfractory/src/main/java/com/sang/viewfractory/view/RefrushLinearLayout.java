@@ -21,6 +21,8 @@ import com.sang.viewfractory.utils.ViewUtils;
  */
 public class RefrushLinearLayout extends LinearLayout {
 
+    public final static int STYLE_LOAD=ShapeView.STYLE_LOAD;
+    public final static int STYLE_SQUARE=ShapeView.STYLE_SQUARE;
     private TextView tvMsg, tvTime;
     private BasicView shapeView;
 
@@ -67,7 +69,7 @@ public class RefrushLinearLayout extends LinearLayout {
         setPadding(gap, gap, gap, gap);
     }
 
-    public void setSyle(int style){
+    public void setStyle(int style){
         this.style=style;
         shapeView.setStyle(style);
     }

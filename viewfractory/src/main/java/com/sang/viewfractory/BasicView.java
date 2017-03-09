@@ -47,8 +47,15 @@ public class BasicView extends View {
      */
     public static final int LOAD_BEFOR = 5;//即将开始加载
 
-    
-    public static final int STYLE_LOAD = 6; 
+    /**
+     * 加载中旋转图像
+     */
+    public static final int STYLE_LOAD = 6;
+
+    /**
+     * 加载中正方形图像
+     */
+    public static final int STYLE_SQUARE = 7;
 
 
     /**
@@ -95,6 +102,7 @@ public class BasicView extends View {
     }
 
     private void initView(Context context, AttributeSet attrs, int defStyleAttr) {
+        style=STYLE_SQUARE;
         mPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
         mPaint.setStrokeWidth(1);
         color = Color.parseColor("#B8B7B8");

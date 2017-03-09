@@ -64,9 +64,9 @@ public class ShowDetailActivity extends BasisActivity {
             @Override
             public void onReceivedError(WebView view, int errorCode, String description, String failingUrl) {
                 super.onReceivedError(view, errorCode, description, failingUrl);
-                Logger.i(failingUrl);
 
                 try {
+                    Logger.i(failingUrl);
                     Uri uri = Uri.parse(infor.content);
                     Intent intent = new Intent(Intent.ACTION_VIEW, uri);
                     startActivity(intent);
@@ -85,7 +85,6 @@ public class ShowDetailActivity extends BasisActivity {
             @Override
             public void onProgressChanged(WebView view, int newProgress) {
                 progress.setProgress(newProgress);
-
             }
 
         });
@@ -94,17 +93,19 @@ public class ShowDetailActivity extends BasisActivity {
         webView.setDownloadListener(new DownloadListener() {
             @Override
             public void onDownloadStart(String url, String userAgent, String contentDisposition, String mimetype, long contentLength) {
-                Uri uri = Uri.parse(url);
-                Intent intent = new Intent(Intent.ACTION_VIEW, uri);
-                startActivity(intent);
+                    Uri uri = Uri.parse(url);
+                    Intent intent = new Intent(Intent.ACTION_VIEW, uri);
+                    startActivity(intent);
+
             }
         });
 
 
-
         Logger.i(infor.content);
-        if (infor.type == 0) {
-            String a ="   <head>\n" +
+        if (infor.type == 0)
+
+        {
+            String a = "   <head>\n" +
                     "        <title> new document </title>\n" +
                     "        <meta name=\"viewport\" content=\"width=device-width, initial-scale=1\">\n" +
                     "        <meta http-equiv=\"Content-Type\" content=\"text/html; charset=utf-8\" />\n" +
@@ -112,8 +113,10 @@ public class ShowDetailActivity extends BasisActivity {
                     "                img { max-width: 100%;}\n" +
                     "        </style>\n" +
                     "        </head>";
-            webView.loadDataWithBaseURL("", a+infor.content, "text/html", "utf-8", "");
-        } else {
+            webView.loadDataWithBaseURL("", a + infor.content, "text/html", "utf-8", "");
+        } else
+
+        {
             mWebSettings.setDisplayZoomControls(false);
             mWebSettings.setUseWideViewPort(true);
             mWebSettings.setLoadsImagesAutomatically(true);
@@ -128,8 +131,6 @@ public class ShowDetailActivity extends BasisActivity {
 
 
     }
-
-
 
 
     public void initToolBar(String title) {

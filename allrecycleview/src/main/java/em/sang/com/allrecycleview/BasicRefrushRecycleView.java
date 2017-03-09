@@ -5,9 +5,6 @@ import android.animation.AnimatorListenerAdapter;
 import android.animation.ValueAnimator;
 import android.content.Context;
 import android.support.annotation.Nullable;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.text.TextUtils;
 import android.util.AttributeSet;
 import android.view.MotionEvent;
@@ -16,6 +13,7 @@ import android.view.ViewGroup;
 import android.view.animation.DecelerateInterpolator;
 import android.widget.LinearLayout;
 
+import com.sang.viewfractory.utils.JLog;
 import com.sang.viewfractory.view.RefrushLinearLayout;
 import com.sang.viewfractory.view.ShapeView;
 
@@ -28,7 +26,7 @@ import em.sang.com.allrecycleview.inter.RefrushListener;
  * @Author：桑小年
  * @Data：2016/12/1 14:42
  */
-public abstract class BasicRefrushRecycleView extends RecyclerView {
+public abstract class BasicRefrushRecycleView extends BaiscRecycleView {
     /**
      * 正在加载
      */
@@ -75,11 +73,25 @@ public abstract class BasicRefrushRecycleView extends RecyclerView {
     public static final int LOAD_DOWN_BEFOR = 10;//松手刷新
 
 
+    /**
+     * 不需要上拉,只需要滑动到最底部,就能直接调用加载更多
+     */
+    public static final int STYLE_SLIPE = 11;
+    /**
+     * 滑动到最底部后,需要拖动才能直接调用加载更多
+     */
+    public static final int STYLE_PULL = 12;
+
+
     public boolean hasTop, hasBoom;
 
     public RefrushLinearLayout topView, boomView;
     public int mearchTop, mearchBoom;
 
+    /**
+     * 刷新控件的style
+     */
+    protected int style=STYLE_SLIPE;
 
     public float downY;
 
@@ -101,23 +113,21 @@ public abstract class BasicRefrushRecycleView extends RecyclerView {
 
     public BasicRefrushRecycleView(Context context) {
         super(context);
-        initView(context, null, 0);
+
 
     }
 
     public BasicRefrushRecycleView(Context context, @Nullable AttributeSet attrs) {
         super(context, attrs);
-        initView(context, attrs, 0);
+
     }
 
     public BasicRefrushRecycleView(Context context, @Nullable AttributeSet attrs, int defStyle) {
         super(context, attrs, defStyle);
-        initView(context, attrs, defStyle);
+
 
     }
 
-    protected void initView(Context context, @Nullable AttributeSet attrs, int defStyle) {
-    }
 
     protected int getNextState(int refrush_state) {
         int load = refrush_state;
@@ -148,6 +158,9 @@ public abstract class BasicRefrushRecycleView extends RecyclerView {
         }
         return load;
     }
+
+
+
 
     /**
      * 是否是上拉加载更多
@@ -317,6 +330,7 @@ public abstract class BasicRefrushRecycleView extends RecyclerView {
             return;
         }
         final int load = getNextState(downState);
+
         downAnimator = ValueAnimator.ofFloat(height, stand);
         downAnimator.setInterpolator(new DecelerateInterpolator(1));
         downAnimator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
@@ -405,7 +419,7 @@ public abstract class BasicRefrushRecycleView extends RecyclerView {
      */
     public void setLoading() {
         clearViewAnimotion();
-        setViewHeight(topView, mearchTop + 1);
+        setViewHeight(topView, mearchTop);
         upRefushState(LOADING);
     }
 
@@ -458,41 +472,15 @@ public abstract class BasicRefrushRecycleView extends RecyclerView {
         view.setLayoutParams(layoutParams);
     }
 
-
+    @Override
     public boolean isFirst() {
-        LayoutManager manager = getLayoutManager();
-        if (manager instanceof LinearLayoutManager) {
-            LinearLayoutManager linearLayoutManager = ((LinearLayoutManager) manager);
-            int position = linearLayoutManager.findFirstVisibleItemPosition();
-            if (position == -1) {
-                position = 0;
-            }
-            return 0 == position && hasTop;
-        } else if (manager instanceof StaggeredGridLayoutManager) {
-            int position = ((StaggeredGridLayoutManager) manager).findFirstVisibleItemPositions(new int[2])[0];
-            if (position <= 0) {
-                position = 0;
-            }
-            return 0 == position && hasTop;
-        } else {
-            return false;
-        }
+        return super.isFirst() && hasTop;
     }
 
+    @Override
     public boolean isLast() {
-        int itemCount = getAdapter().getItemCount() - 1;
-        LayoutManager manager = getLayoutManager();
-        if (manager instanceof LinearLayoutManager) {
-            LinearLayoutManager linearLayoutManager = ((LinearLayoutManager) manager);
-            return itemCount == linearLayoutManager.findLastVisibleItemPosition() && hasBoom;
-        } else if (manager instanceof StaggeredGridLayoutManager) {
-            return itemCount == ((StaggeredGridLayoutManager) manager).findLastVisibleItemPositions(new int[2])[0] && hasBoom;
-
-        } else {
-            return false;
-        }
+        return super.isLast() && hasBoom;
     }
-
 
     @Override
     public void setAdapter(Adapter adapter) {
@@ -501,21 +489,22 @@ public abstract class BasicRefrushRecycleView extends RecyclerView {
     }
 
 
-    public void LoadNoMore(){
+    public void LoadNoMore() {
         LoadNoMore(null);
     }
-    public void LoadNoMore(String msg){
 
-        if (isFirst()){
-            if (TextUtils.isEmpty(msg)){
-                msg=getContext().getString(R.string.no_data);
+    public void LoadNoMore(String msg) {
+
+        if (isFirst()) {
+            if (TextUtils.isEmpty(msg)) {
+                msg = getContext().getString(R.string.no_data);
             }
-            upRefushState(LOAD_FAIL,msg);
-        }else {
-            if (TextUtils.isEmpty(msg)){
-                msg=getContext().getString(R.string.no_more);
+            upRefushState(LOAD_FAIL, msg);
+        } else {
+            if (TextUtils.isEmpty(msg)) {
+                msg = getContext().getString(R.string.no_more);
             }
-            downRefrushState(LOAD_DOWN_FAIL,msg);
+            downRefrushState(LOAD_DOWN_FAIL, msg);
         }
     }
 
@@ -524,51 +513,51 @@ public abstract class BasicRefrushRecycleView extends RecyclerView {
      * 上拉加载更多
      *
      * @param refrush_state
-     *  @param s
+     * @param s
      */
-    protected void downRefrushState(int refrush_state,String s) {
+    protected void downRefrushState(int refrush_state, String s) {
         if (this.downstate != refrush_state) {
-            int loadstate =-1;
+            int loadstate = -1;
             String msg = null;
-            System.out.println("--------------boomView--------------:"+downstate+">>"+refrush_state);
             boomView.setVisibility(VISIBLE);
             switch (refrush_state) {
                 case LOAD_DOWN_OVER:
-                    loadstate=ShapeView.LOAD_BEFOR;
-                    msg="上拉加载数据";
+                    loadstate = ShapeView.LOAD_BEFOR;
+                    msg = "上拉加载数据";
                     break;
                 case LOAD_DOWN_BEFOR:
-                    loadstate=ShapeView.LOAD_OVER;
-                    msg="松手刷新数据";
+                    loadstate = ShapeView.LOAD_OVER;
+                    msg = "松手刷新数据";
 
                     break;
                 case LOADING_DOWN:
-                    loadstate=ShapeView.LOADING;
-                    msg="正在加载数据";
+                    loadstate = ShapeView.LOADING;
+                    msg = "正在加载数据";
                     if (listener != null) {
                         isLoadMore = true;
                         listener.onLoadDowning();
                     }
                     upRefushState(LOAD_OVER);
+                    JLog.i(msg+"------------");
                     break;
                 case LOAD_DOWN_FAIL:
-                    loadstate=ShapeView.LOAD_FAIL;
-                    msg="加载失败";
+                    loadstate = ShapeView.LOAD_FAIL;
+                    msg = "加载失败";
                     break;
                 case LOAD_DOWN_SUCCESS:
-                    loadstate=ShapeView.LOAD_SUCCESS;
-                    msg="加载成功";
+                    loadstate = ShapeView.LOAD_SUCCESS;
+                    msg = "加载成功";
                     break;
                 default:
-                    loadstate=ShapeView.LOAD_FAIL;
-                    msg="加载异常";
+                    loadstate = ShapeView.LOAD_FAIL;
+                    msg = "加载异常";
                     break;
             }
 
             boomView.upState(loadstate);
             if (TextUtils.isEmpty(s)) {
                 boomView.setTvMsg(msg);
-            }else {
+            } else {
                 boomView.setTvMsg(s);
             }
             this.downstate = refrush_state;
@@ -578,69 +567,71 @@ public abstract class BasicRefrushRecycleView extends RecyclerView {
 
     /**
      * 上拉加载更多
+     *
      * @param refrush_state
-
      */
     protected void downRefrushState(int refrush_state) {
-        downRefrushState(refrush_state,null);
+        downRefrushState(refrush_state, null);
     }
 
-    public void upRefushState(int refrush_state,String s) {
+    public void upRefushState(int refrush_state, String s) {
 
         if (this.upstate != refrush_state) {
 
-            int loadstate =-1;
+            int loadstate = -1;
             String msg = null;
             switch (refrush_state) {
                 case LOAD_OVER://4
-                      loadstate =ShapeView.LOAD_OVER;
-                      msg = "下拉刷新数据";
+                    loadstate = ShapeView.LOAD_OVER;
+                    msg = "下拉刷新数据";
                     break;
                 case LOAD_BEFOR://5
-                    loadstate =ShapeView.LOAD_BEFOR;
+                    loadstate = ShapeView.LOAD_BEFOR;
                     msg = "松手刷新数据";
                     break;
                 case LOADING://0
-                    loadstate =ShapeView.LOADING;
+                    loadstate = ShapeView.LOADING;
                     msg = "正在加载数据";
                     if (listener != null) {
                         isLoadMore = false;
                         listener.onLoading();
                     }
+
                     downRefrushState(LOAD_DOWN_OVER);
                     boomView.setVisibility(INVISIBLE);
                     break;
                 case LOAD_FAIL://2
-                    loadstate =ShapeView.LOAD_FAIL;
+                    loadstate = ShapeView.LOAD_FAIL;
                     msg = "加载失败";
                     break;
                 case LOAD_SUCCESS://1
-                    loadstate =ShapeView.LOAD_SUCCESS;
+                    loadstate = ShapeView.LOAD_SUCCESS;
                     msg = "加载成功";
 
                     break;
                 default:
-                    loadstate =ShapeView.LOAD_FAIL;
+                    loadstate = ShapeView.LOAD_FAIL;
                     msg = "加载异常";
                     break;
             }
             topView.upState(loadstate);
-            if (TextUtils.isEmpty(s)){
+            if (TextUtils.isEmpty(s)) {
                 topView.setTvMsg(msg);
-            }else {
+            } else {
                 topView.setTvMsg(s);
             }
             this.upstate = refrush_state;
             startUpAnimotion(upstate);
         }
     }
+
     /**
      * 下拉状态刷新
      *
      * @param refrush_state
      */
     protected void upRefushState(int refrush_state) {
-            upRefushState(refrush_state,null);
+        upRefushState(refrush_state, null);
 
     }
 
@@ -746,21 +737,22 @@ public abstract class BasicRefrushRecycleView extends RecyclerView {
         }
     }
 
-        /**
-         * 刷新失败后调用
-         */
+    /**
+     * 刷新失败后调用
+     */
     public void loadFail() {
         loadFail(null);
 
     }
+
     /**
-         * 刷新失败后调用
-         */
+     * 刷新失败后调用
+     */
     public void loadFail(String msg) {
-        if ( !isLoadMore()) {
+        if (!isLoadMore()) {
             upRefushState(LOAD_FAIL, msg);
-        } else  {
-            downRefrushState(LOAD_DOWN_FAIL,msg);
+        } else {
+            downRefrushState(LOAD_DOWN_FAIL, msg);
         }
 
     }
@@ -773,4 +765,36 @@ public abstract class BasicRefrushRecycleView extends RecyclerView {
         }
         return null;
     }
+
+
+
+    /**
+     * 设置加载风格
+     *
+     * @param style
+     */
+    public void setStyle(int style) {
+        this.style = style;
+        int top, down;
+        switch (style) {
+            case STYLE_PULL:
+                top = RefrushLinearLayout.STYLE_SQUARE;
+                down = RefrushLinearLayout.STYLE_LOAD;
+                break;
+            case STYLE_SLIPE:
+                top = RefrushLinearLayout.STYLE_SQUARE;
+                down = RefrushLinearLayout.STYLE_LOAD;
+                break;
+            default:
+                top = RefrushLinearLayout.STYLE_SQUARE;
+                down = RefrushLinearLayout.STYLE_LOAD;
+                break;
+        }
+
+        topView.setStyle(top);
+        boomView.setStyle(down);
+    }
+
+
+
 }

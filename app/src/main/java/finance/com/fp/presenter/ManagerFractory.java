@@ -5,12 +5,13 @@ import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 
+import em.sang.com.allrecycleview.cutline.DividerGridItemDecoration;
+import em.sang.com.allrecycleview.cutline.RecycleViewDivider;
 import finance.com.fp.R;
 import finance.com.fp.mode.datafractory.CardDataFractory;
 import finance.com.fp.mode.datafractory.HomeDataFractory;
 import finance.com.fp.mode.datafractory.ImprotFactory;
-import finance.com.fp.utlis.DividerGridItemDecoration;
-import finance.com.fp.utlis.RecycleViewDivider;
+
 
 /**
  * Description：

@@ -60,6 +60,7 @@ public class OverlapRecycleView extends RecyclerView {
 
     private void initView() {
 //        setLayoutManager(new OverlapManager(getContext()));
+
         downY = downX = -1;
         mDecorViewLocation = new int[2];
         mDecorView = (FrameLayout) ((Activity) getContext()).getWindow().getDecorView();

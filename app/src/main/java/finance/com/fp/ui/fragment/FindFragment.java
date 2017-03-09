@@ -7,10 +7,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 
-import com.orhanobut.logger.Logger;
-
 import em.sang.com.allrecycleview.RefrushRecycleView;
 import em.sang.com.allrecycleview.adapter.RefrushAdapter;
+import em.sang.com.allrecycleview.cutline.RecycleViewDivider;
 import em.sang.com.allrecycleview.inter.RefrushListener;
 import finance.com.fp.BasisFragment;
 import finance.com.fp.R;
@@ -19,7 +18,6 @@ import finance.com.fp.presenter.HomeFragmentPreComl;
 import finance.com.fp.presenter.inter.HomeFragmentPre;
 import finance.com.fp.ui.FriendActivity;
 import finance.com.fp.ui.inter.HomeFramentView;
-import finance.com.fp.utlis.RecycleViewDivider;
 
 /**
  * Description：
@@ -82,13 +80,16 @@ public class FindFragment extends BasisFragment implements HomeFramentView {
     @Override
     public void loadSuccess() {
         rc.loadSuccess();
-        Logger.i("加载成功调用了");
+    }
+
+    @Override
+    public void loadNoMore() {
+        rc.LoadNoMore();
     }
 
     @Override
     public void loadFail() {
         rc.loadFail();
-        Logger.i("加载失败调用了");
 
     }
 

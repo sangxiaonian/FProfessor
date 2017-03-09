@@ -5,6 +5,7 @@ import android.content.Context;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.View;
 import android.view.Window;
 import android.widget.Button;
@@ -66,6 +67,7 @@ public class XDialog<T> extends Dialog {
         }
         bt_cancel = (Button) findViewById(R.id.bt_cancel);
         bt_entry = (Button) findViewById(R.id.bt_entry);
+
         dialog = this;
     }
 
@@ -208,6 +210,22 @@ public class XDialog<T> extends Dialog {
 
         if (style > 0) {
             window.setWindowAnimations(style);
+        }
+    }
+
+    protected String be_entry_name,bt_cancle_name;
+
+    /**
+     * 设置按钮的文字信息 默认为"取消" 和"确认" 在show之前调用
+     * @param entry 确认按钮
+     * @param cancle 取消按钮
+     */
+    public void setButtonName(String entry,String cancle){
+        if (!TextUtils.isEmpty(entry)){
+            be_entry_name=entry;
+        }
+        if (!TextUtils.isEmpty(cancle)){
+            bt_cancle_name=entry;
         }
     }
 

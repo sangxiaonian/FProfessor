@@ -112,7 +112,7 @@ public class ShapFactory {
         mPath.reset();
         mPaint.setStyle(Paint.Style.STROKE);
         mPaint.setStrokeWidth(2);
-        int radius = mWidth / 2-3;
+        int radius = mWidth /2-2;
         mPath.moveTo(mWidth/8,mHeight/3);
         mPath.lineTo(mWidth/4,mHeight/4);
         mPath.lineTo(mWidth*3/8,mHeight/3);

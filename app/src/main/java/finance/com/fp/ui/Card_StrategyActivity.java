@@ -14,6 +14,7 @@ import java.util.List;
 
 import em.sang.com.allrecycleview.RefrushRecycleView;
 import em.sang.com.allrecycleview.adapter.DefaultAdapter;
+import em.sang.com.allrecycleview.cutline.RecycleViewDivider;
 import em.sang.com.allrecycleview.holder.CustomHolder;
 import em.sang.com.allrecycleview.inter.DefaultAdapterViewLisenter;
 import em.sang.com.allrecycleview.inter.RefrushListener;
@@ -23,7 +24,6 @@ import finance.com.fp.mode.bean.Set_Item;
 import finance.com.fp.mode.bean.TranInfor;
 import finance.com.fp.mode.datafractory.HttpFactory;
 import finance.com.fp.mode.http.Config;
-import finance.com.fp.utlis.RecycleViewDivider;
 import finance.com.fp.utlis.ToastUtil;
 import rx.Observer;
 import rx.Subscription;

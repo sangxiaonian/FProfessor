@@ -57,8 +57,17 @@ public class BasisActivity extends AppCompatActivity {
             TextView tvtitle = (TextView) findViewById(R.id.title);
             if (tvtitle != null) {
                 tvtitle.setText(title);
+                tvtitle.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        onTitlClick(v);
+                    }
+                });
             }
         }
+    }
+
+    public void onTitlClick(View v) {
     }
 
     /**

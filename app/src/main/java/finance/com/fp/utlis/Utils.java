@@ -259,4 +259,8 @@ public class Utils {
         }
         return list;
     }
+
+    public static Context getContext() {
+        return CusApplication.getContext();
+    }
 }
