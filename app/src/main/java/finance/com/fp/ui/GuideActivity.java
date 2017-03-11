@@ -33,9 +33,9 @@ public class GuideActivity extends BasisActivity {
         vp= (ViewPager) findViewById(R.id.vp);
         datas=new ArrayList<>();
         datas.add(R.mipmap.vp1);
+        datas.add(R.mipmap.vp2);
         datas.add(R.mipmap.vp4);
         datas.add(R.mipmap.vp3);
-        datas.add(R.mipmap.vp2);
 
         vp.setAdapter(new MyAdapter());
 

@@ -3,6 +3,8 @@ package finance.com.fp.presenter;
 import android.content.Context;
 import android.content.Intent;
 
+import com.orhanobut.logger.Logger;
+
 import java.util.ArrayList;
 import java.util.List;
 

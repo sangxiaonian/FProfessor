@@ -14,7 +14,6 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 
@@ -29,8 +28,9 @@ import finance.com.fp.mode.http.Config;
 import finance.com.fp.presenter.HomeSonPerComl;
 import finance.com.fp.presenter.inter.HomeSonPreInter;
 import finance.com.fp.ui.inter.HomeSonView;
-import finance.com.fp.utlis.PermissionUtil;
+import finance.com.fp.utlis.PermissionUtils;
 import finance.com.fp.utlis.ToastUtil;
+import finance.com.fp.utlis.Utils;
 import sang.com.xdialog.DialogFactory;
 import sang.com.xdialog.XDialog;
 import sang.com.xdialog.inter.OnEntryClickListener;
@@ -228,7 +228,11 @@ public class HomeSonActivity extends BasisActivity implements HomeSonView {
 
         View inflate = inflater.inflate(R.layout.dialog_item, null);
         dialog.setView(inflate);
-        if (PermissionUtil.has(this, Manifest.permission.CALL_PHONE)) {
+        // 首先保存图片
+        boolean has = PermissionUtils.getInstance()
+                .showMsg(Utils.getResStr(R.string.no_permission), Utils.getResStr(R.string.phone_permission))
+                .has(this, Manifest.permission.CALL_PHONE);
+        if (has) {
             final AlertDialog show = dialog.show();
             show.getWindow().setBackgroundDrawable(new ColorDrawable(getResources().getColor(R.color.transparent)));
             TextView tv_phone = (TextView) inflate.findViewById(R.id.tv_phone);
@@ -274,14 +278,6 @@ public class HomeSonActivity extends BasisActivity implements HomeSonView {
 
             } catch (Exception e) {
                 e.printStackTrace();
-            }
-        }else {
-            if (PermissionUtil.hasCallPhonePermReason(this)) { // 是否显示申请权限的原因(被拒一次后再次申请时候)
-                Toast.makeText( this, "没有授予打电话权限的话,打不了电话哦!", Toast.LENGTH_SHORT).show();
-
-                PermissionUtil.requestCallPhonePerm(this, 1); // 申请权限
-            } else {
-                PermissionUtil.requestCallPhonePerm(this, 1);
             }
         }
 

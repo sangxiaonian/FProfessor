@@ -15,7 +15,6 @@ import finance.com.fp.mode.bean.LoanSearchBean;
 import finance.com.fp.mode.http.Config;
 import finance.com.fp.ui.LoanConditionActivity;
 import finance.com.fp.utlis.GlideUtils;
-import finance.com.fp.utlis.Utils;
 
 /**
  * Description：
@@ -48,13 +47,11 @@ public class HomeBodyHolder extends CustomHolder<LoanSearchBean> {
             @Override
             public void onClick(View v) {
 
-                if (!Utils.isLogion(context)) {
-                    Utils.showLoginDialog(context);
-                } else {
+
                     Intent intent = new Intent(context, LoanConditionActivity.class);
                     intent.putExtra(Config.infors, item);
                     context.startActivity(intent);
-                }
+
             }
         });
     }

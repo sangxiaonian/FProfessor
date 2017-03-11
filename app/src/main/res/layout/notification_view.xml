@@ -29,17 +29,6 @@
         android:layout_toRightOf="@+id/notification_large_icon"
         android:text="Message"
         android:textColor="@color/black"/>
-
-
-    <TextView
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/notification_text"
-        android:layout_marginLeft="10dp"
-        android:textSize="10dp"
-        android:layout_toRightOf="@+id/notification_large_icon"
-        android:text="(嘿嘿，偷偷听告诉你，我是自定义的)"
-        android:textColor="@color/black"/>
     
     <ImageView
         android:id="@+id/notification_small_icon"

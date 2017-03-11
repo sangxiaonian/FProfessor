@@ -25,13 +25,12 @@ public class SplishActivity extends BasisActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splish);
 
-        Observable.just(0).subscribeOn(Schedulers.io()).delay(2, TimeUnit.SECONDS)
+        Observable.just(0).subscribeOn(Schedulers.io()).delay(4, TimeUnit.SECONDS)
                 .map(new Func1<Integer, Boolean>() {
-
                     @Override
                     public Boolean call(Integer integer) {
                         String sp = Utils.getSp(SplishActivity.this, Config.isFirst);
-                       return TextUtils.isEmpty(sp);
+                        return TextUtils.isEmpty(sp);
                     }
                 })
 
@@ -39,12 +38,13 @@ public class SplishActivity extends BasisActivity {
                 .subscribe(new Observer<Boolean>() {
                     @Override
                     public void onCompleted() {
-
                     }
-
                     @Override
                     public void onError(Throwable e) {
-
+                        e.printStackTrace();
+                        startActivity(new Intent(SplishActivity.this, MainActivity.class));
+                        finish();
+                        overridePendingTransition(R.anim.slide_right_in, R.anim.slide_left_out);
                     }
 
                     @Override
@@ -52,11 +52,11 @@ public class SplishActivity extends BasisActivity {
                         if (integer) {
                             startActivity(new Intent(SplishActivity.this, GuideActivity.class));
                             finish();
-                        }else {
-                            startActivity(new Intent(SplishActivity.this,MainActivity.class));
+                        } else {
+                            startActivity(new Intent(SplishActivity.this, MainActivity.class));
                             finish();
                         }
-                        overridePendingTransition(R.anim.slide_right_in,R.anim.slide_left_out);
+                        overridePendingTransition(R.anim.slide_right_in, R.anim.slide_left_out);
 
                     }
                 });

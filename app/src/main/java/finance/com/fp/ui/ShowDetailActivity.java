@@ -15,12 +15,12 @@ import android.webkit.WebViewClient;
 import android.widget.TextView;
 
 import com.orhanobut.logger.Logger;
+import com.sang.viewfractory.view.HorizontalProgress;
 
 import finance.com.fp.BasisActivity;
 import finance.com.fp.R;
 import finance.com.fp.mode.bean.TranInfor;
 import finance.com.fp.mode.http.Config;
-import finance.com.fp.utlis.HorizontalProgress;
 
 public class ShowDetailActivity extends BasisActivity {
 

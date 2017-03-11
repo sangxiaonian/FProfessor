@@ -1,11 +1,21 @@
 package finance.com.fp.utlis;
 
+import android.Manifest;
+import android.app.Activity;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Bitmap;
+import android.net.Uri;
+import android.os.Environment;
+import android.provider.MediaStore;
 import android.text.TextUtils;
 
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.math.BigDecimal;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
@@ -23,6 +33,8 @@ import finance.com.fp.ui.RegisterActivity;
 import sang.com.xdialog.DialogFactory;
 import sang.com.xdialog.XDialog;
 import sang.com.xdialog.inter.OnEntryClickListener;
+
+import static android.R.attr.path;
 
 /**
  * Description：
@@ -261,6 +273,55 @@ public class Utils {
     }
 
     public static Context getContext() {
-        return CusApplication.getContext();
+        return CusApplication.getContext().getApplicationContext();
+    }
+
+    /**
+     * 保存图片到图库
+     * @param context
+     * @param bmp
+     */
+    public static void saveImageToGallery(Context context, Bitmap bmp) {
+       // 首先保存图片
+        boolean has = PermissionUtils.getInstance()
+                .showMsg(Utils.getResStr(R.string.no_permission), Utils.getResStr(R.string.reason_permission))
+                .has((Activity) context, Manifest.permission.WRITE_EXTERNAL_STORAGE);
+        if (has) {
+            boolean isSuccess=true;
+            File appDir = new File(Environment.getExternalStorageDirectory(), "Boohee");
+            if (!appDir.exists()) {
+                appDir.mkdir();
+            }
+            String fileName = System.currentTimeMillis() + ".jpg";
+            File file = new File(appDir, fileName);
+            try {
+                FileOutputStream fos = new FileOutputStream(file);
+                bmp.compress(Bitmap.CompressFormat.JPEG, 100, fos);
+                fos.flush();
+                fos.close();
+            } catch (FileNotFoundException e) {
+                e.printStackTrace();
+                isSuccess=false;
+            } catch (IOException e) {
+                isSuccess=false;
+                e.printStackTrace();
+            }
+
+            // 其次把文件插入到系统图库
+            try {
+                MediaStore.Images.Media.insertImage(context.getContentResolver(),
+                        file.getAbsolutePath(), fileName, null);
+            } catch (FileNotFoundException e) {
+                isSuccess=false;
+                e.printStackTrace();
+            }
+            if (isSuccess){
+                ToastUtil.showTextToast(context.getString(R.string.friend_save_succeed));
+            }else {
+                ToastUtil.showTextToast(context.getString(R.string.friend_save_fail));
+            }
+            // 最后通知图库更新
+            context.sendBroadcast(new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE, Uri.parse("file://" + path)));
+        }
     }
 }

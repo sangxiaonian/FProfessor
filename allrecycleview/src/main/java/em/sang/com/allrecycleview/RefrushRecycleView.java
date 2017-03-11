@@ -7,6 +7,8 @@ import android.view.ViewGroup;
 import android.widget.LinearLayout;
 
 import com.sang.viewfractory.utils.Apputils;
+import com.sang.viewfractory.utils.DeviceUtils;
+import com.sang.viewfractory.utils.JLog;
 import com.sang.viewfractory.view.RefrushLinearLayout;
 
 import em.sang.com.allrecycleview.adapter.BasicAdapter;
@@ -14,7 +16,7 @@ import em.sang.com.allrecycleview.holder.SimpleHolder;
 
 
 /**
- * Description：上拉和下拉都需要拖动才能显示
+ * Description：上拉刷新和下拉加载控件,默认没有上拉加载
  * <p>
  * Author：桑小年
  * Data：2016/12/1 14:42
@@ -87,10 +89,11 @@ public class RefrushRecycleView extends BasicRefrushRecycleView {
         super.onScrolled(dx, dy);
         if (downstate != LOADING_DOWN ) {
             synchronized (RefrushRecycleView.class) {
-                if (dy > 0 && style == STYLE_SLIPE) {
+                if (dy > DeviceUtils.getMinTouchSlop(getContext()) && style == STYLE_SLIPE) {
                     if (!isFirst() && isLast() && downstate != LOADING_DOWN ) {
                         long l =System.currentTimeMillis() - lastTime;
-                        if (l >200) {
+                        if (l >1000) {
+                            JLog.i("-------------被叫用了---------------------");
                             lastTime = System.currentTimeMillis();
                             downRefrushState(LOADING_DOWN);
                         }

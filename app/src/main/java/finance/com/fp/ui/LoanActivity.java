@@ -11,9 +11,8 @@ import java.util.List;
 
 import finance.com.fp.BasisActivity;
 import finance.com.fp.R;
-import finance.com.fp.mode.http.Config;
 import finance.com.fp.mode.bean.Set_Item;
-import finance.com.fp.mode.bean.TranInfor;
+import finance.com.fp.mode.http.Config;
 import finance.com.fp.presenter.LoanProComl;
 import finance.com.fp.presenter.inter.LoanInter;
 import finance.com.fp.ui.holder.CardNotifiHolder;
@@ -106,35 +105,7 @@ public class LoanActivity extends BasisActivity implements LoanView {
 
     @Override
     public void onListItemClick(int position, Set_Item item) {
-        TranInfor tranInfor = new TranInfor();
-        Intent intent = new Intent();
-        tranInfor.activity_id = 2;
 
-        tranInfor.title = item.title;
-        Class c = null;
-        switch (position) {
-            case 0://提额攻略
-//                tranInfor.item_id = LoanDataFractory.LOAN_STRAGE;
-
-                break;
-            case 1://交易分析
-//               c=HomeSonActivity.class;
-//                tranInfor.item_id = LoanDataFractory.BALANCE_CALL;
-                break;
-            case 2://精养卡分析
-//                c=HomeSonActivity.class;
-//                tranInfor.item_id = HomeDataFractory.CREDIT;
-                break;
-
-
-        }
-        if (c==null){
-            ToastUtil.showTextToast("该功能尚未开放");
-        }else {
-            intent.putExtra(Config.infors, tranInfor);
-            intent.setClass(this, c);
-            startActivity(intent);
-        }
     }
 
     @Override

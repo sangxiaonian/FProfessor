@@ -180,11 +180,31 @@
 -keep class retrofit2.adapter.rxjava.**{*;}
 
 #analytic 友盟
--keep class com.umeng.analytics.**{*;}
--keep class u.aly.**{*;}
+-dontwarn com.taobao.**
+-dontwarn anet.channel.**
+-dontwarn anetwork.channel.**
+-dontwarn org.android.**
+-dontwarn org.apache.thrift.**
+-dontwarn com.xiaomi.**
+-dontwarn com.huawei.**
 
--keep class android.support.graphics.drawable.**{*;}
+-keepattributes *Annotation*
 
+-keep class com.taobao.** {*;}
+-keep class org.android.** {*;}
+-keep class anet.channel.** {*;}
+-keep class com.umeng.** {*;}
+-keep class com.xiaomi.** {*;}
+-keep class com.huawei.** {*;}
+-keep class org.apache.thrift.** {*;}
+
+-keep class com.alibaba.sdk.android.**{*;}
+-keep class com.ut.**{*;}
+-keep class com.ta.**{*;}
+
+-keep public class **.R$*{
+   public static final int *;
+}
 #converter-gson
 -keep class retrofit2.converter.gson.**{*;}
 -keep class retrofit2.converter.scalars.**{*;}

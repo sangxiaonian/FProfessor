@@ -31,7 +31,7 @@
 
     </android.support.v7.widget.Toolbar>
 
-    <finance.com.fp.utlis.HorizontalProgress
+    <com.sang.viewfractory.view.HorizontalProgress
         android:layout_width="match_parent"
         android:id="@+id/pb"
         android:layout_height="@dimen/title_cut_height"

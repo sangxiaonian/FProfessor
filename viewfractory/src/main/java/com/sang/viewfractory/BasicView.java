@@ -56,7 +56,10 @@ public class BasicView extends View {
      * 加载中正方形图像
      */
     public static final int STYLE_SQUARE = 7;
-
+    /**
+     * 没有更多数据了
+     */
+    public static final int LOAD_NO_MORE=8;
 
     /**
      * 当前状态
@@ -175,6 +178,10 @@ public class BasicView extends View {
             case LOAD_FAIL:
                 setShapRotation(0);
                 bitmap = factory.creatError(mWidth, mHeight);
+                break;
+            case LOAD_NO_MORE:
+                setShapRotation(0);
+
                 break;
 
         }

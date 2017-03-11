@@ -14,6 +14,8 @@ import android.view.WindowManager;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.umeng.message.PushAgent;
+
 
 /**
  * Description：
@@ -29,8 +31,14 @@ public class BasisActivity extends AppCompatActivity {
     public void onCreate(Bundle savedInstanceState, PersistableBundle persistentState) {
         super.onCreate(savedInstanceState, persistentState);
 
+
     }
 
+    @Override
+    protected void onStart() {
+        super.onStart();
+        PushAgent.getInstance(this).onAppStart();
+    }
 
     public void initData() {
 

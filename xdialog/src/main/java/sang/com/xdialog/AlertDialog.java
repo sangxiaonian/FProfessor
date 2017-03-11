@@ -75,12 +75,15 @@ public class AlertDialog extends XDialog {
         super.iniViews();
         txt_title = (TextView) findViewById(R.id.txt_title);
 
-        if (TextUtils.isEmpty(msg_titles)) {
-            txt_title.setVisibility(View.GONE);
-        } else {
-            txt_title.setVisibility(View.VISIBLE);
-            txt_title.setText(msg_titles);
+        if (txt_title!=null) {
+            if (TextUtils.isEmpty(msg_titles)) {
+                txt_title.setVisibility(View.GONE);
+            } else {
+                txt_title.setVisibility(View.VISIBLE);
+                txt_title.setText(msg_titles);
+            }
         }
+
         if (style == ALEART_EDITTEXT) {
             et = (EditText) findViewById(R.id.txt_msg);
             if (!TextUtils.isEmpty(msg_content)) {
@@ -91,11 +94,13 @@ public class AlertDialog extends XDialog {
             }
         } else {
             content = (TextView) findViewById(R.id.txt_msg);
-            if (TextUtils.isEmpty(msg_content)) {
-                content.setVisibility(View.GONE);
-            } else {
-                content.setVisibility(View.VISIBLE);
-                content.setText(msg_content);
+            if (content!=null) {
+                if (TextUtils.isEmpty(msg_content)) {
+                    content.setVisibility(View.GONE);
+                } else {
+                    content.setVisibility(View.VISIBLE);
+                    content.setText(msg_content);
+                }
             }
 
         }

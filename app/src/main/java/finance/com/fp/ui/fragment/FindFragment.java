@@ -7,6 +7,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 
+import com.orhanobut.logger.Logger;
+
 import em.sang.com.allrecycleview.RefrushRecycleView;
 import em.sang.com.allrecycleview.adapter.RefrushAdapter;
 import em.sang.com.allrecycleview.cutline.RecycleViewDivider;
@@ -63,6 +65,7 @@ public class FindFragment extends BasisFragment implements HomeFramentView {
 
             @Override
             public void onLoadDowning() {
+
                 pre.loadMore();
             }
         });

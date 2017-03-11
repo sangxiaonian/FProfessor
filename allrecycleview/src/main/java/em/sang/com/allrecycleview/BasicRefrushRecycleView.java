@@ -13,7 +13,6 @@ import android.view.ViewGroup;
 import android.view.animation.DecelerateInterpolator;
 import android.widget.LinearLayout;
 
-import com.sang.viewfractory.utils.JLog;
 import com.sang.viewfractory.view.RefrushLinearLayout;
 import com.sang.viewfractory.view.ShapeView;
 
@@ -71,6 +70,7 @@ public abstract class BasicRefrushRecycleView extends BaiscRecycleView {
      * 松手刷新
      */
     public static final int LOAD_DOWN_BEFOR = 10;//松手刷新
+    public static final int LOAD_DOWN_NO_MORE = 11;//松手刷新
 
 
     /**
@@ -91,7 +91,7 @@ public abstract class BasicRefrushRecycleView extends BaiscRecycleView {
     /**
      * 刷新控件的style
      */
-    protected int style=STYLE_SLIPE;
+    protected int style = STYLE_SLIPE;
 
     public float downY;
 
@@ -153,13 +153,12 @@ public abstract class BasicRefrushRecycleView extends BaiscRecycleView {
                 break;
             case LOAD_DOWN_SUCCESS:
             case LOAD_DOWN_FAIL:
+            case LOAD_DOWN_NO_MORE:
                 load = LOAD_DOWN_OVER;
                 break;
         }
         return load;
     }
-
-
 
 
     /**
@@ -192,7 +191,6 @@ public abstract class BasicRefrushRecycleView extends BaiscRecycleView {
                     clearDownAnimotion();
                     setDownHeightVisible(-gap);
                 }
-
                 break;
             case MotionEvent.ACTION_UP:
             case MotionEvent.ACTION_CANCEL:
@@ -262,12 +260,14 @@ public abstract class BasicRefrushRecycleView extends BaiscRecycleView {
      */
     protected void startUpAnimotion(int upState) {
         final View view = topView;
-        float stand = getUpHeightByState(upState);
+        final float stand = getUpHeightByState(upState);
         ViewGroup.LayoutParams layoutParams = view.getLayoutParams();
         int height = layoutParams.height;
+
         if (height == stand) {
             return;
         }
+
         final int load = getNextState(upState);
 
         upAnimator = ValueAnimator.ofFloat(height, stand);
@@ -329,7 +329,9 @@ public abstract class BasicRefrushRecycleView extends BaiscRecycleView {
         if (height == stand) {
             return;
         }
+
         final int load = getNextState(downState);
+
 
         downAnimator = ValueAnimator.ofFloat(height, stand);
         downAnimator.setInterpolator(new DecelerateInterpolator(1));
@@ -344,7 +346,7 @@ public abstract class BasicRefrushRecycleView extends BaiscRecycleView {
             @Override
             public void onAnimationEnd(Animator animation) {
                 super.onAnimationEnd(animation);
-                if (load != downstate) {
+                if (load != downstate&&style!=STYLE_SLIPE) {
                     downRefrushState(load);
                 }
 
@@ -414,11 +416,15 @@ public abstract class BasicRefrushRecycleView extends BaiscRecycleView {
     protected abstract int downChangeStateByHeight(int height);
 
 
+    private boolean isStrong;
+
     /**
      * 设置正在加载
      */
     public void setLoading() {
+
         clearViewAnimotion();
+        isStrong = true;
         setViewHeight(topView, mearchTop);
         upRefushState(LOADING);
     }
@@ -446,7 +452,6 @@ public abstract class BasicRefrushRecycleView extends BaiscRecycleView {
             upAnimator.removeAllUpdateListeners();
             upAnimator.pause();
             upAnimator.cancel();
-
         }
     }
 
@@ -504,7 +509,7 @@ public abstract class BasicRefrushRecycleView extends BaiscRecycleView {
             if (TextUtils.isEmpty(msg)) {
                 msg = getContext().getString(R.string.no_more);
             }
-            downRefrushState(LOAD_DOWN_FAIL, msg);
+            downRefrushState(LOAD_DOWN_NO_MORE, msg);
         }
     }
 
@@ -517,51 +522,60 @@ public abstract class BasicRefrushRecycleView extends BaiscRecycleView {
      */
     protected void downRefrushState(int refrush_state, String s) {
         if (this.downstate != refrush_state) {
-            int loadstate = -1;
-            String msg = null;
-            boomView.setVisibility(VISIBLE);
-            switch (refrush_state) {
-                case LOAD_DOWN_OVER:
-                    loadstate = ShapeView.LOAD_BEFOR;
-                    msg = "上拉加载数据";
-                    break;
-                case LOAD_DOWN_BEFOR:
-                    loadstate = ShapeView.LOAD_OVER;
-                    msg = "松手刷新数据";
+            synchronized (BasicRefrushRecycleView.class) {
+                if (this.downstate != refrush_state) {
+                    int loadstate = -1;
+                    String msg = null;
+                    boomView.setVisibility(VISIBLE);
+                    switch (refrush_state) {
+                        case LOAD_DOWN_OVER:
+                            loadstate = ShapeView.LOAD_BEFOR;
+                            msg = "上拉加载数据";
+                            break;
+                        case LOAD_DOWN_BEFOR:
+                            loadstate = ShapeView.LOAD_OVER;
+                            msg = "松手刷新数据";
 
-                    break;
-                case LOADING_DOWN:
-                    loadstate = ShapeView.LOADING;
-                    msg = "正在加载数据";
-                    if (listener != null) {
-                        isLoadMore = true;
-                        listener.onLoadDowning();
+                            break;
+                        case LOADING_DOWN:
+                            loadstate = ShapeView.LOADING;
+                            msg = "正在加载数据";
+                            if (listener != null) {
+                                isLoadMore = true;
+                                listener.onLoadDowning();
+                            }
+                            if (upstate!=LOAD_OVER) {
+                                upRefushState(LOAD_OVER);
+                            }
+                            break;
+                        case LOAD_DOWN_FAIL:
+                            loadstate = ShapeView.LOAD_FAIL;
+                            msg = "加载失败";
+                            break;
+                        case LOAD_DOWN_SUCCESS:
+                            loadstate = ShapeView.LOAD_SUCCESS;
+                            msg = "加载成功";
+                            break;
+                        case LOAD_DOWN_NO_MORE:
+                            loadstate=ShapeView.LOAD_NO_MORE;
+                            msg = "没有更多数据了";
+                            break;
+                        default:
+                            loadstate = ShapeView.LOAD_FAIL;
+                            msg = "加载异常";
+                            break;
                     }
-                    upRefushState(LOAD_OVER);
-                    JLog.i(msg+"------------");
-                    break;
-                case LOAD_DOWN_FAIL:
-                    loadstate = ShapeView.LOAD_FAIL;
-                    msg = "加载失败";
-                    break;
-                case LOAD_DOWN_SUCCESS:
-                    loadstate = ShapeView.LOAD_SUCCESS;
-                    msg = "加载成功";
-                    break;
-                default:
-                    loadstate = ShapeView.LOAD_FAIL;
-                    msg = "加载异常";
-                    break;
-            }
 
-            boomView.upState(loadstate);
-            if (TextUtils.isEmpty(s)) {
-                boomView.setTvMsg(msg);
-            } else {
-                boomView.setTvMsg(s);
+                    boomView.upState(loadstate);
+                    if (TextUtils.isEmpty(s)) {
+                        boomView.setTvMsg(msg);
+                    } else {
+                        boomView.setTvMsg(s);
+                    }
+                    this.downstate = refrush_state;
+                    startDownAnimotion(downstate);
+                }
             }
-            this.downstate = refrush_state;
-            startDownAnimotion(downstate);
         }
     }
 
@@ -575,53 +589,55 @@ public abstract class BasicRefrushRecycleView extends BaiscRecycleView {
     }
 
     public void upRefushState(int refrush_state, String s) {
-
         if (this.upstate != refrush_state) {
+            synchronized (BasicRefrushRecycleView.class) {
+                if (this.upstate != refrush_state) {
+                    int loadstate = -1;
+                    String msg = null;
+                    switch (refrush_state) {
+                        case LOAD_OVER://4
+                            loadstate = ShapeView.LOAD_OVER;
+                            msg = "下拉刷新数据";
+                            break;
+                        case LOAD_BEFOR://5
+                            loadstate = ShapeView.LOAD_BEFOR;
+                            msg = "松手刷新数据";
+                            break;
+                        case LOADING://0
+                            loadstate = ShapeView.LOADING;
+                            msg = "正在加载数据";
+                            if (listener != null) {
+                                isLoadMore = false;
+                                listener.onLoading();
+                            }
 
-            int loadstate = -1;
-            String msg = null;
-            switch (refrush_state) {
-                case LOAD_OVER://4
-                    loadstate = ShapeView.LOAD_OVER;
-                    msg = "下拉刷新数据";
-                    break;
-                case LOAD_BEFOR://5
-                    loadstate = ShapeView.LOAD_BEFOR;
-                    msg = "松手刷新数据";
-                    break;
-                case LOADING://0
-                    loadstate = ShapeView.LOADING;
-                    msg = "正在加载数据";
-                    if (listener != null) {
-                        isLoadMore = false;
-                        listener.onLoading();
+                            downRefrushState(LOAD_DOWN_OVER);
+                            boomView.setVisibility(INVISIBLE);
+                            break;
+                        case LOAD_FAIL://2
+                            loadstate = ShapeView.LOAD_FAIL;
+                            msg = "加载失败";
+                            break;
+                        case LOAD_SUCCESS://1
+                            loadstate = ShapeView.LOAD_SUCCESS;
+                            msg = "加载成功";
+
+                            break;
+                        default:
+                            loadstate = ShapeView.LOAD_FAIL;
+                            msg = "加载异常";
+                            break;
                     }
-
-                    downRefrushState(LOAD_DOWN_OVER);
-                    boomView.setVisibility(INVISIBLE);
-                    break;
-                case LOAD_FAIL://2
-                    loadstate = ShapeView.LOAD_FAIL;
-                    msg = "加载失败";
-                    break;
-                case LOAD_SUCCESS://1
-                    loadstate = ShapeView.LOAD_SUCCESS;
-                    msg = "加载成功";
-
-                    break;
-                default:
-                    loadstate = ShapeView.LOAD_FAIL;
-                    msg = "加载异常";
-                    break;
+                    topView.upState(loadstate);
+                    if (TextUtils.isEmpty(s)) {
+                        topView.setTvMsg(msg);
+                    } else {
+                        topView.setTvMsg(s);
+                    }
+                    this.upstate = refrush_state;
+                    startUpAnimotion(upstate);
+                }
             }
-            topView.upState(loadstate);
-            if (TextUtils.isEmpty(s)) {
-                topView.setTvMsg(msg);
-            } else {
-                topView.setTvMsg(s);
-            }
-            this.upstate = refrush_state;
-            startUpAnimotion(upstate);
         }
     }
 
@@ -767,7 +783,6 @@ public abstract class BasicRefrushRecycleView extends BaiscRecycleView {
     }
 
 
-
     /**
      * 设置加载风格
      *
@@ -794,7 +809,6 @@ public abstract class BasicRefrushRecycleView extends BaiscRecycleView {
         topView.setStyle(top);
         boomView.setStyle(down);
     }
-
 
 
 }

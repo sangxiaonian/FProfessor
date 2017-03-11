@@ -10,6 +10,7 @@ import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import java.util.ArrayList;
@@ -29,7 +30,8 @@ public class MainActivity extends BasisActivity implements View.OnClickListener 
      * The {@link ViewPager} that will host the section contents.
      */
 
-    private LinearLayout ll_home, ll_find, ll_set;
+    private LinearLayout ll_home, ll_set;
+    private RelativeLayout ll_find;
     private TextView tv_home, tv_find, tv_set;
     private ImageView img_home, img_find, img_set;
     private List<View> views;
@@ -86,7 +88,7 @@ public class MainActivity extends BasisActivity implements View.OnClickListener 
         img_home = (ImageView) findViewById(R.id.img_home);
 
         ll_home = (LinearLayout) findViewById(R.id.ll_home);
-        ll_find = (LinearLayout) findViewById(R.id.ll_find);
+        ll_find = (RelativeLayout) findViewById(R.id.ll_find);
         ll_set = (LinearLayout) findViewById(R.id.ll_set);
         vp = (FrameLayout) findViewById(R.id.container);
 

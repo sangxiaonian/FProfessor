@@ -1,4 +1,4 @@
-package finance.com.fp.utlis;
+package com.sang.viewfractory.view;
 
 import android.content.Context;
 import android.content.res.TypedArray;
@@ -7,7 +7,9 @@ import android.graphics.Paint;
 import android.util.AttributeSet;
 import android.widget.ProgressBar;
 
-import finance.com.fp.R;
+import com.sang.viewfractory.R;
+import com.sang.viewfractory.utils.DeviceUtils;
+import com.sang.viewfractory.utils.ViewUtils;
 
 
 /**
@@ -92,7 +94,7 @@ public class HorizontalProgress extends ProgressBar {
      * 初始化属性
      */
     private void initView(Context context, AttributeSet attrs, int defStyleAttr) {
-        DEFAULT_HEIGHT_REACHED_PROGRESS_BAR=DeviceUtils.dip2px(context,2);
+        DEFAULT_HEIGHT_REACHED_PROGRESS_BAR= DeviceUtils.dip2px(context,2);
         TypedArray typedArray = context.obtainStyledAttributes(attrs, R.styleable.HorizontalProgress);
         textColor = typedArray.getColor(R.styleable.HorizontalProgress_progress_text_color, DEFAULT_TEXT_COLOR);
 
@@ -169,7 +171,8 @@ public class HorizontalProgress extends ProgressBar {
         if (ifDrawText){
             mPaint.setColor(textColor);
             //需要画出的文本
-            String text = Utils.get2Double(radio * 100) + "%";
+            String text = ViewUtils.get2Double(radio * 100) + "%";
+
 
             //文字的宽高
             textWidth = (int) mPaint.measureText(text);

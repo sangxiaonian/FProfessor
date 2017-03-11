@@ -8,12 +8,13 @@ import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 
+import com.sang.viewfractory.view.HorizontalProgress;
+
 import finance.com.fp.BasisActivity;
 import finance.com.fp.R;
 import finance.com.fp.mode.bean.FinanceBean;
 import finance.com.fp.mode.bean.HttpBean;
 import finance.com.fp.mode.http.HttpClient;
-import finance.com.fp.utlis.HorizontalProgress;
 import rx.Observer;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;

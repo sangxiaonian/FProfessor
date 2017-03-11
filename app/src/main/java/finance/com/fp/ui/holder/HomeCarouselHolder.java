@@ -46,7 +46,12 @@ public class HomeCarouselHolder extends BasicHolder {
             if (count >= vp.getAdapter().getCount()) {
                 count = 0;
             }
-            vp.setCurrentItem(count);
+
+            try {
+                vp.setCurrentItem(count);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
 
             handler.sendEmptyMessageDelayed(0, 5 * 1000);
         }

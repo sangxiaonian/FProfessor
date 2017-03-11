@@ -11,6 +11,13 @@
     <string name="feedback">意见反馈</string>
     <string name="id_infor">个人信息</string>
     <string name="friend">朋友圈</string>
+    <string name="friend_save">保存图片</string>
+    <string name="friend_save_fail">保存失败</string>
+    <string name="friend_save_succeed">保存成功</string>
+    <string name="friend_load_fail">加载失败</string>
+    <string name="no_permission">未授予相关权限</string>
+    <string name="phone_permission">只有授予通话权限,融教授才能帮你呼叫银行电话</string>
+    <string name="reason_permission">只有授予内存卡写入权限,才能将图片保存到手机上哦</string>
 
     <string name="main_search">搜索最新金融口子,中介广告</string>
     <string name="main_item_more">更多</string>
@@ -194,6 +201,7 @@
 
     <string name="temp_register">此注册码为试用码,体验两小时后失效</string>
     <string name="temp_login">此账号为试用账号,已失效</string>
+
 
     <string name="intermediary">http://r.wshinet.com/3.html</string>
 

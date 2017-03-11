@@ -2,9 +2,12 @@ package com.sang.viewfractory.view;
 
 
 import android.content.Context;
+import android.content.res.TypedArray;
 import android.graphics.Color;
 import android.text.Spanned;
+import android.text.TextUtils;
 import android.util.AttributeSet;
+import android.util.TypedValue;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
@@ -19,13 +22,19 @@ import com.sang.viewfractory.R;
 public class FloatView extends LinearLayout {
 
     private TextView tv;
-    private TextView img;
-    private String showContent="全文";
-    private String hiden="收起";
+    private TextView ftv;
+    private String showContent;
+    private String hiden;
     private int color;
 
-    private int lines=4;
+    private int lines;
     private OnStateChangeListener listener;
+    private int textColor;
+    private float textSize;
+    private int flowTextColor;
+    private float flowTextSize;
+    private int flowBackground;
+
 
     public FloatView(Context context) {
         super(context);
@@ -54,30 +63,53 @@ public class FloatView extends LinearLayout {
 
 
     private void initView(Context context, AttributeSet attrs, int defStyleAttr){
+
+        TypedArray typedArray = context.obtainStyledAttributes(attrs, R.styleable.FloatView);
+        textColor = typedArray.getColor(R.styleable.FloatView_textColor, Color.BLACK);
+        textSize = typedArray.getDimension(R.styleable.FloatView_textSize, 14);
+        lines = typedArray.getInteger(R.styleable.FloatView_showLines, 5);
+        flowTextColor = typedArray.getColor(R.styleable.FloatView_flowTextColor, Color.parseColor("#4c69c5"));
+        flowTextSize = typedArray.getDimension(R.styleable.FloatView_flowTextSize, textSize);
+        flowBackground = typedArray.getResourceId(R.styleable.FloatView_flowBackground, R.drawable.select_tv_bg);
+        showContent=typedArray.getString(R.styleable.FloatView_textShow);
+        if (TextUtils.isEmpty(showContent)){
+            showContent=context.getString(R.string.showContent);
+        }
+        hiden=typedArray.getString(R.styleable.FloatView_textHide);
+        if (TextUtils.isEmpty(hiden)){
+            hiden=context.getString(R.string.hiden);
+        }
+
         setOrientation(VERTICAL);
         LayoutParams params = new LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
         tv = new TextView(context);
+        tv.setTextColor(textColor);
+        tv.setTextSize(TypedValue.COMPLEX_UNIT_PX,textSize);
+
+        tv.setTextIsSelectable(true);
         tv.setLayoutParams(params);
-        img=new TextView(context);
-        img.setClickable(true);
-        img.setText(showContent);
-        img.setPadding(0,0,0,0);
-        img.setBackground(getResources().getDrawable(R.drawable.select_tv_bg));
-        img.setTextColor(Color.parseColor("#abcdef"));
+
+        ftv =new TextView(context);
+        ftv.setTextColor(flowTextColor);
+        ftv.setTextSize(TypedValue.COMPLEX_UNIT_PX,flowTextSize);
+        ftv.setClickable(true);
+        ftv.setText(showContent);
+        ftv.setBackground(getResources().getDrawable(flowBackground));
+        ftv.setTextColor(flowTextColor);
         LayoutParams imgParams = new LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-        img.setLayoutParams(imgParams);
+        ftv.setLayoutParams(imgParams);
         addView(tv);
-        addView(img);
-        img.setOnClickListener(new OnClickListener() {
+        addView(ftv);
+        ftv.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (!isExpand){
                     int lineCount= tv.getLineCount();
                     int height = tv.getLineHeight();
                     changeHeight(Math.max(mheight,lineCount*height));
-                    img.setText(hiden);
+                    ftv.setText(hiden);
                 }else {
-                    img.setText(showContent);
+                    ftv.setText(showContent);
                     int height = tv.getLineHeight();
                     changeHeight(height*lines);
                 }
@@ -113,10 +145,10 @@ public class FloatView extends LinearLayout {
                 if (lineCount>lines){
                     isExpand=false;
                     changeHeight(height*lines);
-                    img.setVisibility(VISIBLE);
+                    ftv.setVisibility(VISIBLE);
                 }else {
                     isExpand=true;
-                    img.setVisibility(GONE);
+                    ftv.setVisibility(GONE);
                 }
 
             }

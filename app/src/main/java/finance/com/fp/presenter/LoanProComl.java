@@ -40,6 +40,7 @@ public class LoanProComl extends Subscriber<LoanSearchBean> implements LoanInter
     private HomeCarouselHolder carouselHolder;
     private CardNotifiHolder notifiHolder;
     private List<Set_Item> carouselDatas;
+    private ArrayList<Set_Item> tempDatas;
 
     public LoanProComl(LoanView view) {
         this.view = view;
@@ -49,17 +50,18 @@ public class LoanProComl extends Subscriber<LoanSearchBean> implements LoanInter
     private List<LoanSearchBean> lists;
 
     DefaultAdapter<LoanSearchBean> adapter;
+
     @Override
     public DefaultAdapter<LoanSearchBean> getAdapter(Context context) {
-        lists=new ArrayList<>();
-          adapter = new DefaultAdapter<>(context, lists, R.layout.item_loan_item, new DefaultAdapterViewLisenter<LoanSearchBean>() {
+        lists = new ArrayList<>();
+        adapter = new DefaultAdapter<>(context, lists, R.layout.item_loan_item, new DefaultAdapterViewLisenter<LoanSearchBean>() {
             @Override
             public CustomHolder getBodyHolder(Context context, final List lists, int itemID) {
-                return new HomeBodyHolder(context,lists,itemID);
+                return new HomeBodyHolder(context, lists, itemID);
             }
         });
 
-        HttpFactory.getLoanSearch(0,0).take(3).subscribe(this);
+        HttpFactory.getLoanSearch(0, 0).take(6).subscribe(this);
 
         HomeToolsHolder toolsHolder = new HomeToolsHolder(context, data.getTools(), R.layout.item_home_tool);
         toolsHolder.setView(R.layout.view_tools_loan);
@@ -80,7 +82,7 @@ public class LoanProComl extends Subscriber<LoanSearchBean> implements LoanInter
         grideHolder.setOnToolsItemClickListener(new OnToolsItemClickListener<Set_Item>() {
             @Override
             public void onItemClick(int position, Set_Item item) {
-                view.grideLoanClick(position,item);
+                view.grideLoanClick(position, item);
             }
         });
         adapter.addHead(grideHolder);
@@ -93,7 +95,7 @@ public class LoanProComl extends Subscriber<LoanSearchBean> implements LoanInter
         ji.setOnToolsItemClickListener(new OnToolsItemClickListener<Set_Item>() {
             @Override
             public void onItemClick(int position, Set_Item item) {
-                view.grideLoanClick(position+13,item);
+                view.grideLoanClick(position + 13, item);
             }
         });
 
@@ -106,23 +108,26 @@ public class LoanProComl extends Subscriber<LoanSearchBean> implements LoanInter
     }
 
     private int setCarousel(Context context) {
-        carouselDatas=new ArrayList<>();
-        carouselDatas.add(new Set_Item(R.mipmap.loading,""));
+        carouselDatas = new ArrayList<>();
+        tempDatas = new ArrayList<>();
+
+        carouselDatas.add(new Set_Item(R.mipmap.loading, ""));
         carouselHolder = new HomeCarouselHolder(context, carouselDatas, R.layout.item_home_carousel);
         adapter.addHead(carouselHolder);
         int dimension = (int) context.getResources().getDimension(R.dimen.app_cut_big);
-        carouselHolder.setMagrin(0,dimension,0,0);
+        carouselHolder.setMagrin(0, dimension, 0, 0);
         HttpFactory.getCarousel("31").subscribe(new Subscriber<Set_Item>() {
             @Override
             public void onStart() {
                 super.onStart();
-                carouselDatas.clear();
+                tempDatas.clear();
 
             }
 
             @Override
             public void onCompleted() {
-                adapter.notifyItemRangeChanged(0, 1);
+                carouselDatas.clear();
+                carouselDatas.addAll(tempDatas);
                 adapter.notifyDataSetChanged();
             }
 
@@ -133,10 +138,9 @@ public class LoanProComl extends Subscriber<LoanSearchBean> implements LoanInter
 
             @Override
             public void onNext(Set_Item set_item) {
-                carouselDatas.add(set_item);
+                tempDatas.add(set_item);
             }
         });
-
 
 
         return dimension;

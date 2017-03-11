@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.text.TextUtils;
 
+import java.math.BigDecimal;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
@@ -18,6 +19,20 @@ import java.util.Locale;
  */
 public class ViewUtils {
 
+    /**
+     * 获取两位小数
+     *
+     * @param data
+     * @return
+     */
+    public static float get2Double(double data) {
+        BigDecimal b = new BigDecimal(data);
+//        return b.setScale(2, BigDecimal.ROUND_HALF_UP).floatValue();
+        //   b.setScale(2,   BigDecimal.ROUND_HALF_UP)   表明四舍五入，保留两位小数
+        float v = (float) Double.parseDouble(String.format("%.2f", data));
+
+        return v;
+    }
 
     public static String getTime(String flag, Context context){
         SharedPreferences preferences = context.getSharedPreferences(Config.sp_name, 0);

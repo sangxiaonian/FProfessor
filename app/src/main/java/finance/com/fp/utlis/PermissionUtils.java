@@ -64,11 +64,13 @@ public class PermissionUtils {
                        final @NonNull String[] permissions) {
 
         boolean hasPermission = true;
-        boolean isTry = true;
+        boolean isTry = false;
         for (int i = 0; i < permissions.length; i++) {
             if (ContextCompat.checkSelfPermission(activity, permissions[i]) != PackageManager.PERMISSION_GRANTED){
                 hasPermission=false;
-                isTry=hasReason(activity,permissions[i]);
+                if (hasReason(activity,permissions[i])){
+                    isTry=true;
+                }
             }
         }
 
@@ -93,8 +95,6 @@ public class PermissionUtils {
             }else {
                 request(activity,permissions,REQUEST_QUDE);
             }
-        } else {
-
         }
 
         return hasPermission;

@@ -27,7 +27,6 @@ public class RefrushLinearLayout extends LinearLayout {
     private BasicView shapeView;
 
     private String flag;
-    private int style;
 
     public RefrushLinearLayout(Context context) {
         super(context);
@@ -70,7 +69,6 @@ public class RefrushLinearLayout extends LinearLayout {
     }
 
     public void setStyle(int style){
-        this.style=style;
         shapeView.setStyle(style);
     }
 

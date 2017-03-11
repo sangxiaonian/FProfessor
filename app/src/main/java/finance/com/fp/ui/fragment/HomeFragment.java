@@ -27,7 +27,6 @@ import finance.com.fp.ui.LoanActivity;
 import finance.com.fp.ui.PlannerActivity;
 import finance.com.fp.ui.inter.HomeFramentView;
 import finance.com.fp.utlis.ToastUtil;
-import finance.com.fp.utlis.Utils;
 
 /**
  * Description：
@@ -49,13 +48,11 @@ public class HomeFragment extends BasisFragment implements View.OnClickListener,
     public View initViews(LayoutInflater inflater, ViewGroup container) {
         View view = inflater.inflate(R.layout.fragment_main, null);
         recyclerView = (RefrushRecycleView) view.findViewById(R.id.rc_home);
-
         title_card = (ImageButton) view.findViewById(R.id.img_main_card_icon);
         ltitle_ending = (ImageButton) view.findViewById(R.id.img_main_net_icon);
         title_forheard = (ImageButton) view.findViewById(R.id.img_main_imp_icon);
         msg = (ImageButton) view.findViewById(R.id.img_main_msg);
         msg_small = (ImageButton) view.findViewById(R.id.img_main_msg_small);
-
         tv_card= (LinearLayout) view.findViewById(R.id.tv_card);
         tv_import= (LinearLayout) view.findViewById(R.id.tv_improt);
         tv_loan= (LinearLayout) view.findViewById(R.id.tv_loan);
@@ -101,10 +98,6 @@ public class HomeFragment extends BasisFragment implements View.OnClickListener,
 
     @Override
     public void onClick(View v) {
-        if(!Utils.isLogion(getContext())){
-            Utils.showLoginDialog(getContext());
-            return;
-        }
 
         Class c = null;
         Intent intent = new Intent();

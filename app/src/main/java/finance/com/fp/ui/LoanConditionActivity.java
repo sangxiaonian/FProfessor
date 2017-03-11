@@ -13,7 +13,6 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
-import com.orhanobut.logger.Logger;
 
 import finance.com.fp.BasisActivity;
 import finance.com.fp.R;
@@ -40,7 +39,6 @@ public class LoanConditionActivity extends BasisActivity implements View.OnClick
         setContentView(R.layout.activity_loan_condition);
         setColor(this,getResources().getColor(R.color.statucolor));
          bean = getIntent().getParcelableExtra(Config.infors);
-        Logger.i(bean.toString());
         initToolBar(bean.getTitle());
         initView();
         initData();

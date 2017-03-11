@@ -1,6 +1,8 @@
 package finance.com.fp.ui.holder;
 
+import android.app.Dialog;
 import android.content.Context;
+import android.graphics.Bitmap;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
@@ -17,6 +19,7 @@ import com.bumptech.glide.Glide;
 import com.sang.viewfractory.utils.ViewUtils;
 import com.sang.viewfractory.view.FloatView;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import em.sang.com.allrecycleview.adapter.DefaultAdapter;
@@ -25,8 +28,10 @@ import em.sang.com.allrecycleview.inter.DefaultAdapterViewLisenter;
 import finance.com.fp.R;
 import finance.com.fp.mode.bean.FriendBean;
 import finance.com.fp.utlis.GlideUtils;
+import finance.com.fp.utlis.Utils;
 import sang.com.xdialog.DialogFactory;
 import sang.com.xdialog.XDialog;
+import sang.com.xdialog.inter.OnEntryClickListener;
 
 import static finance.com.fp.R.id.img_icon;
 
@@ -37,8 +42,14 @@ import static finance.com.fp.R.id.img_icon;
  * @Data：2017/2/26 15:29
  */
 public class FriendHolder extends CustomHolder<FriendBean> {
+    private XDialog dialog, select, load;
+
     public FriendHolder(Context context, List<FriendBean> lists, int itemID) {
         super(context, lists, itemID);
+        dialog = DialogFactory.getInstance().creatDiaolg(context, DialogFactory.ALEART_DIALOG);
+        select = DialogFactory.getInstance().creatDiaolg(context, DialogFactory.SELECT_DIALOG);
+        load = DialogFactory.getInstance().creatDiaolg(context, DialogFactory.LOAD_DIALOG);
+
     }
 
     @Override
@@ -46,17 +57,17 @@ public class FriendHolder extends CustomHolder<FriendBean> {
         super.initView(position, datas, context);
         final FriendBean bean = datas.get(position);
         TextView title = (TextView) itemView.findViewById(R.id.tv_title);
-        if (!TextUtils.isEmpty(bean.getTitle())){
+        if (!TextUtils.isEmpty(bean.getTitle())) {
             title.setText(bean.getTitle());
         }
-        FloatView content = (FloatView) itemView.findViewById(R.id.tv_content);
-        if (bean.getContent()!=null){
+        final FloatView content = (FloatView) itemView.findViewById(R.id.tv_content);
+        if (bean.getContent() != null) {
             content.setText(Html.fromHtml(bean.getContent()));
         }
 
         TextView time = (TextView) itemView.findViewById(R.id.tv_time);
-        if (bean.getUpdatetime()!=null){
-            time.setText(ViewUtils.formatDateTime(bean.getUpdatetime()+"000"));
+        if (bean.getUpdatetime() != null) {
+            time.setText(ViewUtils.formatDateTime(bean.getUpdatetime() + "000"));
         }
 
 
@@ -64,8 +75,8 @@ public class FriendHolder extends CustomHolder<FriendBean> {
         textView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (listener!=null){
-                    listener.onItemClick(position,bean);
+                if (listener != null) {
+                    listener.onItemClick(position, bean);
 
                 }
             }
@@ -76,39 +87,25 @@ public class FriendHolder extends CustomHolder<FriendBean> {
 
         RecyclerView recyclerView = (RecyclerView) itemView.findViewById(R.id.rc);
         final List<FriendBean.ImagesBean> images = bean.getImages();
-        if (bean.getImages()==null||bean.getImages().size()==0){
+        if (bean.getImages() == null || bean.getImages().size() == 0) {
             recyclerView.setVisibility(View.GONE);
-        }else {
+        } else {
             recyclerView.setVisibility(View.VISIBLE);
             recyclerView.setLayoutManager(new StaggeredGridLayoutManager(2, LinearLayoutManager.VERTICAL));
-            recyclerView.setAdapter(new DefaultAdapter<FriendBean.ImagesBean>(context,images,R.layout.view_img,new DefaultAdapterViewLisenter<FriendBean.ImagesBean>(){
+            recyclerView.setAdapter(new DefaultAdapter<FriendBean.ImagesBean>(context, images, R.layout.view_img, new DefaultAdapterViewLisenter<FriendBean.ImagesBean>() {
                 @Override
                 public CustomHolder getBodyHolder(Context context, List<FriendBean.ImagesBean> lists, int itemID) {
-                    return new CustomHolder<FriendBean.ImagesBean>(context, lists, itemID){
+                    return new CustomHolder<FriendBean.ImagesBean>(context, lists, itemID) {
                         @Override
                         public void initView(int position, List<FriendBean.ImagesBean> datas, final Context context) {
                             super.initView(position, datas, context);
                             final FriendBean.ImagesBean imagesBean = datas.get(position);
                             ImageView imageView = (ImageView) itemView.findViewById(img_icon);
-                            GlideUtils.loadImage(context,imageView,imagesBean.getUrl());
+                            GlideUtils.loadImage(context, imageView, imagesBean.getUrl());
                             imageView.setOnClickListener(new View.OnClickListener() {
                                 @Override
                                 public void onClick(View v) {
-                                    final XDialog dialog = DialogFactory.getInstance().creatDiaolg(context,DialogFactory.ALEART_DIALOG);
-                                    ImageView view = new ImageView(context);
-                                    view.setClickable(true);
-                                    view.setOnClickListener(new View.OnClickListener() {
-                                        @Override
-                                        public void onClick(View v) {
-                                            dialog.dismiss();
-                                        }
-                                    });
-                                    LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
-                                    view.setLayoutParams(params);
-                                    GlideUtils.loadImage(context,view,imagesBean.getUrl());
-                                    dialog.show();
-                                    dialog.setContentView(view);
-                                    dialog.getWindow().setLayout(WindowManager.LayoutParams.MATCH_PARENT,WindowManager.LayoutParams.MATCH_PARENT);
+                                    showImag(context, imagesBean);
                                 }
                             });
                         }
@@ -117,6 +114,63 @@ public class FriendHolder extends CustomHolder<FriendBean> {
             }));
         }
 
+
+    }
+
+    private void showImag(final Context context, final FriendBean.ImagesBean bean) {
+
+        final ImageView view = new ImageView(context);
+        LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
+        view.setLayoutParams(params);
+        view.setClickable(true);
+        view.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog.dismiss();
+            }
+        });
+        GlideUtils.loadImage(context, view, bean.getUrl());
+        setOnLongClick(view, context);
+        dialog.show();
+        dialog.setContentView(view);
+        dialog.getWindow().setLayout(WindowManager.LayoutParams.MATCH_PARENT, WindowManager.LayoutParams.MATCH_PARENT);
+
+    }
+
+    private void setOnLongClick(ImageView view, final Context context) {
+
+
+        view.setLongClickable(true);
+        view.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View v) {
+                try {
+                    final Bitmap bitmap;
+                    v.setDrawingCacheEnabled(true);
+                    bitmap = Bitmap.createBitmap(v.getDrawingCache());
+                    v.setDrawingCacheEnabled(false);
+
+
+                    List<String> list = new ArrayList<String>();
+                    list.add(context.getResources().getString(R.string.friend_save));
+                    select.setDatas(list);
+                    select.setOnClickListener(new OnEntryClickListener() {
+                        @Override
+                        public void onClick(Dialog dialog, int which, Object data) {
+                            Utils.saveImageToGallery(context, bitmap);
+                            dialog.dismiss();
+
+                        }
+                    });
+                    if (bitmap != null) {
+                        select.show();
+                    }
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+                return false;
+            }
+        });
 
     }
 }

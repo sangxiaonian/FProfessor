@@ -8,16 +8,6 @@
     >
 
 
-    <em.sang.com.allrecycleview.RefrushRecycleView
-        android:id="@+id/rc_home"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="@color/text_home_item_cut"
-        app:layout_behavior="finance.com.fp.utlis.CustomBehavior">
-
-    </em.sang.com.allrecycleview.RefrushRecycleView>
-
-
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="200dp"
@@ -27,13 +17,12 @@
             android:id="@+id/ll"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="@color/colorPrimary"
             android:gravity="center_vertical"
             android:orientation="vertical">
 
             <RelativeLayout
                 android:id="@+id/ll_et"
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="?actionBarSize"
                 android:layout_marginLeft="@dimen/app_cut_big"
                 android:layout_marginRight="@dimen/home_title_ends"
@@ -67,6 +56,15 @@
                     android:background="@color/transparent"
                     android:src="@mipmap/nav_notice" />
 
+                <ImageView
+                    android:id="@+id/img_red"
+
+                    android:layout_width="@dimen/red_point"
+                    android:layout_height="@dimen/red_point"
+                    android:layout_centerHorizontal="true"
+
+                    android:scaleType="centerCrop"
+                    android:src="@mipmap/ic_launcher" />
                 <!--<TextView
                     android:layout_centerHorizontal="true"
                     android:layout_width="wrap_content"
@@ -199,7 +197,9 @@
             android:layout_marginLeft="20dp"
             android:layout_marginRight="20dp"
             android:clickable="false"
-            android:gravity="center_vertical">
+            android:gravity="center_vertical"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentStart="true">
 
             <ImageButton
                 android:id="@+id/img_main_card_icon"
@@ -250,5 +250,14 @@
         </LinearLayout>
 
     </RelativeLayout>
+
+    <em.sang.com.allrecycleview.RefrushRecycleView
+        android:id="@+id/rc_home"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/text_home_item_cut"
+        app:layout_behavior="finance.com.fp.utlis.CustomBehavior">
+
+    </em.sang.com.allrecycleview.RefrushRecycleView>
 
 </android.support.design.widget.CoordinatorLayout>
