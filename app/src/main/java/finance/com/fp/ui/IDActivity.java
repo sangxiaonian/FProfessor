@@ -126,6 +126,7 @@ public class IDActivity extends BasisActivity implements OnToolsItemClickListene
     }
 
     public void click(View view) {
+        dialog=DialogFactory.getInstance().creatDiaolg(this,DialogFactory.LOAD_DIALOG);
         dialog.show();
         HttpClient.getClient(Config.base_url).subPerson(params.removeNull()).subscribeOn(Schedulers.io()).
                 observeOn(AndroidSchedulers.mainThread()).subscribe(this);
