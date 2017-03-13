@@ -115,6 +115,7 @@ public class BasicView extends View {
         gap = Apputils.dip2px(getContext(), 5);
         mPath = new Path();
         factory = ShapFactory.getInstance(mPath, mPaint,context);
+        style=STYLE_SQUARE;
     }
 
     @Override
