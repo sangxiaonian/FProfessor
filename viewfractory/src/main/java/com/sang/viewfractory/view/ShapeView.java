@@ -50,7 +50,7 @@ public class ShapeView extends BasicView {
             public void onAnimationUpdate(ValueAnimator animation) {
                 float value = (float) animation.getAnimatedValue();
                 switch (style){
-                    case 0:
+                    case STYLE_SQUARE:
                         if (change) {
                             setScaleX(value);
                         } else {
