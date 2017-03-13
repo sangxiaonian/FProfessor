@@ -24,8 +24,6 @@ public class FindFriendHolder extends BasicHolder{
     @Override
     public void initView(final int position, final Context context) {
         super.initView(position, context);
-        itemView.findViewById(R.id.img_red).setVisibility(View.VISIBLE);
-
 
         itemView.setOnClickListener(new View.OnClickListener() {
             @Override

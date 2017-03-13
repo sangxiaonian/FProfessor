@@ -1,11 +1,13 @@
 package finance.com.fp.ui.fragment;
 
+import android.content.Context;
 import android.content.Intent;
 import android.support.v7.widget.LinearLayoutManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 
 import em.sang.com.allrecycleview.RefrushRecycleView;
@@ -26,6 +28,7 @@ import finance.com.fp.ui.ImportActivity;
 import finance.com.fp.ui.LoanActivity;
 import finance.com.fp.ui.PlannerActivity;
 import finance.com.fp.ui.inter.HomeFramentView;
+import finance.com.fp.ui.inter.MainView;
 import finance.com.fp.utlis.ToastUtil;
 
 /**
@@ -38,11 +41,13 @@ public class HomeFragment extends BasisFragment implements View.OnClickListener,
 
 
     private RefrushRecycleView recyclerView;
-
+    private ImageView msg_red;
     private ImageButton   title_card, ltitle_ending, title_forheard,msg,msg_small;
     private LinearLayout tv_card,tv_loan,tv_import;
     private HomeFragmentPre pre;
     private RefrushAdapter adapter;
+    private MainView view;
+
 
     @Override
     public View initViews(LayoutInflater inflater, ViewGroup container) {
@@ -56,6 +61,7 @@ public class HomeFragment extends BasisFragment implements View.OnClickListener,
         tv_card= (LinearLayout) view.findViewById(R.id.tv_card);
         tv_import= (LinearLayout) view.findViewById(R.id.tv_improt);
         tv_loan= (LinearLayout) view.findViewById(R.id.tv_loan);
+        msg_red= (ImageView) view.findViewById(R.id.img_red);
         return view;
     }
 
@@ -119,6 +125,7 @@ public class HomeFragment extends BasisFragment implements View.OnClickListener,
                 break;
             case R.id.img_main_msg:
             case R.id.img_main_msg_small:
+                removeRed();
                 c=HomeSonActivity.class;
                 TranInfor tranInfor = new TranInfor();
                 tranInfor.activity_id = 0;
@@ -134,10 +141,25 @@ public class HomeFragment extends BasisFragment implements View.OnClickListener,
             cnt.startActivity(intent);
         }
     }
+
+    private void removeRed() {
+        if (view!=null){
+            view.removeMsg();
+            msg_red.setVisibility(View.GONE);
+        }
+    }
+
     @Override
     public void onDestroy() {
         super.onDestroy();
         pre.unsubscribe();
+    }
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        if (context instanceof MainView){
+            view= (MainView) context;
+        }
     }
 
 
@@ -194,5 +216,22 @@ public class HomeFragment extends BasisFragment implements View.OnClickListener,
     @Override
     public void loadNoMore() {
         recyclerView.LoadNoMore();
+    }
+
+    public void showRed(){
+        msg_red.setVisibility(View.VISIBLE);
+    }
+
+    @Override
+    public void onHiddenChanged(boolean hidden) {
+        super.onHiddenChanged(hidden);
+        if (!hidden){
+            if (view.hasNewMsg()){
+                msg_red.setVisibility(View.VISIBLE);
+            }else {
+                msg_red.setVisibility(View.GONE);
+
+            }
+        }
     }
 }

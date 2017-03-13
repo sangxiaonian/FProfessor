@@ -12,4 +12,6 @@ public interface HomeFramentView extends OnToolsItemClickListener<Set_Item>{
     void showLoad();
 
     void loadNoMore();
+
+
 }

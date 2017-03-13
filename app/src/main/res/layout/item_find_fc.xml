@@ -25,7 +25,7 @@
 
     <ImageView
         android:id="@+id/img_red"
-
+        android:visibility="gone"
         android:layout_width="@dimen/red_point"
         android:layout_height="@dimen/red_point"
         android:layout_alignBottom="@id/more"

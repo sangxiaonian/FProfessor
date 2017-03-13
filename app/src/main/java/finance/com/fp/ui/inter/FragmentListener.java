@@ -8,6 +8,7 @@ public interface FragmentListener {
     void onNextClick();
 
     String getPhone();
+
     boolean isRegister();
 
     void setPhone(String phone);
