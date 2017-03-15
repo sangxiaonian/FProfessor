@@ -13,4 +13,5 @@ public interface FragmentListener {
 
     void setPhone(String phone);
 
+    boolean re_psd();
 }

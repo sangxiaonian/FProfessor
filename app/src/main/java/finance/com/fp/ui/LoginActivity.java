@@ -12,9 +12,11 @@ import android.widget.RadioGroup;
 
 import finance.com.fp.BasisActivity;
 import finance.com.fp.R;
+import finance.com.fp.mode.http.Config;
 import finance.com.fp.presenter.RegisterPreComl;
 import finance.com.fp.presenter.inter.RegisterInter;
 import finance.com.fp.ui.inter.RegisterView;
+import finance.com.fp.utlis.Utils;
 import sang.com.xdialog.DialogFactory;
 import sang.com.xdialog.XDialog;
 
@@ -105,6 +107,16 @@ public class LoginActivity extends BasisActivity implements RegisterView<String>
 
     }
 
+    @Override
+    public boolean showView(EditText et_register) {
+        return true;
+    }
+
+    @Override
+    public boolean re_psd() {
+        return false;
+    }
+
     private boolean isNormal;
 
     @Override
@@ -130,7 +142,10 @@ public class LoginActivity extends BasisActivity implements RegisterView<String>
                 pre.getDynamic(getString(R.string.input_phone), et_user, null);
                 break;
             case R.id.bt_forget:
-
+                Intent intent = new Intent(this, RegisterActivity.class);
+                intent.putExtra(Config.infors,"re_psd");
+                startActivity(intent);
+                finish();
                 break;
         }
     }

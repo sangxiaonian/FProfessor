@@ -36,4 +36,8 @@ public interface RegisterView<T> extends Observer<T> {
     String getPhone();
 
     void setPhone(String phone);
+
+    boolean showView(EditText et_register);
+
+    boolean re_psd();
 }

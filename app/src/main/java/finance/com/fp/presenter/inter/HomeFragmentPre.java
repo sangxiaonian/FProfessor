@@ -18,6 +18,8 @@ public interface HomeFragmentPre  {
      */
     RefrushAdapter<Set_Item> initAdapter(Context context);
 
+    void getCouser();
+
     /**
      * 初始化FindAdapter
      * @param context

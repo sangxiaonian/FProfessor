@@ -140,6 +140,16 @@ public class RegisterPasswordFragment extends BasisFragment implements View.OnCl
 
     }
 
+    @Override
+    public boolean showView(EditText et_register) {
+        return true;
+    }
+
+    @Override
+    public boolean re_psd() {
+        return false;
+    }
+
 
     @Override
     public void onCompleted() {

@@ -10,6 +10,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import com.orhanobut.logger.Logger;
 
@@ -35,10 +37,11 @@ import sang.com.xdialog.inter.OnEntryClickListener;
 public class RegisterPhoneFragment extends BasisFragment implements View.OnClickListener, RegisterView<String> {
     private EditText et_user, et_password, et_register;
     private Button bt_next, bt_dynamic, bt_vip;
-
+    private LinearLayout ll_register;
     private RegisterInter pre;
     private FragmentListener listener;
     private XDialog dialog,inforDialog;
+    private String re_psd;
 
     @Override
     public View initViews(LayoutInflater inflater, ViewGroup container) {
@@ -49,7 +52,7 @@ public class RegisterPhoneFragment extends BasisFragment implements View.OnClick
         bt_next = (Button) view.findViewById(R.id.bt_login);
         bt_dynamic = (Button) view.findViewById(R.id.bt_dynamic);
         bt_vip = (Button) view.findViewById(R.id.bt_forget);
-
+        ll_register= (LinearLayout) view.findViewById(R.id.ll_register);
         return view;
     }
 
@@ -60,7 +63,13 @@ public class RegisterPhoneFragment extends BasisFragment implements View.OnClick
         bt_dynamic.setOnClickListener(this);
         bt_vip.setOnClickListener(this);
         pre=new RegisterPreComl(this);
-        initToolBar();
+        if (listener.re_psd()){
+            initToolBar("忘记密码");
+            ll_register.setVisibility(View.GONE);
+        }else {
+            initToolBar();
+            ll_register.setVisibility(View.VISIBLE);
+        }
         dialog= DialogFactory.getInstance().creatDiaolg(getContext(),DialogFactory.LOAD_DIALOG);
         inforDialog= DialogFactory.getInstance().creatDiaolg(getContext(),DialogFactory.ALEART_DIALOG);
         inforDialog.setCancelable(false);
@@ -70,7 +79,6 @@ public class RegisterPhoneFragment extends BasisFragment implements View.OnClick
     public void onClick(View v) {
         switch (v.getId()){
             case R.id.bt_forget:
-
                 startActivity(new Intent(getContext(), LoginActivity.class));
                 getActivity().finish();
                 break;
@@ -161,6 +169,26 @@ public class RegisterPhoneFragment extends BasisFragment implements View.OnClick
     }
 
     @Override
+    public boolean showView(EditText et_register) {
+
+        if (listener.re_psd()){
+            ll_register.setVisibility(View.GONE);
+            rootView.findViewById(R.id.tv).setVisibility(View.GONE);
+            return false;
+        }else {
+            rootView.findViewById(R.id.tv).setVisibility(View.VISIBLE);
+            ll_register.setVisibility(View.VISIBLE);
+            return true;
+        }
+
+    }
+
+    @Override
+    public boolean re_psd() {
+        return listener.re_psd();
+    }
+
+    @Override
     public void onHiddenChanged(boolean hidden) {
         super.onHiddenChanged(hidden);
         if (!hidden){
@@ -169,6 +197,9 @@ public class RegisterPhoneFragment extends BasisFragment implements View.OnClick
     }
 
     public void initToolBar() {
+        initToolBar(null);
+    }
+    public void initToolBar(String title) {
         Toolbar toolbar = (Toolbar) rootView.findViewById(R.id.toolbar);
         if (toolbar != null) {
             toolbar.setNavigationOnClickListener(new View.OnClickListener() {
@@ -177,9 +208,14 @@ public class RegisterPhoneFragment extends BasisFragment implements View.OnClick
                     listener.onBackClikc();
                 }
             });
+            TextView view = (TextView) rootView.findViewById(R.id.title);
+            if (!TextUtils.isEmpty(title)&& view !=null){
+                view.setText(title);
+            }
 
         }
     }
+
 
     @Override
     public void onCompleted() {

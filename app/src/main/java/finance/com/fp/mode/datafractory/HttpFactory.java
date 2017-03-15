@@ -295,7 +295,7 @@ public class HttpFactory {
      * @return
      */
     public static Observable<String> setPassword(String username, String member) {
-
+        Logger.i(Config.base_url);
         return HttpClient.getClient(Config.base_url).setPassWord(username, member).subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread());
     }

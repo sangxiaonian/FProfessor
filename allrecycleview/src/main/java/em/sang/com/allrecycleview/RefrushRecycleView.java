@@ -2,9 +2,11 @@ package em.sang.com.allrecycleview;
 
 import android.content.Context;
 import android.support.annotation.Nullable;
+import android.support.v7.widget.RecyclerView;
 import android.util.AttributeSet;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
+import android.widget.TextSwitcher;
 
 import com.sang.viewfractory.utils.Apputils;
 import com.sang.viewfractory.utils.DeviceUtils;
@@ -23,6 +25,10 @@ import em.sang.com.allrecycleview.holder.SimpleHolder;
  */
 public class RefrushRecycleView extends BasicRefrushRecycleView {
 
+    @Override
+    public void setAdapter(Adapter adapter) {
+        super.setAdapter(adapter);
+    }
 
     public RefrushRecycleView(Context context) {
         super(context);

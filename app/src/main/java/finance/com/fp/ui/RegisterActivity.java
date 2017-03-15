@@ -104,6 +104,12 @@ public class RegisterActivity extends BasisActivity implements FragmentListener 
         this.phone=phone;
     }
 
+    @Override
+    public boolean re_psd() {
+        String extra = getIntent().getStringExtra(Config.infors);
+        return !TextUtils.isEmpty(extra)&&TextUtils.equals(extra,"re_psd");
+    }
+
     private void changeFragment(int position, boolean b) {
         FragmentManager fm = getSupportFragmentManager();
         // 开启Fragment事务

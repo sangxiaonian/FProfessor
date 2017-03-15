@@ -167,14 +167,16 @@
         <item>交通银行申卡进度查询_https://creditcardapp.bankcomm.com/member/apply/status/preinquiry.html?_channel=WC</item>
         <item>浦发银行申卡进度查询_https://weixin.spdbccc.com.cn/spdbcccWeChatPage/applyProgressPath.do?path=applyProgress&amp;page=index&amp;noCheck=1</item>
         <item>农业银行申卡进度查询_https://wx.abchina.com/WebSite/B4CardStatusAuthenticationAct.ebf?openId=oHFX_jvtLqWukfZ3GiveXbHFVCYA&amp;amp;appId=wx51fdf61c0de4ab0b</item>
-        <item>中国银行申卡进度查询_https://apply.mcard.boc.cn/apply/mobile/mainAppi/showScheduleQuery</item>
         <item>北京银行申卡进度查询_https://onlinepay.cupdata.com/weixin/apply.do?action=applyProgressInit&amp;bankNum=6403&amp;userId=weixin</item>
     </string-array>
+<!--
+    <item>中国银行申卡进度查询_https://apply.mcard.boc.cn/apply/mobile/mainAppi/showScheduleQuery</item>
+-->
 
 
     <string-array name="card_hot_apply">
-        <item>交通银行标准信用卡\n(银联，人民币，金卡)</item>
         <item>中信i白金信用卡\n(银联，人民币，白金卡)</item>
+        <item>交通银行标准信用卡\n(银联，人民币，金卡)</item>
         <item>浦发银行标准信用卡\n(银联，人民币，金卡)</item>
         <item>兴业银行标准信用卡\n(银联，人民币，金卡)</item>
         <item>浦发青春信用卡\n(人民币，美元，普卡)</item>

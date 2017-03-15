@@ -68,17 +68,13 @@ public class CardDataFractory extends BaseFractory {
                 R.mipmap.icon_societegenerale_phone,
                 R.mipmap.icon_bankofcommunications_phone,
                 R.mipmap.icon_shanghaipudongdevelopmentbank_phone,
-                R.mipmap.icon_huaxiabank_phone,
                 R.mipmap.icon_agricuralbankof_phone,
-                R.mipmap.icon_thebankofchina_phone,
                 R.mipmap.icon_bankofbeijing
 
         };
         String[] tittles;
         if (page==0){
             tittles = context.getResources().getStringArray(R.array.card_pro_query);
-
-
         }else {
             tittles=new String[0];
         }

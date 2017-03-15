@@ -232,6 +232,8 @@ public class HomeFragment extends BasisFragment implements View.OnClickListener,
                 msg_red.setVisibility(View.GONE);
 
             }
+        }else {
+           pre.getCouser();
         }
     }
 }

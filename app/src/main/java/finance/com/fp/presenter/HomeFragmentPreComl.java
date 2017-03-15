@@ -32,6 +32,7 @@ import finance.com.fp.utlis.Utils;
 import rx.Subscriber;
 import rx.Subscription;
 
+import static anet.channel.util.Utils.context;
 import static finance.com.fp.CusApplication.getContext;
 
 /**
@@ -105,33 +106,45 @@ public class HomeFragmentPreComl implements HomeFragmentPre {
         carouselHolder = new HomeCarouselHolder(context, carouselList, R.layout.item_home_carousel);
         adapter.addHead(carouselHolder);
         temp = new ArrayList<>();
-        HttpFactory.getCarousel("29").subscribe(new Subscriber<Set_Item>() {
-            @Override
-            public void onStart() {
-                super.onStart();
-                temp.clear();
+        getCouser();
+    }
 
-            }
 
-            @Override
-            public void onCompleted() {
-                carouselList.clear();
-                carouselList.addAll(temp);
-                adapter.notifyItemRangeChanged(0, 1);
-                adapter.notifyDataSetChanged();
-            }
+    private boolean isRefrush;
+    @Override
+    public void getCouser() {
+        if (!isRefrush) {
+            Subscription subscribe = HttpFactory.getCarousel("29").subscribe(new Subscriber<Set_Item>() {
+                @Override
+                public void onStart() {
+                    super.onStart();
+                    temp.clear();
+                    isRefrush=true;
+                }
 
-            @Override
-            public void onError(Throwable e) {
-                e.printStackTrace();
-            }
+                @Override
+                public void onCompleted() {
+                    carouselList.clear();
+                    carouselList.addAll(temp);
+                    adapter.notifyItemRangeChanged(0, 1);
+                    adapter.notifyDataSetChanged();
+                    temp.clear();
+                }
 
-            @Override
-            public void onNext(Set_Item set_item) {
+                @Override
+                public void onError(Throwable e) {
+                    e.printStackTrace();
+                    isRefrush=false;
+                }
 
-                temp.add(set_item);
-            }
-        });
+                @Override
+                public void onNext(Set_Item set_item) {
+
+                    temp.add(set_item);
+                }
+            });
+
+        }
     }
 
 

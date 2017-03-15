@@ -41,8 +41,8 @@ public class HttpClient {
                     OkHttpClient.Builder builder = new OkHttpClient.Builder();
                     builder.connectTimeout(60, TimeUnit.SECONDS)
                             .addInterceptor(getLogInterceptor())
-//                            .addNetworkInterceptor(getIntercepot())
-//                            .cache(getCache())
+                            .addNetworkInterceptor(getIntercepot())
+                            .cache(getCache())
                     ;
                     Retrofit retrofit = new Retrofit.Builder()
                             .client(builder.build())
@@ -58,9 +58,8 @@ public class HttpClient {
     }
 
     public static HttpService getClient(String url) {
-        if (cacheServices == null) {
+
             synchronized (HttpClient.class) {
-                if (cacheServices == null) {
 
                     OkHttpClient.Builder builder = new OkHttpClient.Builder();
                     builder.connectTimeout(60, TimeUnit.SECONDS)
@@ -73,8 +72,7 @@ public class HttpClient {
                             .baseUrl(url)
                             .build();
                     cacheServices = retrofit.create(HttpService.class);
-                }
-            }
+
         }
         return cacheServices;
     }
@@ -98,7 +96,6 @@ public class HttpClient {
             @Override
             public Response intercept(Chain chain) throws IOException {
                 Request request = chain.request();
-
                 // 如果没有网络，则启用 FORCE_CACHE
                 if (!NetworkUtils.isConnected()) {
                     request = request.newBuilder()
@@ -114,7 +111,6 @@ public class HttpClient {
                         .maxAge(5, TimeUnit.MINUTES)
                         .maxStale(5, TimeUnit.DAYS)
                         .build();
-                Logger.i("此处开始进行缓存");
                 return response.newBuilder()
                         //在这里生成新的响应并修改它的响应头
                         .header("Cache-Control", cacheControl.toString())

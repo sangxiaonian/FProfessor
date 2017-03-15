@@ -58,13 +58,12 @@
 
                 <ImageView
                     android:id="@+id/img_red"
-
+                    android:visibility="gone"
                     android:layout_width="@dimen/red_point"
                     android:layout_height="@dimen/red_point"
-                    android:layout_centerHorizontal="true"
-
+                    android:layout_toEndOf="@id/img_main_msg"
                     android:scaleType="centerCrop"
-                    android:src="@mipmap/ic_launcher" />
+                    android:src="@mipmap/white_point" />
                 <!--<TextView
                     android:layout_centerHorizontal="true"
                     android:layout_width="wrap_content"
