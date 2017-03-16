@@ -12,6 +12,9 @@ import android.os.Environment;
 import android.provider.MediaStore;
 import android.text.TextUtils;
 
+import com.umeng.message.IUmengCallback;
+import com.umeng.message.PushAgent;
+
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
@@ -161,13 +164,23 @@ public class Utils {
     }
 
     /**
-     * 设置注册
+     *
      * @param context
      */
     public static String getSp(Context context, String phone) {
         SharedPreferences preferences = context.getSharedPreferences(Config.sp_name, 0);
        return preferences.getString(phone,"");
     }
+
+    /**
+     * 设置注册
+     * @param context
+     */
+    public static boolean getBooleanSp(Context context, String name) {
+        SharedPreferences preferences = context.getSharedPreferences(Config.sp_name, 0);
+        return preferences.getBoolean(name,true);
+    }
+
     /**
      *  设置配置文件
      * @param context
@@ -177,6 +190,19 @@ public class Utils {
         SharedPreferences preferences = context.getSharedPreferences(Config.sp_name, 0);
         SharedPreferences.Editor edit = preferences.edit();
         edit.putString(name, value);
+        edit.commit();
+    }
+
+
+    /**
+     *  设置配置文件
+     * @param context
+
+     */
+    public static void setSp(Context context,String name,boolean value) {
+        SharedPreferences preferences = context.getSharedPreferences(Config.sp_name, 0);
+        SharedPreferences.Editor edit = preferences.edit();
+        edit.putBoolean(name, value);
         edit.commit();
     }
 
@@ -323,5 +349,33 @@ public class Utils {
             // 最后通知图库更新
             context.sendBroadcast(new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE, Uri.parse("file://" + path)));
         }
+    }
+
+    public static void openPush(PushAgent mPushAgent,Context context) {
+        Utils.setSp(context,Config.isopenPush,true);
+        mPushAgent.enable(new IUmengCallback() {
+            @Override
+            public void onSuccess() {
+
+            }
+
+            @Override
+            public void onFailure(String s, String s1) {
+
+            }
+        });
+    }
+
+    public static void close(PushAgent mPushAgent,Context context){
+        Utils.setSp(context,Config.isopenPush,false);
+        mPushAgent.disable(new IUmengCallback() {
+            @Override
+            public void onSuccess() {
+            }
+
+            @Override
+            public void onFailure(String s, String s1) {
+            }
+        });
     }
 }

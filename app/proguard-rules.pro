@@ -205,6 +205,8 @@
 -keep public class **.R$*{
    public static final int *;
 }
+
+
 #converter-gson
 -keep class retrofit2.converter.gson.**{*;}
 -keep class retrofit2.converter.scalars.**{*;}
@@ -292,14 +294,19 @@
 #-keep class com.umeng.analytics.**{*;}
 #-keep interface com.umeng.analytics.**{*;}
 #
-#-dontwarn  cem.sang.com.allrecycleview.**
-#-keep class cem.sang.com.allrecycleview.**{*;}
-#-keep interface cem.sang.com.allrecycleview.**{*;}
-#
-#-dontwarn  sang.com.xdialog.**
-#-keep class sang.com.xdialog.**{*;}
-#-keep interface sang.com.xdialog.**{*;}
-#
+-dontwarn  cem.sang.com.allrecycleview.**
+-keep class cem.sang.com.allrecycleview.**{*;}
+-keep interface cem.sang.com.allrecycleview.**{*;}
+
+-dontwarn  sang.com.xdialog.**
+-keep class sang.com.xdialog.**{*;}
+-keep interface sang.com.xdialog.**{*;}
+
+-dontwarn  com.sang.viewfractory.**
+-keep class com.sang.viewfractory.**{*;}
+-keep interface com.sang.viewfractory.**{*;}
+
+
 #-dontwarn  com.umeng.message.lib.**
 #-keep class com.umeng.message.lib.**{*;}
 #-keep interface com.umeng.message.lib.**{*;}

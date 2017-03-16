@@ -1,5 +1,6 @@
 package finance.com.fp.ui.fragment;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.support.v7.widget.LinearLayoutManager;
@@ -8,12 +9,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 
-import com.orhanobut.logger.Logger;
-
 import em.sang.com.allrecycleview.RefrushRecycleView;
 import em.sang.com.allrecycleview.adapter.RefrushAdapter;
 import em.sang.com.allrecycleview.cutline.RecycleViewDivider;
-import em.sang.com.allrecycleview.holder.CustomPeakHolder;
 import em.sang.com.allrecycleview.inter.RefrushListener;
 import finance.com.fp.BasisFragment;
 import finance.com.fp.R;
@@ -24,8 +22,6 @@ import finance.com.fp.ui.FriendActivity;
 import finance.com.fp.ui.holder.FindFriendHolder;
 import finance.com.fp.ui.inter.HomeFramentView;
 import finance.com.fp.ui.inter.MainView;
-
-import static finance.com.fp.R.id.container;
 
 /**
  * Description：
@@ -49,14 +45,14 @@ public class FindFragment extends BasisFragment implements HomeFramentView {
         }
     }
 
+
     @Override
     public View initViews(LayoutInflater inflater, ViewGroup container) {
-       View view = inflater.inflate(R.layout.fragment_find, null);
+        View view = inflater.inflate(R.layout.fragment_find, null);
         rc = (RefrushRecycleView) view.findViewById(R.id.rc_find);
         rc.setFlag("absdc");
         return view;
     }
-
 
 
     @Override
@@ -85,7 +81,14 @@ public class FindFragment extends BasisFragment implements HomeFramentView {
         });
         rc.setLoading();
 
+        if (view != null) {
+            if (view.hasNewFriend()) {
+                showRed();
+            } else {
+                hideRed();
 
+            }
+        }
     }
 
     @Override
@@ -97,7 +100,6 @@ public class FindFragment extends BasisFragment implements HomeFramentView {
         Intent intent = new Intent(getActivity(), FriendActivity.class);
         startActivity(intent);
     }
-
 
 
     @Override
@@ -125,25 +127,29 @@ public class FindFragment extends BasisFragment implements HomeFramentView {
         FindFriendHolder o = (FindFriendHolder) adapter.getHeards().get(0);
         o.itemView.findViewById(R.id.img_red).setVisibility(View.VISIBLE);
     }
+
     public void hideRed() {
         FindFriendHolder o = (FindFriendHolder) adapter.getHeards().get(0);
         o.itemView.findViewById(R.id.img_red).setVisibility(View.GONE);
     }
 
 
+    @Override
+    public void onAttach(Activity activity) {
+        super.onAttach(activity);
+    }
 
     @Override
     public void onHiddenChanged(boolean hidden) {
         super.onHiddenChanged(hidden);
-        if (view!=null) {
-            if (!hidden){
-                if (view.hasNewFriend()){
-                    showRed();
-                }else {
-                    hideRed();
+        if (view != null) {
+            if (view.hasNewFriend()) {
+                showRed();
+            } else {
+                hideRed();
 
-                }
             }
         }
     }
+
 }

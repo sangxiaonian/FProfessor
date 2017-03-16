@@ -4,7 +4,6 @@ import android.app.Notification;
 import android.content.Context;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
-import android.os.Handler;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
@@ -13,7 +12,6 @@ import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
 import android.widget.RemoteViews;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -37,7 +35,6 @@ import finance.com.fp.ui.fragment.HomeFragment;
 import finance.com.fp.ui.fragment.SetFragment;
 import finance.com.fp.ui.inter.MainView;
 
-import static anet.channel.util.Utils.context;
 
 public class MainActivity extends BasisActivity implements View.OnClickListener,MainView{
 
@@ -113,12 +110,13 @@ public class MainActivity extends BasisActivity implements View.OnClickListener,
                                         showMsg = true;
                                         break;
                                     case "2":
+                                        showFriend = true;
                                         if (getSupportFragmentManager().findFragmentByTag(find) != null) {
                                             findFragment.showRed();
                                         }
                                         Logger.i("显示数据");
                                         img_red.setVisibility(View.VISIBLE);
-                                        showFriend = true;
+
                                         break;
                                     default:
                                         Logger.i("显示数据");

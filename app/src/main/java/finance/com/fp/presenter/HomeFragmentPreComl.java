@@ -3,8 +3,6 @@ package finance.com.fp.presenter;
 import android.content.Context;
 import android.content.Intent;
 
-import com.orhanobut.logger.Logger;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -32,8 +30,6 @@ import finance.com.fp.utlis.Utils;
 import rx.Subscriber;
 import rx.Subscription;
 
-import static anet.channel.util.Utils.context;
-import static finance.com.fp.CusApplication.getContext;
 
 /**
  * Description：
@@ -161,14 +157,14 @@ public class HomeFragmentPreComl implements HomeFragmentPre {
         });
 
         adapter.setRefrushPosition(2);
-        FindFriendHolder friendHolder = new FindFriendHolder(getContext(), null, R.layout.item_find_fc);
+        FindFriendHolder friendHolder = new FindFriendHolder(context, null, R.layout.item_find_fc);
         float dimension = context.getResources().getDimension(R.dimen.find_title_item_margin_v);
         friendHolder.setMagrin(0, dimension, 0, dimension);
         friendHolder.setOnToolsItemClickListener(view);
 
 
         adapter.addHead(friendHolder);
-        FindFunctionHolder holder = new FindFunctionHolder(getContext(), null, R.layout.item_find_function);
+        FindFunctionHolder holder = new FindFunctionHolder(context, null, R.layout.item_find_function);
         holder.setOnToolsItemClickListener(new OnToolsItemClickListener() {
             @Override
             public void onItemClick(int position, Object item) {

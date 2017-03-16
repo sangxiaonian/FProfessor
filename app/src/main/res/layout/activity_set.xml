@@ -21,6 +21,13 @@
         <TextView
             style="@style/set_item"
             android:text="@string/set_msg" />
+        <ImageView
+            android:id="@+id/img_set_msg"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@mipmap/common_nav_btn_message_s"
+            android:layout_marginEnd="@dimen/app_margin_ends"
+            />
     </LinearLayout>
 
     <LinearLayout
