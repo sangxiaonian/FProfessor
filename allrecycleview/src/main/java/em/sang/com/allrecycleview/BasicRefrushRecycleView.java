@@ -13,6 +13,7 @@ import android.view.ViewGroup;
 import android.view.animation.DecelerateInterpolator;
 import android.widget.LinearLayout;
 
+import com.sang.viewfractory.utils.JLog;
 import com.sang.viewfractory.view.RefrushLinearLayout;
 import com.sang.viewfractory.view.ShapeView;
 
@@ -106,7 +107,7 @@ public abstract class BasicRefrushRecycleView extends BaiscRecycleView {
      */
     public final int muli = 3;
     public RefrushListener listener;
-    public float min = 0;
+    public float min = 1;
     public int upstate = -1;
     public int downstate = -1;
 
@@ -176,43 +177,45 @@ public abstract class BasicRefrushRecycleView extends BaiscRecycleView {
             downY = e.getRawY();
         }
 
-        switch (e.getAction()) {
-            case MotionEvent.ACTION_DOWN:
-                downY = e.getRawY();
-                break;
-            case MotionEvent.ACTION_MOVE:
-                float gap = (e.getRawY() - downY) / muli;
-                downY = e.getRawY();
-                isNoTouch = false;
-                if (isFirst()) {
-                    clearUpAnimotion();
-                    setUpHeightVisible(gap);
-                } else if (isLast()) {
-                    clearDownAnimotion();
-                    setDownHeightVisible(-gap);
-                }
-                break;
-            case MotionEvent.ACTION_UP:
-            case MotionEvent.ACTION_CANCEL:
-                downY = -1;
-                isNoTouch = true;
-                if (isFirst()) {
-                    startUpAnimotion(upstate);
-                } else if (isLast()) {
-                    startDownAnimotion(downstate);
-                }
-                break;
-            default:
-                downY = -1;
-                isNoTouch = true;
-                if (isFirst()) {
-                    startUpAnimotion(upstate);
-                } else if (isLast()) {
-                    startDownAnimotion(downstate);
-                }
-                break;
+        if (listener!=null) {
+            switch (e.getAction()) {
+                case MotionEvent.ACTION_DOWN:
+                    downY = e.getRawY();
+                    break;
+                case MotionEvent.ACTION_MOVE:
+                    float gap = (e.getRawY() - downY) / muli;
+                    downY = e.getRawY();
+                    isNoTouch = false;
+                    JLog.i(isFirst()+">>>"+gap);
+                    if (isFirst()) {
+                        clearUpAnimotion();
+                        setUpHeightVisible(gap);
+                    } else if (isLast()) {
+                        clearDownAnimotion();
+                        setDownHeightVisible(-gap);
+                    }
+                    break;
+                case MotionEvent.ACTION_UP:
+                case MotionEvent.ACTION_CANCEL:
+                    downY = -1;
+                    isNoTouch = true;
+                    if (isFirst()) {
+                        startUpAnimotion(upstate);
+                    } else if (isLast()) {
+                        startDownAnimotion(downstate);
+                    }
+                    break;
+                default:
+                    downY = -1;
+                    isNoTouch = true;
+                    if (isFirst()) {
+                        startUpAnimotion(upstate);
+                    } else if (isLast()) {
+                        startDownAnimotion(downstate);
+                    }
+                    break;
+            }
         }
-
         return super.onTouchEvent(e);
     }
 
@@ -422,11 +425,12 @@ public abstract class BasicRefrushRecycleView extends BaiscRecycleView {
      * 设置正在加载
      */
     public void setLoading() {
-
-        clearViewAnimotion();
-        isStrong = true;
-        setViewHeight(topView, mearchTop);
-        upRefushState(LOADING);
+        if (listener!=null) {
+            clearViewAnimotion();
+            isStrong = true;
+            setViewHeight(topView, mearchTop);
+            upRefushState(LOADING);
+        }
     }
 
 

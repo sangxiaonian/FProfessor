@@ -25,8 +25,10 @@ import finance.com.fp.ui.holder.HomeCarouselHolder;
 import finance.com.fp.ui.holder.HomeToolsHolder;
 import finance.com.fp.ui.inter.CardView;
 import finance.com.fp.utlis.Utils;
-import rx.Observer;
+import rx.Observable;
+import rx.Subscriber;
 import rx.Subscription;
+import rx.functions.Func3;
 
 /**
  * Description：
@@ -64,8 +66,6 @@ public class CardActivityComl implements CardActivityPre {
         toolsHolder.setOnToolsItemClickListener(view);
 
         adapter.addHead(toolsHolder);
-
-
         getCarouselHolder(context);
 
 
@@ -86,12 +86,13 @@ public class CardActivityComl implements CardActivityPre {
         });
         moreHolder.setMagrin(0, item_cut, 0, item_cut_line);
         adapter.addHead(moreHolder);
-        GrideHolder balancesHolder = new GrideHolder(context, data.getGVbalances(), R.layout.item_grideview);
+
+        GrideHolder balancesHolder = new GrideHolder(context,tempList, R.layout.item_grideview);
         balancesHolder.getGridView().setPadding(0, 0, 0, (int) (item_cut * 3 / 2));
         balancesHolder.setOnToolsItemClickListener(new OnToolsItemClickListener<Set_Item>() {
             @Override
             public void onItemClick(int position, Set_Item item) {
-                view.onClickBanance(position,item,data.getGVbalances().size());
+                view.onClickBanance(position,item,tempList.size());
             }
         });
         adapter.addHead(balancesHolder);
@@ -153,54 +154,57 @@ public class CardActivityComl implements CardActivityPre {
         });
         adapter.addHead(cardHolder);
 
-        itemSubscriber=HttpFactory.getRecommends().subscribe(new Observer<Set_Item>() {
+    }
+
+
+    Subscription subscribe;
+
+    @Override
+    public void initAllData(){
+          subscribe = Observable.zip(HttpFactory.getRecommends().toList(), HttpFactory.getCarousel("30").toList(), data.getGVbalances().toList(), new Func3<List<Set_Item>, List<Set_Item>, List<Set_Item>, List<List<Set_Item>>>() {
+
+
+            @Override
+            public List<List<Set_Item>> call(List<Set_Item> set_items, List<Set_Item> set_items2, List<Set_Item> set_items3) {
+
+                List<List<Set_Item>> lists = new ArrayList<List<Set_Item>>();
+                lists.add(set_items);
+                lists.add(set_items2);
+                lists.add(set_items3);
+                return lists;
+            }
+        }).subscribe(new Subscriber<List<List<Set_Item>>>() {
+
             @Override
             public void onCompleted() {
-                adapter.notifyItemRangeChanged(0, 1);
                 adapter.notifyDataSetChanged();
+                view.loadSuccess();
             }
 
             @Override
             public void onError(Throwable e) {
                 e.printStackTrace();
+                view.loadFail();
             }
 
             @Override
-            public void onNext(Set_Item set_item) {
-                cardLists.add(set_item);
+            public void onNext(List<List<Set_Item>> lists) {
+                carouselList.clear();
+                cardLists.clear();
+                tempList.clear();
+                cardLists.addAll(lists.get(0));
+                carouselList.addAll(lists.get(1));
+                tempList.addAll(lists.get(2));
             }
         });
     }
-
-    Subscription itemSubscriber;
-    Subscription recommendedSubscriber;
 
 
     private void getCarouselHolder(Context context) {
         carouselList.add(new Set_Item(R.mipmap.loading,""));
         carouselHolder = new HomeCarouselHolder(context, carouselList, R.layout.item_home_carousel);
         adapter.addHead(carouselHolder);
-        tempList.clear();
-        recommendedSubscriber= HttpFactory.getCarousel("30").subscribe(new Observer<Set_Item>() {
 
-            @Override
-            public void onCompleted() {
-                carouselList.clear();
-                carouselList.addAll(tempList);
-                adapter.notifyItemRangeChanged(0, 1);
-                adapter.notifyDataSetChanged();
-            }
-
-            @Override
-            public void onError(Throwable e) {
-                e.printStackTrace();
-            }
-
-            @Override
-            public void onNext(Set_Item set_item) {
-                tempList.add(set_item);
-            }
-        });
     }
 
 
@@ -208,13 +212,11 @@ public class CardActivityComl implements CardActivityPre {
     public void clearThread() {
         notifiHolder.stopCarousel();
         carouselHolder.stopCarousel();
-        if (recommendedSubscriber != null) {
-            recommendedSubscriber.unsubscribe();
+        if (subscribe != null) {
+            subscribe.unsubscribe();
         }
 
-        if (itemSubscriber != null) {
-            itemSubscriber.unsubscribe();
-        }
+
     }
 
 

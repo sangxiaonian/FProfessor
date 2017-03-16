@@ -30,7 +30,7 @@ public class BaiscRecycleView extends RecyclerView {
         LayoutManager manager = getLayoutManager();
         if (manager instanceof LinearLayoutManager) {
             LinearLayoutManager linearLayoutManager = ((LinearLayoutManager) manager);
-            int position = linearLayoutManager.findFirstVisibleItemPosition();
+            int position = linearLayoutManager.findFirstCompletelyVisibleItemPosition();
             if (position == -1) {
                 position = 0;
             }

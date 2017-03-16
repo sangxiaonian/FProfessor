@@ -5,6 +5,7 @@ import java.util.List;
 import finance.com.fp.mode.bean.Set_Item;
 import finance.com.fp.mode.datafractory.CardDataFractory;
 import finance.com.fp.mode.inter.CardDataInter;
+import rx.Observable;
 
 /**
  * Description：
@@ -26,12 +27,9 @@ public class CardDataComl implements CardDataInter{
     }
 
     @Override
-    public List<Set_Item> getGVbalances() {
+    public Observable<Set_Item> getGVbalances() {
         return fractory.getGVbalances();
     }
 
-    @Override
-    public List<Set_Item> getCards() {
-        return fractory.getCards();
-    }
+
 }

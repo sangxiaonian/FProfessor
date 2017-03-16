@@ -2,11 +2,9 @@ package em.sang.com.allrecycleview;
 
 import android.content.Context;
 import android.support.annotation.Nullable;
-import android.support.v7.widget.RecyclerView;
 import android.util.AttributeSet;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
-import android.widget.TextSwitcher;
 
 import com.sang.viewfractory.utils.Apputils;
 import com.sang.viewfractory.utils.DeviceUtils;
@@ -89,16 +87,17 @@ public class RefrushRecycleView extends BasicRefrushRecycleView {
         }
     }
 
-    private long lastTime ;
+    private long lastTime;
+
     @Override
     public void onScrolled(int dx, int dy) {
         super.onScrolled(dx, dy);
-        if (downstate != LOADING_DOWN ) {
+        if (downstate != LOADING_DOWN) {
             synchronized (RefrushRecycleView.class) {
                 if (dy > DeviceUtils.getMinTouchSlop(getContext()) && style == STYLE_SLIPE) {
-                    if (!isFirst() && isLast() && downstate != LOADING_DOWN ) {
-                        long l =System.currentTimeMillis() - lastTime;
-                        if (l >1000) {
+                    if (!isFirst() && isLast() && downstate != LOADING_DOWN) {
+                        long l = System.currentTimeMillis() - lastTime;
+                        if (l > 1000) {
                             JLog.i("-------------被叫用了---------------------");
                             lastTime = System.currentTimeMillis();
                             downRefrushState(LOADING_DOWN);

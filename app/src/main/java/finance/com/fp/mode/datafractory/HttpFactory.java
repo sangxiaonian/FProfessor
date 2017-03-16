@@ -524,14 +524,14 @@ public class HttpFactory {
 
     }
 
-
     /**
-     * 快速微带
+     * 热身排行榜
+     * @param page
      * @return
      */
-    public static Observable<Set_Item> getQuckWei() {
+    public static Observable<Set_Item> getAllBance(int page) {
 
-        return HttpClient.getClient().getHotApply(36,0,20)
+        return HttpClient.getClient().getHotApply(37,page,20)
                 .subscribeOn(Schedulers.io())
                 .flatMap(new Func1<HttpBean<FinanceBean>, Observable<Set_Item>>() {
                     @Override
@@ -548,6 +548,7 @@ public class HttpFactory {
                                         item.content = financeBean.getContent();
                                         item.updatetime = ViewUtils.formatDateTime(s);
                                         item.img_url = financeBean.getThumb();
+                                        item.content = financeBean.getF_url();
                                         return item;
                                     }
                                 })
@@ -555,10 +556,17 @@ public class HttpFactory {
                     }
                 })
                 .observeOn(AndroidSchedulers.mainThread());
+
     }
 
+
+
+
+
+
+
     /**
-     * 快速微带
+     * 朋友圈信息
      * @return
      */
     public static Observable<FriendBean> getFriend(int page) {
@@ -580,7 +588,16 @@ public class HttpFactory {
                 .observeOn(AndroidSchedulers.mainThread());
     }
 
+    /**
+     * 获取个人资料
+     * @param phone
+     * @return
+     */
     public static Observable<IDBean> getID(String phone){
         return HttpClient.getClient( ).getPerson(phone).subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread());
+    }
+
+    public static Observable<Set_Item> getGVbalances() {
+        return getAllBance(0);
     }
 }

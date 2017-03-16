@@ -16,7 +16,6 @@
 
    <include
         android:id="@+id/rc"
-
         layout="@layout/view_recycleview" />
 
 

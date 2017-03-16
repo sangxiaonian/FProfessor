@@ -1,4 +1,4 @@
-package com.sang.viewfractory.utils;
+package sang.com.xdialog.utils;
 
 import android.util.Log;
 
@@ -6,7 +6,7 @@ public class JLog {
     /**
      *  tag
      */
-    public static String tag = "view";
+    public static String tag = "XDialog";
 
 
     /**

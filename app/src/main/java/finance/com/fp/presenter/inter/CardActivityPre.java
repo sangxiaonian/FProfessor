@@ -15,4 +15,6 @@ public interface CardActivityPre {
 
 
     void clearThread();
+
+    void initAllData();
 }

@@ -131,24 +131,26 @@ public class CardDataFractory extends BaseFractory {
             tittles=new String[0];
         }
 
-        return Observable.zip(Observable.from(icons),
-
-                Observable.from(tittles).map(new Func1<String, String[]>() {
-                    @Override
-                    public String[] call(String s) {
-                        String[] split = s.split("_");
-
-                        return split;
-                    }
-                })
-                , new Func2<Integer, String[], Set_Item>() {
-                    @Override
-                    public Set_Item call(Integer integer, String[] s) {
-
-                        return new Set_Item(integer, s[0],s[1]);
-
-                    }
-                }).subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread());
+//        return Observable.zip(Observable.from(icons),
+//
+//                Observable.from(tittles).map(new Func1<String, String[]>() {
+//                    @Override
+//                    public String[] call(String s) {
+//                        String[] split = s.split("_");
+//
+//                        return split;
+//                    }
+//                })
+//                , new Func2<Integer, String[], Set_Item>() {
+//                    @Override
+//                    public Set_Item call(Integer integer, String[] s) {
+//
+//                        return new Set_Item(integer, s[0],s[1]);
+//
+//                    }
+//                }).subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread());
+//
+        return HttpFactory.getAllBance(page);
     }
 
     /**
@@ -163,14 +165,6 @@ public class CardDataFractory extends BaseFractory {
     }
 
 
-    private Observable<Set_Item> getZip(Integer[] icons, String[] tittles) {
-        return Observable.zip(Observable.from(icons), Observable.from(tittles), new Func2<Integer, String, Set_Item>() {
-            @Override
-            public Set_Item call(Integer integer, String s) {
-                return new Set_Item(integer, s);
-            }
-        }).subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread());
-    }
 
 
     /***
@@ -192,7 +186,7 @@ public class CardDataFractory extends BaseFractory {
         return tools;
     }
 
-    public List<Set_Item> getGVbalances() {
+    public Observable<Set_Item> getGVbalances() {
         List<Set_Item> datas = new ArrayList<>();
         String[] tltles = context.getResources().getStringArray(R.array.card_items_balances);
         int[] icons = {R.mipmap.icon_chinaciticbank, R.mipmap.icon_cib,
@@ -204,25 +198,11 @@ public class CardDataFractory extends BaseFractory {
             String[] tltle = tltles[i].split("_");
             datas.add(new Set_Item(icons[i], tltle[0],tltle[1]));
         }
-        return datas;
+        return HttpFactory.getGVbalances();
     }
 
-    /**
-     * 本期力荐卡
-     *
-     * @return
-     */
-    public List<Set_Item> getCards() {
-        List<Set_Item> datas = new ArrayList<>();
 
-        int[] icons = {R.mipmap.home_picture, R.mipmap.home_picture, R.mipmap.home_picture};
-        for (int i = 0; i < icons.length; i++) {
-            Set_Item item = new Set_Item();
-            item.icon_id = icons[i];
-            datas.add(item);
-        }
-        return datas;
-    }
+
 
     public int getCardLayoutID(int item_id) {
         int id = 0;

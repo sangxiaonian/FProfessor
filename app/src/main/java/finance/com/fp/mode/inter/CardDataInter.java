@@ -3,6 +3,7 @@ package finance.com.fp.mode.inter;
 import java.util.List;
 
 import finance.com.fp.mode.bean.Set_Item;
+import rx.Observable;
 
 /**
  * Description：
@@ -17,11 +18,7 @@ public interface CardDataInter {
      * 获取办卡专区的银行图标
      * @return
      */
-    List<Set_Item> getGVbalances();
+    Observable<Set_Item> getGVbalances();
 
-    /**
-     * 获取力荐银行
-     * @return
-     */
-    List<Set_Item> getCards();
+
 }

@@ -8,7 +8,9 @@ import com.tencent.bugly.crashreport.CrashReport;
 import com.umeng.message.IUmengRegisterCallback;
 import com.umeng.message.PushAgent;
 
+import finance.com.fp.mode.http.Config;
 import finance.com.fp.utlis.ToastUtil;
+import finance.com.fp.utlis.Utils;
 
 /**
  * Description：
@@ -62,9 +64,12 @@ public class CusApplication extends Application {
             }
         });
 
-
-
-
+        boolean booleanSp = Utils.getBooleanSp(this, Config.isopenPush);
+        if (booleanSp){
+            Utils.close(mPushAgent,this);
+        }else {
+            Utils.openPush(mPushAgent,this);
+        }
     }
 
     public static Context getContext() {

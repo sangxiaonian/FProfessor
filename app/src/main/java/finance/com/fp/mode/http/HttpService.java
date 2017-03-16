@@ -176,6 +176,7 @@ public interface HttpService {
     @POST("index.php?m=content&c=doserver&a=get_people")
     Observable<HttpBean<FriendBean>> getFriend(@Field("page") int page, @Field("strip") int strip);
 
+
     @FormUrlEncoded
     @POST("index.php?m=content&c=doserver&a=opinion")
     Observable<String> submit(@Field("opinion") String sp, @Field("username")String phone);
@@ -185,6 +186,9 @@ public interface HttpService {
     @POST("index.php?m=content&c=doserver&a=app_member_add")
     Observable<String> subPerson(@FieldMap Map<String,String> params); @FormUrlEncoded
 
+    /**
+     * 个人资料
+     */
     @POST("index.php?m=content&c=doserver&a=app_member_select")
     Observable<IDBean> getPerson(@Field("username") String username);
 }
