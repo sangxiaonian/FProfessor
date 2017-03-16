@@ -15,6 +15,7 @@
         android:layout_weight="1"
         layout="@layout/view_recycleview" />
 
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="60dp"

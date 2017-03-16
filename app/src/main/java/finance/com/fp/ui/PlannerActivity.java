@@ -13,6 +13,9 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.orhanobut.logger.Logger;
+import com.sang.viewfractory.view.RefrushLinearLayout;
+import com.sang.viewfractory.view.ShapeView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -22,9 +25,11 @@ import finance.com.fp.R;
 import finance.com.fp.mode.bean.Set_Item;
 import finance.com.fp.mode.datafractory.HttpFactory;
 import finance.com.fp.mode.http.Config;
+import finance.com.fp.ui.holder.BasicHolder;
 import finance.com.fp.utlis.ToastUtil;
 import finance.com.fp.utlis.Utils;
 import rx.Observer;
+import rx.Subscriber;
 import rx.Subscription;
 
 /**
@@ -36,6 +41,12 @@ public class PlannerActivity extends BasisActivity implements Observer<Set_Item>
     private EditText et;
     private Button btn;
     private List<Set_Item> lists;
+    private RefrushLinearLayout bottomView;
+    private Set_Item bottom;
+    private String send = "发送中..";
+    private String send_fail = "网络异常,发送失败!";
+    private int state;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,11 +58,18 @@ public class PlannerActivity extends BasisActivity implements Observer<Set_Item>
         et = (EditText) findViewById(R.id.et_planner);
         btn = (Button) findViewById(R.id.btn_planner_send);
         lists = new ArrayList<>();
-        Set_Item item = new Set_Item();
-        item.title = getString(R.string.planner_start);
-        lists.add(item);
+
+
+        bottomView = new RefrushLinearLayout(this);
+        bottomView.setStyle(RefrushLinearLayout.STYLE_LOAD);
+        bottomView.setVisibility(View.INVISIBLE);
+        bottom = new Set_Item();
+        bottom.title = getString(R.string.loan_apply_detail);
+        bottom.type = 2;
         initData();
     }
+
+
 
     Subscription subscribe;
 
@@ -75,6 +93,36 @@ public class PlannerActivity extends BasisActivity implements Observer<Set_Item>
         rc.setLayoutManager(manage);
         adapter = new PlannerAdapter();
         rc.setAdapter(adapter);
+        subscribe = HttpFactory.getPlanner("测试", Utils.getSp(PlannerActivity.this, Config.login_name)).subscribe(new Subscriber<Set_Item>() {
+            @Override
+            public void onStart() {
+                super.onStart();
+                show();
+            }
+
+            @Override
+            public void onCompleted() {
+                hiden();
+                adapter.notifyDataSetChanged();
+
+            }
+
+            @Override
+            public void onError(Throwable e) {
+                e.printStackTrace();
+                fail();
+            }
+
+            @Override
+            public void onNext(Set_Item set_item) {
+                if (TextUtils.isEmpty(set_item.title)) {
+                    set_item.title = getString(R.string.planner_start);
+                }
+                lists.add(set_item);
+            }
+        });
+
+
         btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -85,12 +133,14 @@ public class PlannerActivity extends BasisActivity implements Observer<Set_Item>
                     item1.type = 1;
                     item1.icon_id = R.mipmap.login_boyhead;
                     lists.add(item1);
-                    adapter.notifyDataSetChanged( );
+                    adapter.notifyDataSetChanged();
+                    Logger.i(adapter.getItemCount()+"----------"+lists.size()+"----------"+lists.get(0).title);
                     rc.scrollToPosition(adapter.getItemCount() - 1);
                     et.setText("");
                     btn.setText("发送中..");
                     btn.setEnabled(false);
                     unSunsriber();
+                    show();
                     subscribe = HttpFactory.getPlanner(msg, Utils.getSp(PlannerActivity.this, Config.login_name)).subscribe(PlannerActivity.this);
                 }
 
@@ -100,8 +150,28 @@ public class PlannerActivity extends BasisActivity implements Observer<Set_Item>
 
     }
 
+    private void show() {
+        bottom.title = send;
+        state = ShapeView.LOADING;
+        bottomView.setVisibility(View.VISIBLE);
+
+        adapter.notifyItemChanged(adapter.getItemCount() - 1);
+    }
+
+    private void hiden() {
+        bottomView.setVisibility(View.INVISIBLE);
+    }
+
+    private void fail() {
+        bottom.title = send_fail;
+        state = ShapeView.LOAD_FAIL;
+        bottomView.setVisibility(View.VISIBLE);
+        adapter.notifyItemChanged(adapter.getItemCount() - 1);
+    }
+
     @Override
     public void onCompleted() {
+        hiden();
         adapter.notifyDataSetChanged();
         btn.setText("发送");
         btn.setEnabled(true);
@@ -112,6 +182,7 @@ public class PlannerActivity extends BasisActivity implements Observer<Set_Item>
         btn.setText("发送");
         btn.setEnabled(true);
         e.printStackTrace();
+        fail();
         ToastUtil.showTextToast(getString(R.string.net_error));
     }
 
@@ -127,7 +198,9 @@ public class PlannerActivity extends BasisActivity implements Observer<Set_Item>
 
         @Override
         public int getItemViewType(int position) {
-
+            if (position == getItemCount() - 1) {
+                return 2;
+            }
             return lists.get(position).type;
         }
 
@@ -136,6 +209,8 @@ public class PlannerActivity extends BasisActivity implements Observer<Set_Item>
             RecyclerView.ViewHolder holder;
             if (viewType == 0) {
                 holder = new PlannerHolder(View.inflate(PlannerActivity.this, R.layout.item_planner_sys, null));
+            } else if (viewType == 2) {
+                holder = new SimpleHolder(bottomView);
             } else {
                 holder = new PlannerHolder(View.inflate(PlannerActivity.this, R.layout.item_planner_cus, null));
             }
@@ -145,12 +220,17 @@ public class PlannerActivity extends BasisActivity implements Observer<Set_Item>
 
         @Override
         public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
-            ((PlannerHolder) holder).initView(lists.get(position));
+            if (position != getItemCount() - 1) {
+                ((PlannerHolder) holder).initView(lists.get(position));
+            } else {
+                bottomView.setTvMsg(bottom.title);
+                bottomView.upState(state);
+            }
         }
 
         @Override
         public int getItemCount() {
-            return lists.size();
+            return lists.size()+1;
         }
     }
 
@@ -161,7 +241,7 @@ public class PlannerActivity extends BasisActivity implements Observer<Set_Item>
 
     }
 
-    public class PlannerHolder extends RecyclerView.ViewHolder {
+    public class PlannerHolder extends BasicHolder {
         public ImageView view;
         public TextView text;
         public View itemView;
@@ -186,5 +266,17 @@ public class PlannerActivity extends BasisActivity implements Observer<Set_Item>
         }
 
 
+    }
+
+    public class SimpleHolder extends PlannerHolder{
+
+        public SimpleHolder(View itemView) {
+            super(itemView);
+        }
+
+        @Override
+        public void initView(Set_Item item) {
+
+        }
     }
 }
