@@ -525,13 +525,11 @@ public class HttpFactory {
     }
 
     /**
-     * 热身排行榜
-     * @param page
+     * 获取全部银行
      * @return
      */
-    public static Observable<Set_Item> getAllBance(int page) {
-
-        return HttpClient.getClient().getHotApply(37,page,20)
+    public static Observable<Set_Item> getAllBance() {
+        return HttpClient.getClient().getAllBalance()
                 .subscribeOn(Schedulers.io())
                 .flatMap(new Func1<HttpBean<FinanceBean>, Observable<Set_Item>>() {
                     @Override
@@ -540,23 +538,18 @@ public class HttpFactory {
                                 .map(new Func1<FinanceBean, Set_Item>() {
                                     @Override
                                     public Set_Item call(FinanceBean financeBean) {
-
                                         Set_Item item = new Set_Item();
                                         item.title = financeBean.getTitle();
                                         item.describe = financeBean.getDescription();
-                                        String s = financeBean.getUpdatetime() + "000";
-                                        item.content = financeBean.getContent();
-                                        item.updatetime = ViewUtils.formatDateTime(s);
+                                        item.content = financeBean.getBank_url();
                                         item.img_url = financeBean.getThumb();
-                                        item.content = financeBean.getF_url();
+                                        item.content = financeBean.getBank_url();
                                         return item;
                                     }
-                                })
-                                ;
+                                });
                     }
                 })
                 .observeOn(AndroidSchedulers.mainThread());
-
     }
 
 
@@ -597,7 +590,5 @@ public class HttpFactory {
         return HttpClient.getClient( ).getPerson(phone).subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread());
     }
 
-    public static Observable<Set_Item> getGVbalances() {
-        return getAllBance(0);
-    }
+
 }

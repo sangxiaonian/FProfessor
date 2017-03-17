@@ -103,54 +103,8 @@ public class CardDataFractory extends BaseFractory {
 
     public Observable<Set_Item> getAllBalances(int page) {
 
-        Integer[] icons = {R.mipmap.icon_thebankofchina_phone,
-                R.mipmap.icon_agricuralbankof_phone,
-                R.mipmap.icon_constructionbankccb_phone,
 
-                R.mipmap.icon_bankofcommunications_phone,
-                R.mipmap.icon_chinamerchants_phone,
-                R.mipmap.icon_shanghaipudongdevelopmentbank_phone,
-
-                R.mipmap.icon_guangdongdevelopmentbankk_phone,
-                R.mipmap.icon_huaxiabank_phone,
-                R.mipmap.icon_pinganbank_phone,
-
-                R.mipmap.icon_everbrightbank_phone,
-                R.mipmap.icon_chinaciticbank_phone,
-                R.mipmap.icon_societegenerale_phone,
-
-                R.mipmap.icon_minsheengbank_phone,
-                R.mipmap.icon_zheshangbank_phone,
-                R.mipmap.icon_citibank_phone
-        };
-        String[] tittles;
-        if (page==0){
-            tittles = context.getResources().getStringArray(R.array.card_phone);
-
-        }else {
-            tittles=new String[0];
-        }
-
-//        return Observable.zip(Observable.from(icons),
-//
-//                Observable.from(tittles).map(new Func1<String, String[]>() {
-//                    @Override
-//                    public String[] call(String s) {
-//                        String[] split = s.split("_");
-//
-//                        return split;
-//                    }
-//                })
-//                , new Func2<Integer, String[], Set_Item>() {
-//                    @Override
-//                    public Set_Item call(Integer integer, String[] s) {
-//
-//                        return new Set_Item(integer, s[0],s[1]);
-//
-//                    }
-//                }).subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread());
-//
-        return HttpFactory.getAllBance(page);
+        return HttpFactory.getAllBance();
     }
 
     /**
@@ -187,18 +141,8 @@ public class CardDataFractory extends BaseFractory {
     }
 
     public Observable<Set_Item> getGVbalances() {
-        List<Set_Item> datas = new ArrayList<>();
-        String[] tltles = context.getResources().getStringArray(R.array.card_items_balances);
-        int[] icons = {R.mipmap.icon_chinaciticbank, R.mipmap.icon_cib,
-                R.mipmap.icon_shanghaipudongdevelopmentbank, R.mipmap.icon_everbrightbank,
-                R.mipmap.icon_bankofcommunictions, R.mipmap.icon_minshengbank, R.mipmap.icon_chinamerchants
-                , R.mipmap.icon_more_balabce};
 
-        for (int i = 0; i < tltles.length; i++) {
-            String[] tltle = tltles[i].split("_");
-            datas.add(new Set_Item(icons[i], tltle[0],tltle[1]));
-        }
-        return HttpFactory.getGVbalances();
+        return HttpFactory.getAllBance().take(7);
     }
 
 

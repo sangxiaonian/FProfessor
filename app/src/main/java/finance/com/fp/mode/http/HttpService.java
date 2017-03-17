@@ -191,4 +191,12 @@ public interface HttpService {
      */
     @POST("index.php?m=content&c=doserver&a=app_member_select")
     Observable<IDBean> getPerson(@Field("username") String username);
+
+     /**
+     * 个人资料
+     */
+    @POST("index.php?m=content&c=doserver&a=bank")
+    Observable<HttpBean<FinanceBean>>  getAllBalance();
+
+
 }

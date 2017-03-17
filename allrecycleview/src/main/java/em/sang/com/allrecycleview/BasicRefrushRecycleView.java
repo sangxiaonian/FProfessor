@@ -13,7 +13,6 @@ import android.view.ViewGroup;
 import android.view.animation.DecelerateInterpolator;
 import android.widget.LinearLayout;
 
-import com.sang.viewfractory.utils.JLog;
 import com.sang.viewfractory.view.RefrushLinearLayout;
 import com.sang.viewfractory.view.ShapeView;
 
@@ -186,7 +185,6 @@ public abstract class BasicRefrushRecycleView extends BaiscRecycleView {
                     float gap = (e.getRawY() - downY) / muli;
                     downY = e.getRawY();
                     isNoTouch = false;
-                    JLog.i(isFirst()+">>>"+gap);
                     if (isFirst()) {
                         clearUpAnimotion();
                         setUpHeightVisible(gap);

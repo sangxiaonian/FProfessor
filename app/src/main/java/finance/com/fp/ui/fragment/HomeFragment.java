@@ -42,8 +42,8 @@ public class HomeFragment extends BasisFragment implements View.OnClickListener,
 
     private RefrushRecycleView recyclerView;
     private ImageView msg_red;
-    private ImageButton   title_card, ltitle_ending, title_forheard,msg,msg_small;
-    private LinearLayout tv_card,tv_loan,tv_import;
+    private ImageButton title_card, ltitle_ending, title_forheard, msg, msg_small;
+    private LinearLayout tv_card, tv_loan, tv_import;
     private HomeFragmentPre pre;
     private RefrushAdapter adapter;
     private MainView view;
@@ -58,10 +58,10 @@ public class HomeFragment extends BasisFragment implements View.OnClickListener,
         title_forheard = (ImageButton) view.findViewById(R.id.img_main_imp_icon);
         msg = (ImageButton) view.findViewById(R.id.img_main_msg);
         msg_small = (ImageButton) view.findViewById(R.id.img_main_msg_small);
-        tv_card= (LinearLayout) view.findViewById(R.id.tv_card);
-        tv_import= (LinearLayout) view.findViewById(R.id.tv_improt);
-        tv_loan= (LinearLayout) view.findViewById(R.id.tv_loan);
-        msg_red= (ImageView) view.findViewById(R.id.img_red);
+        tv_card = (LinearLayout) view.findViewById(R.id.tv_card);
+        tv_import = (LinearLayout) view.findViewById(R.id.tv_improt);
+        tv_loan = (LinearLayout) view.findViewById(R.id.tv_loan);
+        msg_red = (ImageView) view.findViewById(R.id.img_red);
         return view;
     }
 
@@ -89,9 +89,9 @@ public class HomeFragment extends BasisFragment implements View.OnClickListener,
         recyclerView.setLayoutManager(manager);
         recyclerView.addItemDecoration(new RecycleViewDivider(getContext(), LinearLayout.VERTICAL));
         pre = new HomeFragmentPreComl(this);
-        adapter=pre.initAdapter(getContext());
+        adapter = pre.initAdapter(getContext());
         recyclerView.setAdapter(adapter);
-        recyclerView.setRefrushListener(new DefaultRefrushListener(){
+        recyclerView.setRefrushListener(new DefaultRefrushListener() {
             @Override
             public void onLoading() {
                 pre.getFinceData(6);
@@ -126,12 +126,12 @@ public class HomeFragment extends BasisFragment implements View.OnClickListener,
             case R.id.img_main_msg:
             case R.id.img_main_msg_small:
                 removeRed();
-                c=HomeSonActivity.class;
+                c = HomeSonActivity.class;
                 TranInfor tranInfor = new TranInfor();
                 tranInfor.activity_id = 0;
                 tranInfor.item_id = 4;
                 tranInfor.title = getString(R.string.msg_center);
-                intent.putExtra(Config.infors,tranInfor);
+                intent.putExtra(Config.infors, tranInfor);
                 break;
         }
         if (c == null) {
@@ -143,7 +143,7 @@ public class HomeFragment extends BasisFragment implements View.OnClickListener,
     }
 
     private void removeRed() {
-        if (view!=null){
+        if (view != null) {
             view.removeMsg();
             msg_red.setVisibility(View.GONE);
         }
@@ -154,11 +154,12 @@ public class HomeFragment extends BasisFragment implements View.OnClickListener,
         super.onDestroy();
         pre.unsubscribe();
     }
+
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
-        if (context instanceof MainView){
-            view= (MainView) context;
+        if (context instanceof MainView) {
+            view = (MainView) context;
         }
     }
 
@@ -174,24 +175,25 @@ public class HomeFragment extends BasisFragment implements View.OnClickListener,
         switch (position) {
             case 0:
                 tranInfor.item_id = position;
-                c=PlannerActivity.class;
+                c = PlannerActivity.class;
+//                c= MapActivity.class;
                 break;
             case 1:
-                c=HomeSonActivity.class;
+                c = HomeSonActivity.class;
                 tranInfor.item_id = HomeDataFractory.BALANCE_CALL;
                 break;
             case 2:
-                c=HomeSonActivity.class;
+                c = HomeSonActivity.class;
                 tranInfor.item_id = HomeDataFractory.CREDIT;
                 break;
             case 3:
                 tranInfor.item_id = HomeDataFractory.UTILITY_TOLL;
-                c=HomeSonActivity.class;
+                c = HomeSonActivity.class;
                 break;
         }
-        if (c==null){
+        if (c == null) {
             ToastUtil.showTextToast("该功能尚未开放");
-        }else {
+        } else {
             intent.putExtra(Config.infors, tranInfor);
             intent.setClass(getActivity(), c);
             getActivity().startActivity(intent);
@@ -218,22 +220,22 @@ public class HomeFragment extends BasisFragment implements View.OnClickListener,
         recyclerView.LoadNoMore();
     }
 
-    public void showRed(){
+    public void showRed() {
         msg_red.setVisibility(View.VISIBLE);
     }
 
     @Override
     public void onHiddenChanged(boolean hidden) {
         super.onHiddenChanged(hidden);
-        if (!hidden){
-            if (view.hasNewMsg()){
+        if (!hidden) {
+            if (view.hasNewMsg()) {
                 msg_red.setVisibility(View.VISIBLE);
-            }else {
+            } else {
                 msg_red.setVisibility(View.GONE);
 
             }
-        }else {
-           pre.getCouser();
+        } else {
+            pre.getCouser();
         }
     }
 }

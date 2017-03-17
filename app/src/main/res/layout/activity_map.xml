@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fitsSystemWindows="true"
+    tools:context="finance.com.fp.ui.MapActivity">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:background="#aaaaaaaa"
+        android:gravity="center_vertical"
+        android:layout_height="?attr/actionBarSize">
+        <ImageView
+            android:id="@+id/img_back"
+            android:layout_marginStart="@dimen/app_margin_ends"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@mipmap/icon_goback_light"
+            />
+    </LinearLayout>
+    <com.amap.api.maps.MapView
+        android:id="@+id/map"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"/>
+
+</RelativeLayout>

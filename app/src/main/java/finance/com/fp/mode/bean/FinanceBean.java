@@ -18,6 +18,7 @@ public class FinanceBean {
     private String content;
     private String turl;
     private String f_url;
+    private String bank_url;
 
 
     public String getF_url() {
@@ -84,6 +85,14 @@ public class FinanceBean {
         this.content = content;
     }
 
+    public String getBank_url() {
+        return bank_url;
+    }
+
+    public void setBank_url(String bank_url) {
+        this.bank_url = bank_url;
+    }
+
     @Override
     public String toString() {
         return "FinanceBean{" +
@@ -94,6 +103,8 @@ public class FinanceBean {
                 ", updatetime='" + updatetime + '\'' +
                 ", content='" + content + '\'' +
                 ", turl='" + turl + '\'' +
+                ", f_url='" + f_url + '\'' +
+                ", bank_url='" + bank_url + '\'' +
                 '}';
     }
 }

@@ -47,6 +47,7 @@ public class Set_Item {
     public int   type;
     public boolean isCheck;
     public String turl;
+    public String bank_url;
 
     public Set_Item(){
 

@@ -161,15 +161,19 @@ public class CardActivityComl implements CardActivityPre {
 
     @Override
     public void initAllData(){
-          subscribe = Observable.zip(HttpFactory.getRecommends().toList(), HttpFactory.getCarousel("30").toList(), data.getGVbalances().toList(), new Func3<List<Set_Item>, List<Set_Item>, List<Set_Item>, List<List<Set_Item>>>() {
+          subscribe = Observable.zip(HttpFactory.getRecommends().toList(), HttpFactory.getCarousel("30").toList()
+                  , data.getGVbalances().toList(),
+                  new Func3<List<Set_Item>, List<Set_Item>, List<Set_Item>, List<List<Set_Item>>>() {
 
 
             @Override
             public List<List<Set_Item>> call(List<Set_Item> set_items, List<Set_Item> set_items2, List<Set_Item> set_items3) {
-
                 List<List<Set_Item>> lists = new ArrayList<List<Set_Item>>();
                 lists.add(set_items);
                 lists.add(set_items2);
+                if (set_items3.size()<=7){
+                    set_items3.add(new Set_Item(R.mipmap.icon_more_balabce,Utils.getResStr(R.string.more_balance)));
+                }
                 lists.add(set_items3);
                 return lists;
             }
