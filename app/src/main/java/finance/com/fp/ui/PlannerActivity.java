@@ -13,7 +13,6 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
-import com.orhanobut.logger.Logger;
 import com.sang.viewfractory.view.RefrushLinearLayout;
 import com.sang.viewfractory.view.ShapeView;
 
@@ -93,7 +92,7 @@ public class PlannerActivity extends BasisActivity implements Observer<Set_Item>
         rc.setLayoutManager(manage);
         adapter = new PlannerAdapter();
         rc.setAdapter(adapter);
-        subscribe = HttpFactory.getPlanner("测试", Utils.getSp(PlannerActivity.this, Config.login_name)).subscribe(new Subscriber<Set_Item>() {
+        subscribe = HttpFactory.getPlanner(false,"", Utils.getSp(PlannerActivity.this, Config.login_name)).subscribe(new Subscriber<Set_Item>() {
             @Override
             public void onStart() {
                 super.onStart();
@@ -134,14 +133,13 @@ public class PlannerActivity extends BasisActivity implements Observer<Set_Item>
                     item1.icon_id = R.mipmap.login_boyhead;
                     lists.add(item1);
                     adapter.notifyDataSetChanged();
-                    Logger.i(adapter.getItemCount()+"----------"+lists.size()+"----------"+lists.get(0).title);
                     rc.scrollToPosition(adapter.getItemCount() - 1);
                     et.setText("");
                     btn.setText("发送中..");
                     btn.setEnabled(false);
                     unSunsriber();
                     show();
-                    subscribe = HttpFactory.getPlanner(msg, Utils.getSp(PlannerActivity.this, Config.login_name)).subscribe(PlannerActivity.this);
+                    subscribe = HttpFactory.getPlanner(true, msg, Utils.getSp(PlannerActivity.this, Config.login_name)).subscribe(PlannerActivity.this);
                 }
 
             }

@@ -180,6 +180,14 @@ public class Utils {
         SharedPreferences preferences = context.getSharedPreferences(Config.sp_name, 0);
         return preferences.getBoolean(name,true);
     }
+    /**
+     * 设置注册
+     * @param context
+     */
+    public static boolean getBooleanSp(Context context, String name,boolean defalu) {
+        SharedPreferences preferences = context.getSharedPreferences(Config.sp_name, 0);
+        return preferences.getBoolean(name,defalu);
+    }
 
     /**
      *  设置配置文件

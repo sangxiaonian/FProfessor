@@ -62,6 +62,7 @@ public class HomeFragment extends BasisFragment implements View.OnClickListener,
         tv_import = (LinearLayout) view.findViewById(R.id.tv_improt);
         tv_loan = (LinearLayout) view.findViewById(R.id.tv_loan);
         msg_red = (ImageView) view.findViewById(R.id.img_red);
+
         return view;
     }
 
@@ -79,6 +80,13 @@ public class HomeFragment extends BasisFragment implements View.OnClickListener,
         tv_import.setOnClickListener(this);
         tv_loan.setOnClickListener(this);
         tv_card.setOnClickListener(this);
+            if (view != null) {
+                if (view.hasNewMsg()) {
+                    showRed();
+                } else {
+                    msg_red.setVisibility(View.GONE);
+                }
+            }
     }
 
 
@@ -232,7 +240,6 @@ public class HomeFragment extends BasisFragment implements View.OnClickListener,
                 msg_red.setVisibility(View.VISIBLE);
             } else {
                 msg_red.setVisibility(View.GONE);
-
             }
         } else {
             pre.getCouser();

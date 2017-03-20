@@ -2,8 +2,6 @@ package finance.com.fp.mode.http;
 
 import android.support.annotation.NonNull;
 
-import com.orhanobut.logger.Logger;
-
 import java.io.File;
 import java.io.IOException;
 import java.util.concurrent.TimeUnit;
@@ -85,7 +83,7 @@ public class HttpClient {
 
     private static HttpLoggingInterceptor getLogInterceptor() {
         HttpLoggingInterceptor interceptor = new HttpLoggingInterceptor();
-        interceptor.setLevel(HttpLoggingInterceptor.Level.HEADERS);
+        interceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
         return interceptor;
     }
 

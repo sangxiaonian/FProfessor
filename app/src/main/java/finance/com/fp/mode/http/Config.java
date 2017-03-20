@@ -24,5 +24,7 @@ public class Config {
     public static String login_password="login_password";
     public static String isFirst="isFirst";
     public static String isopenPush="isopenPush";
+    public static String showMsg="showMsg";
+    public static String showFriend="showFriend";
 
 }

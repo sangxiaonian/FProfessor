@@ -20,6 +20,16 @@ public class FinanceBean {
     private String f_url;
     private String bank_url;
 
+    public String getReply() {
+        return reply;
+    }
+
+    public void setReply(String reply) {
+        this.reply = reply;
+    }
+
+    private String reply;
+
 
     public String getF_url() {
         return f_url;
@@ -105,6 +115,7 @@ public class FinanceBean {
                 ", turl='" + turl + '\'' +
                 ", f_url='" + f_url + '\'' +
                 ", bank_url='" + bank_url + '\'' +
+                ", reply='" + reply + '\'' +
                 '}';
     }
 }

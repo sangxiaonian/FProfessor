@@ -340,9 +340,10 @@ public class HttpFactory {
      * 学习规划师
      *
      * @return
+     * @param b
      * @param msg
      */
-    public static Observable<Set_Item> getPlanner(String msg,String phone) {
+    public static Observable<Set_Item> getPlanner(final boolean b, String msg, String phone) {
         return HttpClient.getClient().getPlanner(msg,phone).subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread())
                 .flatMap(new Func1<HttpBean<FinanceBean>, Observable<Set_Item>>() {
                     @Override
@@ -352,12 +353,15 @@ public class HttpFactory {
                                     @Override
                                     public Set_Item call(FinanceBean financeBean) {
                                         Set_Item item = new Set_Item();
-                                        item.title = financeBean.getContent();
-
+                                        if (!b) {
+                                            item.title = financeBean.getContent();
+                                        }else {
+                                            item.title = financeBean.getReply();
+                                        }
                                         item.turl = financeBean.getTurl();
                                         item.content = financeBean.getTurl();
+                                        item.describe = financeBean.getReply();
                                         item.img_url = financeBean.getThumb();
-
                                         return item;
                                     }
                                 })

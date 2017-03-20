@@ -12,4 +12,7 @@ public interface MainView {
     void removeFriend();
 
     void removeMsg();
+
+    void showMsg();
+    void showFriend();
 }
