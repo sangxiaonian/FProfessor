@@ -56,6 +56,7 @@ public class CusApplication extends Application {
     private void initUmen() {
         CrashReport.initCrashReport(getApplicationContext(), "b038c087da", false);
         PushAgent mPushAgent = PushAgent.getInstance(this);
+
 //注册推送服务，每次调用register方法都会回调该接口
         mPushAgent.register(new IUmengRegisterCallback() {
 
@@ -72,6 +73,7 @@ public class CusApplication extends Application {
             }
         });
 
+        mPushAgent.setNotificaitonOnForeground(true);
         UmengMessageHandler messageHandler = new UmengMessageHandler() {
             /**
              * 自定义通知栏样式的回调方法
@@ -153,6 +155,7 @@ public class CusApplication extends Application {
         mPushAgent.setNotificationClickHandler(notificationClickHandler);
 
         boolean booleanSp = Utils.getBooleanSp(this, Config.isopenPush);
+        Logger.i(booleanSp+">>>>>>>>>>>>>>>>>>>>>>>");
         if (booleanSp){
             Utils.close(mPushAgent,this);
         }else {

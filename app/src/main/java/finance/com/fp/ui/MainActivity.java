@@ -39,7 +39,6 @@ public class MainActivity extends BasisActivity implements View.OnClickListener,
     private ImageView img_home, img_find, img_set, img_red;
     private List<View> views;
     private FrameLayout vp;
-    private List<Fragment> fragments;
     private boolean showMsg, showFriend;
     private String home = "home";
     private String find = "find";
@@ -64,15 +63,12 @@ public class MainActivity extends BasisActivity implements View.OnClickListener,
 
     private void initDatas() {
         views = new ArrayList<>();
-        fragments = new ArrayList<>();
         views.add(tv_find);
         views.add(tv_home);
         views.add(tv_set);
         views.add(img_set);
         views.add(img_home);
         views.add(img_find);
-
-
     }
 
 

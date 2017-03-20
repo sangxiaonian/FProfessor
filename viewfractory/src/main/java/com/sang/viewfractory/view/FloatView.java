@@ -14,6 +14,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.sang.viewfractory.R;
+import com.sang.viewfractory.utils.DeviceUtils;
 
 
 /**
@@ -97,6 +98,7 @@ public class FloatView extends LinearLayout {
         ftv.setBackground(getResources().getDrawable(flowBackground));
         ftv.setTextColor(flowTextColor);
         LayoutParams imgParams = new LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+        imgParams.setMargins(0, DeviceUtils.dip2px(context,10),0,0);
         ftv.setLayoutParams(imgParams);
         addView(tv);
         addView(ftv);
