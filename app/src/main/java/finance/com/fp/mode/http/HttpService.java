@@ -9,6 +9,7 @@ import finance.com.fp.mode.bean.HttpBean;
 import finance.com.fp.mode.bean.IDBean;
 import finance.com.fp.mode.bean.LoanSearchBean;
 import finance.com.fp.mode.bean.MsgContentBean;
+import retrofit2.http.Body;
 import retrofit2.http.Field;
 import retrofit2.http.FieldMap;
 import retrofit2.http.FormUrlEncoded;
@@ -197,6 +198,11 @@ public interface HttpService {
      */
     @POST("index.php?m=content&c=doserver&a=bank")
     Observable<HttpBean<FinanceBean>>  getAllBalance();
+
+
+    @FormUrlEncoded
+    @POST("index.php?m=content&c=doserver&a=app_member_add")
+    Observable<String> subPerson(@Body String json,@Field("sign") String sign);
 
 
 }
