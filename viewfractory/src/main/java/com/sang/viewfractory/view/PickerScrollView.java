@@ -5,6 +5,7 @@ import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.animation.ValueAnimator;
 import android.content.Context;
+import android.content.res.TypedArray;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.PointF;
@@ -15,6 +16,7 @@ import android.view.MotionEvent;
 import android.view.VelocityTracker;
 import android.view.View;
 
+import com.sang.viewfractory.R;
 import com.sang.viewfractory.listener.OnScrollSelectListener;
 import com.sang.viewfractory.utils.DeviceUtils;
 import com.sang.viewfractory.utils.ScrollUtils;
@@ -25,7 +27,7 @@ import java.util.List;
 public class PickerScrollView extends View {
 
     private TextPaint mTextPaint;//画笔
-    private int centerColor;
+    private int centerColor, otherColor, lineColor;
     private PointF centerPoint, downPoint;
     private float textSize, radio;
     private List<String> lists = new ArrayList<>();
@@ -33,16 +35,55 @@ public class PickerScrollView extends View {
 
     float start = 0;
     private OnScrollSelectListener listener;
-    private boolean isCycle,hasLine;
+    private boolean isCycle, hasLine;
     private VelocityTracker velocityTracker;
     private ValueAnimator fillAnimator;
+    private int showLines;
+    private float otherTextScral;
 
-    public void setOnScrollSelectListener(OnScrollSelectListener listener){
-        this.listener=listener;
+    /**
+     * 设置文字大小
+     *
+     * @param textSize
+     */
+    public void setTextSize(float textSize) {
+        this.textSize = textSize;
     }
 
-    public void setIsCycle(boolean isCycle){
-        this.isCycle=isCycle;
+    /**
+     * 设置文字大小
+     *
+     * @param lines 默认显示一共多少行,${setTextSize}
+     */
+    public void setShowLines(int lines) {
+        this.showLines = lines;
+    }
+
+    /**
+     * 是否显示两条横线
+     *
+     * @param hasline
+     */
+    public void setHasLine(boolean hasline) {
+        this.hasLine = hasline;
+    }
+
+    /**
+     * 设置监听
+     *
+     * @param listener
+     */
+    public void setOnScrollSelectListener(OnScrollSelectListener listener) {
+        this.listener = listener;
+    }
+
+    /**
+     * 是否循环 如果太少就不会循环
+     *
+     * @param isCycle
+     */
+    public void setIsCycle(boolean isCycle) {
+        this.isCycle = isCycle;
     }
 
     public PickerScrollView(Context context) {
@@ -63,17 +104,32 @@ public class PickerScrollView extends View {
 
     private void iniView(Context context, @Nullable AttributeSet attrs, int defStyleAttr) {
         velocityTracker = VelocityTracker.obtain();
-        centerColor = Color.parseColor("#303030");
-        textSize = DeviceUtils.sp2px(context,18);
+
+        TypedArray typedArray = context.obtainStyledAttributes(attrs, R.styleable.PickerScrollView);
+
+        centerColor = typedArray.getColor(R.styleable.PickerScrollView_pv_centerColor, Color.BLACK);
+        otherColor = typedArray.getColor(R.styleable.PickerScrollView_pv_otherColor, Color.BLACK);
+        lineColor = typedArray.getColor(R.styleable.PickerScrollView_pv_lineColor, Color.BLACK);
+        hasLine = typedArray.getBoolean(R.styleable.PickerScrollView_pv_hasLine, false);
+        showLines = typedArray.getInt(R.styleable.PickerScrollView_pv_showLines, 11);
+        textSize = typedArray.getDimension(R.styleable.PickerScrollView_pv_textSize, 0);
+        isCycle = typedArray.getBoolean(R.styleable.PickerScrollView_pv_isCycle, false);
+        otherTextScral = typedArray.getFloat(R.styleable.PickerScrollView_pv_otherTextScral, 1.2f);
+        typedArray.recycle();
         mTextPaint = new TextPaint();
         mTextPaint.setColor(centerColor);
-        mTextPaint.setTextSize(textSize);
-
+        mTextPaint.setAntiAlias(true);
         centerPoint = new PointF();
         downPoint = new PointF();
         downPoint.y = -1;
-        isCycle=true;
-        setBackgroundColor(Color.WHITE);
+        for (int i = 0; i < 15; i++) {
+            if (i < 8) {
+                lists.add("测试" + i);
+            } else {
+                lists.add("TEST" + i);
+
+            }
+        }
 
     }
 
@@ -85,7 +141,11 @@ public class PickerScrollView extends View {
         downPoint.x = getMeasuredWidth();
         downPoint.y = getMeasuredHeight();
         radio = getMeasuredHeight() / 2;
-        //文本一半高度
+
+        if (textSize == 0) {
+            textSize = (float) (radio * Math.PI / (showLines * 2));
+        }
+        mTextPaint.setTextSize(textSize);
         textHalf = (mTextPaint.descent() + mTextPaint.ascent() + 2 * mTextPaint.getFontSpacing()) / 2;
 
     }
@@ -93,12 +153,15 @@ public class PickerScrollView extends View {
     @Override
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
+        //文本一半高度
 
-        mTextPaint.setStrokeWidth(2);
-        mTextPaint.setAlpha(255);
-        canvas.drawLine(0, canvas.getHeight() / 2 + textHalf, canvas.getWidth(), canvas.getHeight() / 2 + textHalf, mTextPaint);
-        canvas.drawLine(0, canvas.getHeight() / 2 - textHalf, canvas.getWidth(), canvas.getHeight() / 2 - textHalf, mTextPaint);
-        mTextPaint.setStrokeWidth(1);
+
+        if (hasLine) {
+            mTextPaint.setAlpha(120);
+            mTextPaint.setColor(lineColor);
+            canvas.drawLine(0, canvas.getHeight() / 2 + textHalf, canvas.getWidth(), canvas.getHeight() / 2 + textHalf, mTextPaint);
+            canvas.drawLine(0, canvas.getHeight() / 2 - textHalf, canvas.getWidth(), canvas.getHeight() / 2 - textHalf, mTextPaint);
+        }
         drawTest(canvas, textHalf * 2);
 
 
@@ -108,33 +171,40 @@ public class PickerScrollView extends View {
         int size = lists.size();
         int count = position % size;
         int result = count < 0 ? (count + size) : count;
-
         return result;
     }
 
     private int position = 0;
 
     /**
-     * 获取当前被选中的数据
+     * 获取当前被选中的下标
+     *
      * @return
      */
-    public int getSelect(){
+    public int getSelect() {
         return initPosition(position);
     }
 
+    /**
+     * 获取当前被选中的数据
+     *
+     * @return
+     */
     public String getCurrentData() {
         return lists.get(getSelect());
     }
+
     /**
      * 设置或更新要显示的数据
+     *
      * @param list
      */
     public void setDatas(List<String> list) {
         if (list != null && list.size() > 0) {
             lists.clear();
             lists.addAll(list);
-            if (listener!=null){
-                listener.onStopPosition(getSelect(),getCurrentData());
+            if (listener != null) {
+                listener.onStopPosition(getSelect(), getCurrentData());
             }
             postInvalidate();
         }
@@ -158,7 +228,7 @@ public class PickerScrollView extends View {
         int minPoint = position - cellPoint;
 
         int size = lists.size();
-        if (!isCycle||textHalf*size*2<radio*Math.PI) {
+        if (!isCycle) {
             maxPoint = maxPoint > (size - 1) ? size - 1 : maxPoint;
             minPoint = minPoint < 0 ? 0 : minPoint;
             start = start > 0 ? (start > cellHeight * 3 ? cellHeight * 3 : start) : (start < -cellHeight * size - cellHeight * 2 ? -cellHeight * size - cellHeight * 2 : start);
@@ -195,24 +265,63 @@ public class PickerScrollView extends View {
 
             float textHeight = (mTextPaint.descent() + mTextPaint.ascent());
 
-            float scale = (float) (currentHeight / cellHeight);
+            float scale = (float) (currentHeight / (cellHeight*otherTextScral));
 
             //文字底部基线
             int baseY = (int) ((topLine + bottomLine) / 2 - textHeight * scale / 2);
 
-            canvas.save();
-
-
-
-            mTextPaint.setAlpha((int) (255 * scale/2));
-            if (position==i){
+            //下面的线
+            float textscale = 1.2f;
+            if (topLine > (canvas.getHeight() / 2 - textHalf) && topLine < (canvas.getHeight() / 2 + textHalf)) {
+                //绘制线上部分
                 mTextPaint.setAlpha((255));
+                mTextPaint.setColor(centerColor);
+                canvas.save();
+                canvas.clipRect(0, canvas.getHeight() / 2 - textHalf, canvas.getWidth(), canvas.getHeight() / 2 + textHalf);
+//                canvas.scale(textscale, textscale, canvas.getWidth() / 2, (topLine + bottomLine) / 2);
+                canvas.drawText(text, baseX, baseY, mTextPaint);
+                canvas.restore();
 
+                //绘制线下部分
+                mTextPaint.setAlpha((int) (255 * scale / 2));
+                mTextPaint.setColor(otherColor);
+                canvas.save();
+                canvas.clipRect(0, canvas.getHeight() / 2 + textHalf, canvas.getWidth(), bottomLine);
+                canvas.scale(1/otherTextScral, scale, canvas.getWidth() / 2, (topLine + bottomLine) / 2);
+                canvas.drawText(text, baseX, baseY, mTextPaint);
+                canvas.restore();
+
+                //上面的线
+            } else if (bottomLine > (canvas.getHeight() / 2 - textHalf) && bottomLine < (canvas.getHeight() / 2 + textHalf)) {
+
+                //绘制线下部分
+                mTextPaint.setAlpha((255));
+                mTextPaint.setColor(centerColor);
+                canvas.save();
+                canvas.clipRect(0, canvas.getHeight() / 2 - textHalf, canvas.getWidth(), canvas.getHeight() / 2 + textHalf);
+//                canvas.scale(textscale, textscale, canvas.getWidth() / 2, (topLine + bottomLine) / 2);
+                canvas.drawText(text, baseX, baseY, mTextPaint);
+                canvas.restore();
+
+                //绘制线上部分
+                mTextPaint.setAlpha((int) (255 * scale / 2));
+                mTextPaint.setColor(otherColor);
+                canvas.save();
+                canvas.clipRect(0, topLine, canvas.getWidth(), canvas.getHeight() / 2 - textHalf);
+                canvas.scale(1/otherTextScral, scale, canvas.getWidth() / 2, (topLine + bottomLine) / 2);
+                canvas.drawText(text, baseX, baseY, mTextPaint);
+                canvas.restore();
+            } else {
+                //绘制其他
+                mTextPaint.setAlpha((int) (255 * scale / 2));
+                mTextPaint.setColor(otherColor);
+                canvas.save();
+                canvas.clipRect(0, topLine, canvas.getWidth(), bottomLine);
+                canvas.scale(1/otherTextScral, scale, canvas.getWidth() / 2, (topLine + bottomLine) / 2);
+                canvas.drawText(text, baseX, baseY, mTextPaint);
+                canvas.restore();
             }
-            canvas.clipRect(0, topLine, canvas.getWidth(), bottomLine);
-            canvas.scale(1f, scale, canvas.getWidth() / 2, (topLine + bottomLine) / 2);
-            canvas.drawText(text, baseX, baseY, mTextPaint);
-            canvas.restore();
+
 
             //文字中心基线
             int textY = (int) Math.abs((topLine + bottomLine) / 2);
@@ -257,7 +366,7 @@ public class PickerScrollView extends View {
             default:
                 velocityTracker.computeCurrentVelocity(1000);
                 float velocityY = velocityTracker.getYVelocity();
-                if (Math.abs(velocityY) > 500&&lists.size()>5) {//速度大于200时候，用惯性滑动
+                if (Math.abs(velocityY) > 500 && lists.size() > 5) {//速度大于200时候，用惯性滑动
 //                    filling(velocityY);
                     startUpAnimator();
                 } else {
@@ -274,14 +383,14 @@ public class PickerScrollView extends View {
 
     private void filling(float velocityY) {
         ScrollUtils utils = new ScrollUtils(getContext(), velocityTracker);
-        float minY = (float) (textHalf*4*Math.PI);
+        float minY = (float) (textHalf * 4 * Math.PI);
 
         if (!isCycle) {
             if (velocityY < 0) {
-                minY = -(lists.size() - initPosition(position)) * textHalf*2;
+                minY = -(lists.size() - initPosition(position)) * textHalf * 2;
             }
             if (velocityY > 0) {
-                minY = (initPosition(position) + 1) * textHalf*2;
+                minY = (initPosition(position) + 1) * textHalf * 2;
             }
         }
 
@@ -295,7 +404,7 @@ public class PickerScrollView extends View {
             @Override
             public void onAnimationUpdate(ValueAnimator animation) {
                 float value = (float) animation.getAnimatedValue();
-                start=value;
+                start = value;
                 postInvalidate();
             }
         });
@@ -311,6 +420,7 @@ public class PickerScrollView extends View {
         fillAnimator.start();
 
     }
+
     private void clearAllAnimation() {
         if (upAnimator != null) {
             upAnimator.cancel();
@@ -324,14 +434,15 @@ public class PickerScrollView extends View {
 
 
     ValueAnimator upAnimator;
+
     private void startUpAnimator() {
 
         float startPoint = start;
-        upAnimator=ValueAnimator.ofFloat(startPoint,-textHalf*2*position);
+        upAnimator = ValueAnimator.ofFloat(startPoint, -textHalf * 2 * position);
         upAnimator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
             @Override
             public void onAnimationUpdate(ValueAnimator animation) {
-                start= (float) animation.getAnimatedValue();
+                start = (float) animation.getAnimatedValue();
                 postInvalidate();
             }
         });
@@ -339,17 +450,15 @@ public class PickerScrollView extends View {
             @Override
             public void onAnimationEnd(Animator animation) {
                 super.onAnimationEnd(animation);
-                if (listener!=null){
+                if (listener != null) {
                     int i = initPosition(position);
-                    listener.onStopPosition(i,lists.get(i));
+                    listener.onStopPosition(i, lists.get(i));
                 }
             }
         });
         upAnimator.setDuration(200);
         upAnimator.start();
     }
-
-
 
 
 }

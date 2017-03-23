@@ -199,17 +199,6 @@ public class PickView extends View {
             canvas.scale(1f, scale, canvas.getWidth() / 2, (topLine + bottomLine) / 2);
             canvas.drawText(text, baseX, baseY, mTextPaint);
             canvas.restore();
-
-            //文字中心基线
-            int textY = (int) Math.abs((topLine + bottomLine) / 2);
-
-            if (Math.abs(textY - canvas.getHeight() / 2) < (cellHeight / 2) && i != position) {
-                this.position = i;
-                if (listener != null) {
-                    listener.onPositionChenge(index, lists.get(index));
-                }
-
-            }
         }
         canvas.restore();
     }
