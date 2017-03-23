@@ -10,7 +10,7 @@ import android.view.View;
 import android.view.Window;
 import android.widget.Button;
 
-import com.sang.viewfractory.view.PickerScrollView;
+import com.sang.viewfractory.listener.OnScrollSelectListener;
 
 import sang.com.xdialog.inter.OnEntryClickListener;
 
@@ -21,12 +21,22 @@ import sang.com.xdialog.inter.OnEntryClickListener;
  * @Data：2017/2/8 16:10
  */
 public class XDialog<T> extends Dialog {
-    PickerScrollView.OnPickerSelecterListener listener;
+     protected OnScrollSelectListener listener;
     protected int layoutId;
     public final static int NO_BUTTON = 0;
     public final static int BUTTON_UP = 1;
+    /**
+     * 有一个Edittext
+     */
     public final static int ALEART_EDITTEXT = 2;
+    /**
+     * 提示框中,只有一个确认按钮
+     */
     public static final int ALEART_ONLY_ENTRY = 3;
+    /**
+     * 选择循环显示
+     */
+    public static final int PICK_NOCYCLE =4 ;
 
     protected Button bt_cancel, bt_entry;
     protected OnCancelListener cancleListener;
@@ -167,7 +177,7 @@ public class XDialog<T> extends Dialog {
      *
      * @param onPickerSelecterListener
      */
-    public void setOnPickerSelecterListener(PickerScrollView.OnPickerSelecterListener onPickerSelecterListener) {
+    public void setOnPickerSelecterListener(OnScrollSelectListener onPickerSelecterListener) {
         this.listener = onPickerSelecterListener;
     }
 
@@ -183,9 +193,7 @@ public class XDialog<T> extends Dialog {
     }
 
     protected void changeLayoutByStyle(int style) {
-        if (style == ALEART_EDITTEXT) {
-            layoutId = R.layout.alert_editext_dialog;
-        }
+
     }
 
     /**

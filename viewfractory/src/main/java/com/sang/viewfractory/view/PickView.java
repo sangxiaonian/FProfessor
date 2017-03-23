@@ -106,7 +106,32 @@ public class PickView extends View {
 
     private int position = 0;
 
+    /**
+     * 获取当前被选中的数据
+     * @return
+     */
+    public int getSelect(){
+        return initPosition(position);
+    }
 
+    public String getCurrentData() {
+        return lists.get(getSelect());
+    }
+    /**
+     * 设置或更新要显示的数据
+     * @param list
+     */
+    public void setDatas(List<String> list) {
+        if (list != null && list.size() > 0) {
+            lists.clear();
+            lists.addAll(list);
+            if (listener!=null){
+                listener.onStopPosition(getSelect(),getCurrentData());
+            }
+            postInvalidate();
+        }
+
+    }
 
     private void drawTest(Canvas canvas, float cellHeight) {
         canvas.save();

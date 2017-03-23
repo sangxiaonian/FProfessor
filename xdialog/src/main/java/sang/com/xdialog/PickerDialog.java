@@ -21,6 +21,7 @@ import java.util.List;
  * @Data： 2017/2/6 17:48
  */
 public class PickerDialog extends XDialog<List<String>> {
+
     private Activity activity;
     private PickerScrollView pickerScrollView;
     private List<String> lists;
@@ -70,7 +71,12 @@ public class PickerDialog extends XDialog<List<String>> {
         //用这个方法设置dialog大小也可以，但是这个方法不能设置重心之类的参数，推荐用Attributes设置
         //最后把这个参数对象设置进去，即与dialog绑定
         getWindow().setAttributes(params);
-        pickerScrollView = (PickerScrollView) findViewById(R.id.picker);
+        if (layoutId!=0) {
+            pickerScrollView = (PickerScrollView) findViewById(R.id.picker);
+            if (style==PICK_NOCYCLE){
+                pickerScrollView.setIsCycle(false);
+            }
+        }
         window.setWindowAnimations(R.style.dialog_down);
         initDialog();
 
@@ -87,7 +93,7 @@ public class PickerDialog extends XDialog<List<String>> {
     private void initDialog(){
         if (pickerScrollView!=null) {
             if (listener!=null){
-                pickerScrollView.setOnPickerSelecterListener(listener);
+                pickerScrollView.setOnScrollSelectListener(listener);
             }
             if (lists!=null){
                 pickerScrollView.setDatas(lists);
@@ -134,7 +140,6 @@ public class PickerDialog extends XDialog<List<String>> {
 
     @Override
     public void showStyle(int style) {
-
         super.showStyle(style);
     }
 
@@ -145,6 +150,10 @@ public class PickerDialog extends XDialog<List<String>> {
             case BUTTON_UP:
                 layoutId =R.layout.picker_button_up;
                 break;
+            case PICK_NOCYCLE:
+                layoutId =R.layout.picker_button_up;
+                break;
+
         }
     }
 }

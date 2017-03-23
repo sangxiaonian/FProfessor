@@ -119,6 +119,7 @@ public class AlertDialog extends XDialog {
 
     @Override
     protected void changeLayoutByStyle(int style) {
+
         switch (style) {
             case ALEART_EDITTEXT:
                 layoutId = R.layout.alert_editext_dialog;

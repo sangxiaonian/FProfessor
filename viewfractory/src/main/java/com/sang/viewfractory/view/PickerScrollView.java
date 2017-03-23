@@ -1,332 +1,304 @@
 package com.sang.viewfractory.view;
 
+
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.animation.ValueAnimator;
 import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Color;
-import android.graphics.Paint;
-import android.graphics.Rect;
+import android.graphics.PointF;
+import android.support.annotation.Nullable;
+import android.text.TextPaint;
 import android.util.AttributeSet;
 import android.view.MotionEvent;
 import android.view.VelocityTracker;
 import android.view.View;
 
+import com.sang.viewfractory.listener.OnScrollSelectListener;
+import com.sang.viewfractory.utils.DeviceUtils;
 import com.sang.viewfractory.utils.ScrollUtils;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
-
-
-/**
- * Description：仿Ios滚动选择控件
- *
- * @Author：桑小年
- * @Data：2017/2/6 17:21
- */
 public class PickerScrollView extends View {
 
-
-    private Paint mPaint;
-    private Rect textRectF, centerRectf;
+    private TextPaint mTextPaint;//画笔
     private int centerColor;
-    private float mWidth, mHeight, centerY, startY, lineStartY, lineEndY, downY, cellHeight, textHeight;
-    private int bigCap, textSize;
-    private int currentPosition;
-    private ValueAnimator animator, fillAnimator;
-    private List<String> datas;
-    private Map<Integer, Float> basicLines;
+    private PointF centerPoint, downPoint;
+    private float textSize, radio;
+    private List<String> lists = new ArrayList<>();
+    private float textHalf;
+
+    float start = 0;
+    private OnScrollSelectListener listener;
+    private boolean isCycle,hasLine;
     private VelocityTracker velocityTracker;
-    private OnPickerSelecterListener listener;
+    private ValueAnimator fillAnimator;
 
-
-    public void setOnPickerSelecterListener(OnPickerSelecterListener listener){
+    public void setOnScrollSelectListener(OnScrollSelectListener listener){
         this.listener=listener;
+    }
+
+    public void setIsCycle(boolean isCycle){
+        this.isCycle=isCycle;
     }
 
     public PickerScrollView(Context context) {
         super(context);
-        initView(context, null, 0);
+        iniView(context, null, 0);
+
     }
 
-    public PickerScrollView(Context context, AttributeSet attrs) {
+    public PickerScrollView(Context context, @Nullable AttributeSet attrs) {
         super(context, attrs);
-        initView(context, attrs, 0);
+        iniView(context, attrs, 0);
     }
 
-    public PickerScrollView(Context context, AttributeSet attrs, int defStyleAttr) {
+    public PickerScrollView(Context context, @Nullable AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
-        initView(context, attrs, defStyleAttr);
+        iniView(context, attrs, defStyleAttr);
     }
 
-    private void initView(Context context, AttributeSet attrs, int defStyleAttr) {
-        setBackgroundColor(Color.WHITE);
-        centerColor = Color.BLACK;
-        mPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
-        textRectF = new Rect();
-        centerRectf = new Rect();
-        downY = -1;
-
-        datas = new ArrayList<>();
-        basicLines = new HashMap<>();
+    private void iniView(Context context, @Nullable AttributeSet attrs, int defStyleAttr) {
         velocityTracker = VelocityTracker.obtain();
+        centerColor = Color.parseColor("#303030");
+        textSize = DeviceUtils.sp2px(context,18);
+        mTextPaint = new TextPaint();
+        mTextPaint.setColor(centerColor);
+        mTextPaint.setTextSize(textSize);
 
-        for (int i = 0; i <= 100; i++) {
-            datas.add("test" + i);
-
-        }
-
-
-    }
-
-    private void initDatas() {
-        if (datas.size() > 0) {
-            mPaint.setTextSize(textSize);
-            mPaint.getTextBounds(datas.get(0), 0, datas.get(0).length(), textRectF);
-            bigCap = (int) (textRectF.height() /5f);
-            textHeight = textRectF.height();
-            cellHeight = textHeight + 2 * bigCap;
-        }
-
-    }
-
-    /**
-     * 设置或更新要显示的数据
-     * @param list
-     */
-    public void setDatas(List<String> list) {
-        if (list != null && list.size() > 0) {
-            datas.clear();
-            datas.addAll(list);
-            if (listener!=null){
-                listener.onSelecter(datas.get(currentPosition),currentPosition);
-            }
-            postInvalidate();
-        }
+        centerPoint = new PointF();
+        downPoint = new PointF();
+        downPoint.y = -1;
+        isCycle=true;
+        setBackgroundColor(Color.WHITE);
 
     }
 
     @Override
     protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
         super.onMeasure(widthMeasureSpec, heightMeasureSpec);
-        mWidth = getMeasuredWidth();
-        mHeight = getMeasuredHeight();
-
-        if (lineEndY == 0) {
-            if (textSize==0){
-            textSize = (int) (mHeight / 5);}
-            initDatas();
-            centerY = (mHeight + textHeight) / 2;
-            startY = centerY;
-            lineStartY = (mHeight - textHeight) / 2 - bigCap;
-            lineEndY = (mHeight + textHeight) / 2 + bigCap;
-
-        }
+        centerPoint.x = getMeasuredWidth() / 2;
+        centerPoint.y = getMeasuredHeight() / 2;
+        downPoint.x = getMeasuredWidth();
+        downPoint.y = getMeasuredHeight();
+        radio = getMeasuredHeight() / 2;
+        //文本一半高度
+        textHalf = (mTextPaint.descent() + mTextPaint.ascent() + 2 * mTextPaint.getFontSpacing()) / 2;
 
     }
-
 
     @Override
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
 
-        drawSelectText(canvas);
-        drawOtherText(canvas);
-        mPaint.setColor(Color.GRAY);
-        mPaint.setAlpha(255);
-        canvas.drawLine(0, lineStartY, mWidth, lineStartY, mPaint);
-        canvas.drawLine(0, lineEndY, mWidth, lineEndY, mPaint);
+        mTextPaint.setStrokeWidth(2);
+        mTextPaint.setAlpha(255);
+        canvas.drawLine(0, canvas.getHeight() / 2 + textHalf, canvas.getWidth(), canvas.getHeight() / 2 + textHalf, mTextPaint);
+        canvas.drawLine(0, canvas.getHeight() / 2 - textHalf, canvas.getWidth(), canvas.getHeight() / 2 - textHalf, mTextPaint);
+        mTextPaint.setStrokeWidth(1);
+        canvas.save();
+        drawTest(canvas, textHalf * 2);
+        canvas.restore();
 
     }
 
-    /**
-     * 绘制其他文字
-     * @param canvas
-     */
-    private void drawOtherText(Canvas canvas) {
-        //绘制上面的
-        mPaint.setColor(centerColor);
-        float bassicLine = startY - cellHeight + bigCap;
-        for (int i = currentPosition - 1; i >= 0; i--) {
-            float v = bassicLine - cellHeight;
-//            float scale = (float) Math.pow(2, Math.abs(v - lineStartY) / (2 * cellHeight));
-            float scale = getScrall(v - lineStartY);
-            mPaint.setAlpha((int) (255 / scale));
-            String text = datas.get(i);
-            mPaint.setTextSize(textSize / scale);
-            mPaint.getTextBounds(text, 0, text.length(), centerRectf);
-            float startX = (mWidth - centerRectf.width()) / 2;
-            canvas.drawText(text, startX, bassicLine - (cellHeight - centerRectf.height()) / 2, mPaint);
-            basicLines.put(i, bassicLine - (cellHeight - centerRectf.height()) / 2);
-            bassicLine -= cellHeight;
-        }
+    private int initPosition(int position) {
+        int size = lists.size();
+        int count = position % size;
+        int result = count < 0 ? (count + size) : count;
 
-
-        //绘制下面的
-
-        bassicLine = startY + bigCap + cellHeight;
-        for (int i = currentPosition + 1; i < datas.size(); i++) {
-            float v = bassicLine;
-//            float scale = (float) Math.pow(2, Math.abs(v - lineEndY) / (2 * cellHeight));
-            float scale =  getScrall(v - lineEndY);
-            mPaint.setAlpha((int) (255 / (scale)));
-            String text = datas.get(i);
-            mPaint.setTextSize(textSize / scale);
-            mPaint.getTextBounds(text, 0, text.length(), centerRectf);
-            float startX = (mWidth - centerRectf.width()) / 2;
-            canvas.drawText(text, startX, bassicLine - (cellHeight - centerRectf.height()) / 2, mPaint);
-            basicLines.put(i, bassicLine - (cellHeight - centerRectf.height()) / 2);
-            bassicLine += cellHeight;
-        }
-
+        return result;
     }
+
+    private int position = 0;
 
     /**
      * 获取当前被选中的数据
      * @return
      */
     public int getSelect(){
-        return currentPosition;
+        return initPosition(position);
     }
 
-    private float getScrall(float distance){
-        float scale = (float) Math.pow(2, Math.abs(distance) / (2 * cellHeight));
-        return scale;
+    public String getCurrentData() {
+        return lists.get(getSelect());
     }
-
     /**
-     * 绘制被选中的文字
-     * @param canvas
+     * 设置或更新要显示的数据
+     * @param list
      */
-    private void drawSelectText(Canvas canvas) {
-        if (startY - centerY >= cellHeight) {
-            currentPosition--;
-            if (currentPosition < 0) {
-                currentPosition = 0;
-                if (startY - centerY >= cellHeight * 2)
-                    startY = cellHeight * 2 + centerY;
-            } else {
-                startY = centerY;
+    public void setDatas(List<String> list) {
+        if (list != null && list.size() > 0) {
+            lists.clear();
+            lists.addAll(list);
+            if (listener!=null){
+                listener.onStopPosition(getSelect(),getCurrentData());
             }
-
-
-        } else if (startY - centerY <= -cellHeight) {
-            currentPosition++;
-            if (currentPosition > datas.size() - 1) {
-                currentPosition = datas.size() - 1;
-                if (startY - centerY < -2 * cellHeight) {
-                    startY = centerY - 2 * cellHeight;
-                }
-            } else {
-                startY = centerY;
-            }
-
+            postInvalidate();
         }
-        mPaint.setColor(centerColor);
-        float v = startY + bigCap;
-//        float scale = (float) Math.pow(2, Math.abs(v - lineEndY) / (2 * cellHeight));
-        float scale =  getScrall(v - lineEndY);
-        mPaint.setAlpha((int) (255 / scale));
-        String selectText = datas.get(currentPosition);
-        mPaint.setTextSize(textSize / scale);
-        mPaint.getTextBounds(selectText, 0, selectText.length(), textRectF);
-        float startX = (mWidth - textRectF.width()) / 2;
-        canvas.drawText(selectText, startX, startY, mPaint);
-        basicLines.put(currentPosition, startY);
+
     }
 
-    boolean isFill=true;
+    private void drawTest(Canvas canvas, float cellHeight) {
+        canvas.save();
+        //保证当前position为正,切相对位置不变
+
+
+        //单个条目所占的角度
+        float cellAngle = (float) (cellHeight * 180 / (radio * Math.PI));
+
+        //一侧能显示的条目
+        int cellPoint = (int) Math.ceil(Math.abs(90 * 1.0 / cellAngle));
+
+        //上策显示的条目
+        int maxPoint = position + cellPoint;
+        //下面显示的条目
+        int minPoint = position - cellPoint;
+
+        int size = lists.size();
+        if (!isCycle||textHalf*size*2<radio*Math.PI) {
+            maxPoint = maxPoint > (size - 1) ? size - 1 : maxPoint;
+            minPoint = minPoint < 0 ? 0 : minPoint;
+            start = start > 0 ? (start > cellHeight * 3 ? cellHeight * 3 : start) : (start < -cellHeight * size - cellHeight * 2 ? -cellHeight * size - cellHeight * 2 : start);
+        }
+
+
+        for (int i = minPoint; i <= maxPoint; i++) {
+            //相对于中心,第i段的弧长
+            float length = start + cellHeight * i + cellHeight / 2;
+
+            //相对于中心,第i段的角度
+            float curentAngle = (float) (length * 180 / (radio * Math.PI));
+
+            //顶部相对中心高度
+            float top = (float) (radio * (Math.sin(Math.toRadians(curentAngle))));
+
+            //底部相对中心高度
+            float botoom = (float) (radio * (Math.sin(Math.toRadians(curentAngle - cellAngle))));
+
+            //当前条目高度
+            double currentHeight = top - botoom;
+
+            //顶部真实高度
+            float topLine = canvas.getHeight() / 2 - top;
+            //底部真实高度
+            float bottomLine = canvas.getHeight() / 2 - botoom;
+
+            //绘制文字
+            int index = initPosition(i);
+            String text = lists.get(index);
+            float textWidth = mTextPaint.measureText(text);
+
+            int baseX = (int) (canvas.getWidth() / 2 - textWidth / 2);
+
+            float textHeight = (mTextPaint.descent() + mTextPaint.ascent());
+
+            float scale = (float) (currentHeight / cellHeight);
+
+            //文字底部基线
+            int baseY = (int) ((topLine + bottomLine) / 2 - textHeight * scale / 2);
+
+            canvas.save();
+
+            mTextPaint.setAlpha((int) (255 * scale));
+            canvas.clipRect(0, topLine, canvas.getWidth(), bottomLine);
+            canvas.scale(1f, scale, canvas.getWidth() / 2, (topLine + bottomLine) / 2);
+            canvas.drawText(text, baseX, baseY, mTextPaint);
+            canvas.restore();
+
+            //文字中心基线
+            int textY = (int) Math.abs((topLine + bottomLine) / 2);
+
+            if (Math.abs(textY - canvas.getHeight() / 2) < (cellHeight / 2) && i != position) {
+                this.position = i;
+                if (listener != null) {
+                    listener.onPositionChenge(index, lists.get(index));
+                }
+
+            }
+        }
+        canvas.restore();
+    }
+
     @Override
     public boolean onTouchEvent(MotionEvent event) {
-
-        if (downY == -1) {
-            downY = event.getY();
+        if (downPoint.y == -1) {
+            downPoint.x = event.getRawX();
+            downPoint.y = event.getRawY();
         }
-
+        clearAllAnimation();
         velocityTracker.addMovement(event);
-        cancleAnimotion();
         switch (event.getAction()) {
             case MotionEvent.ACTION_DOWN:
-                downY = event.getY();
+                downPoint.x = event.getRawX();
+                downPoint.y = event.getRawY();
                 break;
             case MotionEvent.ACTION_MOVE:
-                float moveY = event.getY();
-                if (!((currentPosition == 0 && downY < moveY) || (currentPosition == datas.size() - 1 && downY > moveY))) {
-                    startY = startY + (moveY - downY);
-                    downY = moveY;
-                    isFill=true;
-                    postInvalidate();
-                } else {
-                    float scale =  (Math.abs(startY-centerY)*5/cellHeight);
-                    scale=scale<1?1:scale;
-
-                    startY = startY + (moveY - downY)/scale;
-                    downY = moveY;
-                    isFill=false;
-                    postInvalidate();
+                float moveX = event.getRawX();
+                float moveY = event.getRawY();
+                float disX = moveX - downPoint.x;
+                float disY = moveY - downPoint.y;
+                if (disX > DeviceUtils.getMinTouchSlop(getContext()) && disY < DeviceUtils.getMinTouchSlop(getContext())) {
+                    return false;
                 }
+                start -= disY;
+                downPoint.x = moveX;
+                downPoint.y = moveY;
+                postInvalidate();
                 break;
             default:
-                downY = -1;
                 velocityTracker.computeCurrentVelocity(1000);
                 float velocityY = velocityTracker.getYVelocity();
-                if (Math.abs(velocityY) > 500&&datas.size()>5&&isFill) {//速度大于200时候，用惯性滑动
-                    filling(velocityY);
+                if (Math.abs(velocityY) > 500&&lists.size()>5) {//速度大于200时候，用惯性滑动
+//                    filling(velocityY);
+                    startUpAnimator();
                 } else {
-                    moveToPosition();
+                    startUpAnimator();
+
                 }
+
+                downPoint.y = -1;
+                downPoint.x = -1;
                 break;
         }
-
-
         return true;
     }
 
-    private void cancleAnimotion() {
-        if (animator != null && animator.isRunning()) {
-            animator.cancel();
-        }
-        if (fillAnimator != null && fillAnimator.isRunning()) {
-            fillAnimator.cancel();
-        }
-    }
-
-    float a = 0;
-
     private void filling(float velocityY) {
         ScrollUtils utils = new ScrollUtils(getContext(), velocityTracker);
+        float minY = (float) (textHalf*4*Math.PI);
 
-        float minY = 0;
-        if (velocityY < 0) {
-            minY = -(datas.size() - currentPosition) * cellHeight;
+        if (!isCycle) {
+            if (velocityY < 0) {
+                minY = -(lists.size() - initPosition(position)) * textHalf*2;
+            }
+            if (velocityY > 0) {
+                minY = (initPosition(position) + 1) * textHalf*2;
+            }
         }
-        if (velocityY > 0) {
-            minY = (currentPosition + 1) * cellHeight;
-        }
+
         float finalY = (float) utils.getSplineFlingDistance(minY);
         float t = (float) utils.getTiemByDistance(finalY);
-        float endY = startY + finalY;
-        float start = startY;
-        fillAnimator = ValueAnimator.ofFloat(start, endY);
+        float endY = start + finalY;
+        float startpoint = start;
+        fillAnimator = ValueAnimator.ofFloat(startpoint, endY);
         fillAnimator.setInterpolator(new ScrollUtils.ViscousFluidInterpolator());
         fillAnimator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
             @Override
             public void onAnimationUpdate(ValueAnimator animation) {
                 float value = (float) animation.getAnimatedValue();
-                startY += (value - a);
+                start=value;
                 postInvalidate();
-                a = value;
             }
         });
         fillAnimator.addListener(new AnimatorListenerAdapter() {
             @Override
             public void onAnimationEnd(Animator animation) {
                 super.onAnimationEnd(animation);
-                moveToPosition();
+                startUpAnimator();
             }
         });
 
@@ -334,43 +306,45 @@ public class PickerScrollView extends View {
         fillAnimator.start();
 
     }
-
-    private void moveToPosition() {
-        float start = startY;
-        if (startY - centerY > cellHeight / 2) {
-            currentPosition--;
-            currentPosition = currentPosition < 0 ? 0 : currentPosition;
-        } else if (startY - centerY < -cellHeight / 2) {
-            currentPosition++;
-            currentPosition = currentPosition > datas.size() - 1 ? datas.size() - 1 : currentPosition;
+    private void clearAllAnimation() {
+        if (upAnimator != null) {
+            upAnimator.cancel();
+            upAnimator = null;
         }
-
-        if (listener!=null){
-            listener.onSelecter(datas.get(currentPosition),currentPosition);
+        if (fillAnimator != null) {
+            fillAnimator.cancel();
+            fillAnimator = null;
         }
+    }
 
-        start = basicLines.get(currentPosition);
-        animator = ValueAnimator.ofFloat(start, centerY);
-        animator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
+
+    ValueAnimator upAnimator;
+    private void startUpAnimator() {
+
+        float startPoint = start;
+        upAnimator=ValueAnimator.ofFloat(startPoint,-textHalf*2*position);
+        upAnimator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
             @Override
             public void onAnimationUpdate(ValueAnimator animation) {
-                float value = (float) animation.getAnimatedValue();
-                startY = value;
+                start= (float) animation.getAnimatedValue();
                 postInvalidate();
             }
         });
-
-        animator.setDuration(200);
-        animator.start();
+        upAnimator.addListener(new AnimatorListenerAdapter() {
+            @Override
+            public void onAnimationEnd(Animator animation) {
+                super.onAnimationEnd(animation);
+                if (listener!=null){
+                    int i = initPosition(position);
+                    listener.onStopPosition(i,lists.get(i));
+                }
+            }
+        });
+        upAnimator.setDuration(200);
+        upAnimator.start();
     }
 
-    public String getCurrentData() {
-        return datas.get(currentPosition);
-    }
 
 
-    public interface OnPickerSelecterListener{
-        void onSelecter(String content, int position);
-    }
 
 }
