@@ -99,9 +99,8 @@ public class PickerScrollView extends View {
         canvas.drawLine(0, canvas.getHeight() / 2 + textHalf, canvas.getWidth(), canvas.getHeight() / 2 + textHalf, mTextPaint);
         canvas.drawLine(0, canvas.getHeight() / 2 - textHalf, canvas.getWidth(), canvas.getHeight() / 2 - textHalf, mTextPaint);
         mTextPaint.setStrokeWidth(1);
-        canvas.save();
         drawTest(canvas, textHalf * 2);
-        canvas.restore();
+
 
     }
 
@@ -203,7 +202,13 @@ public class PickerScrollView extends View {
 
             canvas.save();
 
-            mTextPaint.setAlpha((int) (255 * scale));
+
+
+            mTextPaint.setAlpha((int) (255 * scale/2));
+            if (position==i){
+                mTextPaint.setAlpha((255));
+
+            }
             canvas.clipRect(0, topLine, canvas.getWidth(), bottomLine);
             canvas.scale(1f, scale, canvas.getWidth() / 2, (topLine + bottomLine) / 2);
             canvas.drawText(text, baseX, baseY, mTextPaint);
