@@ -1,12 +1,13 @@
 <resources>
 
 
+    <!--满屏-->
     <style name="DialogTheme" parent="android:Theme.Dialog">
 
         <item name="android:layout_width">fill_parent</item>
         <item name="android:layout_height">fill_parent</item>
         <!-- No backgrounds, titles or window float -->
-        <item name="android:windowBackground">@null</item>
+
         <item name="android:windowNoTitle">true</item>
         <item name="android:windowIsFloating">true</item>
     </style>
@@ -65,12 +66,14 @@
         <item name="android:textSize">@dimen/title_size</item>
         <item name="android:gravity">center</item>
         <item name="android:textStyle">bold</item>
-
         <item name="android:layout_marginTop">8dp</item>
         <item name="android:textColor">@color/btn_blue</item>
         <item name="android:background">@drawable/select_btn_corner</item>
     </style>
 
+    <style name="bt_normal" parent="btn_corners">
+        <item name="android:background">@drawable/select_bt</item>
+    </style>
 
 
 </resources>

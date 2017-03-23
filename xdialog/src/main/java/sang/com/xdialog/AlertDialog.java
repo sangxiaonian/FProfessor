@@ -17,13 +17,12 @@ import com.sang.viewfractory.utils.DeviceUtils;
  * @Author：桑小年
  * @Data：2017/2/9 10:10
  */
-public class AlertDialog extends XDialog {
+public class AlertDialog extends XDialog<String> {
 
-    private String msg_titles, msg_content;
+    private String msg_titles;
 
     public AlertDialog(Context context) {
         this(context, R.style.DialogCutTheme);
-//        super(context);
     }
 
     public AlertDialog(Context context, int themeResId) {
@@ -86,20 +85,20 @@ public class AlertDialog extends XDialog {
 
         if (style == ALEART_EDITTEXT) {
             et = (EditText) findViewById(R.id.txt_msg);
-            if (!TextUtils.isEmpty(msg_content)) {
+            if (!TextUtils.isEmpty(datas)) {
                 et.setVisibility(View.VISIBLE);
-                et.setHint(msg_content);
+                et.setHint(datas);
                 et.requestFocus();
 
             }
         } else {
             content = (TextView) findViewById(R.id.txt_msg);
             if (content!=null) {
-                if (TextUtils.isEmpty(msg_content)) {
+                if (TextUtils.isEmpty(datas)) {
                     content.setVisibility(View.GONE);
                 } else {
                     content.setVisibility(View.VISIBLE);
-                    content.setText(msg_content);
+                    content.setText(datas);
                 }
             }
 
@@ -112,14 +111,9 @@ public class AlertDialog extends XDialog {
         setContentView(R.layout.alert_dialog);
     }
 
-    @Override
-    public void showStyle(int style) {
-        super.showStyle(style);
-    }
 
     @Override
     protected void changeLayoutByStyle(int style) {
-
         switch (style) {
             case ALEART_EDITTEXT:
                 layoutId = R.layout.alert_editext_dialog;
@@ -138,10 +132,9 @@ public class AlertDialog extends XDialog {
     }
 
     @Override
-    public void setDatas(Object datas) {
+    public void setDatas(String datas) {
         super.setDatas(datas);
-        msg_content = (String) datas;
-
+        this.datas = datas;
     }
 
     @Override

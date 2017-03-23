@@ -16,7 +16,7 @@ import sang.com.xdialog.view.LoadView;
  * @Data：2017/2/9 10:10
  */
 public class LoadDialog extends XDialog {
-    private String msg_titles, msg_content;
+    private String msg_titles;
 
     public LoadDialog(Context context) {
         this(context, R.style.DialogCutTheme);
@@ -80,9 +80,6 @@ public class LoadDialog extends XDialog {
         super.setTitle(title);
         msg_titles = (String) title;
     }
-
-
-
 
 
     @Override

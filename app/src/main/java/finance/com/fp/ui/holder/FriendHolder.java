@@ -29,6 +29,7 @@ import finance.com.fp.R;
 import finance.com.fp.mode.bean.FriendBean;
 import finance.com.fp.utlis.GlideUtils;
 import finance.com.fp.utlis.Utils;
+import sang.com.xdialog.XDialogBuilder;
 import sang.com.xdialog.DialogFactory;
 import sang.com.xdialog.XDialog;
 import sang.com.xdialog.inter.OnEntryClickListener;
@@ -42,12 +43,13 @@ import static finance.com.fp.R.id.img_icon;
  * @Data：2017/2/26 15:29
  */
 public class FriendHolder extends CustomHolder<FriendBean> {
-    private XDialog dialog, select, load;
+    private XDialog dialog, load;
+    private XDialogBuilder selectbuilder;
 
     public FriendHolder(Context context, List<FriendBean> lists, int itemID) {
         super(context, lists, itemID);
         dialog = DialogFactory.getInstance().creatDiaolg(context, DialogFactory.ALEART_DIALOG);
-        select = DialogFactory.getInstance().creatDiaolg(context, DialogFactory.SELECT_DIALOG);
+        selectbuilder = new XDialogBuilder(context);
         load = DialogFactory.getInstance().creatDiaolg(context, DialogFactory.LOAD_DIALOG);
 
     }
@@ -153,17 +155,25 @@ public class FriendHolder extends CustomHolder<FriendBean> {
 
                     List<String> list = new ArrayList<String>();
                     list.add(context.getResources().getString(R.string.friend_save));
-                    select.setDatas(list);
-                    select.setOnClickListener(new OnEntryClickListener() {
-                        @Override
-                        public void onClick(Dialog dialog, int which, Object data) {
-                            Utils.saveImageToGallery(context, bitmap);
-                            dialog.dismiss();
 
-                        }
-                    });
+
                     if (bitmap != null) {
-                        select.show();
+//
+                       selectbuilder.setDatas(list)
+                               .setStyle(XDialogBuilder.SELECT_WIDTH_FULL)
+                                .setThemeID(sang.com.xdialog.R.style.DialogTheme)
+                                .setEntryListener(new OnEntryClickListener() {
+                                    @Override
+                                    public void onClick(Dialog dialog, int which, Object data) {
+                                        Utils.saveImageToGallery(context, bitmap);
+                                        dialog.dismiss();
+
+                                    }
+                                })
+                                .setDialogStyle(XDialogBuilder.SELECT_DIALOG)
+                               .builder()
+                       .show();
+
                     }
                 } catch (Exception e) {
                     e.printStackTrace();

@@ -21,8 +21,9 @@ import sang.com.xdialog.inter.OnEntryClickListener;
  * @Data：2017/2/8 16:10
  */
 public class XDialog<T> extends Dialog {
-     protected OnScrollSelectListener listener;
+    protected OnScrollSelectListener listener;
     protected int layoutId;
+    protected T datas;
     public final static int NO_BUTTON = 0;
     public final static int BUTTON_UP = 1;
     /**
@@ -36,7 +37,12 @@ public class XDialog<T> extends Dialog {
     /**
      * 选择循环显示
      */
-    public static final int PICK_NOCYCLE =4 ;
+    public static final int PICK_NOCYCLE = 4;
+
+    /**
+     * selectDialog 宽布满整个屏幕
+     */
+    public static final int SELECT_WIDTH_FULL = 5;
 
     protected Button bt_cancel, bt_entry;
     protected OnCancelListener cancleListener;
@@ -45,7 +51,18 @@ public class XDialog<T> extends Dialog {
     protected int style;
     protected Window window;
     protected View view;
+    /**
+     * 动画效果
+     */
+    private int animationsStyle;
 
+    /**
+     * 设置动画效果
+     * @param animationsStyle
+     */
+    public void setAnimationsStyle(int animationsStyle) {
+        this.animationsStyle = animationsStyle;
+    }
 
     public XDialog(Context context) {
         super(context);
@@ -63,7 +80,7 @@ public class XDialog<T> extends Dialog {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        requestWindowFeature(Window.FEATURE_NO_TITLE);
+//        requestWindowFeature(Window.FEATURE_NO_TITLE);
         window = getWindow();
         window.setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
 
@@ -120,7 +137,7 @@ public class XDialog<T> extends Dialog {
         super.onStart();
         initCancelListener();
         initEntryListener();
-        initAnimotion();
+        initAnimation();
     }
 
     public void initCancelListener() {
@@ -160,6 +177,7 @@ public class XDialog<T> extends Dialog {
      * @param datas
      */
     public void show(T datas) {
+        setDatas(datas);
         show();
     }
 
@@ -169,7 +187,7 @@ public class XDialog<T> extends Dialog {
      * @param datas
      */
     public void setDatas(T datas) {
-
+        this.datas=datas;
     }
 
     /**
@@ -196,6 +214,7 @@ public class XDialog<T> extends Dialog {
 
     }
 
+
     /**
      * 设置风格
      *
@@ -205,35 +224,28 @@ public class XDialog<T> extends Dialog {
         changeLayoutByStyle(style);
     }
 
-    protected int animationstyle;
 
 
-    protected void initAnimotion() {
-        int style = 0;
-        switch (animationstyle) {
-            case 1:
-                style = R.style.dialog_down;
-                break;
-        }
-
-        if (style > 0) {
-            window.setWindowAnimations(style);
+    protected void initAnimation() {
+        if (animationsStyle > 0) {
+            window.setWindowAnimations(animationsStyle);
         }
     }
 
-    protected String be_entry_name,bt_cancle_name;
+    protected String be_entry_name, bt_cancle_name;
 
     /**
      * 设置按钮的文字信息 默认为"取消" 和"确认" 在show之前调用
-     * @param entry 确认按钮
+     *
+     * @param entry  确认按钮
      * @param cancle 取消按钮
      */
-    public void setButtonName(String entry,String cancle){
-        if (!TextUtils.isEmpty(entry)){
-            be_entry_name=entry;
+    public void setButtonName(String entry, String cancle) {
+        if (!TextUtils.isEmpty(entry)) {
+            be_entry_name = entry;
         }
-        if (!TextUtils.isEmpty(cancle)){
-            bt_cancle_name=entry;
+        if (!TextUtils.isEmpty(cancle)) {
+            bt_cancle_name = entry;
         }
     }
 

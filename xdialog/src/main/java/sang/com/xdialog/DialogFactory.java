@@ -78,4 +78,25 @@ public class DialogFactory {
         return creatDiaolg(context,ALEART_DIALOG);
     }
 
+    public XDialog creatDiaolg(Context context, int style, int dialogStyle) {
+        XDialog dialog ;
+        switch (style){
+            case PIKER_DIALOG:
+                dialog=new PickerDialog(context,dialogStyle);
+                break;
+            case ALEART_DIALOG:
+                dialog=new AlertDialog(context,dialogStyle);
+                break;
+            case SELECT_DIALOG:
+                dialog=new SelectDialog(context,dialogStyle);
+                break;
+            case LOAD_DIALOG:
+                dialog=new LoadDialog(context,dialogStyle);
+                break;
+            default:
+                dialog=new PickerDialog(context,dialogStyle);
+                break;
+        }
+        return dialog;
+    }
 }

@@ -24,7 +24,7 @@ public class PickerDialog extends XDialog<List<String>> {
 
     private Activity activity;
     private PickerScrollView pickerScrollView;
-    private List<String> lists;
+
 
 
 
@@ -45,7 +45,7 @@ public class PickerDialog extends XDialog<List<String>> {
 
     private void initView(Context context){
         activity= (Activity) context;
-        lists=new ArrayList<>();
+        datas=new ArrayList<>();
     }
 
     @Override
@@ -95,8 +95,8 @@ public class PickerDialog extends XDialog<List<String>> {
             if (listener!=null){
                 pickerScrollView.setOnScrollSelectListener(listener);
             }
-            if (lists!=null){
-                pickerScrollView.setDatas(lists);
+            if (datas!=null){
+                pickerScrollView.setDatas(datas);
             }
         }
 
@@ -122,21 +122,16 @@ public class PickerDialog extends XDialog<List<String>> {
 
     @Override
     public void setDatas(List<String> datas) {
-        super.setDatas(datas);
         if (datas!=null){
-            lists.clear();
-            lists.addAll(datas);
+            if (this.datas==null){
+                this.datas=new ArrayList<>();
+            }
+            this.datas.clear();
+            this.datas.addAll(datas);
         }
     }
 
-    @Override
-    public void show(List<String> datas) {
-        if (datas!=null){
-            lists.clear();
-            lists.addAll(datas);
-        }
-        super.show(datas);
-    }
+
 
     @Override
     public void showStyle(int style) {
