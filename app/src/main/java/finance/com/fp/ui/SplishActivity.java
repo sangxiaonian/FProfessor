@@ -25,7 +25,7 @@ public class SplishActivity extends BasisActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splish);
 
-        Observable.just(0).subscribeOn(Schedulers.io()).delay(4, TimeUnit.SECONDS)
+        Observable.just(0).subscribeOn(Schedulers.io()).delay(1, TimeUnit.SECONDS)
                 .map(new Func1<Integer, Boolean>() {
                     @Override
                     public Boolean call(Integer integer) {

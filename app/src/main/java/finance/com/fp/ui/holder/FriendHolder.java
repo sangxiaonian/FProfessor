@@ -16,8 +16,11 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.animation.GlideAnimation;
+import com.bumptech.glide.request.target.SimpleTarget;
 import com.sang.viewfractory.utils.ViewUtils;
 import com.sang.viewfractory.view.FloatView;
+import com.sang.viewfractory.view.MoveView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -27,11 +30,10 @@ import em.sang.com.allrecycleview.holder.CustomHolder;
 import em.sang.com.allrecycleview.inter.DefaultAdapterViewLisenter;
 import finance.com.fp.R;
 import finance.com.fp.mode.bean.FriendBean;
-import finance.com.fp.utlis.GlideUtils;
 import finance.com.fp.utlis.Utils;
-import sang.com.xdialog.XDialogBuilder;
 import sang.com.xdialog.DialogFactory;
 import sang.com.xdialog.XDialog;
+import sang.com.xdialog.XDialogBuilder;
 import sang.com.xdialog.inter.OnEntryClickListener;
 
 import static finance.com.fp.R.id.img_icon;
@@ -102,14 +104,20 @@ public class FriendHolder extends CustomHolder<FriendBean> {
                         public void initView(int position, List<FriendBean.ImagesBean> datas, final Context context) {
                             super.initView(position, datas, context);
                             final FriendBean.ImagesBean imagesBean = datas.get(position);
-                            ImageView imageView = (ImageView) itemView.findViewById(img_icon);
-                            GlideUtils.loadImage(context, imageView, imagesBean.getUrl());
-                            imageView.setOnClickListener(new View.OnClickListener() {
+                            final ImageView imageView = (ImageView) itemView.findViewById(img_icon);
+                            Glide.with(context).load(imagesBean.getUrl()).asBitmap().into(new SimpleTarget<Bitmap>() {
                                 @Override
-                                public void onClick(View v) {
-                                    showImag(context, imagesBean);
+                                public void onResourceReady(final Bitmap resource, GlideAnimation<? super Bitmap> glideAnimation) {
+                                    imageView.setImageBitmap(resource);
+                                    imageView.setOnClickListener(new View.OnClickListener() {
+                                        @Override
+                                        public void onClick(View v) {
+                                            showImag(context, imagesBean, v,resource);
+                                        }
+                                    });
                                 }
                             });
+
                         }
                     };
                 }
@@ -119,9 +127,9 @@ public class FriendHolder extends CustomHolder<FriendBean> {
 
     }
 
-    private void showImag(final Context context, final FriendBean.ImagesBean bean) {
+    private void showImag(final Context context, final FriendBean.ImagesBean bean, View v, final Bitmap resource) {
 
-        final ImageView view = new ImageView(context);
+        final MoveView view = new  MoveView(context);
         LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
         view.setLayoutParams(params);
         view.setClickable(true);
@@ -131,56 +139,58 @@ public class FriendHolder extends CustomHolder<FriendBean> {
                 dialog.dismiss();
             }
         });
-        GlideUtils.loadImage(context, view, bean.getUrl());
-        setOnLongClick(view, context);
+
+        view.setListener(new   MoveView.MoveViewListener() {
+            @Override
+            public void onLongClick(View view) {
+                setOnLongClick(view,context,resource);
+            }
+
+
+            @Override
+            public void onClick(View view) {
+
+            }
+
+
+            @Override
+            public void animotionEnd(View view) {
+                dialog.dismiss();
+            }
+        });
+        view.setOriginView(v,resource);
         dialog.show();
         dialog.setContentView(view);
         dialog.getWindow().setLayout(WindowManager.LayoutParams.MATCH_PARENT, WindowManager.LayoutParams.MATCH_PARENT);
 
     }
 
-    private void setOnLongClick(ImageView view, final Context context) {
+    private void setOnLongClick(View v, final Context context, final Bitmap bitmap) {
 
+        try {
 
-        view.setLongClickable(true);
-        view.setOnLongClickListener(new View.OnLongClickListener() {
-            @Override
-            public boolean onLongClick(View v) {
-                try {
-                    final Bitmap bitmap;
-                    v.setDrawingCacheEnabled(true);
-                    bitmap = Bitmap.createBitmap(v.getDrawingCache());
-                    v.setDrawingCacheEnabled(false);
+            List<String> list = new ArrayList<String>();
+            list.add(context.getResources().getString(R.string.friend_save));
+            if (bitmap != null) {
+                selectbuilder.setDatas(list)
+                        .setThemeID(sang.com.xdialog.R.style.DialogTheme)
+                        .setEntryListener(new OnEntryClickListener() {
+                            @Override
+                            public void onClick(Dialog dialog, int which, Object data) {
+                                Utils.saveImageToGallery(context, bitmap);
+                                dialog.dismiss();
 
+                            }
+                        })
+                        .setDialogStyle(XDialogBuilder.SELECT_DIALOG)
+                        .builder()
+                        .show();
 
-                    List<String> list = new ArrayList<String>();
-                    list.add(context.getResources().getString(R.string.friend_save));
-
-
-                    if (bitmap != null) {
-//
-                       selectbuilder.setDatas(list)
-                               .setStyle(XDialogBuilder.SELECT_WIDTH_FULL)
-                                .setThemeID(sang.com.xdialog.R.style.DialogTheme)
-                                .setEntryListener(new OnEntryClickListener() {
-                                    @Override
-                                    public void onClick(Dialog dialog, int which, Object data) {
-                                        Utils.saveImageToGallery(context, bitmap);
-                                        dialog.dismiss();
-
-                                    }
-                                })
-                                .setDialogStyle(XDialogBuilder.SELECT_DIALOG)
-                               .builder()
-                       .show();
-
-                    }
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-                return false;
             }
-        });
-
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
+
 }
+

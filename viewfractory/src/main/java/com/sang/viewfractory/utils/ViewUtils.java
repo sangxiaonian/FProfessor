@@ -2,7 +2,9 @@ package com.sang.viewfractory.utils;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.graphics.Rect;
 import android.text.TextUtils;
+import android.view.View;
 
 import java.math.BigDecimal;
 import java.text.SimpleDateFormat;
@@ -138,6 +140,27 @@ public class ViewUtils {
         return endCal;
     }
 
+    /**
+     * 获取View在屏幕中的位置
+     * @param view
+     * @return
+     */
+    public static int[] getLoaction(View view){
+        int[] position = new int[2];
+        view.getLocationOnScreen(position);
+        return position;
+    }
 
+
+    /**
+     * 获取View在屏幕中的位置
+     * @param view
+     * @return
+     */
+    public static Rect getViewRect(View view){
+        Rect rect = new Rect();
+        view.getLocalVisibleRect(rect);
+        return rect;
+    }
 
 }

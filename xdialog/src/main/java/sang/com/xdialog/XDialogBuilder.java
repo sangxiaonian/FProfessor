@@ -267,6 +267,7 @@ public class XDialogBuilder<T> {
        dialog.setTitle(title);
        dialog.setDatas(datas);
        dialog.setButtonName(be_entry_name,bt_cancle_name);
+       dialog.setOnClickListener(entryListener);
        dialog.setStyle(style);
        dialog.setAnimationsStyle(animationsStyle);
         return dialog;

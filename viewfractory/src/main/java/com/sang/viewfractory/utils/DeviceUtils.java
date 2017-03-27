@@ -3,6 +3,8 @@ package com.sang.viewfractory.utils;
 import android.content.Context;
 import android.view.ViewConfiguration;
 
+import java.lang.reflect.Field;
+
 /**
  * Description：
  *
@@ -78,5 +80,37 @@ public class DeviceUtils {
     public static float getScreenWidth(Context context){
         float density = context.getResources().getDisplayMetrics().widthPixels;
         return density;
+    }
+    /**
+     * 获取屏幕密度
+     * @param context
+     * @return
+     */
+    public static float getScreenHeight(Context context){
+        float density = context.getResources().getDisplayMetrics().heightPixels;
+        return density;
+    }
+    /**
+     * 获取状态栏高度
+     * @param context
+     * @return
+     */
+    public static int getStatuBarHeight(Context context)   {
+        try {
+            Class<?> c = Class.forName("com.android.internal.R$dimen");
+            Object obj = c.newInstance();
+            Field field = c.getField("status_bar_height");
+            int x = Integer.parseInt(field.get(obj).toString());
+            return context.getResources().getDimensionPixelSize(x);
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        } catch (InstantiationException e) {
+            e.printStackTrace();
+        } catch (IllegalAccessException e) {
+            e.printStackTrace();
+        } catch (NoSuchFieldException e) {
+            e.printStackTrace();
+        }
+        return 0;
     }
 }
