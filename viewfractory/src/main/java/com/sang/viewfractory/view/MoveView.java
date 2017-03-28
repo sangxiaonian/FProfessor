@@ -8,6 +8,8 @@ import android.animation.ValueAnimator;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
+import android.graphics.Color;
+import android.graphics.Paint;
 import android.graphics.PointF;
 import android.graphics.Rect;
 import android.support.annotation.Nullable;
@@ -19,11 +21,12 @@ import android.view.animation.AccelerateInterpolator;
 import android.view.animation.DecelerateInterpolator;
 
 import com.sang.viewfractory.utils.DeviceUtils;
+import com.sang.viewfractory.utils.JLog;
 import com.sang.viewfractory.utils.ViewUtils;
 
 public class MoveView extends android.support.v7.widget.AppCompatImageView implements GestureDetector.OnGestureListener, GestureDetector.OnDoubleTapListener {
 
-    private PointF downP, destinationP, ratioP;
+    private PointF downP;
 
     /**
      * view开始和结束时后的位置
@@ -40,7 +43,7 @@ public class MoveView extends android.support.v7.widget.AppCompatImageView imple
     private float mHeight, mWidth;
     private Bitmap bitmap;
     private long time;
-
+    private Paint mPaint;
 
     /**
      * 原始View的位置
@@ -74,8 +77,6 @@ public class MoveView extends android.support.v7.widget.AppCompatImageView imple
 
     private void initView(Context context, AttributeSet attrs, int defStyleAttr) {
         downP = new PointF(0, 0);
-        destinationP = new PointF(100, 100);
-        ratioP = new PointF();
         minScaleX = 1;
         doubliScale = 2f;
         currentPoint = new PointF(0, 0);
@@ -83,6 +84,7 @@ public class MoveView extends android.support.v7.widget.AppCompatImageView imple
         setClickable(true);
         detector = new GestureDetector(context, this);
         time = 300;
+        mPaint=new Paint(Paint.ANTI_ALIAS_FLAG);
 
     }
 
@@ -91,9 +93,14 @@ public class MoveView extends android.support.v7.widget.AppCompatImageView imple
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
         if (viewRect != null && bitmap != null) {
+            double v =  viewRect.width() * 1.0 / startRect.width();
+            mPaint.setColor(Color.BLACK);
+            mPaint.setAlpha((int) ((int) (255*v)/maxScaleX));
+            canvas.drawRect(0,0,mWidth,mHeight,mPaint);
             canvas.save();
             canvas.translate(currentPoint.x, currentPoint.y);
-            canvas.drawBitmap(creatBitmap(bitmap, viewRect), 0, 0, null);
+            Bitmap bitmap = creatBitmap(this.bitmap, viewRect);
+            canvas.drawBitmap(bitmap,0, 0, null);
             canvas.restore();
         }
 
@@ -107,8 +114,9 @@ public class MoveView extends android.support.v7.widget.AppCompatImageView imple
      * @return
      */
     private Bitmap creatBitmap(Bitmap bitmap, Rect viewRect) {
-        float height = viewRect.width() * (bitmap.getHeight() * 1.0f / bitmap.getWidth());
-        return Bitmap.createScaledBitmap(bitmap, viewRect.width(), (int) height, true);
+        float width = viewRect.width();
+        float height = width * (bitmap.getHeight() * 1.0f / bitmap.getWidth());
+        return Bitmap.createScaledBitmap(bitmap, (int) width, (int) height, true);
     }
 
     private void startAnimotion() {
@@ -122,8 +130,21 @@ public class MoveView extends android.support.v7.widget.AppCompatImageView imple
         pointF.y = bottom;
         ViewPoint point = new ViewPoint(stattTranslateX, startTranslatY, pointF);
         //结束数据
-        PointF pointF1 = new PointF(startRect.width() * maxScaleX, startRect.height() * maxScaleX);
-        ViewPoint endPoint = new ViewPoint(0, 0, pointF1);
+        float width = mWidth;
+        float height = mHeight;
+        double v = bitmap.getWidth() * 1.0 / bitmap.getHeight();
+        float endTranX = 0;
+        float endTranY = 0;
+
+        if (mWidth/mHeight> v){
+            width = (float) (mHeight*v);
+            endTranX =(mWidth-width)/2;
+        }else {
+            height = (float) (width/v);
+            endTranY=(mHeight-height)/2;
+        }
+        PointF pointF1 = new PointF(width, height);
+        ViewPoint endPoint = new ViewPoint(endTranX, endTranY, pointF1);
         getAnimotion(point, endPoint, false);
 
     }
@@ -131,7 +152,18 @@ public class MoveView extends android.support.v7.widget.AppCompatImageView imple
     @Override
     protected void onAttachedToWindow() {
         super.onAttachedToWindow();
-        startAnimotion();
+        post(new Runnable() {
+            @Override
+            public void run() {
+                mWidth = getWidth();
+                mHeight = getHeight();
+                float maxScaleX = mWidth * 1.0f / startRect.width();
+                float maxScaleY = mHeight * 1.0f / startRect.height();
+                MoveView.this.maxScaleX = Math.min(maxScaleX, maxScaleY);
+                minScaleX = 1;
+                startAnimotion();
+            }
+        });
     }
 
     /**
@@ -187,24 +219,12 @@ public class MoveView extends android.support.v7.widget.AppCompatImageView imple
         viewRect.bottom = height;
         startRect.right = width;
         startRect.bottom = height;
-
-
         int[] loaction = ViewUtils.getLoaction(originView);
         currentPoint.x = loaction[0];
         currentPoint.y = loaction[1] - DeviceUtils.getStatuBarHeight(getContext());
         startPoint.x = loaction[0];
         startPoint.y = loaction[1] - DeviceUtils.getStatuBarHeight(getContext());
-        mWidth = DeviceUtils.getScreenWidth(getContext());
-        mHeight = DeviceUtils.getScreenHeight(getContext());
         this.bitmap = bitmap;
-
-        float maxScaleX = mWidth * 1.0f / startRect.width();
-        float maxScaleY = mHeight * 1.0f / startRect.height();
-
-        this.maxScaleX = Math.min(maxScaleX, maxScaleY);
-        minScaleX = 1;
-        postInvalidate();
-
     }
 
     @Override
@@ -242,8 +262,21 @@ public class MoveView extends android.support.v7.widget.AppCompatImageView imple
         pointF.y = bottom;
         ViewPoint point = new ViewPoint(currentPoint.x, currentPoint.y, pointF);
         //结束数据
-        PointF pointF1 = new PointF(startRect.width() * maxScaleX, startRect.height() * maxScaleX);
-        ViewPoint endPoint = new ViewPoint(0, 0, pointF1);
+        float width = mWidth;
+        float height = mHeight;
+        double v = bitmap.getWidth() * 1.0 / bitmap.getHeight();
+        float endTranX = 0;
+        float endTranY = 0;
+
+        if (mWidth/mHeight> v){
+            width = (float) (mHeight*v);
+            endTranX =(mWidth-width)/2;
+        }else {
+            height = (float) (width/v);
+            endTranY=(mHeight-height)/2;
+        }
+        PointF pointF1 = new PointF(width, height);
+        ViewPoint endPoint = new ViewPoint(endTranX, endTranY, pointF1);
         getAnimotion(point, endPoint, false);
 
     }
@@ -252,7 +285,6 @@ public class MoveView extends android.support.v7.widget.AppCompatImageView imple
      * 结束
      */
     private void moveToPoint() {
-
         int right = viewRect.right;
         int bottom = viewRect.bottom;
         PointF pointF = new PointF();
@@ -265,8 +297,6 @@ public class MoveView extends android.support.v7.widget.AppCompatImageView imple
         float stattTranslateX = startPoint.x;
         ViewPoint endPoint = new ViewPoint(stattTranslateX, startTranslatY, pointF1);
         getAnimotion(point, endPoint, true);
-
-
     }
 
     ValueAnimator animator;
@@ -346,17 +376,33 @@ public class MoveView extends android.support.v7.widget.AppCompatImageView imple
             if (isCanDrag) {
                 float abs = Math.abs((mHeight - distanceY) * maxScaleX / mHeight);
                 abs = abs > maxScaleX ? maxScaleX : (abs < minScaleX ? minScaleX : abs);
-                currentPoint.x = distanceX + (mWidth - (startRect.width() * abs)) / 2;
-                currentPoint.y = distanceY;
-                viewRect.right = (int) (startRect.width() * abs);
+
+
+                //结束数据
+                float width = (startRect.width() * abs);
+                float height = (startRect.height() * abs);
+                double v = bitmap.getWidth() * 1.0 / bitmap.getHeight();
+                float endTranX = 0;
+                float endTranY = 0;
+
+                if (mWidth/mHeight> v){
+                    width = (float) (height*v);
+                    endTranX =(mWidth-width)/2;
+                }else {
+                    height = (float) (width/v);
+                    endTranY=(mHeight-height)/2;
+                }
+                currentPoint.x = distanceX + endTranX;
+                currentPoint.y = distanceY+endTranY;
+                viewRect.right = (int) width;
                 viewRect.left = 0;
                 viewRect.top = 0;
-                viewRect.bottom = (int) (startRect.height() * abs);
+                viewRect.bottom = (int) height;
                 postInvalidate();
             }
         } else {
-            float y = -distanceY + getTranslationY();
-            float x = -distanceX + getTranslationX();
+            float y = -distanceY*doubliScale + getTranslationY();
+            float x = -distanceX*doubliScale + getTranslationX();
             setTranslationY(y);
             setTranslationX(x);
         }
