@@ -101,7 +101,6 @@ public class ShowDetailActivity extends BasisActivity {
         });
 
 
-        Logger.i(infor.content);
         if (infor.type == 0)
 
         {

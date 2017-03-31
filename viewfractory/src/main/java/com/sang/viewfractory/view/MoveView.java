@@ -21,10 +21,9 @@ import android.view.animation.AccelerateInterpolator;
 import android.view.animation.DecelerateInterpolator;
 
 import com.sang.viewfractory.utils.DeviceUtils;
-import com.sang.viewfractory.utils.JLog;
 import com.sang.viewfractory.utils.ViewUtils;
 
-public class MoveView extends android.support.v7.widget.AppCompatImageView implements GestureDetector.OnGestureListener, GestureDetector.OnDoubleTapListener {
+public class MoveView extends View implements GestureDetector.OnGestureListener, GestureDetector.OnDoubleTapListener {
 
     private PointF downP;
 
@@ -157,6 +156,28 @@ public class MoveView extends android.support.v7.widget.AppCompatImageView imple
             public void run() {
                 mWidth = getWidth();
                 mHeight = getHeight();
+                //由于部分时候,图片并不是完全填充View,所以需要处理一下
+                float width = startRect.width() ;
+                float height = startRect.height();
+                double v = bitmap.getWidth() * 1.0 / bitmap.getHeight();
+                float endTranX = 0;
+                float endTranY = 0;
+
+                if (width/height> v){
+                    endTranX = (float) (( width-height*v)/2);
+                    width = (float) (height*v);
+                }else {
+                    endTranY= (float) (( height-width/v)/2);
+                    height = (float) (width/v);
+                }
+                viewRect.right = (int) width;
+                viewRect.bottom = (int) height;
+                startRect.right = (int) width;
+                startRect.bottom = (int) height;
+                currentPoint.x +=endTranX ;
+                currentPoint.y += endTranY;
+                startPoint.x +=endTranX ;
+                startPoint.y += endTranY;
                 float maxScaleX = mWidth * 1.0f / startRect.width();
                 float maxScaleY = mHeight * 1.0f / startRect.height();
                 MoveView.this.maxScaleX = Math.min(maxScaleX, maxScaleY);
@@ -211,8 +232,9 @@ public class MoveView extends android.support.v7.widget.AppCompatImageView imple
      * @param originView
      */
     public void setOriginView(View originView, Bitmap bitmap) {
-        viewRect = ViewUtils.getViewRect(originView);
-        startRect = ViewUtils.getViewRect(originView);
+        viewRect = new Rect();
+        startRect = new Rect();
+        //获取控件的宽高
         int width = originView.getWidth();
         int height = originView.getHeight();
         viewRect.right = width;
@@ -220,9 +242,9 @@ public class MoveView extends android.support.v7.widget.AppCompatImageView imple
         startRect.right = width;
         startRect.bottom = height;
         int[] loaction = ViewUtils.getLoaction(originView);
-        currentPoint.x = loaction[0];
+        currentPoint.x = loaction[0] ;
         currentPoint.y = loaction[1] - DeviceUtils.getStatuBarHeight(getContext());
-        startPoint.x = loaction[0];
+        startPoint.x = loaction[0]  ;
         startPoint.y = loaction[1] - DeviceUtils.getStatuBarHeight(getContext());
         this.bitmap = bitmap;
     }
@@ -292,7 +314,15 @@ public class MoveView extends android.support.v7.widget.AppCompatImageView imple
         pointF.y = bottom;
         ViewPoint point = new ViewPoint(currentPoint.x, currentPoint.y, pointF);
         //结束数据
-        PointF pointF1 = new PointF(startRect.width(), startRect.height());
+        double v = bitmap.getWidth() * 1.0 / bitmap.getHeight();
+        float width = (startRect.width() );
+        float height = (startRect.height() );
+        if (mWidth/mHeight> v){
+            width = (float) (height*v);
+        }else {
+            height = (float) (width/v);
+        }
+        PointF pointF1 = new PointF(width,height);
         float startTranslatY = startPoint.y;
         float stattTranslateX = startPoint.x;
         ViewPoint endPoint = new ViewPoint(stattTranslateX, startTranslatY, pointF1);
@@ -398,6 +428,7 @@ public class MoveView extends android.support.v7.widget.AppCompatImageView imple
                 viewRect.left = 0;
                 viewRect.top = 0;
                 viewRect.bottom = (int) height;
+
                 postInvalidate();
             }
         } else {
