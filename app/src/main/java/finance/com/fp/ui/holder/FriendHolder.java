@@ -46,14 +46,9 @@ import static finance.com.fp.R.id.img_icon;
  * @Data：2017/2/26 15:29
  */
 public class FriendHolder extends CustomHolder<FriendBean> {
-    private XDialog dialog, load;
 
     public FriendHolder(Context context, List<FriendBean> lists, int itemID) {
         super(context, lists, itemID);
-        dialog = DialogFactory.getInstance().creatDiaolg(context, DialogFactory.ALEART_DIALOG);
-
-        load = DialogFactory.getInstance().creatDiaolg(context, DialogFactory.LOAD_DIALOG);
-
     }
 
     @Override
