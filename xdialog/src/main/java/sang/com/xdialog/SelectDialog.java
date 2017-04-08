@@ -35,7 +35,6 @@ public class SelectDialog extends XDialog<List<String>> {
 
     public SelectDialog(Context context, int themeResId) {
         super(context, themeResId);
-        JLog.i(R.style.DialogCutTheme+">>>>>>>>   "+themeResId);
     }
 
     protected SelectDialog(Context context, boolean cancelable, OnCancelListener cancelListener) {
@@ -116,7 +115,6 @@ public class SelectDialog extends XDialog<List<String>> {
 
     @Override
     protected void changeLayoutByStyle(int style) {
-        JLog.i(style+">>>>>>>>>>");
         switch (style) {
             case SELECT_WIDTH_FULL:
                 itemID = R.layout.item_text_full;

@@ -47,12 +47,11 @@ import static finance.com.fp.R.id.img_icon;
  */
 public class FriendHolder extends CustomHolder<FriendBean> {
     private XDialog dialog, load;
-    private XDialogBuilder selectbuilder;
 
     public FriendHolder(Context context, List<FriendBean> lists, int itemID) {
         super(context, lists, itemID);
         dialog = DialogFactory.getInstance().creatDiaolg(context, DialogFactory.ALEART_DIALOG);
-        selectbuilder = new XDialogBuilder(context);
+
         load = DialogFactory.getInstance().creatDiaolg(context, DialogFactory.LOAD_DIALOG);
 
     }
@@ -128,71 +127,12 @@ public class FriendHolder extends CustomHolder<FriendBean> {
 
     }
 
-    private void showImag(final Context context, final FriendBean.ImagesBean bean, View v, final Bitmap resource) {
-
-        final MoveView view = new  MoveView(context);
-        LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
-        view.setLayoutParams(params);
-        view.setClickable(true);
-        view.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                dialog.dismiss();
-            }
-        });
-
-        view.setListener(new   MoveView.MoveViewListener() {
-            @Override
-            public void onLongClick(View view) {
-                setOnLongClick(view,context,resource);
-            }
-
-
-            @Override
-            public void onClick(View view) {
-
-            }
-
-
-            @Override
-            public void animotionEnd(View view) {
-                dialog.dismiss();
-            }
-        });
-        view.setOriginView(v,resource);
-        dialog.show();
-        dialog.setContentView(view);
-        Window window = dialog.getWindow();
-        window.setLayout(WindowManager.LayoutParams.MATCH_PARENT, WindowManager.LayoutParams.MATCH_PARENT);
-
+    protected void showImag(final Context context, final FriendBean.ImagesBean bean, View v, final Bitmap resource) {
     }
 
-    private void setOnLongClick(View v, final Context context, final Bitmap bitmap) {
 
-        try {
 
-            List<String> list = new ArrayList<String>();
-            list.add(context.getResources().getString(R.string.friend_save));
-            if (bitmap != null) {
-                selectbuilder.setDatas(list)
-                        .setThemeID(sang.com.xdialog.R.style.DialogTheme)
-                        .setEntryListener(new OnEntryClickListener() {
-                            @Override
-                            public void onClick(Dialog dialog, int which, Object data) {
-                                Utils.saveImageToGallery(context, bitmap);
-                                dialog.dismiss();
 
-                            }
-                        })
-                        .setDialogStyle(XDialogBuilder.SELECT_DIALOG)
-                        .builder()
-                        .show();
-
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
 
 }
 

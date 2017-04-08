@@ -251,7 +251,6 @@ public class XDialogBuilder<T> {
     private T datas;
 
    public XDialog builder(){
-       JLog.i("------------"+themeID+"--------------");
        XDialog dialog;
        if (themeID>0) {
            dialog = DialogFactory.getInstance().creatDiaolg(context,dialogStyle,themeID);

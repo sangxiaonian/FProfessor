@@ -38,7 +38,7 @@ public class RegisterFinishFragment extends BasisFragment implements View.OnClic
         super.initData();
         bt_next.setOnClickListener(this);
         tv_content = (TextView) rootView.findViewById(R.id.tv_content);
-        if (listener.isRegister()){
+        if (listener.isRegister()||!listener.re_psd()){
             initToolBar(null);
         }else {
             tv_content.setText(getString(R.string.psd_change_succ));

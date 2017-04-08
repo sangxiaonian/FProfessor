@@ -5,9 +5,12 @@ import android.os.Bundle;
 import android.text.TextUtils;
 
 
+import com.sang.viewfractory.utils.BarUtils;
+
 import java.util.concurrent.TimeUnit;
 
 import finance.com.fp.BasisActivity;
+import finance.com.fp.CusApplication;
 import finance.com.fp.R;
 import finance.com.fp.mode.http.Config;
 import finance.com.fp.utlis.Utils;
@@ -23,12 +26,14 @@ public class SplishActivity extends BasisActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        BarUtils.hideStatusBar(this);
         setContentView(R.layout.activity_splish);
 
-        Observable.just(0).subscribeOn(Schedulers.io()).delay(1, TimeUnit.SECONDS)
+        Observable.just(0).subscribeOn(Schedulers.io()).delay(2, TimeUnit.SECONDS)
                 .map(new Func1<Integer, Boolean>() {
                     @Override
                     public Boolean call(Integer integer) {
+                        ((CusApplication)getApplication()).initUmen();
                         String sp = Utils.getSp(SplishActivity.this, Config.isFirst);
                         return TextUtils.isEmpty(sp);
                     }

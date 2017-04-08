@@ -1,10 +1,17 @@
 package finance.com.fp.ui;
 
+import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.StaggeredGridLayoutManager;
+import android.view.View;
+
+import com.sang.viewfractory.utils.BarUtils;
+import com.sang.viewfractory.utils.JLog;
+import com.sang.viewfractory.view.MoveView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -26,12 +33,15 @@ import finance.com.fp.ui.holder.FriendHolder;
 import finance.com.fp.utlis.ToastUtil;
 import finance.com.fp.utlis.Utils;
 import rx.Observer;
+import sang.com.xdialog.XDialogBuilder;
+import sang.com.xdialog.inter.OnEntryClickListener;
 
 public class FriendActivity extends BasisActivity implements Observer<FriendBean>,OnToolsItemClickListener<FriendBean> {
 
     private RefrushRecycleView recycleView;
     private List<FriendBean> lists, tempLists;
     private int page;
+    private MoveView mv;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,7 +55,8 @@ public class FriendActivity extends BasisActivity implements Observer<FriendBean
 
     @Override
     public void initView() {
-
+        mv= (MoveView) findViewById(R.id.mv);
+        mv.setVisibility(View.GONE);
         recycleView = (RefrushRecycleView) findViewById(R.id.rc);
         recycleView.setHasBoom(true);
         StaggeredGridLayoutManager manager = new StaggeredGridLayoutManager(1, LinearLayoutManager.VERTICAL);
@@ -75,7 +86,36 @@ public class FriendActivity extends BasisActivity implements Observer<FriendBean
           adapter = new RefrushAdapter(this, lists, R.layout.item_friend, new DefaultAdapterViewLisenter() {
             @Override
             public CustomHolder getBodyHolder(Context context, List lists, int itemID) {
-                FriendHolder holder = new FriendHolder(context, lists, itemID);
+                FriendHolder holder = new FriendHolder(context, lists, itemID){
+                    @Override
+                    protected void showImag(final Context context, FriendBean.ImagesBean bean, final View v, final Bitmap resource) {
+                        mv.setVisibility(View.VISIBLE);
+                        mv.setClickable(true);
+                        v.setVisibility(View.INVISIBLE);
+                        mv.setListener(new   MoveView.MoveViewListener() {
+                            @Override
+                            public void onLongClick(View view) {
+
+                                setOnLongClick(view,context,resource);
+                            }
+
+
+                            @Override
+                            public void onClick(View view) {
+
+                            }
+
+
+                            @Override
+                            public void animotionEnd(View view) {
+                                mv.setVisibility(View.GONE);
+                                v.setVisibility(View.VISIBLE);
+                            }
+                        });
+                        mv.setOriginView(v,resource);
+
+                    }
+                };
                 holder.setOnTOnToolsItemClickListener(FriendActivity.this);
                 return holder;
             }
@@ -128,6 +168,32 @@ public class FriendActivity extends BasisActivity implements Observer<FriendBean
         intent.putExtra(Config.infors, infor);
         startActivity(intent);
     }
+
+    private void setOnLongClick(View v, final Context context, final Bitmap bitmap) {
+        try {
+            List<String> list = new ArrayList<String>();
+            list.add(context.getResources().getString(R.string.friend_save));
+            if (bitmap != null) {
+                new XDialogBuilder<>(this).setDatas(list)
+                        .setThemeID(sang.com.xdialog.R.style.DialogTheme)
+                        .setEntryListener(new OnEntryClickListener() {
+                            @Override
+                            public void onClick(Dialog dialog, int which, Object data) {
+                                Utils.saveImageToGallery(context, bitmap);
+                                dialog.dismiss();
+
+                            }
+                        })
+                        .setDialogStyle(XDialogBuilder.SELECT_DIALOG)
+                        .builder()
+                        .show();
+
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
 }
 
 

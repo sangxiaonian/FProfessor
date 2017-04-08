@@ -46,14 +46,14 @@ public class CusApplication extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
-        ToastUtil.init(this);
-        Logger.init("PING");
         context = this;
         Logger.i("友盟注册");
-        initUmen();
+
     }
 
-    private void initUmen() {
+    public void initUmen() {
+        ToastUtil.init(this);
+        Logger.init("PING");
         CrashReport.initCrashReport(getApplicationContext(), "b038c087da", false);
         PushAgent mPushAgent = PushAgent.getInstance(this);
 

@@ -73,7 +73,7 @@ public class DeviceUtils {
         return density;
     }
     /**
-     * 获取屏幕密度
+     * 获取屏幕宽度
      * @param context
      * @return
      */

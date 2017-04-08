@@ -20,8 +20,12 @@ import android.view.View;
 import android.view.animation.AccelerateInterpolator;
 import android.view.animation.DecelerateInterpolator;
 
+import com.sang.viewfractory.utils.BarUtils;
 import com.sang.viewfractory.utils.DeviceUtils;
+import com.sang.viewfractory.utils.JLog;
 import com.sang.viewfractory.utils.ViewUtils;
+
+import static android.support.v7.widget.AppCompatDrawableManager.get;
 
 public class MoveView extends View implements GestureDetector.OnGestureListener, GestureDetector.OnDoubleTapListener {
 
@@ -82,8 +86,8 @@ public class MoveView extends View implements GestureDetector.OnGestureListener,
         startPoint = new PointF(0, 0);
         setClickable(true);
         detector = new GestureDetector(context, this);
-        time = 300;
-        mPaint=new Paint(Paint.ANTI_ALIAS_FLAG);
+        time = 200;
+        mPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
 
     }
 
@@ -92,14 +96,16 @@ public class MoveView extends View implements GestureDetector.OnGestureListener,
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
         if (viewRect != null && bitmap != null) {
-            double v =  viewRect.width() * 1.0 / startRect.width();
+            double v = viewRect.width() * 1.0 / startRect.width();
+            double v1 = viewRect.height() * 1.0 / startRect.height();
+            v=Math.min(v,v1);
             mPaint.setColor(Color.BLACK);
-            mPaint.setAlpha((int) ((int) (255*v)/maxScaleX));
-            canvas.drawRect(0,0,mWidth,mHeight,mPaint);
+            mPaint.setAlpha(((int) (255 * Math.sqrt((v - 1) / (maxScaleX - 1)))));
+            canvas.drawRect(0, 0, mWidth, mHeight, mPaint);
             canvas.save();
             canvas.translate(currentPoint.x, currentPoint.y);
             Bitmap bitmap = creatBitmap(this.bitmap, viewRect);
-            canvas.drawBitmap(bitmap,0, 0, null);
+            canvas.drawBitmap(bitmap, 0, 0, null);
             canvas.restore();
         }
 
@@ -135,12 +141,12 @@ public class MoveView extends View implements GestureDetector.OnGestureListener,
         float endTranX = 0;
         float endTranY = 0;
 
-        if (mWidth/mHeight> v){
-            width = (float) (mHeight*v);
-            endTranX =(mWidth-width)/2;
-        }else {
-            height = (float) (width/v);
-            endTranY=(mHeight-height)/2;
+        if (mWidth / mHeight > v) {
+            width = (float) (mHeight * v);
+            endTranX = (mWidth - width) / 2;
+        } else {
+            height = (float) (width / v);
+            endTranY = (mHeight - height) / 2;
         }
         PointF pointF1 = new PointF(width, height);
         ViewPoint endPoint = new ViewPoint(endTranX, endTranY, pointF1);
@@ -148,44 +154,6 @@ public class MoveView extends View implements GestureDetector.OnGestureListener,
 
     }
 
-    @Override
-    protected void onAttachedToWindow() {
-        super.onAttachedToWindow();
-        post(new Runnable() {
-            @Override
-            public void run() {
-                mWidth = getWidth();
-                mHeight = getHeight();
-                //由于部分时候,图片并不是完全填充View,所以需要处理一下
-                float width = startRect.width() ;
-                float height = startRect.height();
-                double v = bitmap.getWidth() * 1.0 / bitmap.getHeight();
-                float endTranX = 0;
-                float endTranY = 0;
-
-                if (width/height> v){
-                    endTranX = (float) (( width-height*v)/2);
-                    width = (float) (height*v);
-                }else {
-                    endTranY= (float) (( height-width/v)/2);
-                    height = (float) (width/v);
-                }
-                viewRect.right = (int) width;
-                viewRect.bottom = (int) height;
-                startRect.right = (int) width;
-                startRect.bottom = (int) height;
-                currentPoint.x +=endTranX ;
-                currentPoint.y += endTranY;
-                startPoint.x +=endTranX ;
-                startPoint.y += endTranY;
-                float maxScaleX = mWidth * 1.0f / startRect.width();
-                float maxScaleY = mHeight * 1.0f / startRect.height();
-                MoveView.this.maxScaleX = Math.min(maxScaleX, maxScaleY);
-                minScaleX = 1;
-                startAnimotion();
-            }
-        });
-    }
 
     /**
      * 自定义估值算法
@@ -195,8 +163,8 @@ public class MoveView extends View implements GestureDetector.OnGestureListener,
         @Override
         public ViewPoint evaluate(float fraction, ViewPoint startValue, ViewPoint endValue) {
             ViewPoint point = new ViewPoint();
-            float value = fraction*fraction;
-           value= (float) Math.pow(value, 0.5);
+            float value = fraction * fraction;
+            value = (float) Math.pow(value, 0.5);
             point.translateX = startValue.translateX + (endValue.translateX - startValue.translateX) * value;
             point.translateY = startValue.translateY + (endValue.translateY - startValue.translateY) * value;
             point.sizePoint.x = startValue.sizePoint.x + (endValue.sizePoint.x - startValue.sizePoint.x) * value;
@@ -232,21 +200,55 @@ public class MoveView extends View implements GestureDetector.OnGestureListener,
      * @param originView
      */
     public void setOriginView(View originView, Bitmap bitmap) {
+
         viewRect = new Rect();
         startRect = new Rect();
         //获取控件的宽高
         int width = originView.getWidth();
         int height = originView.getHeight();
+
+        float endTranX = 0;
+        float endTranY = 0;
+        double v = bitmap.getWidth() * 1.0 / bitmap.getHeight();
+        if (width / height < v) {
+            endTranX = (float) ((width - height * v) / 2);
+            width = (int) (height * v);
+        } else {
+            endTranY = (float) ((height - width / v) / 2);
+            height = (int) (width / v);
+        }
         viewRect.right = width;
         viewRect.bottom = height;
         startRect.right = width;
         startRect.bottom = height;
+
         int[] loaction = ViewUtils.getLoaction(originView);
-        currentPoint.x = loaction[0] ;
+        currentPoint.x = loaction[0];
         currentPoint.y = loaction[1] - DeviceUtils.getStatuBarHeight(getContext());
-        startPoint.x = loaction[0]  ;
+        startPoint.x = loaction[0];
         startPoint.y = loaction[1] - DeviceUtils.getStatuBarHeight(getContext());
         this.bitmap = bitmap;
+        currentPoint.x += endTranX;
+        currentPoint.y += endTranY;
+        startPoint.x += endTranX;
+        startPoint.y += endTranY;
+
+        post(new Runnable() {
+            @Override
+            public void run() {
+                mWidth = getWidth();
+                mHeight = getHeight();
+                //由于部分时候,图片并不是完全填充View,所以需要处理一下
+                float maxScaleX = mWidth * 1.0f / startRect.width();
+                float maxScaleY = mHeight * 1.0f / startRect.height();
+                MoveView.this.maxScaleX = Math.min(maxScaleX, maxScaleY);
+                minScaleX = 1;
+                startAnimotion();
+
+            }
+        });
+
+
     }
 
     @Override
@@ -277,6 +279,7 @@ public class MoveView extends View implements GestureDetector.OnGestureListener,
 
 
     private void recoverToPosition() {
+
         int right = viewRect.right;
         int bottom = viewRect.bottom;
         PointF pointF = new PointF();
@@ -290,12 +293,12 @@ public class MoveView extends View implements GestureDetector.OnGestureListener,
         float endTranX = 0;
         float endTranY = 0;
 
-        if (mWidth/mHeight> v){
-            width = (float) (mHeight*v);
-            endTranX =(mWidth-width)/2;
-        }else {
-            height = (float) (width/v);
-            endTranY=(mHeight-height)/2;
+        if (mWidth / mHeight > v) {
+            width = (float) (mHeight * v);
+            endTranX = (mWidth - width) / 2;
+        } else {
+            height = (float) (width / v);
+            endTranY = (mHeight - height) / 2;
         }
         PointF pointF1 = new PointF(width, height);
         ViewPoint endPoint = new ViewPoint(endTranX, endTranY, pointF1);
@@ -315,14 +318,14 @@ public class MoveView extends View implements GestureDetector.OnGestureListener,
         ViewPoint point = new ViewPoint(currentPoint.x, currentPoint.y, pointF);
         //结束数据
         double v = bitmap.getWidth() * 1.0 / bitmap.getHeight();
-        float width = (startRect.width() );
-        float height = (startRect.height() );
-        if (mWidth/mHeight> v){
-            width = (float) (height*v);
-        }else {
-            height = (float) (width/v);
+        float width = (startRect.width());
+        float height = (startRect.height());
+        if (mWidth / mHeight > v) {
+            width = (float) (height * v);
+        } else {
+            height = (float) (width / v);
         }
-        PointF pointF1 = new PointF(width,height);
+        PointF pointF1 = new PointF(width, height);
         float startTranslatY = startPoint.y;
         float stattTranslateX = startPoint.x;
         ViewPoint endPoint = new ViewPoint(stattTranslateX, startTranslatY, pointF1);
@@ -415,15 +418,15 @@ public class MoveView extends View implements GestureDetector.OnGestureListener,
                 float endTranX = 0;
                 float endTranY = 0;
 
-                if (mWidth/mHeight> v){
-                    width = (float) (height*v);
-                    endTranX =(mWidth-width)/2;
-                }else {
-                    height = (float) (width/v);
-                    endTranY=(mHeight-height)/2;
+                if (mWidth / mHeight > v) {
+                    width = (float) (height * v);
+                    endTranX = (mWidth - width) / 2;
+                } else {
+                    height = (float) (width / v);
+                    endTranY = (mHeight - height) / 2;
                 }
                 currentPoint.x = distanceX + endTranX;
-                currentPoint.y = distanceY+endTranY;
+                currentPoint.y = distanceY + endTranY;
                 viewRect.right = (int) width;
                 viewRect.left = 0;
                 viewRect.top = 0;
@@ -432,8 +435,9 @@ public class MoveView extends View implements GestureDetector.OnGestureListener,
                 postInvalidate();
             }
         } else {
-            float y = -distanceY*doubliScale + getTranslationY();
-            float x = -distanceX*doubliScale + getTranslationX();
+            float y = -distanceY + getTranslationY();
+            float x = -distanceX + getTranslationX();
+
             setTranslationY(y);
             setTranslationX(x);
         }
@@ -466,14 +470,14 @@ public class MoveView extends View implements GestureDetector.OnGestureListener,
             } else if (clickListener != null) {
                 clickListener.onClick(this);
             }
-            if (isSacel){
-                animate().scaleY(1).scaleX(1).withStartAction(new Runnable() {
+            if (isSacel) {
+                animate().scaleY(1).scaleX(1).translationX(0).translationY(0).withStartAction(new Runnable() {
                     @Override
                     public void run() {
                         moveToPoint();
                     }
                 });
-            }else {
+            } else {
                 moveToPoint();
             }
         }
